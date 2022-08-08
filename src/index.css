@@ -1,0 +1,225 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-light-gray {
+    background-color: #F0F0F0
+  }
+
+  .bg-light-red {
+    background-color: #E84025
+  }
+
+  .border-3 {
+    border-width: 3px
+  }
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+COUNT DOWN CSS
+
+.countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.countdown__box svg {
+  position: relative;
+}
+
+.countdown__box svg circle {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  fill: transparent;
+}
+
+.countdown__box_circles {
+  position: relative;
+}
+
+.countdown__box_left {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+  font-size: 20px;
+  background: white;
+  width: 76%;
+  height: 76%;
+  border-radius: 50%;
+  color: #71728E;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.countdown__box_left .digits {
+  font-size: 33px;
+  font-weight: 700;
+}
+
+.countdown__box_left .labels {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.countdown__box_label {
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.main {
+  width: 100%;
+  height: 100vh;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background-color: rgba(0, 0, 0, .4);
+  /* background-color: #000000cc; */
+}
+
+video {
+  width: 100%;
+  bottom: 0px;
+  object-fit: cover;
+}
+
+.content {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding-bottom: 20px;
+  /* color: white; */
+}
+
+.main_wrapper {
+  padding: 20px 45px;
+}
+
+.white_background {
+  background: #ffffff75;
+  padding: 10px 45px;
+  height: min-content;
+}
+
+.black_big {
+  color: black;
+  text-align: center;
+  font-weight: 600;
+  font-size: 3vw;
+  letter-spacing: 20px;
+  text-shadow: 0px 2px 10px #827c7c;
+  line-height: 50px;
+}
+
+.red_big {
+  color: #D6420B;
+  text-align: center;
+  font-weight: 600;
+  font-size: 2vw;
+  text-shadow: 0px 2px 5px #555555;
+  line-height: 43px;
+}
+
+.black_small {
+  color: black;
+  text-align: center;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.red_small {
+  color: #D6420B;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 13px;
+}
+
+.black_paragraph {
+  padding: 0 30%;
+  text-align: justify;
+  font-size: 13px;
+}
+
+.Form_Wrapper {
+  padding: 0 7rem;
+}
+
+.undertext {
+  font-size: 13px;
+  text-align: center;
+  padding: 0 26rem;
+}
+
+.under_red_text {
+  color: #D6420B;
+  text-align: center;
+}
+
+.sabadel_logo {
+  width: 110px;
+  margin: 0 auto;
+}
+
+.desk_top{
+  display: block;
+}
+.mobile{
+  display: none;
+}
+
+
+/*  ================================ RESPONSIVE CSS ================== */
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media screen and (max-width: 1200px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media screen and (max-width: 992px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media screen and (max-width: 768px) {}
+
+
+/* Medium devices (landscape tablets, 768px and up and laptops/desktops) */
+/*  */
+
+
+@media screen and (max-width:600px){
+
+  .overlay {
+    height: 100%;
+  }
+
+  .desk_top{
+    display: none;
+  }
+  .mobile{
+    display: flex;
+  }
+
+ 
+  
+}
