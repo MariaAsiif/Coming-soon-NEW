@@ -20,19 +20,30 @@ const CommingSoon = () => {
                         <h4>Something Awesome is Coming</h4>
                         <h5>The life saved may be your own</h5>
                         <p>
-                            The University Of Chicago Medical Center (UChicago Medicine)
-                            conducted the study of a similar plant base therapeutic usage in
-                            patients is significantly correlated with a reduction in COVID-19
-                            positivity and considered to be one Of the most positive Inhibits
-                            SARS-CoV-2 that's far examined my scientific inquisitors. The
-                            product our platform focuses on is specifically cultivated wellness
-                            and has a compounding biological effect on the aforementioned
-                            discovery, truth through science. Please join us an alert allow us to
-                            alert you the mornent The Centers for Disease Control (CDC) and
-                            The European Center for Disease Prevention and Control releases
-                            further information in this area in their quest to save lives and heal
-                            families devastated by the hurnan health consequences and
-                            mental health issues exacerbated by this recent pandemic
+                            The University Of Chicago Medical Center (UChicago Medicine) conducted the study
+                             of a similar species origins in the Cannabis sativa plant which form the basis 
+                             of therapeutic organic cultivars usage by patients who suffered from “severe 
+                             acute respiratory syndrome" cause by contracting coronavirus 2 (SARS-CoV-2) and
+                              effects of the current outbreak of coronavirus disease (COVID-19) and it smells
+                               virulent variants variant B.1.1.7 (a.k.a 20I/501Y.V1) [17], the South Africa
+                                variant B.1.351 (a.k.a 20H/501Y.V2) [18], the Brazilian variant P.1 (a.k.a 20J/501Y.V3) [19],
+                                 and the India variant B.1.617 [20] have been circulating worldwide, including the United States (US)
+                                  and Spain. These variants contain mutations on the S protein RBD and are widely speculated to make
+                                   SARS-CoV-2 more infectious. Specifically, all three variants involve RBD mutation N501Y, 
+                                   whereas the South Africa and Brazilian variants also contain RBD mutations E484K and K417N.
+                                    The Cannabis sativa cultivars have demonstrated significantly correlated reduction in COVID-19
+                                     positivity and considered to be one Of the most positive Inhibits SARS-CoV-2 that's they have 
+                                     far examined by scientific inquisitors. The Cannabis sativa cultivars product available on the
+                                      HPO Rx platform focuses specifically I'm clinical outcomes using cultivated wellness,
+                                       its products and services which demonstrates a compounding positive biological effect
+                                        as patients have consumed these cultivars. The aforementioned discovery, covered by
+                                         truth through science has shown promising in Academic science peer reviews, you will 
+                                         discover by a plain language search on the topic across the Internet,  and continues
+                                          to be examined by clinical organizations all over the world. Please join us by registering
+                                           for our alert below. The moment The Centers for Disease Control (CDC) and The European
+                                            Center for Disease Prevention and Control releases further information in this area in
+                                             their quest to save lives and heal families devastated by the Hunan
+                             health consequences and mental health issues exacerbated by this recent pandemic.
                         </p>
 
                         <div className="couter_data">
