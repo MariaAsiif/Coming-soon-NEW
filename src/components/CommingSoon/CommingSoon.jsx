@@ -19,7 +19,7 @@ const CommingSoon = () => {
                         <h2>Coming </h2>
                         <h3>THERAPEUTIC</h3>
                         <h4>Something Awesome is Coming</h4>
-                        <h5>The life saved may be your own</h5>
+                        <h5>The life saved may be your own!</h5>
                         <p>
                             <ReadMore>
                                 The University Of Chicago Medical Center (UChicago Medicine)
@@ -62,7 +62,7 @@ const CommingSoon = () => {
                             </span>
                         </div>
 
-                        <div className="company_info_name text-red-400">
+                        <div className="company_info_name text-red-600">
                             <span>A Fairman Company</span>
                         </div>
 

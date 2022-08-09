@@ -85,6 +85,7 @@
     font-size: 18px;
     font-weight: 500;
     color: #D6420B;
+    text-shadow: 0px 2px 10px #827c7c;
     line-height: 1em;
     padding-top: 20px;
 }
@@ -176,6 +177,10 @@
 
 }
 
+.read-or-hide{
+    text-shadow: 0px 2px 10px #827c7c;
+
+}
 
 
 @media screen and (width: 280px) {
