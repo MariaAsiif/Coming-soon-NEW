@@ -111,6 +111,11 @@
     font-weight: bold;
 }
 
+.date_small{
+    font-size: 12px !important;
+}
+
+
 .info_text {
     color: black;
     font-size: 14px;
