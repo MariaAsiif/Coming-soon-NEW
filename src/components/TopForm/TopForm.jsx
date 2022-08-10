@@ -3,8 +3,9 @@ import uk from "../../assets/images/u_k.png"
 import ReactFlagsSelect from 'react-flags-select';
 import './topform.css'
 import axios from 'axios';
-import Input from 'react-phone-number-input/input'
-
+// import Input from 'react-phone-number-input/input'
+import 'react-phone-input-2/lib/style.css'
+import PhoneInput from 'react-phone-input-2'
 
 const TopForm = () => {
 
@@ -128,16 +129,12 @@ const TopForm = () => {
 
         })();
     }, [])
-    const [num, setnum] = useState("")
+
     return (
         <section className='row mb-1'>
             <div className="col-12">
-                <Input
-                    country="GB"
-                    international
-                    withCountryCallingCode
-                    value={num}
-                    onChange={(v) => setnum(v)} />
+
+
                 <div className='text-center mt-5 relative form_input '>
                     {activeField === "firstname" ?
                         (
@@ -172,15 +169,29 @@ const TopForm = () => {
                         (
                             <>
 
-                                <div className='flex justify-end form-field'>
+                                <div className=' flex justify-end form-field'>
                                     {/* <input name='mobile' value={mobileno.value} onChange={handleChangeMobile} type="text " className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Mobile?" /> */}
-                                    <Input
+                                    <div className='w-4/5'>
+                                        <PhoneInput
+                                            country="us"
+
+                                            containerClass="flex items-center h-full "
+                                            inputClass="phone_custom_input"
+                                            dropdownClass={"custom-dropdown"}
+                                            enableSearch
+                                            disableSearchIcon
+                                            countryCodeEditable={false}
+                                            value={mobileno.value}
+                                            onChange={handleChangeMobile} />
+                                    </div>
+
+                                    {/* <Input
                                         className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Mobile?"
                                         country={select}
                                         international
                                         withCountryCallingCode
                                         value={mobileno.value}
-                                        onChange={handleChangeMobile} />
+                                        onChange={handleChangeMobile} /> */}
                                     <button onClick={goToMobileField} className='bg-light-red border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium'>Enter</button>
                                 </div>
                             </>

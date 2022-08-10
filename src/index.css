@@ -23,9 +23,7 @@
 }
 
 
-COUNT DOWN CSS
-
-.countdown {
+COUNT DOWN CSS .countdown {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -183,11 +181,27 @@ video {
   margin: 0 auto;
 }
 
-.desk_top{
+.desk_top {
   display: block;
 }
-.mobile{
+
+.mobile {
   display: none;
+}
+
+
+/* PhoneInput 3rd part pkg customm css */
+.phone_custom_input {
+  border: none !important;
+  width: 100% !important;
+}
+
+.custom-dropdown {
+  margin-top: 3px !important;
+}
+
+.custom-dropdown li.country {
+  text-align: left;
 }
 
 
@@ -207,19 +221,20 @@ video {
 /*  */
 
 
-@media screen and (max-width:600px){
+@media screen and (max-width:600px) {
 
   .overlay {
     height: 100%;
   }
 
-  .desk_top{
+  .desk_top {
     display: none;
   }
-  .mobile{
+
+  .mobile {
     display: flex;
   }
 
- 
-  
+
+
 }
