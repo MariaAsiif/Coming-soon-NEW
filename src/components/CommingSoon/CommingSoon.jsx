@@ -2,7 +2,7 @@ import React from 'react'
 import comming_soonvideo from "../../assets/videos/comming-soon.mp4"
 import Countdown from '../CountDownTimer/CountDownTimer'
 import TopForm from '../TopForm/TopForm'
-import sabadelLogo from "../../assets/images/sabadell.png"
+import sabadelLogo from "../../assets/images/sabadel.png"
 import worldBankLogo from "../../assets/images/world.png"
 // import MobileCountdown from '../MobileCountDownTimer/CountDownTimer'
 import ReadMore from '../readmore/readmore'
@@ -87,7 +87,7 @@ const CommingSoon = () => {
                     <div className="bottom_block flex justify-between item-center relative mt-5 ">
                         <div className="bottom_block_left">
                             <div className="logo_first text-center text-1xl text-red-600 font-samibold">
-                                <img className=' w-[140px]' src={sabadelLogo} alt="sabadel" />
+                                <img className=' w-[130px]' src={sabadelLogo} alt="sabadel" />
                                 <span  >sponser</span>
 
                             </div>
