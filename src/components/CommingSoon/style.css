@@ -111,11 +111,6 @@
     font-weight: bold;
 }
 
-.date_small{
-    font-size: 12px !important;
-}
-
-
 .info_text {
     color: black;
     font-size: 14px;
@@ -123,6 +118,11 @@
     margin: auto;
 
 }
+
+.date_small{
+    font-size: 12px !important;
+}
+
 
 .wrappers {
     border: 1pt solid;

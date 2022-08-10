@@ -60,7 +60,7 @@ const CommingSoon = () => {
                                 <br />
                                 <span className='flex flex-col mt-3'></span>
                                 Dr. De Mandeville.<br />
-                                <small className='date_small'>Circa August</small> 1, 2022
+                                <small className="date_small">Circa August</small> 1, 2022
                             </span>
 
                         </p>

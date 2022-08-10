@@ -8,7 +8,7 @@ const ReadMore = ({ children }) => {
     };
     return (
       <p className="">
-        {isReadMore ? text.slice(0, 415) : text}
+        {isReadMore ? text.slice(0, 415) : text}.
         <button onClick={toggleReadMore} className="read-or-hide text-red-600 pl-2">
           {isReadMore ? "Read More" : "Show Less"}
         </button>
