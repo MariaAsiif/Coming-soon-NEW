@@ -15,6 +15,7 @@ const TopForm = () => {
                     <ReactFlagsSelect
                         selected={select}
                         onSelect={onSelect}
+                        searchable={true}
                         showSelectedLabel={false}
                         showOptionLabel={false}
                     />
