@@ -79,6 +79,7 @@
     color: black;
     line-height: 1em;
     padding-top: 10px;
+    padding-bottom:10px ;
 }
 
 .text h5 {
@@ -98,8 +99,16 @@
     padding: 20px 0px;
     text-align: justify;
     align-items: center;
+    
     font-weight: 500;
     max-width: 500px !important;
+}
+
+.text .truth_block{
+    text-align: center;
+    display: block;
+    font-size: 23px;
+    font-weight: bold;
 }
 
 .info_text {
