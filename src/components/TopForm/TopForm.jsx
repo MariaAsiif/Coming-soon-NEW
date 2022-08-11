@@ -14,6 +14,7 @@ const TopForm = () => {
     const [email, setemail] = useState({ femail: "email", value: "", isempty: true })
     const [mobileno, setmobileno] = useState({ fmobile: "mobile", value: "", isempty: true })
     const [activeField, setactiveField] = useState("firstname")
+    const [countryCode, setCountryCode] = useState("")
     const [errors, seterrors] = useState({
         nameError: null,
         emailError: null,
@@ -123,6 +124,7 @@ const TopForm = () => {
         (async () => {
             const response = await axios('https://api.ipregistry.co/?key=m7irmmf8ey12rx7o')
             const currentCountryCode = response.data.location.country.code
+            setCountryCode(currentCountryCode.toLowerCase())
             console.log(currentCountryCode);
             setSelect(currentCountryCode)
 
@@ -148,7 +150,7 @@ const TopForm = () => {
                                 />
                                 <div className='flex justify-end form-field'>
                                     <input name='firstname' value={firstname.value} onChange={handleChangeName} type="text " className=" focus:outline-none border-0  w-[64%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Name?" />
-                                    <button onClick={goToNameField} className='bg-light-red border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium'>Enter</button>
+                                    <button onClick={goToNameField} className={`${firstname.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                 </div>
                             </>
                         ) : null}
@@ -160,7 +162,7 @@ const TopForm = () => {
 
                                 <div className='flex justify-end form-field'>
                                     <input name='email' value={email.value} onChange={handleChangeEmail} type="email " className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Email?" />
-                                    <button onClick={goToEmailField} className='bg-light-red border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium'>Enter</button>
+                                    <button onClick={goToEmailField} className={`${!errors.emailError && email.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                 </div>
                             </>
                         ) : null}
@@ -173,8 +175,7 @@ const TopForm = () => {
                                     {/* <input name='mobile' value={mobileno.value} onChange={handleChangeMobile} type="text " className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Mobile?" /> */}
                                     <div className='w-4/5'>
                                         <PhoneInput
-                                            country="us"
-
+                                            country={countryCode}
                                             containerClass="flex items-center h-full "
                                             inputClass="phone_custom_input"
                                             dropdownClass={"custom-dropdown"}
@@ -192,7 +193,9 @@ const TopForm = () => {
                                         withCountryCallingCode
                                         value={mobileno.value}
                                         onChange={handleChangeMobile} /> */}
-                                    <button onClick={goToMobileField} className='bg-light-red border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium'>Enter</button>
+                                    <button onClick={goToMobileField}
+                                        className={`${!errors.mobileError && mobileno.value !== "" ? `bg-green-600` : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>
+                                        Enter</button>
                                 </div>
                             </>
                         ) : null}
