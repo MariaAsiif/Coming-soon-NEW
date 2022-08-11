@@ -54,6 +54,20 @@ const CommingSoon = () => {
                                 in this area in their quest to save lives and heal families devastated by the Hunan health consequences
                                 and mental health issues exacerbated by this recent pandemic.
                             </ReadMore>
+                            <p>
+                                The Cannabis sativa cultivar plant-based Cannabidiol therapeutic product's goods and services, will be readily available on the HPO Rx platform later this year, listed and available from a wide array of commercial sources, including a plethora of small, and medium size laboratories, license private labs and Suppliers, supplementing alternative Cannabidiol treatments available through national health Systems of sovereign government's purchase through and from licensed International pharmaceutical enterprises, not only targeted at bolstering the immune system protection against SARS-CoV-2 (COVID-19), but an expanding list of other medical conditions where this treatment has been shown to be broadly effective.
+
+                                The Cannabidiol treatments available on the HPO Rx platform, will focus specifically on medical patients seeking a positive outcome for their medical condition.
+
+                                The Cannabis sativa cultivar Cannabidiol they chose to use as the basis of their specific medical condition and treatment regime, especially treatment designed to protect their autoimmune system from the ravages of pathogen like SARS-CoV-2 (COVID-19), now rampant on our planet due to, some suspect, climate change and human impact effects on our climate.
+
+                                Each patient must determine if the Cannabis sativa cultivar of their choice in use results in a positive clinical outcome in the treatment of their specific medical ailment and condition using cultivated wellness natural medical products derived from a Cannabis sativa cultivar, Rx products or services from which they derive a positive or compounding biological effect as patients in use of a Cannabidiol sourced from Cannabis sativa cultivars.
+
+                                The aforementioned discovery via truth through science has shown promising in Academic science peer reviews, you will discover by a plain language search on the topic across the Internet,  and continues to be examined by clinical organizations all over the world.
+
+                                The moment, The World Health Organization (WHO), and Government agencies, the Centers for Disease Control (CDC) and the European Center for Disease Prevention and Control releases further information in this area in their quest to save lives and heal families devastated by the Hunan health consequences and mental health issues exacerbated by this recent pandemic, the consequences of which has been the Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) and influenza A virus (IAV) represent two highly transmissible airborne pathogens with pandemic capabilities.
+
+                            </p>
 
                             <p className='abstrct_text'>
                                 We are the human stewards of this planet and each other, either we’re all safe or no one is safe. Please join us by registering for our medical alert below.
