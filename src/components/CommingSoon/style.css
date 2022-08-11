@@ -55,8 +55,9 @@
 }
 
 .text h2 {
-    font-size: 6em;
+    font-size: 50px;
     font-weight: 600;
+    font-family: Poppins;
     letter-spacing: 20px;
     color: black;
     text-shadow: 0px 2px 10px #827c7c;
@@ -65,7 +66,8 @@
 }
 
 .text h3 {
-    font-size: 4em;
+    font-size: 36px;
+    font-family: Poppins;
     font-weight: 700;
     color: #D6420B;
     text-shadow: 0px 2px 5px #555555;
@@ -74,8 +76,9 @@
 }
 
 .text h4 {
-    font-size: 1.3em;
+    font-size: 14px;
     font-weight: 600;
+    font-family: Poppins;
     color: black;
     line-height: 1em;
     padding-top: 10px;
@@ -83,8 +86,9 @@
 }
 
 .text h5 {
-    font-size: 18px;
+    font-size: 13.5px;
     font-weight: 500;
+    font-family: Poppins;
     color: #D6420B;
     text-shadow: 0px 2px 10px #827c7c;
     line-height: 1em;
@@ -95,10 +99,12 @@
     /* padding: 0px 60px; */
     margin: auto;
     font-size: 1em;
+    font-family: Poppins;
+
     color: black;
     padding: 20px 0px;
-    text-align: left;
-    align-items: left;
+    text-align: justify;
+    align-items: center;
 
     font-weight: 500;
     max-width: 500px !important;
@@ -106,20 +112,39 @@
 
 .text .truth_block {
     text-align: center;
-    display: block;
-    font-size: 23px;
-    font-weight: bold;
-    text-shadow: 0px 2px 10px #636bca;
+    font-family: Poppins;
 
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    /* text-shadow: 0px 2px 10px #636bca; */
+    text-shadow: 0px 2px 10px #827c7c;
+
+
+}
+
+.text_link {
+    color: black;
+    font-size: 15px;
+    font-family: Pt serif;
 }
 
 .info_text {
     color: black;
-    font-size: 14px;
+    font-size: 10px;
     width: 75%;
     margin: auto;
 
 }
+
+
+.abstrct_text {
+    color: black;
+    font-size: 10px;
+    font-family: Poppins;
+}
+
 
 .date_small {
     font-size: 12px !important;

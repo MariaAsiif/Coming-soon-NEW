@@ -23,7 +23,7 @@ const CommingSoon = () => {
 
                         <p>
                             <span className='truth_block text-blue-600'>TRUTH THROUGH SCIENCE</span>
-                            <a href="https://www.science.org/doi/10.1126/sciadv.abi6110" target="_blank" rel="noopener noreferrer" className='text-blue-600 mb-1 text-[20px] tracking-[1px]'>
+                            <a href="https://www.science.org/doi/10.1126/sciadv.abi6110" target="_blank" rel="noopener noreferrer" className='text_link  mb-1 text-[20px] tracking-[1px]'>
                                 “The University of Chicago Medical Center (UChicago Medicine) finds that Cannabidiol inhibits SARS-CoV-2
                                 replication through induction of the host ER stress and innate immune responses”.
                             </a>
@@ -55,13 +55,13 @@ const CommingSoon = () => {
                                 and mental health issues exacerbated by this recent pandemic.
                             </ReadMore>
 
-                            <span>
+                            <p className='abstrct_text'>
                                 We are the human stewards of this planet and each other, either we’re all safe or no one is safe. Please join us by registering for our medical alert below.
                                 <br />
                                 <span className='flex flex-col mt-3'></span>
                                 Dr. De Mandeville.<br />
                                 <small className="date_small">Circa August</small> 1, 2022
-                            </span>
+                            </p>
 
                         </p>
 
