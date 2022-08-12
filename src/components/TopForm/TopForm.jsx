@@ -6,8 +6,10 @@ import axios from 'axios';
 // import Input from 'react-phone-number-input/input'
 import 'react-phone-input-2/lib/style.css'
 import PhoneInput from 'react-phone-input-2'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const TopForm = () => {
+const TopForm = (props) => {
 
     const [select, setSelect] = useState("SE");
     const [firstname, setfirstname] = useState({ fname: "firstname", value: "", isempty: true })
@@ -103,7 +105,9 @@ const TopForm = () => {
         }
     }
 
-    const goToMobileField = () => {
+    const goToMobileField = async () => {
+
+
         if (mobileno.value === "") {
             seterrors((preverrors) => ({
                 ...preverrors,
@@ -116,27 +120,62 @@ const TopForm = () => {
                 mobileError: null,
                 emailError: null,
             })
-            console.log("api will run");
+
+            try {
+                const response = await axios.post("http://localhost:5873/users/signup",
+                    {
+                        full_name: firstname.value,
+                        email: email.value,
+                        userName: firstname.value,
+                        password: "test",
+                        platform: "email",
+                        role: "subscriber",
+                        location: {
+                            type: "Point",
+                            coordinates: [
+                                0,
+                                0
+                            ]
+                        },
+                        phoneNumber: mobileno.value
+                    })
+                console.log("response", response);
+                if (response.data.status === "Fail") {
+                    toast.error(response.data.message);
+                } else {
+                    toast.success(response.data.message);
+                }
+
+
+            } catch (error) {
+                console.log("api will error", error);
+            }
         }
     }
 
     useEffect(() => {
-        (async () => {
-            const response = await axios('https://api.ipregistry.co/?key=m7irmmf8ey12rx7o')
-            const currentCountryCode = response.data.location.country.code
-            setCountryCode(currentCountryCode.toLowerCase())
-            console.log(currentCountryCode);
-            setSelect(currentCountryCode)
 
+        setCountryCode(props.countryCode.toLowerCase())
 
-        })();
-    }, [])
+        setSelect(props.countryCode)
+
+    }, [props.countryCode])
 
     return (
         <section className='row mb-1'>
             <div className="col-12">
 
-
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
                 <div className='text-center mt-5 relative form_input '>
                     {activeField === "firstname" ?
                         (

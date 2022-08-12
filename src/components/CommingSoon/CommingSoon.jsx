@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import comming_soonvideo from "../../assets/videos/comming-soon.mp4"
 import Countdown from '../CountDownTimer/CountDownTimer'
 import TopForm from '../TopForm/TopForm'
 import sabadelLogo from "../../assets/images/sabadel.png"
 import worldBankLogo from "../../assets/images/world.png"
-// import MobileCountdown from '../MobileCountDownTimer/CountDownTimer'
 import ReadMore from '../readmore/readmore'
+import { Translator, Translate } from 'react-auto-translate';
 import './style.css'
+import axios from 'axios';
 const CommingSoon = () => {
+    const [countryCode, setcountryCode] = useState("SE")
+    useEffect(() => {
+        (async () => {
+            const response = await axios('https://api.ipregistry.co/?key=m7irmmf8ey12rx7o')
+            const currentCountryCode = response.data.location.country.code
+            setcountryCode(currentCountryCode)
+        })();
+    }, [])
+
     return (
         <>
             <section className="showcase">
@@ -29,7 +39,6 @@ const CommingSoon = () => {
                             </a>
                             <br />
                             <ReadMore>
-
                                 The University Of Chicago Medical Center (UChicago Medicine)
                                 conducted the study of a similar species origins in the Cannabis sativa plant which
                                 form the basis of therapeutic organic cultivars usage by patients who suffered from “severe acute respiratory syndrome"
@@ -54,6 +63,11 @@ const CommingSoon = () => {
                                 in this area in their quest to save lives and heal families devastated by the Hunan health consequences
                                 and mental health issues exacerbated by this recent pandemic.
                             </ReadMore>
+                            <Translator from='en' to='es' googleApiKey='API_KEY'   >
+
+                                <h1><Translate>Welcome!</Translate></h1>
+
+                            </Translator>
                             <p className='abstrct_text'>
                                 We are the human stewards of this planet and each other, either we’re all safe or no one is safe. Please join us by registering for our medical alert below.
                                 <br />
@@ -69,7 +83,7 @@ const CommingSoon = () => {
                         </div>
 
                         <div className="form_data">
-                            <TopForm />
+                            <TopForm countryCode={countryCode} />
                         </div>
 
                         <div className="info_text">
