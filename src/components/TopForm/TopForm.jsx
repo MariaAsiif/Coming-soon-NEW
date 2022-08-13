@@ -13,12 +13,16 @@ const TopForm = (props) => {
 
     const [select, setSelect] = useState("SE");
     const [firstname, setfirstname] = useState({ fname: "firstname", value: "", isempty: true })
+    const [familyName, setFamilyName] = useState({ fname: "familyname", value: "", isempty: true })
+    const [secondFamilyName, setSecondFamilyName] = useState({ fname: "secondfamilyname", value: "", isempty: true })
     const [email, setemail] = useState({ femail: "email", value: "", isempty: true })
     const [mobileno, setmobileno] = useState({ fmobile: "mobile", value: "", isempty: true })
     const [activeField, setactiveField] = useState("firstname")
     const [countryCode, setCountryCode] = useState("")
     const [errors, seterrors] = useState({
         nameError: null,
+        familyNameError: null,
+        secondFamilyNameError: null,
         emailError: null,
         mobileError: null,
     })
@@ -36,6 +40,24 @@ const TopForm = (props) => {
             value
         }))
     }
+    const handleChangeFamilyName = (e) => {
+        let { value } = e.target
+        value = value.toUpperCase().replace(/[^a-z ]/gi, '')
+        setFamilyName((prevname) => ({
+            ...prevname,
+            value
+        }))
+    }
+    const handleChangeSecondFamilyName = (e) => {
+        let { value } = e.target
+        value = value.toUpperCase().replace(/[^a-z ]/gi, '')
+        setSecondFamilyName((prevname) => ({
+            ...prevname,
+            value
+        }))
+    }
+
+
     const handleChangeEmail = (e) => {
         let { value } = e.target
         // if (value.includes(" ")) {
@@ -62,6 +84,8 @@ const TopForm = (props) => {
             seterrors({
                 nameError: (<div className='text-red-600'>Name is required</div>),
                 mobileError: null,
+                familyNameError: null,
+                secondFamilyNameError: null,
                 emailError: null,
             })
         }
@@ -70,9 +94,49 @@ const TopForm = (props) => {
                 nameError: null,
                 mobileError: null,
                 emailError: null,
+                familyNameError: null,
+                secondFamilyNameError: null,
+            })
+            setactiveField("familyname")
+        }
+    }
+
+
+    const goToFamilyField = () => {
+        debugger
+
+        if (familyName.value === "") {
+            seterrors({
+                familyNameError: (<div className='text-red-600'>Family Name is required</div>),
+                mobileError: null,
+                emailError: null,
+                // familyNameError: null,
+                secondFamilyNameError: null,
+            })
+        }
+        else {
+            seterrors({
+                nameError: null,
+                mobileError: null,
+                emailError: null,
+                familyNameError: null,
+                secondFamilyNameError: null,
+            })
+            setactiveField("secondfamilyname")
+        }
+    }
+    const goToSecondFamilyField = () => {
+        debugger
+       
+            seterrors({
+                nameError: null,
+                mobileError: null,
+                emailError: null,
+                familyNameError: null,
+                secondFamilyNameError: null,
             })
             setactiveField("email")
-        }
+        
     }
 
     const goToEmailField = () => {
@@ -194,13 +258,30 @@ const TopForm = (props) => {
                             </>
                         ) : null}
 
+                    {activeField === "familyname" &&
+                        (
+                            <>
+                                <input name='familyname' value={familyName.value} onChange={handleChangeFamilyName} type="text " className=" focus:outline-none border-0  w-[80%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Family Name?" />
+                                <button onClick={goToFamilyField} className={`${familyName.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
+                            </>
+                        )
+                    }
+
+                    {activeField === "secondfamilyname" &&
+                        (
+                            <>
+                                <input name='secondfamilyname' value={secondFamilyName.value} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-0  w-[80%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Additional Family Names (Optional)?" />
+                                <button onClick={goToSecondFamilyField} className={`${secondFamilyName.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
+                            </>
+                        )
+                    }
 
                     {activeField === "email" ?
                         (
                             <>
 
                                 <div className='flex justify-end form-field'>
-                                    <input name='email' value={email.value} onChange={handleChangeEmail} type="email " className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Email?" />
+                                    <input name='email' value={email.value} onChange={handleChangeEmail} type="email " className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Email Address" />
                                     <button onClick={goToEmailField} className={`${!errors.emailError && email.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                 </div>
                             </>
@@ -243,6 +324,9 @@ const TopForm = (props) => {
 
 
                 </div>
+                {errors.nameError}
+                {errors.familyNameError}
+                {errors.secondFamilyNameError}
                 {errors.nameError}
                 {errors.emailError}
                 {errors.mobileError}
