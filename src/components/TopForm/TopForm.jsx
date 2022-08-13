@@ -127,16 +127,16 @@ const TopForm = (props) => {
     }
     const goToSecondFamilyField = () => {
         debugger
-       
-            seterrors({
-                nameError: null,
-                mobileError: null,
-                emailError: null,
-                familyNameError: null,
-                secondFamilyNameError: null,
-            })
-            setactiveField("email")
-        
+
+        seterrors({
+            nameError: null,
+            mobileError: null,
+            emailError: null,
+            familyNameError: null,
+            secondFamilyNameError: null,
+        })
+        setactiveField("email")
+
     }
 
     const goToEmailField = () => {
@@ -186,12 +186,15 @@ const TopForm = (props) => {
             })
 
             try {
+
+               
+
                 const response = await axios.post("http://localhost:5873/users/signup",
                     {
                         first_name: firstname.value,
-                        first_family_name : familyName.value,
-                        second_family_name : secondFamilyName.value,
-                        third_family_name : "laherasif",
+                        first_family_name: familyName.value,
+                        second_family_name: secondFamilyName.value,
+                        third_family_name: "laherasif",
                         email: email.value,
                         userName: firstname.value,
                         password: "test",
@@ -205,8 +208,7 @@ const TopForm = (props) => {
                             ]
                         },
                         phoneNumber: mobileno.value
-                    })
-                console.log("response", response);
+                    } )
                 if (response.data.status === "Fail") {
                     toast.error(response.data.message);
                 } else {
