@@ -188,7 +188,10 @@ const TopForm = (props) => {
             try {
                 const response = await axios.post("http://localhost:5873/users/signup",
                     {
-                        full_name: firstname.value,
+                        first_name: firstname.value,
+                        first_family_name : familyName.value,
+                        second_family_name : secondFamilyName.value,
+                        third_family_name : "laherasif",
                         email: email.value,
                         userName: firstname.value,
                         password: "test",
