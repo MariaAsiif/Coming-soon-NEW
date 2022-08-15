@@ -8,6 +8,7 @@ import 'react-phone-input-2/lib/style.css'
 import PhoneInput from 'react-phone-input-2'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PopUp from '../popup/popup';
 
 const TopForm = (props) => {
 
@@ -19,6 +20,9 @@ const TopForm = (props) => {
     const [mobileno, setmobileno] = useState({ fmobile: "mobile", value: "", isempty: true })
     const [activeField, setactiveField] = useState("firstname")
     const [countryCode, setCountryCode] = useState("")
+    const [name, setName] = useState({})
+    const [isSuccess, seIsSuccess] = useState(false)
+    const [error , setErrors] = useState(false)
     const [errors, seterrors] = useState({
         nameError: null,
         familyNameError: null,
@@ -64,7 +68,7 @@ const TopForm = (props) => {
         const validate = value.trim().toLowerCase();
         // Test if email is valid
         const isValidEmail = re.test(validate);
-  console.log("isv" , isValidEmail)
+        console.log("isv", isValidEmail)
         if (isValidEmail === false) {
             seterrors({
                 emailError: (<div className='text-red-600'>Email is invalid</div>),
@@ -228,8 +232,40 @@ const TopForm = (props) => {
                     })
                 if (response.data.status === "Fail") {
                     toast.error(response.data.message);
+                    setErrors(true)
                 } else {
+
                     toast.success(response.data.message);
+                    seIsSuccess(true)
+                    setName({ fname: firstname.value, fmname: familyName.value, smname: secondFamilyName.value })
+                    setTimeout(() => {
+
+                        setfirstname((prevname) => ({
+                            ...prevname,
+                            value: ""
+                        }))
+                        setFamilyName((prevname) => ({
+                            ...prevname,
+                            value: ""
+                        }))
+                        setSecondFamilyName((prevname) => ({
+                            ...prevname,
+                            value: ""
+                        }))
+                        setemail((prevname) => ({
+                            ...prevname,
+                            value: ""
+                        }))
+                        setmobileno((prevname) => ({
+                            ...prevname,
+                            value: ""
+                        }))
+                        setactiveField("firstname")
+                        setErrors(false)
+
+                    }, 1000);
+
+
                 }
 
 
@@ -353,6 +389,14 @@ const TopForm = (props) => {
 
                         }
                     </div>
+
+                    <div className='skip_field'>
+                        {activeField === "mobile" && error === true &&
+
+                            <span className='hover:underline' onClick={() => setactiveField("email")}>back</span>
+
+                        }
+                    </div>
                 </div>
                 {errors.nameError}
                 {errors.familyNameError}
@@ -361,6 +405,8 @@ const TopForm = (props) => {
                 {errors.mobileError}
 
             </div>
+
+            {isSuccess && <PopUp permition={isSuccess} Toggle={(value) => seIsSuccess(value)} Firstname={name} />}
 
         </section>
     )
