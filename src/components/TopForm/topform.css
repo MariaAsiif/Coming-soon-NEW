@@ -29,9 +29,21 @@
     max-height: 150px;
 }
 .form_input{
-    max-width: 70% !important;
+    max-width: 85% !important;
     margin: auto !important;
     background-color: white !important;
+}
+
+.skip_field{
+    padding-top: 7px;
+    
+}
+
+.skip_field span{
+    font-size: 18px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 

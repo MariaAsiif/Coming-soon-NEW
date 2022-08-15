@@ -126,8 +126,8 @@
 
 .text_link {
     color: black;
-    font-size: 15px;
-    font-family: Pt serif;
+    font-size: 18px;
+    font-family: Poppins;
     font-weight: bold;
 
 }
@@ -221,7 +221,7 @@
 }
 
 .read-or-hide {
-    text-shadow: 30px 50px 50px #827c7c;
+    text-shadow: 0px 3px 10px gray;
 
 }
 

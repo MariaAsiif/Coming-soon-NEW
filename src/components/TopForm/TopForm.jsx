@@ -187,7 +187,7 @@ const TopForm = (props) => {
 
             try {
 
-               
+
 
                 const response = await axios.post("http://localhost:5873/users/signup",
                     {
@@ -208,7 +208,7 @@ const TopForm = (props) => {
                             ]
                         },
                         phoneNumber: mobileno.value
-                    } )
+                    })
                 if (response.data.status === "Fail") {
                     toast.error(response.data.message);
                 } else {
@@ -245,89 +245,97 @@ const TopForm = (props) => {
                     draggable
                     pauseOnHover
                 />
-                <div className='text-center mt-5 relative form_input '>
-                    {activeField === "firstname" ?
-                        (
-                            <>
-                                <ReactFlagsSelect
-                                    selected={select}
-                                    onSelect={onSelect}
-                                    searchable={true}
-                                    showSelectedLabel={false}
-                                    showOptionLabel={false}
-                                />
-                                <div className='flex justify-end form-field'>
-                                    <input name='firstname' value={firstname.value} onChange={handleChangeName} type="text " className=" focus:outline-none border-0  w-[64%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Name?" />
-                                    <button onClick={goToNameField} className={`${firstname.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
-                                </div>
-                            </>
-                        ) : null}
-
-                    {activeField === "familyname" &&
-                        (
-                            <>
-                                <input name='familyname' value={familyName.value} onChange={handleChangeFamilyName} type="text " className=" focus:outline-none border-0  w-[80%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Family Name?" />
-                                <button onClick={goToFamilyField} className={`${familyName.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
-                            </>
-                        )
-                    }
-
-                    {activeField === "secondfamilyname" &&
-                        (
-                            <>
-                                <input name='secondfamilyname' value={secondFamilyName.value} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-0  w-[80%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Additional Family Names (Optional)?" />
-                                <button onClick={goToSecondFamilyField} className={`${secondFamilyName.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
-                            </>
-                        )
-                    }
-
-                    {activeField === "email" ?
-                        (
-                            <>
-
-                                <div className='flex justify-end form-field'>
-                                    <input name='email' value={email.value} onChange={handleChangeEmail} type="email " className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Email Address" />
-                                    <button onClick={goToEmailField} className={`${!errors.emailError && email.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
-                                </div>
-                            </>
-                        ) : null}
-
-                    {activeField === "mobile" ?
-                        (
-                            <>
-
-                                <div className=' flex justify-end form-field'>
-                                    {/* <input name='mobile' value={mobileno.value} onChange={handleChangeMobile} type="text " className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Mobile?" /> */}
-                                    <div className='w-4/5'>
-                                        <PhoneInput
-                                            country={countryCode}
-                                            containerClass="flex items-center h-full "
-                                            inputClass="phone_custom_input"
-                                            dropdownClass={"custom-dropdown"}
-                                            enableSearch
-                                            disableSearchIcon
-                                            countryCodeEditable={false}
-                                            value={mobileno.value}
-                                            onChange={handleChangeMobile} />
+                <div className="flex">
+                    <div className='text-center mt-5 relative form_input w-full'>
+                        {activeField === "firstname" ?
+                            (
+                                <>
+                                    <ReactFlagsSelect
+                                        selected={select}
+                                        onSelect={onSelect}
+                                        searchable={true}
+                                        showSelectedLabel={false}
+                                        showOptionLabel={false}
+                                    />
+                                    <div className='flex justify-end form-field'>
+                                        <input name='firstname' value={firstname.value} onChange={handleChangeName} type="text " className=" focus:outline-none border-0  w-[64%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Name?" />
+                                        <button onClick={goToNameField} className={`${firstname.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                     </div>
+                                </>
+                            ) : null}
 
-                                    {/* <Input
+                        {activeField === "familyname" &&
+                            (
+                                <>
+                                    <input name='familyname' value={familyName.value} onChange={handleChangeFamilyName} type="text " className=" focus:outline-none border-0  w-[80%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Family Name?" />
+                                    <button onClick={goToFamilyField} className={`${familyName.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
+                                </>
+                            )
+                        }
+
+                        {activeField === "secondfamilyname" &&
+                            (
+                                <>
+                                    <input name='secondfamilyname' value={secondFamilyName.value} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-0  w-[80%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Additional Family Names (Optional)?" />
+                                    <button onClick={goToSecondFamilyField} className={`${secondFamilyName.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
+                                </>
+                            )
+                        }
+
+                        {activeField === "email" ?
+                            (
+                                <>
+
+                                    <div className='flex justify-end form-field'>
+                                        <input name='email' value={email.value} onChange={handleChangeEmail} type="email " className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Email Address" />
+                                        <button onClick={goToEmailField} className={`${!errors.emailError && email.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
+                                    </div>
+                                </>
+                            ) : null}
+
+                        {activeField === "mobile" ?
+                            (
+                                <>
+
+                                    <div className=' flex justify-end form-field'>
+                                        {/* <input name='mobile' value={mobileno.value} onChange={handleChangeMobile} type="text " className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Mobile?" /> */}
+                                        <div className='w-4/5'>
+                                            <PhoneInput
+                                                country={countryCode}
+                                                containerClass="flex items-center h-full "
+                                                inputClass="phone_custom_input"
+                                                dropdownClass={"custom-dropdown"}
+                                                enableSearch
+                                                disableSearchIcon
+                                                countryCodeEditable={false}
+                                                value={mobileno.value}
+                                                onChange={handleChangeMobile} />
+                                        </div>
+
+                                        {/* <Input
                                         className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Mobile?"
                                         country={select}
                                         international
                                         withCountryCallingCode
                                         value={mobileno.value}
                                         onChange={handleChangeMobile} /> */}
-                                    <button onClick={goToMobileField}
-                                        className={`${!errors.mobileError && mobileno.value !== "" ? `bg-green-600` : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>
-                                        Enter</button>
-                                </div>
-                            </>
-                        ) : null}
+                                        <button onClick={goToMobileField}
+                                            className={`${!errors.mobileError && mobileno.value !== "" ? `bg-green-600` : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>
+                                            Enter</button>
+                                    </div>
+                                </>
+                            ) : null}
 
 
+                    </div>
 
+                    <div className='skip_field'>
+                        {activeField === "secondfamilyname" &&
 
+                            <span className='text-blue-500 ' onClick={()=> setactiveField("email")}>Or Skip</span>
+
+                        }
+                    </div>
                 </div>
                 {errors.nameError}
                 {errors.familyNameError}
