@@ -1,10 +1,55 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import AuthImage from '../images/auth-image.jpg';
 import AuthDecoration from '../images/auth-decoration.png';
+import axios from "axios"
 
 function Signup() {
+  let navigate = useNavigate();
+  const [formdata, setformdata] = useState({
+    first_name: "",
+    first_family_name: "jamshaid",
+    second_family_name: "jamshaid",
+    third_family_name: "jamshaid",
+    email: "",
+    password: "",
+    phoneNumber: "+923074901291",
+    channel: "sms",
+    role: "superadmin",
+    approved: false,
+    location: {
+      type: "Point",
+      coordinates: [
+        74.28911285869138,
+        31.624888273644956
+      ]
+    }
+  })
+
+  const handleChange = (e) => {
+    let { name, value } = e.target
+    setformdata((prevdata) => ({
+      ...prevdata,
+      [name]: value
+    }))
+  }
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post("http://localhost:5873/users/signup", formdata)
+      console.log("response", response);
+      if (response.data.status === "Success") {
+        console.log("Successs");
+        navigate("/ecommerce/orders", { replace: true });
+
+      }
+
+
+    } catch (error) {
+      console.log("ERROR of Signup", error);
+    }
+
+  }
 
   return (
     <main className="bg-white">
@@ -47,11 +92,11 @@ function Signup() {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-1" htmlFor="email">Email Address <span className="text-rose-500">*</span></label>
-                    <input id="email" className="form-input w-full" type="email" />
+                    <input name='email' value={formdata.email} onChange={handleChange} id="email" className="form-input w-full" type="email" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1" htmlFor="name">Full Name <span className="text-rose-500">*</span></label>
-                    <input id="name" className="form-input w-full" type="text" />
+                    <input name="first_name" value={formdata.first_name} onChange={handleChange} id="name" className="form-input w-full" type="text" />
                   </div>
                   {/* <div>
                     <label className="block text-sm font-medium mb-1" htmlFor="role">Your Role <span className="text-rose-500">*</span></label>
@@ -63,17 +108,17 @@ function Signup() {
                   </div> */}
                   <div>
                     <label className="block text-sm font-medium mb-1" htmlFor="password">Password</label>
-                    <input id="password" className="form-input w-full" type="password" autoComplete="on" />
+                    <input name='password' value={formdata.password} onChange={handleChange} id="password" className="form-input w-full" type="password" autoComplete="on" />
                   </div>
                 </div>
                 <div className="flex items-center justify-between mt-6">
-                  <div className="mr-1">
+                  {/* <div className="mr-1">
                     <label className="flex items-center">
                       <input type="checkbox" className="form-checkbox" />
                       <span className="text-sm ml-2">Email me about product news.</span>
                     </label>
-                  </div>
-                  <button type='button' className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap"  >Sign Up</button>
+                  </div> */}
+                  <button onClick={handleSignup} type='button' className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap"  >Sign Up</button>
                 </div>
               </form>
               {/* Footer */}
