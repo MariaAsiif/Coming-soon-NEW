@@ -51,9 +51,8 @@ function Sidebar({
     <div>
       {/* Sidebar backdrop (mobile only) */}
       <div
-        className={`fixed inset-0 bg-slate-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
-          sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 bg-slate-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
         aria-hidden="true"
       ></div>
 
@@ -61,9 +60,8 @@ function Sidebar({
       <div
         id="sidebar"
         ref={sidebar}
-        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-800 p-4 transition-all duration-200 ease-in-out ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-64'
-        }`}
+        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-800 p-4 transition-all duration-200 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-64'
+          }`}
       >
         {/* Sidebar header */}
         <div className="flex justify-between mb-10 pr-3 sm:px-2">
@@ -125,9 +123,8 @@ function Sidebar({
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          (pathname === '/' || pathname.includes('dashboard')) && 'hover:text-slate-200'
-                        }`}
+                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${(pathname === '/' || pathname.includes('dashboard')) && 'hover:text-slate-200'
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -137,9 +134,8 @@ function Sidebar({
                           <div className="flex items-center">
                             <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
                               <path
-                                className={`fill-current text-slate-400 ${
-                                  (pathname === '/' || pathname.includes('dashboard')) && '!text-indigo-500'
-                                }`}
+                                className={`fill-current text-slate-400 ${(pathname === '/' || pathname.includes('dashboard')) && '!text-indigo-500'
+                                  }`}
                                 d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z"
                               />
                               <path
@@ -171,7 +167,7 @@ function Sidebar({
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/"
+                              to="/dashboard"
                               className={({ isActive }) =>
                                 'block text-slate-400 hover:text-slate-200 transition duration-150 truncate ' + (isActive ? '!text-indigo-500' : '')
                               }
@@ -220,9 +216,8 @@ function Sidebar({
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('ecommerce') && 'hover:text-slate-200'
-                        }`}
+                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('ecommerce') && 'hover:text-slate-200'
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -404,9 +399,8 @@ function Sidebar({
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('community') && 'hover:text-slate-200'
-                        }`}
+                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('community') && 'hover:text-slate-200'
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -558,9 +552,8 @@ function Sidebar({
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('finance') && 'hover:text-slate-200'
-                        }`}
+                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('finance') && 'hover:text-slate-200'
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -645,15 +638,14 @@ function Sidebar({
                 }}
               </SidebarLinkGroup>
               {/* Job Board */}
-              <SidebarLinkGroup activecondition={pathname.includes('job')}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes('job')}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('job') && 'hover:text-slate-200'
-                        }`}
+                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('job') && 'hover:text-slate-200'
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -679,7 +671,7 @@ function Sidebar({
                               Job Board
                             </span>
                           </div>
-                          {/* Icon */}
+                          
                           <div className="flex shrink-0 ml-2">
                             <svg
                               className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`}
@@ -736,17 +728,16 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* Tasks */}
-              <SidebarLinkGroup activecondition={pathname.includes('tasks')}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes('tasks')}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('tasks') && 'hover:text-slate-200'
-                        }`}
+                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('tasks') && 'hover:text-slate-200'
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -769,7 +760,7 @@ function Sidebar({
                               Tasks
                             </span>
                           </div>
-                          {/* Icon */}
+                         
                           <div className="flex shrink-0 ml-2">
                             <svg
                               className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`}
@@ -813,15 +804,14 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* Messages */}
-              <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('messages') && 'bg-slate-900'}`}>
+              {/* <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('messages') && 'bg-slate-900'}`}>
                 <NavLink
                   end
                   to="/messages"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes('messages') && 'hover:text-slate-200'
-                  }`}
+                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('messages') && 'hover:text-slate-200'
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="grow flex items-center">
@@ -839,21 +829,20 @@ function Sidebar({
                         Messages
                       </span>
                     </div>
-                    {/* Badge */}
+                    
                     <div className="flex flex-shrink-0 ml-2">
                       <span className="inline-flex items-center justify-center h-5 text-xs font-medium text-white bg-indigo-500 px-2 rounded">4</span>
                     </div>
                   </div>
                 </NavLink>
-              </li>
+              </li> */}
               {/* Inbox */}
-              <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('inbox') && 'bg-slate-900'}`}>
+              {/* <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('inbox') && 'bg-slate-900'}`}>
                 <NavLink
                   end
                   to="/inbox"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes('inbox') && 'hover:text-slate-200'
-                  }`}
+                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('inbox') && 'hover:text-slate-200'
+                    }`}
                 >
                   <div className="flex items-center">
                     <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
@@ -869,15 +858,14 @@ function Sidebar({
                     <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Inbox</span>
                   </div>
                 </NavLink>
-              </li>
+              </li> */}
               {/* Calendar */}
-              <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('calendar') && 'bg-slate-900'}`}>
+              {/* <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('calendar') && 'bg-slate-900'}`}>
                 <NavLink
                   end
                   to="/calendar"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes('calendar') && 'hover:text-slate-200'
-                  }`}
+                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('calendar') && 'hover:text-slate-200'
+                    }`}
                 >
                   <div className="flex items-center">
                     <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
@@ -892,15 +880,14 @@ function Sidebar({
                     </span>
                   </div>
                 </NavLink>
-              </li>
+              </li> */}
               {/* Campaigns */}
-              <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('campaigns') && 'bg-slate-900'}`}>
+              {/* <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('campaigns') && 'bg-slate-900'}`}>
                 <NavLink
                   end
                   to="/campaigns"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes('campaigns') && 'hover:text-slate-200'
-                  }`}
+                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('campaigns') && 'hover:text-slate-200'
+                    }`}
                 >
                   <div className="flex items-center">
                     <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
@@ -918,17 +905,13 @@ function Sidebar({
                     </span>
                   </div>
                 </NavLink>
-              </li>
+              </li> */}
               {/* Settings */}
-              <SidebarLinkGroup activecondition={pathname.includes('settings')}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes('settings')}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
-                      <a
-                        href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('settings') && 'hover:text-slate-200'
-                        }`}
+                      <a href="#0"  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('settings') && 'hover:text-slate-200' }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -958,7 +941,7 @@ function Sidebar({
                               Settings
                             </span>
                           </div>
-                          {/* Icon */}
+                          
                           <div className="flex shrink-0 ml-2">
                             <svg
                               className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`}
@@ -1054,17 +1037,16 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* Utility */}
-              <SidebarLinkGroup activecondition={pathname.includes('utility')}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes('utility')}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('utility') && 'hover:text-slate-200'
-                        }`}
+                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('utility') && 'hover:text-slate-200'
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -1102,7 +1084,7 @@ function Sidebar({
                               Utility
                             </span>
                           </div>
-                          {/* Icon */}
+                          
                           <div className="flex shrink-0 ml-2">
                             <svg
                               className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`}
@@ -1198,7 +1180,7 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
             </ul>
           </div>
           {/* More group */}
@@ -1274,7 +1256,7 @@ function Sidebar({
                 }}
               </SidebarLinkGroup>
               {/* Onboarding */}
-              <SidebarLinkGroup>
+              {/* <SidebarLinkGroup>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
@@ -1302,7 +1284,7 @@ function Sidebar({
                               Onboarding
                             </span>
                           </div>
-                          {/* Icon */}
+                         
                           <div className="flex shrink-0 ml-2">
                             <svg
                               className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`}
@@ -1348,17 +1330,16 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* Components */}
-              <SidebarLinkGroup activecondition={pathname.includes('component')}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes('component')}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('component') && 'hover:text-slate-200'
-                        }`}
+                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('component') && 'hover:text-slate-200'
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -1384,7 +1365,7 @@ function Sidebar({
                               Components
                             </span>
                           </div>
-                          {/* Icon */}
+                        
                           <div className="flex shrink-0 ml-2">
                             <svg
                               className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`}
@@ -1571,7 +1552,7 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
             </ul>
           </div>
         </div>
