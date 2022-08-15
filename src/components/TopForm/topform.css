@@ -41,10 +41,13 @@
 
 .skip_field span{
     font-size: 18px;
+    color: #1A0DAB;
     text-align: center;
     font-weight: 600;
     cursor: pointer;
 }
+
+
 
 
 @media screen and (width: 280px) {

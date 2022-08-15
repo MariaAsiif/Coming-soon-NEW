@@ -59,15 +59,32 @@ const TopForm = (props) => {
 
 
     const handleChangeEmail = (e) => {
-        let { value } = e.target
-        // if (value.includes(" ")) {
-        //     value = value + e.target.value.toUpperCase().replace(/[^a-z ]/gi, '');
-        //     //value = e.target.value.toUpperCase().replace(/[^a-z ]/gi, '');
-        // }
-        setemail((prevname) => ({
-            ...prevname,
-            value
-        }))
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const { value } = e.target
+        const validate = value.trim().toLowerCase();
+        // Test if email is valid
+        const isValidEmail = re.test(validate);
+  console.log("isv" , isValidEmail)
+        if (isValidEmail === false) {
+            seterrors({
+                emailError: (<div className='text-red-600'>Email is invalid</div>),
+            })
+            setemail((prevname) => ({
+                ...prevname,
+                value
+            }))
+
+        }
+        else {
+            setemail((prevname) => ({
+                ...prevname,
+                value
+            }))
+
+            seterrors({
+                emailError: null,
+            })
+        }
     }
     const handleChangeMobile = (e) => {
         //  let { value } = e.target
@@ -332,7 +349,7 @@ const TopForm = (props) => {
                     <div className='skip_field'>
                         {activeField === "secondfamilyname" &&
 
-                            <span className='text-blue-500 ' onClick={()=> setactiveField("email")}>Or Skip</span>
+                            <span className='hover:underline' onClick={() => setactiveField("email")}>or skip</span>
 
                         }
                     </div>
@@ -340,7 +357,6 @@ const TopForm = (props) => {
                 {errors.nameError}
                 {errors.familyNameError}
                 {errors.secondFamilyNameError}
-                {errors.nameError}
                 {errors.emailError}
                 {errors.mobileError}
 
