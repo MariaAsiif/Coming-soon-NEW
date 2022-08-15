@@ -100,14 +100,14 @@ video {
 }
 
 .content {
-  position: absolute;
+  /* position: absolute;
   width: 100%;
   top: 0;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  padding-bottom: 20px;
+  padding-bottom: 20px; */
   /* color: white; */
 }
 
