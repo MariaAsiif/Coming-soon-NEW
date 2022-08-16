@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
@@ -7,7 +7,7 @@ import DateSelect from '../../components/DateSelect';
 import FilterButton from '../../components/DropdownFilter';
 import CustomersTable from '../../partials/customers/CustomersTable';
 import PaginationClassic from '../../components/PaginationClassic';
-
+import axios from 'axios'
 function Customers() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,17 +17,36 @@ function Customers() {
     setSelectedItems([...selectedItems]);
   };
 
+
+
+  let token = localStorage.getItem('token');
+
+  const config = {
+    headers:{    'Authorization': 'Bearer ' + token}
+
+  };
+
+  useEffect(() => {
+    try {
+      let fectData = async () => {
+        let response = await axios.post('http://localhost:5873/users/listAllUsers', config);
+
+        console.log("res", response)
+      }
+      fectData()
+    }
+    catch (err) {
+      console.log(err);
+    }
+
+  }, [])
+
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="">
 
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+      <div className="relative flex flex-col flex-1">
 
-        {/*  Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
@@ -48,7 +67,7 @@ function Customers() {
 
                 {/* Dropdown */}
                 <DateSelect />
-                
+
                 {/* Filter button */}
                 <FilterButton align="right" />
 
@@ -59,7 +78,7 @@ function Customers() {
                   </svg>
                   <span className="hidden xs:block ml-2">Add Customer</span>
                 </button>
-                
+
               </div>
 
             </div>

@@ -26,7 +26,6 @@ const TopForm = (props) => {
     const [errors, seterrors] = useState({
         nameError: null,
         familyNameError: null,
-        secondFamilyNameError: null,
         emailError: null,
         mobileError: null,
     })
@@ -215,7 +214,7 @@ const TopForm = (props) => {
                         first_name: firstname.value,
                         first_family_name: familyName.value,
                         second_family_name: secondFamilyName.value,
-                        third_family_name: "laherasif",
+                        third_family_name: "test",
                         email: email.value,
                         userName: firstname.value,
                         password: "test",
@@ -236,6 +235,7 @@ const TopForm = (props) => {
                 } else {
 
                     toast.success(response.data.message);
+                    console.log("response", response)
                     seIsSuccess(true)
                     setName({ fname: firstname.value, fmname: familyName.value, smname: secondFamilyName.value })
                     setTimeout(() => {
