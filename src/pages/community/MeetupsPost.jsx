@@ -27,7 +27,7 @@ function MeetupsPost() {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      
+
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
@@ -114,13 +114,13 @@ function MeetupsPost() {
                   <h2 className="text-xl leading-snug text-slate-800 font-bold mb-2">Photos (3)</h2>
                   <div className="grid grid-cols-3 gap-4 my-6">
                     <a className="block" href="#0">
-                      <img className="w-full rounded-sm" src={MeetupPhoto01} width="203" height="152" alt="Meetup photo 01" />
+                      <img className="w-full rounded-sm" src={MeetupPhoto01} width="203" height="152" alt="Meetup_photo 01" />
                     </a>
                     <a className="block" href="#0">
-                      <img className="w-full rounded-sm" src={MeetupPhoto02} width="203" height="152" alt="Meetup photo 02" />
+                      <img className="w-full rounded-sm" src={MeetupPhoto02} width="203" height="152" alt="Meetup_photo 02" />
                     </a>
                     <a className="block" href="#0">
-                      <img className="w-full rounded-sm" src={MeetupPhoto03} width="203" height="152" alt="Meetup photo 03" />
+                      <img className="w-full rounded-sm" src={MeetupPhoto03} width="203" height="152" alt="Meetup_photo 03" />
                     </a>
                   </div>
                 </div>

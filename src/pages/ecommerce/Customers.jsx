@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import Sidebar from '../../partials/Sidebar';
-import Header from '../../partials/Header';
 import DeleteButton from '../../partials/actions/DeleteButton';
 import DateSelect from '../../components/DateSelect';
 import FilterButton from '../../components/DropdownFilter';
@@ -10,8 +8,8 @@ import PaginationClassic from '../../components/PaginationClassic';
 import axios from 'axios'
 function Customers() {
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [users, setusers] = useState([]);
 
   const handleSelectedItems = (selectedItems) => {
     setSelectedItems([...selectedItems]);
@@ -21,23 +19,29 @@ function Customers() {
 
   let token = localStorage.getItem('token');
 
-  const config = {
-    headers:{    'Authorization': 'Bearer ' + token}
 
-  };
+
 
   useEffect(() => {
-    try {
-      let fectData = async () => {
-        let response = await axios.post('http://localhost:5873/users/listAllUsers', config);
+    (async () => {
+      try {
+        const config = {
+          headers: { 'Authorization': 'Bearer ' + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhIjp0cnVlLCJuIjoiSmFtc2hhaWQgU2FiaXIiLCJlIjoiamFtc2hhaWRzYWJpcjQxMTk4MEBnbWFpbC5jb20iLCJkIjoiNjJmNGUxMzI1NmYwNmQxMDg4NGY5NDRlIiwicCI6Ii91cGxvYWRzL2RwL2RlZmF1bHQucG5nIiwiciI6Il9hIiwiaWF0IjoxNjYwMjMxNTE1fQ.Q8gTpV9EW5ha1ujb4qLedGV4wQuQTIr12J0vPeLrhn4" }
 
+        };
+        let response = await axios.post('http://localhost:5873/users/listAllUsers', {
+          sortproperty: "full_name",
+          sortorder: 1,
+          offset: 0,
+          limit: 50
+        }, config);
         console.log("res", response)
+        setusers(response.data.data.users)
+      } catch (error) {
+        console.log(error);
       }
-      fectData()
-    }
-    catch (err) {
-      console.log(err);
-    }
+    })();
+
 
   }, [])
 
@@ -84,7 +88,11 @@ function Customers() {
             </div>
 
             {/* Table */}
-            <CustomersTable selectedItems={handleSelectedItems} />
+            <CustomersTable
+              tableRows={users}
+
+              selectedItems={handleSelectedItems}
+            />
 
             {/* Pagination */}
             <div className="mt-8">

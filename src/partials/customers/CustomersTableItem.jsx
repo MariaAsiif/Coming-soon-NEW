@@ -3,7 +3,7 @@ import React from 'react';
 function CustomersTableItem(props) {
   return (
     <tr>
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
         <div className="flex items-center">
           <label className="inline-flex">
             <span className="sr-only">Select</span>
@@ -19,8 +19,8 @@ function CustomersTableItem(props) {
             </svg>
           </button>
         </div>
-      </td>
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+      </td> */}
+      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="flex items-center">
           <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
             <img className="rounded-full" src={props.image} width="40" height="40" alt={props.name} />
@@ -42,7 +42,7 @@ function CustomersTableItem(props) {
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="text-left font-medium text-emerald-500">{props.spent}</div>
-      </td>
+      </td> */}
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="text-center">{props.refunds}</div>
       </td>
