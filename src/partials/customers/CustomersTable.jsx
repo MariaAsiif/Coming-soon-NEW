@@ -79,7 +79,7 @@ function CustomersTable({
   return (
     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
       <header className="px-5 py-4">
-        <h2 className="font-semibold text-slate-800">All Users <span className="text-slate-400 font-medium">248</span></h2>
+        <h2 className="font-semibold text-slate-800">All Users <span className="text-slate-400 font-medium">{list.length}</span></h2>
       </header>
       <div>
 
@@ -109,19 +109,27 @@ function CustomersTable({
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Phone no</div>
                 </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold">Job role</div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold text-left">verificationCode</div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold text-left">Is Verified</div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold">Location</div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold">City</div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold">State</div>
+                </th><th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold">Country</div>
+                </th>
                 {/* <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold">Orders</div>
-                </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Last order</div>
-                </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Total spent</div>
-                </th> */}
-                {/* <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold">Refunds</div>
-                </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <span className="sr-only">Menu</span>
                 </th> */}
               </tr>
@@ -138,7 +146,13 @@ function CustomersTable({
                       name={`${customer.first_name} ${customer.second_family_name} ${customer.third_family_name}`}
                       email={customer.email}
                       phone={customer.phoneNumber}
-                      location={customer.location}
+                      jobrole={customer.role}
+                      verificationCode={customer.verification_code}
+                      isVerified={customer.is_verified}
+                      location={""}
+                      city={customer.city}
+                      state={customer.state}
+                      country={customer.country}
                       orders={customer.orders}
                       lastOrder={customer.lastOrder}
                       spent={customer.spent}

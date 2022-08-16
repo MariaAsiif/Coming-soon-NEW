@@ -34,19 +34,28 @@ function CustomersTableItem(props) {
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="text-left">{props.phone}</div>
       </td>
-      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="text-center">{props.orders}</div>
+      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+        <div className="text-center">{props.jobrole}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="text-left font-medium text-sky-500">{props.lastOrder}</div>
+        <div className="text-center font-medium text-sky-500">{props.verificationCode}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="text-left font-medium text-emerald-500">{props.spent}</div>
-      </td> */}
-      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="text-center">{props.refunds}</div>
+        <div className="text-center font-medium text-emerald-500">{props.isVerified ? "YES" : "NO"}</div>
       </td>
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+        <div className="text-center">{props.location}</div>
+      </td>
+      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+        <div className="text-center">{props.city}</div>
+      </td>
+      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+        <div className="text-center">{props.state}</div>
+      </td>
+      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+        <div className="text-center">{props.country}</div>
+      </td>
+      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
         
         <button className="text-slate-400 hover:text-slate-500 rounded-full">
           <span className="sr-only">Menu</span>
