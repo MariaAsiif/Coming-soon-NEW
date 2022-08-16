@@ -50,7 +50,7 @@ function CustomersTable({
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    setList(customers);
+    setList(tableRows);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableRows]);
 
@@ -79,7 +79,7 @@ function CustomersTable({
   return (
     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
       <header className="px-5 py-4">
-        <h2 className="font-semibold text-slate-800">All Customers <span className="text-slate-400 font-medium">248</span></h2>
+        <h2 className="font-semibold text-slate-800">All Users <span className="text-slate-400 font-medium">248</span></h2>
       </header>
       <div>
 
@@ -99,17 +99,17 @@ function CustomersTable({
                 </th> */}
                 {/* <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                   <span className="sr-only">Favourite</span>
-                </th>
+                </th> */}
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Order</div>
+                  <div className="font-semibold text-left">Name</div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Email</div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Location</div>
+                  <div className="font-semibold text-left">Phone no</div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                {/* <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold">Orders</div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -118,12 +118,12 @@ function CustomersTable({
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Total spent</div>
                 </th> */}
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                {/* <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold">Refunds</div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <span className="sr-only">Menu</span>
-                </th>
+                </th> */}
               </tr>
             </thead>
             {/* Table body */}
@@ -133,10 +133,11 @@ function CustomersTable({
                   return (
                     <Customer
                       key={customer.id}
-                      id={customer.id}
+                      id={customer._id}
                       image={customer.image}
-                      name={customer.name}
+                      name={`${customer.first_name} ${customer.second_family_name} ${customer.third_family_name}`}
                       email={customer.email}
+                      phone={customer.phoneNumber}
                       location={customer.location}
                       orders={customer.orders}
                       lastOrder={customer.lastOrder}

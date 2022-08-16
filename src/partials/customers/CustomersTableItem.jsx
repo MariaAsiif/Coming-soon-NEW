@@ -20,11 +20,11 @@ function CustomersTableItem(props) {
           </button>
         </div>
       </td> */}
-      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="flex items-center">
-          <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
+          {/* <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
             <img className="rounded-full" src={props.image} width="40" height="40" alt={props.name} />
-          </div>
+          </div> */}
           <div className="font-medium text-slate-800">{props.name}</div>
         </div>
       </td>
@@ -32,9 +32,9 @@ function CustomersTableItem(props) {
         <div className="text-left">{props.email}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="text-left">{props.location}</div>
+        <div className="text-left">{props.phone}</div>
       </td>
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="text-center">{props.orders}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -43,11 +43,11 @@ function CustomersTableItem(props) {
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="text-left font-medium text-emerald-500">{props.spent}</div>
       </td> */}
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="text-center">{props.refunds}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-        {/* Menu button */}
+        
         <button className="text-slate-400 hover:text-slate-500 rounded-full">
           <span className="sr-only">Menu</span>
           <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
@@ -56,7 +56,7 @@ function CustomersTableItem(props) {
             <circle cx="22" cy="16" r="2" />
           </svg>
         </button>
-      </td>
+      </td> */}
     </tr>
   );
 }
