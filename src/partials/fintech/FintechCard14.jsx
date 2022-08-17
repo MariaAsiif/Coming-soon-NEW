@@ -86,12 +86,12 @@ function FintechCard14() {
           pointBackgroundColor: chart.growth ? tailwindConfig().theme.colors.emerald[500] : tailwindConfig().theme.colors.rose[500],
           clip: 20,
         },
-      ],      
-    }    
+      ],
+    }
     return obj;
   };
-  
-  miniCharts.map((miniChart) => {
+
+  miniCharts.forEach((miniChart) => {
     chartData.push(buildChartData(miniChart));
   });
 

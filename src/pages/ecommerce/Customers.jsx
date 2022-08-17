@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import Sidebar from '../../partials/Sidebar';
-import Header from '../../partials/Header';
 import DeleteButton from '../../partials/actions/DeleteButton';
 import DateSelect from '../../components/DateSelect';
 import FilterButton from '../../components/DropdownFilter';
@@ -10,9 +8,9 @@ import PaginationClassic from '../../components/PaginationClassic';
 import axios from 'axios'
 function Customers() {
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [user, setUsers] = useState([]);
+
+  const [users, setusers] = useState([]);
 
   const handleSelectedItems = (selectedItems) => {
     setSelectedItems([...selectedItems]);
@@ -22,35 +20,29 @@ function Customers() {
 
   let token = localStorage.getItem('token');
 
-  const config = {
-    headers: {
-      'Authorization': 'Bearer ' + token,
-      'Content-Type': 'application/json',
-    }
-  };
-
-
-
   useEffect(() => {
-    try {
-      let fectData = async () => {
-        let value =
-        {
 
-          sortproperty: "first_name",
+    (async () => {
+      try {
+        const config = {
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+
+        };
+        let response = await axios.post('http://localhost:5873/users/listAllUsers', {
+          sortproperty: "full_name",
           sortorder: 1,
           offset: 0,
           limit: 50
-
-        }
-        let response = await axios.post('http://localhost:5873/users/listAllUsers', value , config);
-        setUsers(response?.data?.users)
+        }, config);
+        console.log("res", response)
+        setusers(response.data.data.users)
+      } catch (error) {
+        console.log(error);
       }
-      fectData()
-    }
-    catch (err) {
-      console.log(err);
-    }
+    })();
+
 
   }, [])
 
@@ -69,7 +61,7 @@ function Customers() {
 
               {/* Left: Title */}
               <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Customers ✨</h1>
+                <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Users ✨</h1>
               </div>
 
               {/* Right: Actions */}
@@ -97,7 +89,11 @@ function Customers() {
             </div>
 
             {/* Table */}
-            <CustomersTable selectedItems={handleSelectedItems} customer={user} />
+            <CustomersTable
+              tableRows={users}
+
+              selectedItems={handleSelectedItems}
+            />
 
             {/* Pagination */}
             <div className="mt-8">

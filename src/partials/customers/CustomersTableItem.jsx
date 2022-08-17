@@ -3,7 +3,7 @@ import React from 'react';
 function CustomersTableItem(props) {
   return (
     <tr>
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
         <div className="flex items-center">
           <label className="inline-flex">
             <span className="sr-only">Select</span>
@@ -19,12 +19,12 @@ function CustomersTableItem(props) {
             </svg>
           </button>
         </div>
-      </td>
+      </td> */}
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="flex items-center">
-          <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
+          {/* <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
             <img className="rounded-full" src={props.image} width="40" height="40" alt={props.name} />
-          </div>
+          </div> */}
           <div className="font-medium text-slate-800">{props.name}</div>
         </div>
       </td>
@@ -32,22 +32,31 @@ function CustomersTableItem(props) {
         <div className="text-left">{props.email}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="text-left">{props.location}</div>
+        <div className="text-left">{props.phone}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="text-center">{props.orders}</div>
+        <div className="text-center">{props.jobrole}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="text-left font-medium text-sky-500">{props.lastOrder}</div>
+        <div className="text-center font-medium text-sky-500">{props.verificationCode}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="text-left font-medium text-emerald-500">{props.spent}</div>
+        <div className="text-center font-medium text-emerald-500">{props.isVerified ? "YES" : "NO"}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="text-center">{props.refunds}</div>
+        <div className="text-center">{props.location}</div>
       </td>
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-        {/* Menu button */}
+      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+        <div className="text-center">{props.city}</div>
+      </td>
+      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+        <div className="text-center">{props.state}</div>
+      </td>
+      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+        <div className="text-center">{props.country}</div>
+      </td>
+      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+        
         <button className="text-slate-400 hover:text-slate-500 rounded-full">
           <span className="sr-only">Menu</span>
           <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
@@ -56,7 +65,7 @@ function CustomersTableItem(props) {
             <circle cx="22" cy="16" r="2" />
           </svg>
         </button>
-      </td>
+      </td> */}
     </tr>
   );
 }

@@ -8,13 +8,22 @@ import logo from '../images/signin3.png';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useDispatch } from 'react-redux'
+import { signin } from "../Redux/UserAuthSlice/UserAuthSlice"
+const fakeemail = () => {
+  var chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
+  var string = '';
+  for (var ii = 0; ii < 15; ii++) {
+    string += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return string + '@gmail.com'
+}
 function Signin() {
-
+  const dispatch = useDispatch()
 
   const [authValue, setAuthValue] = useState({
-    email: '',
-    password: '',
+    email: fakeemail(),
+    password: '12345678',
   });
 
   const [errors, seterrors] = useState({
@@ -63,18 +72,14 @@ function Signin() {
 
       })
     }
-
     else {
 
       try {
         const response = await axios.post("http://localhost:5873/users/signin", authValue);
         if (response.data.status === "Fail") {
           toast.error(response.data.message);
-
         } else {
-          localStorage.setItem("token", response.data.token);
-          toast.success(response.data.message);
-          Navigate('/dashboard')
+          console.log(response);
         }
       }
       catch (err) {
@@ -82,7 +87,6 @@ function Signin() {
       }
     }
   }
-
 
 
   let { email, password } = authValue;
@@ -123,9 +127,10 @@ function Signin() {
                   <div className="mr-1">
                     <Link className="text-sm underline hover:no-underline" to="/reset-password">Forgot Password?</Link>
                   </div>
-                  {/* <Link to="/dashboard"> */}
-                    <button className="btn bg-indigo-500 bg-red-600 text-white ml-3" >Sign In</button>
-                  {/* </Link> */}
+
+
+                  <button type="submit" className="btn bg-indigo-500 bg-red-600 text-white ml-3" >Sign In</button>
+
                 </div>
               </form>
               {/* Footer */}
@@ -139,9 +144,7 @@ function Signin() {
                     <svg className="inline w-3 h-3 shrink-0 fill-current mr-2" viewBox="0 0 12 12">
                       <path d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z" />
                     </svg>
-                    <span className="text-sm">
-                      To support you during the pandemic super pro features are free until March 31st.
-                    </span>
+                    <span className="text-sm"> To support you during the pandemic super pro features are free until March 31st. </span>
                   </div>
                 </div>
               </div>
