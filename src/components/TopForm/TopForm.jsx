@@ -422,10 +422,7 @@ const TopForm = (props) => {
                             <>
                                 <span className='hover:underline mr-3 ml-2' onClick={() => setactiveField("familyname")}>back</span>
                                 <span className='hover:underline' onClick={() => setactiveField("email")}>or skip</span>
-
                             </>
-
-
                         }
                     </div>
 

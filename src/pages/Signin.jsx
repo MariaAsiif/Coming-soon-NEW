@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import AuthImage from '../images/signin.jpg';
 import AuthDecoration from '../images/auth-decoration.png';
@@ -19,10 +19,11 @@ const fakeemail = () => {
   return string + '@gmail.com'
 }
 function Signin() {
+  let navigate = useNavigate();
   const dispatch = useDispatch()
 
   const [authValue, setAuthValue] = useState({
-    email: fakeemail(),
+    email: "superadmin@getnada.com",
     password: '12345678',
   });
 
@@ -79,7 +80,8 @@ function Signin() {
         if (response.data.status === "Fail") {
           toast.error(response.data.message);
         } else {
-          console.log(response);
+          dispatch(signin(response.data.token))
+          navigate("../dashboard");
         }
       }
       catch (err) {

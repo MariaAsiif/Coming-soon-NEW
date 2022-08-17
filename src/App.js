@@ -3,7 +3,7 @@ import CommingSoon from './components/CommingSoon/CommingSoon'
 
 
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 
 import './charts/ChartjsConfig';
@@ -74,6 +74,18 @@ import AvatarPage from './pages/component/AvatarPage';
 import TooltipPage from './pages/component/TooltipPage';
 import AccordionPage from './pages/component/AccordionPage';
 import IconsPage from './pages/component/IconsPage';
+import MainWrapper from './pages/MainWrapper';
+import { useSelector } from 'react-redux'
+
+const RequireAuth = ({ children }) => {
+  const token = useSelector((state) => state.userAuth.loginInfo.token);
+  let location = useLocation();
+  if (!token) {
+    return <Navigate to="/signin" state={{ from: location }} replace />;
+  }
+  return children;
+}
+
 
 function App() {
 
@@ -89,8 +101,17 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<CommingSoon />} />
-        <Route exact path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard/analytics" element={<Analytics />} />
+        <Route path="/dashboard" element={<RequireAuth> <MainWrapper /></RequireAuth>} >
+          <Route index element={<Dashboard />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="fintech" element={<Fintech />} />
+        </Route>
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+
+
+
+        {/* <Route path="/dashboard/analytics" element={<Analytics />} />
         <Route path="/dashboard/fintech" element={<Fintech />} />
         <Route path="/ecommerce/customers" element={<Customers />} />
         <Route path="/ecommerce/orders" element={<Orders />} />
@@ -133,9 +154,8 @@ function App() {
         <Route path="/utility/faqs" element={<Faqs />} />
         <Route path="/utility/empty-state" element={<EmptyState />} />
         <Route path="/utility/404" element={<PageNotFound />} />
-        <Route path="/utility/knowledge-base" element={<KnowledgeBase />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/utility/knowledge-base" element={<KnowledgeBase />} /> 
+        
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/onboarding-01" element={<Onboarding01 />} />
         <Route path="/onboarding-02" element={<Onboarding02 />} />
@@ -154,7 +174,7 @@ function App() {
         <Route path="/component/tooltip" element={<TooltipPage />} />
         <Route path="/component/accordion" element={<AccordionPage />} />
         <Route path="/component/icons" element={<IconsPage />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="*" element={<PageNotFound />} /> */}
       </Routes>
     </>
   );
