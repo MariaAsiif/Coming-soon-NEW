@@ -9,7 +9,8 @@ import PhoneInput from 'react-phone-input-2'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PopUp from '../popup/popup';
-
+import { FcCheckmark } from 'react-icons/fc'
+import { MdClose } from 'react-icons/md'
 const TopForm = (props) => {
 
     const [select, setSelect] = useState("SE");
@@ -22,7 +23,7 @@ const TopForm = (props) => {
     const [countryCode, setCountryCode] = useState("")
     const [name, setName] = useState({})
     const [isSuccess, seIsSuccess] = useState(false)
-    const [error , setErrors] = useState(false)
+    const [error, setErrors] = useState(false)
     const [errors, seterrors] = useState({
         nameError: null,
         familyNameError: null,
@@ -123,8 +124,6 @@ const TopForm = (props) => {
 
 
     const goToFamilyField = () => {
-        debugger
-
         if (familyName.value === "") {
             seterrors({
                 familyNameError: (<div className='text-red-600'>Family Name is required</div>),
@@ -146,8 +145,6 @@ const TopForm = (props) => {
         }
     }
     const goToSecondFamilyField = () => {
-        debugger
-
         seterrors({
             nameError: null,
             mobileError: null,
@@ -311,7 +308,13 @@ const TopForm = (props) => {
                                         showOptionLabel={false}
                                     />
                                     <div className='flex justify-end form-field'>
-                                        <input name='firstname' value={firstname.value} onChange={handleChangeName} type="text " className=" focus:outline-none border-0  w-[64%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Name?" />
+                                        <div className='w-[64%] relative'>
+                                            <input name='firstname' value={firstname.value} onChange={handleChangeName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Name?" />
+                                            <span className={`absolute top-1/4 right-3 ${firstname.value.length ? "visible" : "invisible"} `}>
+                                                <FcCheckmark />
+                                            </span>
+                                        </div>
+
                                         <button onClick={goToNameField} className={`${firstname.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                     </div>
                                 </>
@@ -320,7 +323,12 @@ const TopForm = (props) => {
                         {activeField === "familyname" &&
                             (
                                 <>
-                                    <input name='familyname' value={familyName.value} onChange={handleChangeFamilyName} type="text " className=" focus:outline-none border-0  w-[80%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Family Name?" />
+                                    <div className='w-4/5 relative inline-block'>
+                                        <input name='familyname' value={familyName.value} onChange={handleChangeFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Family Name?" />
+                                        <span className={`absolute top-1/4 right-3 ${familyName.value.length ? "visible" : "invisible"} `}>
+                                            <FcCheckmark />
+                                        </span>
+                                    </div>
                                     <button onClick={goToFamilyField} className={`${familyName.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                 </>
                             )
@@ -329,7 +337,12 @@ const TopForm = (props) => {
                         {activeField === "secondfamilyname" &&
                             (
                                 <>
-                                    <input name='secondfamilyname' value={secondFamilyName.value} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-0  w-[80%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Additional Family Names (Optional)?" />
+                                    <div className='w-4/5 relative inline-block'>
+                                        <input name='secondfamilyname' value={secondFamilyName.value} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Additional Family Names (Optional)?" />
+                                        <span className={`absolute top-1/4 right-3 ${secondFamilyName.value.length ? "visible" : "invisible"} `}>
+                                            <FcCheckmark />
+                                        </span>
+                                    </div>
                                     <button onClick={goToSecondFamilyField} className={`${secondFamilyName.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                 </>
                             )
@@ -340,7 +353,16 @@ const TopForm = (props) => {
                                 <>
 
                                     <div className='flex justify-end form-field'>
-                                        <input name='email' value={email.value} onChange={handleChangeEmail} type="email " className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Email Address" />
+                                        <div className='w-4/5 relative inline-block'>
+                                            <input name='email' value={email.value} onChange={handleChangeEmail} type="email " className=" focus:outline-none border-0 w-full  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Email Address" />
+                                            {email.value.length && !errors.emailError ?
+                                                <span className={`absolute top-1/4 right-3  `}><FcCheckmark /></span>
+                                                : errors.emailError && email.value !== "" ?
+                                                    <span className={`  absolute top-1/3 right-3`}>  <MdClose className='text-red-600' /> </span>
+                                                    :
+                                                    null}
+                                        </div>
+
                                         <button onClick={goToEmailField} className={`${!errors.emailError && email.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                     </div>
                                 </>
