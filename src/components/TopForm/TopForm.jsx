@@ -403,12 +403,22 @@ const TopForm = (props) => {
 
 
                     </div>
-
+                    <div className='skip_field'>
+                        {activeField === "familyname" &&
+                            <span className='hover:underline' onClick={() => setactiveField("firstname")}>back</span>
+                        }
+                    </div>
                     <div className='skip_field'>
                         {activeField === "secondfamilyname" &&
 
                             <span className='hover:underline' onClick={() => setactiveField("email")}>or skip</span>
 
+                        }
+                    </div>
+
+                    <div className='skip_field'>
+                        {activeField === "email" &&
+                            <span className='hover:underline' onClick={() => setactiveField("secondfamilyname")}>back</span>
                         }
                     </div>
 
@@ -419,6 +429,8 @@ const TopForm = (props) => {
 
                         }
                     </div>
+
+
                 </div>
                 {errors.nameError}
                 {errors.familyNameError}
