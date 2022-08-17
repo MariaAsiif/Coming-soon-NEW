@@ -39,9 +39,10 @@ const CommingSoon = () => {
                                         “The University of Chicago Medical Center (UChicago Medicine) finds that Cannabidiol inhibits SARS-CoV-2
                                         replication through induction of the host ER stress and innate immune responses”.
                                     </a>
+                                    <br/>
+                                    <small className='source'>SOURCE: The University of Chicago Medical Center linked above for voracity</small>
                                 </span>
                             </div>
-                            <small className='source'>SOURCE: The University of Chicago Medical Center linked above for voracity</small>
                             <br />
                             <ReadMore>
                                 The University Of Chicago Medical Center (UChicago Medicine)

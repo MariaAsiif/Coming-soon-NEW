@@ -136,9 +136,8 @@
 }
 
 .text .link_wrapper{
-    border: 2pt solid grey;
-    background-color: lightgrey;
-    padding: 5px;
+    
+    padding: 0px 50px;
 }
 
 .source{
