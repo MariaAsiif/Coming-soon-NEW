@@ -12,6 +12,7 @@ function Customers() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [user, setUsers] = useState([]);
 
   const handleSelectedItems = (selectedItems) => {
     setSelectedItems([...selectedItems]);
@@ -22,16 +23,28 @@ function Customers() {
   let token = localStorage.getItem('token');
 
   const config = {
-    headers:{    'Authorization': 'Bearer ' + token}
-
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    }
   };
+
+
 
   useEffect(() => {
     try {
       let fectData = async () => {
-        let response = await axios.post('http://localhost:5873/users/listAllUsers', config);
+        let value =
+        {
 
-        console.log("res", response)
+          sortproperty: "first_name",
+          sortorder: 1,
+          offset: 0,
+          limit: 50
+
+        }
+        let response = await axios.post('http://localhost:5873/users/listAllUsers', value , config);
+        setUsers(response?.data?.users)
       }
       fectData()
     }
@@ -84,7 +97,7 @@ function Customers() {
             </div>
 
             {/* Table */}
-            <CustomersTable selectedItems={handleSelectedItems} />
+            <CustomersTable selectedItems={handleSelectedItems} customer={user} />
 
             {/* Pagination */}
             <div className="mt-8">

@@ -104,9 +104,7 @@ function Signin() {
                 </Link>
               </div>
             </div>
-            <div>
 
-            </div>
             <div className="max-w-sm mx-auto px-4 py-8">
               <h1 className="text-3xl text-slate-800 font-bold mb-6">Welcome back! </h1>
               {/* Form */}
@@ -125,9 +123,9 @@ function Signin() {
                   <div className="mr-1">
                     <Link className="text-sm underline hover:no-underline" to="/reset-password">Forgot Password?</Link>
                   </div>
-                  <Link to="/dashboard">
+                  {/* <Link to="/dashboard"> */}
                     <button className="btn bg-indigo-500 bg-red-600 text-white ml-3" >Sign In</button>
-                  </Link>
+                  {/* </Link> */}
                 </div>
               </form>
               {/* Footer */}
