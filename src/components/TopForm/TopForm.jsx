@@ -16,7 +16,9 @@ const TopForm = (props) => {
     const [select, setSelect] = useState("SE");
     const [firstname, setfirstname] = useState({ fname: "firstname", value: "", isempty: true })
     const [familyName, setFamilyName] = useState({ fname: "familyname", value: "", isempty: true })
-    const [secondFamilyName, setSecondFamilyName] = useState({ fname: "secondfamilyname", value: "", isempty: true })
+    const [firstFamilyName, setfirstFamilyName] = useState("")
+    const [secondFamilyName, setsecondFamilyName] = useState("")
+    const [thirdFamilyName, setthirdFamilyName] = useState("")
     const [email, setemail] = useState({ femail: "email", value: "", isempty: true })
     const [mobileno, setmobileno] = useState({ fmobile: "mobile", value: "", isempty: true })
     const [activeField, setactiveField] = useState("firstname")
@@ -52,13 +54,20 @@ const TopForm = (props) => {
             value
         }))
     }
+    const handleChangeFirstFamilyName = (e) => {
+        let { value } = e.target
+        value = value.toUpperCase().replace(/[^a-z ]/gi, '')
+        setfirstFamilyName(value)
+    }
     const handleChangeSecondFamilyName = (e) => {
         let { value } = e.target
         value = value.toUpperCase().replace(/[^a-z ]/gi, '')
-        setSecondFamilyName((prevname) => ({
-            ...prevname,
-            value
-        }))
+        setsecondFamilyName(value)
+    }
+    const handleChangeThirdFamilyName = (e) => {
+        let { value } = e.target
+        value = value.toUpperCase().replace(/[^a-z ]/gi, '')
+        setthirdFamilyName(value)
     }
 
 
@@ -141,7 +150,7 @@ const TopForm = (props) => {
                 familyNameError: null,
                 secondFamilyNameError: null,
             })
-            setactiveField("secondfamilyname")
+            setactiveField("additionalfamilyname")
         }
     }
     const goToSecondFamilyField = () => {
@@ -245,10 +254,7 @@ const TopForm = (props) => {
                             ...prevname,
                             value: ""
                         }))
-                        setSecondFamilyName((prevname) => ({
-                            ...prevname,
-                            value: ""
-                        }))
+
                         setemail((prevname) => ({
                             ...prevname,
                             value: ""
@@ -334,16 +340,19 @@ const TopForm = (props) => {
                             )
                         }
 
-                        {activeField === "secondfamilyname" &&
+                        {activeField === "additionalfamilyname" &&
                             (
                                 <>
-                                    <div className='w-4/5 relative inline-block'>
-                                        <input name='secondfamilyname' value={secondFamilyName.value} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Additional Family Names (Optional)?" />
-                                        <span className={`absolute top-1/4 right-3 ${secondFamilyName.value.length ? "visible" : "invisible"} `}>
-                                            <FcCheckmark />
-                                        </span>
+                                    <div className=' w-3/12 relative inline-block'>
+                                        <input name='firstFamilyName' value={firstFamilyName} onChange={handleChangeFirstFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="1st Family Name" />
                                     </div>
-                                    <button onClick={goToSecondFamilyField} className={`${secondFamilyName.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
+                                    <div className=' w-3/12 relative inline-block'>
+                                        <input name='secondFamilyName' value={secondFamilyName} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="2nd Family Name" />
+                                    </div>
+                                    <div className=' w-3/12 relative inline-block'>
+                                        <input name='thirdFamilyName' value={thirdFamilyName} onChange={handleChangeThirdFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="3rd Family Name" />
+                                    </div>
+                                    <button onClick={goToSecondFamilyField} className={`${firstFamilyName || secondFamilyName || thirdFamilyName ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-3/12 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                 </>
                             )
                         }
@@ -409,16 +418,20 @@ const TopForm = (props) => {
                         }
                     </div>
                     <div className='skip_field'>
-                        {activeField === "secondfamilyname" &&
+                        {activeField === "additionalfamilyname" &&
+                            <>
+                                <span className='hover:underline mr-3' onClick={() => setactiveField("email")}>back</span>
+                                <span className='hover:underline' onClick={() => setactiveField("email")}>or skip</span>
 
-                            <span className='hover:underline' onClick={() => setactiveField("email")}>or skip</span>
+                            </>
+
 
                         }
                     </div>
 
                     <div className='skip_field'>
                         {activeField === "email" &&
-                            <span className='hover:underline' onClick={() => setactiveField("secondfamilyname")}>back</span>
+                            <span className='hover:underline' onClick={() => setactiveField("additionalfamilyname")}>back</span>
                         }
                     </div>
 
