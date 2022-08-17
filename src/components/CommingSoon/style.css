@@ -103,9 +103,8 @@
 
     color: black;
     padding: 20px 0px;
-    text-align: justify;
+    text-align: left;
     align-items: center;
-
     font-weight: 500;
     max-width: 500px !important;
 }
@@ -130,7 +129,20 @@
     font-size: 18px;
     font-family: Poppins;
     font-weight: bold;
+    text-align: left !important;
+    align-items: center;
+    
 
+}
+
+.text .link_wrapper{
+    border: 2pt solid grey;
+    background-color: lightgrey;
+    padding: 5px;
+}
+
+.source{
+    font-size: 10px;
 }
 
 .info_text {

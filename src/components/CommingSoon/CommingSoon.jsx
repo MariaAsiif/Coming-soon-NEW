@@ -33,10 +33,15 @@ const CommingSoon = () => {
 
                         <p>
                             <span className='truth_block text-blue-600'>TRUTH THROUGH SCIENCE</span>
-                            <a href="https://www.science.org/doi/10.1126/sciadv.abi6110" target="_blank" rel="noopener noreferrer" className='text_link  mb-1 text-[20px] tracking-[1px]'>
-                                “The University of Chicago Medical Center (UChicago Medicine) finds that Cannabidiol inhibits SARS-CoV-2
-                                replication through induction of the host ER stress and innate immune responses”.
-                            </a>
+                            <div className='link_wrapper'>
+                                <span>
+                                    <a href="https://www.science.org/doi/10.1126/sciadv.abi6110" target="_blank" rel="noopener noreferrer" className='text_link text-left mb-1 text-[20px] tracking-[1px]'>
+                                        “The University of Chicago Medical Center (UChicago Medicine) finds that Cannabidiol inhibits SARS-CoV-2
+                                        replication through induction of the host ER stress and innate immune responses”.
+                                    </a>
+                                </span>
+                            </div>
+                            <small className='source'>SOURCE: The University of Chicago Medical Center linked above for voracity</small>
                             <br />
                             <ReadMore>
                                 The University Of Chicago Medical Center (UChicago Medicine)
@@ -63,17 +68,17 @@ const CommingSoon = () => {
                                 in this area in their quest to save lives and heal families devastated by the Hunan health consequences
                                 and mental health issues exacerbated by this recent pandemic.
                             </ReadMore>
-                            <Translator from='en' to='es' googleApiKey='API_KEY'   >
+                            {/* <Translator from='en' to='es' googleApiKey='API_KEY'   >
 
                                 <h1><Translate>Welcome!</Translate></h1>
 
-                            </Translator>
+                            </Translator> */}
                             <p className='abstrct_text'>
-                                We are the human stewards of this planet and each other, either we’re all safe or no one is safe. Please join us by registering for our medical alert below.
+                                Welcome! We are the human stewards of this planet and each other, either we’re all safe or no one is safe. Please join us by registering for our medical alert below.
                                 <br />
                                 <span className='flex flex-col mt-3'></span>
                                 Dr. De Mandeville.<br />
-                                <small className="date_small">Circa August 1, 2022</small> 
+                                <small className="date_small">Circa August 1, 2022</small>
                             </p>
 
                         </p>
