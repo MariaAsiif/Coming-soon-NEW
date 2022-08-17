@@ -347,7 +347,7 @@ const TopForm = (props) => {
                                         <input name='firstFamilyName' value={firstFamilyName} onChange={handleChangeFirstFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="1st Family Name" />
                                     </div>
                                     <div className=' w-3/12 relative inline-block'>
-                                        <input name='secondFamilyName' value={secondFamilyName} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="2nd Family Name" />
+                                        <input name='secondFamilyName' value={secondFamilyName} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-l-2 border-r-2 border-gray-400  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="2nd Family Name" />
                                     </div>
                                     <div className=' w-3/12 relative inline-block'>
                                         <input name='thirdFamilyName' value={thirdFamilyName} onChange={handleChangeThirdFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="3rd Family Name" />
@@ -420,7 +420,7 @@ const TopForm = (props) => {
                     <div className='skip_field'>
                         {activeField === "additionalfamilyname" &&
                             <>
-                                <span className='hover:underline mr-3' onClick={() => setactiveField("email")}>back</span>
+                                <span className='hover:underline mr-3 ml-2' onClick={() => setactiveField("familyname")}>back</span>
                                 <span className='hover:underline' onClick={() => setactiveField("email")}>or skip</span>
 
                             </>
