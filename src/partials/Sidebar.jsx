@@ -81,7 +81,7 @@ function Sidebar({
             </svg>
           </button>
           {/* Logo */}
-          <NavLink end to="/" className="block h-4">
+          <NavLink end to="/" className="block ">
             <img src={logo} alt="logo" className="w-50 lg:sidebar-expanded:w-40 lg:sidebar-expanded:mt-[-48px] " />
           </NavLink>
         </div>
