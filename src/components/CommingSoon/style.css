@@ -247,6 +247,9 @@
         margin: -20px !important;
         width: 130% !important;
     }
+    .source{
+        font-size: 6px;
+    }
 
     .text h2 {
         font-size: 2em !important;
@@ -257,6 +260,14 @@
         line-height: 1em;
         text-transform: uppercase;
     }
+    .text .link_wrapper{
+        padding: 0px 10px;
+    }
+
+    .text_link{
+        letter-spacing: normal;
+    }
+    
 
 
 }
@@ -266,6 +277,10 @@
         display: flex !important;
         justify-content: space-between !important;
     }
+    .source{
+        font-size: 8px;
+    }
+   
 }
 
 @media (max-width: 600px) {
@@ -275,6 +290,11 @@
         padding: 10px;
     }
 
+  
+
+    .source{
+        font-size: 6px;
+    }
     .bottom_block img {
         width: 80px;
         height: 20px;
@@ -354,6 +374,9 @@
 
     }
 
+    .source{
+        font-size: 8px;
+    }
 
 }
 

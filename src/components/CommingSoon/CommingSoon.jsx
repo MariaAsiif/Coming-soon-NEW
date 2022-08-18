@@ -35,7 +35,7 @@ const CommingSoon = () => {
                             <span className='truth_block text-blue-600'>TRUTH THROUGH SCIENCE</span>
                             <div className='link_wrapper'>
                                 <span>
-                                    <a href="https://www.science.org/doi/10.1126/sciadv.abi6110" target="_blank" rel="noopener noreferrer" className='text_link text-left mb-1 text-[20px] tracking-[1px]'>
+                                    <a href="https://www.science.org/doi/10.1126/sciadv.abi6110" target="_blank" rel="noopener noreferrer" className='text_link text-left mb-1 '>
                                         “The University of Chicago Medical Center (UChicago Medicine) finds that Cannabidiol inhibits SARS-CoV-2
                                         replication through induction of the host ER stress and innate immune responses”.
                                     </a>
