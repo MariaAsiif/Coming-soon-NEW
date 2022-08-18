@@ -73,6 +73,9 @@ function CustomersTable({
                   <div className="font-semibold text-left">FAMILY NAME</div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold text-left">Email</div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Phone no</div>
                 </th>
                 
@@ -91,21 +94,22 @@ function CustomersTable({
                       key={customer.id}
                       id={customer._id}
                       image={customer.image}
-                      name={`${customer.first_name} ${customer.second_family_name} ${customer.third_family_name}`}
+                      name={`${customer.first_name} `}
+                      famlyname={`${customer.first_family_name} ${customer.second_family_name}${customer.third_family_name}`}
                       email={customer.email}
                       phone={customer.phoneNumber}
                       jobrole={customer.role}
-                      verificationCode={customer.verification_code}
-                      isVerified={customer.is_verified}
+                      // verificationCode={customer.verification_code}
+                      // isVerified={customer.is_verified}
                       location={""}
-                      city={customer.city}
-                      state={customer.state}
-                      country={customer.country}
-                      orders={customer.orders}
-                      lastOrder={customer.lastOrder}
-                      spent={customer.spent}
-                      refunds={customer.refunds}
-                      fav={customer.fav}
+                      // city={customer.city}
+                      // state={customer.state}
+                      // country={customer.country}
+                      // orders={customer.orders}
+                      // lastOrder={customer.lastOrder}
+                      // spent={customer.spent}
+                      // refunds={customer.refunds}
+                      // fav={customer.fav}
                       handleClick={handleClick}
                       isChecked={isCheck.includes(customer.id)}
                     />

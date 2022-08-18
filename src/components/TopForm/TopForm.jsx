@@ -219,8 +219,8 @@ const TopForm = (props) => {
                     {
                         first_name: firstname.value,
                         first_family_name: familyName.value,
-                        second_family_name: secondFamilyName.value,
-                        third_family_name: "test",
+                        second_family_name: secondFamilyName,
+                        third_family_name: thirdFamilyName,
                         email: email.value,
                         userName: firstname.value,
                         password: "test",
@@ -263,6 +263,9 @@ const TopForm = (props) => {
                             ...prevname,
                             value: ""
                         }))
+                        setfirstFamilyName('')
+                        setsecondFamilyName('')
+                        setthirdFamilyName('')
                         setactiveField("firstname")
                         setErrors(false)
 

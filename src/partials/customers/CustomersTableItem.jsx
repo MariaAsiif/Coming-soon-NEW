@@ -21,12 +21,10 @@ function CustomersTableItem(props) {
         </div>
       </td> */}
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="flex items-center">
-          {/* <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
-            <img className="rounded-full" src={props.image} width="40" height="40" alt={props.name} />
-          </div> */}
-          <div className="font-medium text-slate-800">{props.name}</div>
-        </div>
+        <div className="text-left">{props.name}</div>
+      </td>
+      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+        <div className="text-left">{props.famlyname}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="text-left">{props.email}</div>
