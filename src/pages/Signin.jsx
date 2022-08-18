@@ -130,10 +130,10 @@ function Signin() {
                     <Link className="text-sm underline hover:no-underline" to="/reset-password">Forgot Password?</Link>
                   </div>
 
-                  <Link to="/dashboard">
+                  {/* <Link to="/dashboard">
                     <button className="btn bg-indigo-500 bg-red-600 text-white ml-3" type="submit">Sign in</button>
-                  </Link>
-                  {/* <button type="submit" className="btn bg-indigo-500 bg-red-600 text-white ml-3" >Sign In</button> */}
+                  </Link> */}
+                  <button type="submit" className="btn bg-indigo-500 bg-red-600 text-white ml-3" >Sign In</button>
 
                 </div>
               </form>
