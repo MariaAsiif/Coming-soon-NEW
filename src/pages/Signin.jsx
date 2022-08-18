@@ -69,7 +69,7 @@ function Signin() {
     e.preventDefault();
     if (authValue.password === "") {
       seterrors({
-        passwordError: (<div className='text-red-600'>Name is required</div>),
+        passwordError: (<div className='text-red-600'>Password is required</div>),
 
       })
     }
