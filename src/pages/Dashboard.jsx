@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Customers from './ecommerce/Customers';
-// import WelcomeBanner from '../partials/dashboard/WelcomeBanner';
+import WelcomeBanner from '../partials/dashboard/WelcomeBanner';
 // import DashboardAvatars from '../partials/dashboard/DashboardAvatars';
 // import FilterButton from '../components/DropdownFilter';
 // import Datepicker from '../components/Datepicker';
@@ -18,10 +18,10 @@ import Customers from './ecommerce/Customers';
 
 function Dashboard() {
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+    <div className="px-4 sm:px-6 lg:px-8 py-8 w-full  mx-auto">
 
       {/* Welcome banner */}
-      {/* <WelcomeBanner /> */}
+      <WelcomeBanner />
 
       {/* Dashboard actions */}
       <div className="sm:flex sm:justify-between sm:items-center mb-8">

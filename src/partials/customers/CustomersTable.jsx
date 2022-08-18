@@ -60,7 +60,7 @@ function CustomersTable({
       <div>
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="table-auto w-full lg:w-[1200px] lg:sidebar-expanded:w-[900px] md:sidebar-expanded:w-[600px] md:w-[700px] sm:w-full">
+          <table className="table-auto w-full lg:w-[1200px] lg:sidebar-expanded:w-[1000px] md:sidebar-expanded:w-[600px] md:w-[700px] sm:w-full">
             {/* Table header */}
             <thead className="text-xs font-semibold uppercase text-slate-500 bg-slate-50 border-t border-b border-slate-200">
               <tr>
