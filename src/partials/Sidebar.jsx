@@ -81,8 +81,8 @@ function Sidebar({
             </svg>
           </button>
           {/* Logo */}
-          <NavLink end to="/" className="block">
-            <img src={logo} alt="logo" className="w-20 lg:sidebar-expanded:w-20" />
+          <NavLink end to="/" className="block h-4">
+            <img src={logo} alt="logo" className="w-50 lg:sidebar-expanded:w-40 lg:sidebar-expanded:mt-[-48px] " />
           </NavLink>
         </div>
 
@@ -96,7 +96,7 @@ function Sidebar({
               </span>
               <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Pages</span>
             </h3> */}
-            <ul className="mt-3"  >
+            <ul>
               {/* Dashboard */}
               <SidebarLinkGroup  activecondition={pathname === '/' || pathname.includes('dashboard')}>
                 {(handleClick, open) => {
@@ -104,7 +104,7 @@ function Sidebar({
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-black hover:text-black-600 truncate transition duration-150 ${(pathname === '/' || pathname.includes('dashboard')) && 'hover:text-black-600'
+                        className={`block  text-black hover:text-black-600 truncate transition duration-150 ${(pathname === '/' || pathname.includes('dashboard')) && 'hover:text-black-600'
                           }`}
                         onClick={(e) => {
                           e.preventDefault();
