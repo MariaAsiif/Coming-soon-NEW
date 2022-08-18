@@ -9,20 +9,23 @@ import PhoneInput from 'react-phone-input-2'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PopUp from '../popup/popup';
-
+import { FcCheckmark } from 'react-icons/fc'
+import { MdClose } from 'react-icons/md'
 const TopForm = (props) => {
 
     const [select, setSelect] = useState("SE");
     const [firstname, setfirstname] = useState({ fname: "firstname", value: "", isempty: true })
     const [familyName, setFamilyName] = useState({ fname: "familyname", value: "", isempty: true })
-    const [secondFamilyName, setSecondFamilyName] = useState({ fname: "secondfamilyname", value: "", isempty: true })
+    const [firstFamilyName, setfirstFamilyName] = useState("")
+    const [secondFamilyName, setsecondFamilyName] = useState("")
+    const [thirdFamilyName, setthirdFamilyName] = useState("")
     const [email, setemail] = useState({ femail: "email", value: "", isempty: true })
     const [mobileno, setmobileno] = useState({ fmobile: "mobile", value: "", isempty: true })
     const [activeField, setactiveField] = useState("firstname")
     const [countryCode, setCountryCode] = useState("")
     const [name, setName] = useState({})
     const [isSuccess, seIsSuccess] = useState(false)
-    const [error , setErrors] = useState(false)
+    const [error, setErrors] = useState(false)
     const [errors, seterrors] = useState({
         nameError: null,
         familyNameError: null,
@@ -51,13 +54,20 @@ const TopForm = (props) => {
             value
         }))
     }
+    const handleChangeFirstFamilyName = (e) => {
+        let { value } = e.target
+        value = value.toUpperCase().replace(/[^a-z ]/gi, '')
+        setfirstFamilyName(value)
+    }
     const handleChangeSecondFamilyName = (e) => {
         let { value } = e.target
         value = value.toUpperCase().replace(/[^a-z ]/gi, '')
-        setSecondFamilyName((prevname) => ({
-            ...prevname,
-            value
-        }))
+        setsecondFamilyName(value)
+    }
+    const handleChangeThirdFamilyName = (e) => {
+        let { value } = e.target
+        value = value.toUpperCase().replace(/[^a-z ]/gi, '')
+        setthirdFamilyName(value)
     }
 
 
@@ -123,8 +133,6 @@ const TopForm = (props) => {
 
 
     const goToFamilyField = () => {
-        debugger
-
         if (familyName.value === "") {
             seterrors({
                 familyNameError: (<div className='text-red-600'>Family Name is required</div>),
@@ -142,12 +150,10 @@ const TopForm = (props) => {
                 familyNameError: null,
                 secondFamilyNameError: null,
             })
-            setactiveField("secondfamilyname")
+            setactiveField("additionalfamilyname")
         }
     }
     const goToSecondFamilyField = () => {
-        debugger
-
         seterrors({
             nameError: null,
             mobileError: null,
@@ -248,10 +254,7 @@ const TopForm = (props) => {
                             ...prevname,
                             value: ""
                         }))
-                        setSecondFamilyName((prevname) => ({
-                            ...prevname,
-                            value: ""
-                        }))
+
                         setemail((prevname) => ({
                             ...prevname,
                             value: ""
@@ -311,7 +314,13 @@ const TopForm = (props) => {
                                         showOptionLabel={false}
                                     />
                                     <div className='flex justify-end form-field'>
-                                        <input name='firstname' value={firstname.value} onChange={handleChangeName} type="text " className=" focus:outline-none border-0  w-[64%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Name?" />
+                                        <div className='w-[64%] relative'>
+                                            <input name='firstname' value={firstname.value} onChange={handleChangeName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Name?" />
+                                            <span className={`absolute top-1/4 right-3 ${firstname.value.length ? "visible" : "invisible"} `}>
+                                                <FcCheckmark />
+                                            </span>
+                                        </div>
+
                                         <button onClick={goToNameField} className={`${firstname.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                     </div>
                                 </>
@@ -320,17 +329,30 @@ const TopForm = (props) => {
                         {activeField === "familyname" &&
                             (
                                 <>
-                                    <input name='familyname' value={familyName.value} onChange={handleChangeFamilyName} type="text " className=" focus:outline-none border-0  w-[80%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Family Name?" />
+                                    <div className='w-4/5 relative inline-block'>
+                                        <input name='familyname' value={familyName.value} onChange={handleChangeFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Family Name?" />
+                                        <span className={`absolute top-1/4 right-3 ${familyName.value.length ? "visible" : "invisible"} `}>
+                                            <FcCheckmark />
+                                        </span>
+                                    </div>
                                     <button onClick={goToFamilyField} className={`${familyName.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                 </>
                             )
                         }
 
-                        {activeField === "secondfamilyname" &&
+                        {activeField === "additionalfamilyname" &&
                             (
                                 <>
-                                    <input name='secondfamilyname' value={secondFamilyName.value} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-0  w-[80%] placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Additional Family Names (Optional)?" />
-                                    <button onClick={goToSecondFamilyField} className={`${secondFamilyName.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
+                                    <div className=' w-3/12 relative inline-block'>
+                                        <input name='firstFamilyName' value={firstFamilyName} onChange={handleChangeFirstFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="1st Family Name" />
+                                    </div>
+                                    <div className=' w-3/12 relative inline-block'>
+                                        <input name='secondFamilyName' value={secondFamilyName} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-l-2 border-r-2 border-gray-400  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="2nd Family Name" />
+                                    </div>
+                                    <div className=' w-3/12 relative inline-block'>
+                                        <input name='thirdFamilyName' value={thirdFamilyName} onChange={handleChangeThirdFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="3rd Family Name" />
+                                    </div>
+                                    <button onClick={goToSecondFamilyField} className={`${firstFamilyName || secondFamilyName || thirdFamilyName ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-3/12 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                 </>
                             )
                         }
@@ -340,7 +362,16 @@ const TopForm = (props) => {
                                 <>
 
                                     <div className='flex justify-end form-field'>
-                                        <input name='email' value={email.value} onChange={handleChangeEmail} type="email " className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Email Address" />
+                                        <div className='w-4/5 relative inline-block'>
+                                            <input name='email' value={email.value} onChange={handleChangeEmail} type="email " className=" focus:outline-none border-0 w-full  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Email Address" />
+                                            {email.value.length && !errors.emailError ?
+                                                <span className={`absolute top-1/4 right-3  `}><FcCheckmark /></span>
+                                                : errors.emailError && email.value !== "" ?
+                                                    <span className={`  absolute top-1/3 right-3`}>  <MdClose className='text-red-600' /> </span>
+                                                    :
+                                                    null}
+                                        </div>
+
                                         <button onClick={goToEmailField} className={`${!errors.emailError && email.value !== "" ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                     </div>
                                 </>
@@ -381,12 +412,23 @@ const TopForm = (props) => {
 
 
                     </div>
+                    <div className='skip_field'>
+                        {activeField === "familyname" &&
+                            <span className='hover:underline' onClick={() => setactiveField("firstname")}>back</span>
+                        }
+                    </div>
+                    <div className='skip_field'>
+                        {activeField === "additionalfamilyname" &&
+                            <>
+                                <span className='hover:underline mr-3 ml-2' onClick={() => setactiveField("familyname")}>back</span>
+                                <span className='hover:underline' onClick={() => setactiveField("email")}>or skip</span>
+                            </>
+                        }
+                    </div>
 
                     <div className='skip_field'>
-                        {activeField === "secondfamilyname" &&
-
-                            <span className='hover:underline' onClick={() => setactiveField("email")}>or skip</span>
-
+                        {activeField === "email" &&
+                            <span className='hover:underline' onClick={() => setactiveField("additionalfamilyname")}>back</span>
                         }
                     </div>
 
@@ -397,6 +439,8 @@ const TopForm = (props) => {
 
                         }
                     </div>
+
+
                 </div>
                 {errors.nameError}
                 {errors.familyNameError}

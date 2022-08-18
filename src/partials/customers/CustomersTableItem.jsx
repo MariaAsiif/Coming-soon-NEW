@@ -41,7 +41,7 @@ function CustomersTableItem(props) {
         <div className="text-center font-medium text-sky-500">{props.verificationCode}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="text-center font-medium text-emerald-500">{props.isVerified ? "YES" : "NO"}</div>
+        <div className={`text-center font-medium ${props.isVerified ? "text-emerald-500" : "text-red-500"}`}>{props.isVerified ? "YES" : "NO"}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="text-center">{props.location}</div>

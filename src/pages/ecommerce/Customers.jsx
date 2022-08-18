@@ -6,8 +6,9 @@ import FilterButton from '../../components/DropdownFilter';
 import CustomersTable from '../../partials/customers/CustomersTable';
 import PaginationClassic from '../../components/PaginationClassic';
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 function Customers() {
-
+  const token = useSelector((state) => state.userAuth.loginInfo.token);
   const [selectedItems, setSelectedItems] = useState([]);
 
   const [users, setusers] = useState([]);
@@ -17,9 +18,6 @@ function Customers() {
   };
 
 
-
-  let token = localStorage.getItem('token');
-
   useEffect(() => {
 
     (async () => {
@@ -28,7 +26,6 @@ function Customers() {
           headers: {
             'Authorization': 'Bearer ' + token
           }
-
         };
         let response = await axios.post('http://localhost:5873/users/listAllUsers', {
           sortproperty: "full_name",
