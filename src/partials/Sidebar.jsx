@@ -23,13 +23,17 @@ function Sidebar({
   // close on click outside
   // useEffect(() => {
   //   const clickHandler = ({ target }) => {
-  //     if (!sidebar.current || !trigger.current) return;
-  //     if (!sidebarOpen || sidebar.current.contains(target) || trigger.current.contains(target)) return;
-  //     setSidebarOpen(false);
+  //     // if (!sidebar.current || !trigger.current) return;
+  //     // if (!sidebarOpen || sidebar.current.contains(target) || trigger.current.contains(target)) return;
+  //     // setSidebarOpen(false);
+  //     if (sidebar.current && !sidebar.current.contains(target)) {
+  //       console.log("i clicked outside");
+  //       setSidebarExpanded(false)
+  //     }
   //   };
   //   document.addEventListener('click', clickHandler);
   //   return () => document.removeEventListener('click', clickHandler);
-  // });
+  // }, [sidebar]);
 
   // close if the esc key is pressed
   useEffect(() => {
@@ -56,7 +60,7 @@ function Sidebar({
       <div className={`fixed inset-0 bg-slate-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} aria-hidden="true" ></div>
 
       {/* Sidebar */}
-      <div id="sidebar" ref={sidebar} className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-[#E5E4E2] p-4 transition-all duration-200 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-64'}`} >
+      <div id="sidebar" ref={sidebar} className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white border-r py-4 transition-all duration-200 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-64'}`} >
         {/* Sidebar header */}
         <div className="flex justify-between mb-10 pr-3 sm:px-2">
           {/* Close button */}
