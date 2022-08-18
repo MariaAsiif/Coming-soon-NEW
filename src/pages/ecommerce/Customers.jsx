@@ -33,7 +33,6 @@ function Customers() {
           offset: 0,
           limit: 50
         }, config);
-        console.log("res", response)
         setusers(response.data.data.users)
       } catch (error) {
         console.log(error);
@@ -44,7 +43,7 @@ function Customers() {
   }, [])
 
   return (
-    <div className="">
+    <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
 
       <div className="relative flex flex-col flex-1">

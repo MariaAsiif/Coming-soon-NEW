@@ -3,7 +3,7 @@ import React from 'react';
 function CustomersTableItem(props) {
   return (
     <tr>
-      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
         <div className="flex items-center">
           <label className="inline-flex">
             <span className="sr-only">Select</span>
@@ -11,7 +11,7 @@ function CustomersTableItem(props) {
           </label>
         </div>
       </td>
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+      {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
         <div className="flex items-center relative">
           <button>
             <svg className={`w-4 h-4 shrink-0 fill-current ${props.fav ? 'text-amber-500' : 'text-slate-300'}`} viewBox="0 0 16 16">

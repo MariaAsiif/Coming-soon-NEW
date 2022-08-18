@@ -3,21 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import AuthImage from '../images/signin.jpg';
 import AuthDecoration from '../images/auth-decoration.png';
-import logo from '../images/signin3.png';
+import logo from '../images/hporx_logo.png';
 
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux'
 import { signin } from "../Redux/UserAuthSlice/UserAuthSlice"
-const fakeemail = () => {
-  var chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
-  var string = '';
-  for (var ii = 0; ii < 15; ii++) {
-    string += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return string + '@gmail.com'
-}
+
 function Signin() {
   let navigate = useNavigate();
   const dispatch = useDispatch()
@@ -106,7 +99,7 @@ function Signin() {
               <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
                 {/* Logo */}
                 <Link className="block" to="/">
-                  <img src={logo} alt="Logo" className="h-24 w-auto" />
+                  <img src={logo} alt="Logo" className=" w-36" />
                 </Link>
               </div>
             </div>

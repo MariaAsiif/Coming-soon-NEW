@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-
-import Sidebar from '../partials/Sidebar';
-import Header from '../partials/Header';
+import React from 'react';
 import Datepicker from '../components/Datepicker';
 import AnalyticsCard01 from '../partials/analytics/AnalyticsCard01';
 import AnalyticsCard02 from '../partials/analytics/AnalyticsCard02';
@@ -17,71 +14,52 @@ import AnalyticsCard11 from '../partials/analytics/AnalyticsCard11';
 
 function Analytics() {
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      {/* Page header */}
+      <div className="sm:flex sm:justify-between sm:items-center mb-8">
 
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+        {/* Left: Title */}
+        <div className="mb-4 sm:mb-0">
+          <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Analytics ✨</h1>
+        </div>
 
-        {/*  Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        {/* Right: Actions */}
+        <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
 
-        <main>
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+          {/* Datepicker built with flatpickr */}
+          <Datepicker align="right" />
 
-            {/* Page header */}
-            <div className="sm:flex sm:justify-between sm:items-center mb-8">
-            
-              {/* Left: Title */}
-              <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Analytics ✨</h1>
-              </div>
-          
-              {/* Right: Actions */}
-              <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                  
-                {/* Datepicker built with flatpickr */}
-                <Datepicker align="right" />
-                  
-              </div>
-            
-            </div>            
-            
-            {/* Cards */}
-            <div className="grid grid-cols-12 gap-6">
+        </div>
 
-              {/* Line chart (Analytics) */}
-              <AnalyticsCard01 />
-              {/*  Line chart (Active Users Right Now) */}
-              <AnalyticsCard02 />
-              {/* Stacked bar chart (Acquisition Channels) */}
-              <AnalyticsCard03 />
-              {/* Horizontal bar chart (Audience Overview) */}
-              <AnalyticsCard04 />
-              {/* Report card (Top Channels) */}
-              <AnalyticsCard05 />
-              {/* Report card (Top Pages) */}
-              <AnalyticsCard06 />
-              {/* Report card (Top Countries) */}
-              <AnalyticsCard07 />
-              {/* Doughnut chart (Sessions By Device) */}
-              <AnalyticsCard08 />
-              {/* Doughnut chart (Visit By Age Category) */}
-              <AnalyticsCard09 />
-              {/* Polar chart (Sessions By Gender) */}
-              <AnalyticsCard10 />
-              {/* Table (Top Products) */}
-              <AnalyticsCard11 />
+      </div>
 
-            </div>
+      {/* Cards */}
+      <div className="grid grid-cols-12 gap-6">
 
-          </div>
-        </main>
+        {/* Line chart (Analytics) */}
+        <AnalyticsCard01 />
+        {/*  Line chart (Active Users Right Now) */}
+        <AnalyticsCard02 />
+        {/* Stacked bar chart (Acquisition Channels) */}
+        <AnalyticsCard03 />
+        {/* Horizontal bar chart (Audience Overview) */}
+        <AnalyticsCard04 />
+        {/* Report card (Top Channels) */}
+        <AnalyticsCard05 />
+        {/* Report card (Top Pages) */}
+        <AnalyticsCard06 />
+        {/* Report card (Top Countries) */}
+        <AnalyticsCard07 />
+        {/* Doughnut chart (Sessions By Device) */}
+        <AnalyticsCard08 />
+        {/* Doughnut chart (Visit By Age Category) */}
+        <AnalyticsCard09 />
+        {/* Polar chart (Sessions By Gender) */}
+        <AnalyticsCard10 />
+        {/* Table (Top Products) */}
+        <AnalyticsCard11 />
 
       </div>
 

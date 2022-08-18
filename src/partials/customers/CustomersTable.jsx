@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Customer from './CustomersTableItem';
 
 
-import Image01 from '../../images/user-40-01.jpg';
-import Image02 from '../../images/user-40-02.jpg';
+// import Image01 from '../../images/user-40-01.jpg';
+// import Image02 from '../../images/user-40-02.jpg';
 // import Image03 from '../../images/user-40-03.jpg';
 // import Image04 from '../../images/user-40-04.jpg';
 // import Image05 from '../../images/user-40-05.jpg';
@@ -32,7 +32,7 @@ function CustomersTable({
 
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
-    setIsCheck(list.map(li => li.id));
+    setIsCheck(list.map(li => li._id));
     if (selectAll) {
       setIsCheck([]);
     }
@@ -60,11 +60,18 @@ function CustomersTable({
       <div>
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="table-auto w-full lg:w-[1200px] lg:sidebar-expanded:w-[1000px] md:sidebar-expanded:w-[600px] md:w-[700px] sm:w-full">
+          <table className="table-auto w-full">
             {/* Table header */}
             <thead className="text-xs font-semibold uppercase text-slate-500 bg-slate-50 border-t border-b border-slate-200">
               <tr>
-               
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+                  <div className="flex items-center">
+                    <label className="inline-flex">
+                      <span className="sr-only">Select all</span>
+                      <input className="form-checkbox" type="checkbox" checked={selectAll} onChange={handleSelectAll} />
+                    </label>
+                  </div>
+                </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 
                   <div className="font-semibold text-left">Name</div>
@@ -78,20 +85,20 @@ function CustomersTable({
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Phone no</div>
                 </th>
-                
+
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold">Location</div>
                 </th>
-                
+
               </tr>
             </thead>
             {/* Table body */}
             <tbody className="text-sm divide-y divide-slate-200">
               {
-                tableRows.map(customer => {
+                tableRows.map((customer, i) => {
                   return (
                     <Customer
-                      key={customer.id}
+                      key={i}
                       id={customer._id}
                       image={customer.image}
                       name={`${customer.first_name} `}
@@ -111,7 +118,7 @@ function CustomersTable({
                       // refunds={customer.refunds}
                       // fav={customer.fav}
                       handleClick={handleClick}
-                      isChecked={isCheck.includes(customer.id)}
+                      isChecked={isCheck.includes(customer._id)}
                     />
                   )
                 })
