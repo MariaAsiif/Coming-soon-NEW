@@ -1,10 +1,36 @@
 import React, { useState } from 'react'
 import Flatpickr from 'react-flatpickr';
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+
 const CreateJob = () => {
+    const token = useSelector((state) => state.userAuth.loginInfo.token);
+    let navigate = useNavigate();
     const [jobModel, setjobModel] = useState({
         expiryDate: new Date(),
         job_title: "",
-
+        salary: "",
+        description: "",
+        jobtype: "",
+        jobstatus: "",
+        jobclass: "",
+        employer: "",
+        job_image_url: "/uploads/dp/default.png",
+        jobCategory: ["62fa17bbdd8f3425747ee221", "62fa188bdd8f3425747ee222"],
+        physicalLocation: {
+            country: "Lahore",
+            state: "Lahore",
+            province: "Lahore",
+            city: "Lahore"
+        },
+        location: {
+            type: "Point",
+            coordinates: [
+                74.28911285869138,
+                31.624888273644956
+            ]
+        }
     })
 
     const handleChange = (e) => {
@@ -18,8 +44,25 @@ const CreateJob = () => {
     const handleExpiryDateChange = (date) => {
         setjobModel((prevmodel) => ({
             ...prevmodel,
-            expiryDate: date
+            expiryDate: date[0]
         }))
+
+    }
+
+    const handleSaveJob = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            };
+            let response = await axios.post('http://localhost:5873/jobs/createjob', jobModel, config);
+            console.log(response);
+            navigate("/jobs", { replace: true });
+
+        } catch (error) {
+            console.log(error);
+        }
     }
     // ****************** Flatpicker Content ***********
     const options = {
@@ -42,54 +85,46 @@ const CreateJob = () => {
     }
     return (
         <div className='bscontainer-fluid'>
-            <div className='row'>
-                <div className='col-lg-4'>
-                    <div>
-                        <label className="block text-sm font-medium mb-1" htmlFor="job_title">Job Title</label>
-                        <input onchange={handleChange} value={jobModel.job_title} name='job_title' id="job_title" className="form-input w-full" type="text" />
-                    </div>
+            <div className='row p-11'>
+                <div className='col-lg-4 mb-4'>
+                    <label className="block text-sm font-medium mb-1" htmlFor="job_title">Job Title</label>
+                    <input onChange={handleChange} value={jobModel.job_title} name='job_title' id="job_title" className="form-input w-full" type="text" />
                 </div>
-                <div className='col-lg-4'>
-                    <div>
-                        <label className="block text-sm font-medium mb-1" htmlFor="salary">Salary</label>
-                        <input onchange={handleChange} value={jobModel.job_title} name='salary' id="salary" className="form-input w-full" type="text" />
-                    </div>
+                <div className='col-lg-4 mb-4'>
+                    <label className="block text-sm font-medium mb-1" htmlFor="salary">Salary</label>
+                    <input onChange={handleChange} value={jobModel.salary} name='salary' id="salary" className="form-input w-full" type="text" />
                 </div>
-                <div className='col-lg-4'>
-                    <div>
-                        <label className="block text-sm font-medium mb-1" htmlFor="description">Description</label>
-                        <input onchange={handleChange} value={jobModel.job_title} name='description' id="description" className="form-input w-full" type="text" />
-                    </div>
+                <div className='col-lg-4 mb-4'>
+                    <label className="block text-sm font-medium mb-1" htmlFor="description">Description</label>
+                    <input onChange={handleChange} value={jobModel.description} name='description' id="description" className="form-input w-full" type="text" />
                 </div>
-                <div className='col-lg-4'>
-                    <div>
-                        <label className="block text-sm font-medium mb-1" htmlFor="employer">Employer</label>
-                        <input onchange={handleChange} value={jobModel.job_title} name='employer' id="employer" className="form-input w-full" type="text" />
-                    </div>
+                <div className='col-lg-4 mb-4'>
+                    <label className="block text-sm font-medium mb-1" htmlFor="employer">Employer</label>
+                    <input onChange={handleChange} value={jobModel.employer} name='employer' id="employer" className="form-input w-full" type="text" />
                 </div>
-                <div className='col-lg-4'>
+                <div className='col-lg-4 mb-4'>
                     <label className="block text-sm font-medium mb-1" htmlFor="jobtype">jobtype</label>
-                    <select onchange={handleChange} value={jobModel.job_title} name="jobtype" id="jobtype" className="form-select w-full">
-                        <option>Full Time</option>
+                    <select onChange={handleChange} value={jobModel.jobtype} name="jobtype" id="jobtype" className="form-select w-full">
+                        <option value="full time">Full Time</option>
                         <option>Part Time</option>
                         <option>Hybrid</option>
                     </select>
                 </div>
-                <div className='col-lg-4'>
+                <div className='col-lg-4 mb-4'>
                     <label className="block text-sm font-medium mb-1" htmlFor="jobstatus">Job Status</label>
-                    <select onchange={handleChange} value={jobModel.job_title} name='jobstatus' id="jobstatus" className="form-select w-full">
-                        <option>Active</option>
+                    <select onChange={handleChange} value={jobModel.jobstatus} name='jobstatus' id="jobstatus" className="form-select w-full">
+                        <option value="active">Active</option>
                         <option>Deactive</option>
                     </select>
                 </div>
-                <div className='col-lg-4'>
+                <div className='col-lg-4 mb-4'>
                     <label className="block text-sm font-medium mb-1" htmlFor="jobclass">Job Class</label>
-                    <select onchange={handleChange} value={jobModel.job_title} name='jobclass' id="jobclass" className="form-select w-full">
+                    <select onChange={handleChange} value={jobModel.jobclass} name='jobclass' id="jobclass" className="form-select w-full">
                         <option>Physical</option>
-                        <option>Rermote</option>
+                        <option value="remote">Remote</option>
                     </select>
                 </div>
-                <div className='col-lg-4'>
+                <div className='col-lg-4 mb-4'>
                     <label className="block text-sm font-medium mb-1"  >Expiry Date</label>
                     <div className="relative">
                         <Flatpickr data-enable-time
@@ -101,6 +136,11 @@ const CreateJob = () => {
                             </svg>
                         </div>
                     </div>
+
+                </div>
+                <div className='col-lg-12'>
+
+                    <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white" onClick={handleSaveJob}>submit</button>
 
                 </div>
 
