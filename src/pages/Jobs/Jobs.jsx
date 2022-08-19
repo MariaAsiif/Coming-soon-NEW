@@ -87,14 +87,14 @@ const Jobs = () => {
                                 <table className="table-auto w-full">
                                     <thead className="text-xs font-semibold uppercase text-slate-500 bg-slate-50 border-t border-b border-slate-200">
                                         <tr>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+                                            {/* <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                 <div className="flex items-center">
                                                     <label className="inline-flex">
                                                         <span className="sr-only">Select all</span>
                                                         <input name="allSelect" checked={!alljobs.some((job) => !job.isChecked)} onChange={handleChange} className="form-checkbox" type="checkbox" />
                                                     </label>
                                                 </div>
-                                            </th>
+                                            </th> */}
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">JOB ID</div>
                                             </th>
@@ -131,14 +131,14 @@ const Jobs = () => {
                                         {alljobs.map((job, i) => {
                                             return (
                                                 <tr key={job._id}>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+                                                    {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                         <div className="flex items-center">
                                                             <label className="inline-flex">
                                                                 <span className="sr-only">Select</span>
                                                                 <input id={job._id} onChange={handleChange} name={job._id} checked={job?.isChecked || false} className="form-checkbox" type="checkbox" />
                                                             </label>
                                                         </div>
-                                                    </td>
+                                                    </td> */}
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{job._id}</div>
                                                     </td>

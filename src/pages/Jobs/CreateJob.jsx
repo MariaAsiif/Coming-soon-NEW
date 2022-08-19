@@ -86,6 +86,9 @@ const CreateJob = () => {
     return (
         <div className='bscontainer-fluid'>
             <div className='row p-11'>
+                <div className='col-12 mb-6'>
+                    <h1 className='text-xl font-semibold'>Add new job</h1>
+                </div>
                 <div className='col-lg-4 mb-4'>
                     <label className="block text-sm font-medium mb-1" htmlFor="job_title">Job Title</label>
                     <input onChange={handleChange} value={jobModel.job_title} name='job_title' id="job_title" className="form-input w-full" type="text" />
