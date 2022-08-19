@@ -7,43 +7,43 @@ import { Link } from 'react-router-dom';
 const Jobs = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [alljobs, setalljobs] = useState([])
-    const [selectedjobs, setselectedjobs] = useState([])
+    // const [selectedjobs, setselectedjobs] = useState([])
 
-    const handleChange = (e) => {
-        const { name, checked } = e.target;
-        if (name === 'allSelect') {
-            let tempUser = alljobs.map((job) => {
-                return { ...job, isChecked: checked };
-            });
-            setalljobs(tempUser);
-            if (e.target.checked) {
-                setselectedjobs(tempUser)
-            }
-            else {
-                setselectedjobs([])
-            }
+    // const handleChange = (e) => {
+    //     const { name, checked } = e.target;
+    //     if (name === 'allSelect') {
+    //         let tempUser = alljobs.map((job) => {
+    //             return { ...job, isChecked: checked };
+    //         });
+    //         setalljobs(tempUser);
+    //         if (e.target.checked) {
+    //             setselectedjobs(tempUser)
+    //         }
+    //         else {
+    //             setselectedjobs([])
+    //         }
 
-        } else {
-            let tempUser = alljobs.map((job) =>
-                job._id === name ? { ...job, isChecked: checked } : job
-            );
-            setalljobs(tempUser);
-            if (e.target.checked) {
+    //     } else {
+    //         let tempUser = alljobs.map((job) =>
+    //             job._id === name ? { ...job, isChecked: checked } : job
+    //         );
+    //         setalljobs(tempUser);
+    //         if (e.target.checked) {
 
-                console.log("checked");
-                let oldselectedjobssss = alljobs.find((sjob) => sjob._id === name)
-                setselectedjobs((prevjob) => ([
-                    ...prevjob,
-                    oldselectedjobssss
-                ]))
-            }
-            else {
-                console.log("unchecked");
-                let oldselectedjobs = selectedjobs.filter((sjob) => sjob._id !== name)
-                setselectedjobs(oldselectedjobs)
-            }
-        }
-    };
+    //             console.log("checked");
+    //             let oldselectedjobssss = alljobs.find((sjob) => sjob._id === name)
+    //             setselectedjobs((prevjob) => ([
+    //                 ...prevjob,
+    //                 oldselectedjobssss
+    //             ]))
+    //         }
+    //         else {
+    //             console.log("unchecked");
+    //             let oldselectedjobs = selectedjobs.filter((sjob) => sjob._id !== name)
+    //             setselectedjobs(oldselectedjobs)
+    //         }
+    //     }
+    // };
     useEffect(() => {
         (async () => {
             try {

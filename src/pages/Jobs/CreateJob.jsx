@@ -87,7 +87,9 @@ const CreateJob = () => {
         <div className='bscontainer-fluid'>
             <div className='row p-11'>
                 <div className='col-12 mb-6'>
-                    <h1 className='text-xl font-semibold'>Add new job</h1>
+                    <header className="  py-4">
+                        <h2 className="font-semibold text-slate-800">Add new job </h2>
+                    </header>
                 </div>
                 <div className='col-lg-4 mb-4'>
                     <label className="block text-sm font-medium mb-1" htmlFor="job_title">Job Title</label>
@@ -142,12 +144,8 @@ const CreateJob = () => {
 
                 </div>
                 <div className='col-lg-12'>
-
-                    <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white" onClick={handleSaveJob}>submit</button>
-
+                    <button className="btn bg-red-500 hover:bg-green-600 text-white" onClick={handleSaveJob}>Submit</button>
                 </div>
-
-
             </div>
         </div>
     )
