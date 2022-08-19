@@ -76,6 +76,8 @@ import AccordionPage from './pages/component/AccordionPage';
 import IconsPage from './pages/component/IconsPage';
 import MainWrapper from './pages/MainWrapper';
 import { useSelector } from 'react-redux'
+import Jobs from './pages/Jobs/Jobs';
+import CreateJob from './pages/Jobs/CreateJob';
 
 const RequireAuth = ({ children }) => {
   const token = useSelector((state) => state.userAuth.loginInfo.token);
@@ -105,6 +107,11 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="fintech" element={<Fintech />} />
+        </Route>
+
+        <Route path="/jobs" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Jobs />} />
+          <Route path="create-job" element={<CreateJob />} />
         </Route>
 
 

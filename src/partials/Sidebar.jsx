@@ -89,7 +89,7 @@ function Sidebar({
                     if (item.subMenuItems.length === 0) {
                       return (
                         <li key={index} className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes(item.pathname) && 'bg-slate-900'}`}>
-                          <NavLink end to={item.path} className={`block text-slate-800 hover:text-red-500 truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-slate-200' : ""}`} >
+                          <NavLink end to={item.path} className={`block text-slate-800 hover:text-red-500 truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-red-500' : ""}`} >
                             <div className="flex items-center justify-between">
                               <div className="grow flex items-center">
                                 {pathname.includes(item.pathname) ? item.activeLeftIcon : item.leftIcon}
@@ -110,7 +110,7 @@ function Sidebar({
                         {(handleClick, open) => {
                           return (
                             <React.Fragment>
-                              <a onClick={(e) => { e.preventDefault(); sidebarExpanded ? handleClick() : setSidebarExpanded(true); }} className={`block text-slate-800 hover:text-red-500 truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-slate-200' : ""}`} href="#0" >
+                              <a onClick={(e) => { e.preventDefault(); sidebarExpanded ? handleClick() : setSidebarExpanded(true); }} className={`block text-slate-800 hover:text-red-500 truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-red-500' : ""}`} href="#0" >
                                 <div className="flex items-center justify-between">
                                   <div className="flex items-center">
                                     {pathname.includes(item.pathname) ? item.activeLeftIcon : item.leftIcon}
@@ -128,7 +128,7 @@ function Sidebar({
                                   {item.subMenuItems.map((subitem, s_index) => {
                                     return (
                                       <li key={s_index} className="mb-1 last:mb-0">
-                                        <NavLink end to={subitem.pathname} className={({ isActive }) => 'block text-slate-800 hover:text-red-500 transition duration-150 truncate ' + (isActive ? '!text-red-500' : '')}>
+                                        <NavLink end to={subitem.pathname} className={({ isActive }) => 'block text-slate-800 hover:text-red-500 sdfdsf transition duration-150 truncate ' + (isActive ? '!text-red-500' : '')}>
                                           <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                             {subitem.label}
                                           </span>
