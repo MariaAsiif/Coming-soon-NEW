@@ -4,7 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import SidebarObj from './SidebarObj';
 
-import logo from '../images/hporx_logo.png';
+import logo from '../images/logo-curtain.png';
 
 function Sidebar({
   sidebarOpen,
@@ -72,7 +72,7 @@ function Sidebar({
           </button>
           {/* Logo */}
           <NavLink end to="/" className="block">
-            <img src={logo} alt="logo" className="w-52 lg:sidebar-expanded:w-40  " />
+            <img src={logo} alt="logo" className="w-[50px] lg:sidebar-expanded:w-[50px] h-[50px]" />
           </NavLink>
         </div>
 

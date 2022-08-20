@@ -5,41 +5,62 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import validate from '../../helpers/validation';
 import useForm from '../../helpers/useForm';
-import { FcCheckmark } from 'react-icons/fc'
-import { MdClose, MdOutlineClose } from 'react-icons/md';
-import { toast  , ToastContainer } from 'react-toastify';
-const CreateJob = () => {
+const CreateCandiate = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     let navigate = useNavigate();
-    // const [jobModel, setjobModel] = useState({
-    //     expiryDate: new Date(),
-    //     job_title: "",
-    //     salary: "",
-    //     description: "",
-    //     jobtype: "",
-    //     jobstatus: "",
-    //     jobclass: "",
-    //     employer: "",
-    //     job_image_url: "/uploads/dp/default.png",
-    //     jobCategory: ["62fa17bbdd8f3425747ee221", "62fa188bdd8f3425747ee222"],
-    //     physicalLocation: {
-    //         country: "Lahore",
-    //         state: "Lahore",
-    //         province: "Lahore",
-    //         city: "Lahore"
-    //     },
-    //     location: {
-    //         type: "Point",
-    //         coordinates: [
-    //             74.28911285869138,
-    //             31.624888273644956
-    //         ]
-    //     }
-    // })
+    const [jobModel, setjobModel] = useState({
+        expiryDate: new Date(),
+        job_title: "",
+        salary: "",
+        description: "",
+        jobtype: "",
+        jobstatus: "",
+        jobclass: "",
+        employer: "",
+        job_image_url: "/uploads/dp/default.png",
+        jobCategory: ["62fa17bbdd8f3425747ee221", "62fa188bdd8f3425747ee222"],
+        physicalLocation: {
+            country: "Lahore",
+            state: "Lahore",
+            province: "Lahore",
+            city: "Lahore"
+        },
+        location: {
+            type: "Point",
+            coordinates: [
+                74.28911285869138,
+                31.624888273644956
+            ]
+        }
+    })
 
+    // const handleChange = (e) => {
+    //     let { name, value } = e.target
+    //     setjobModel((prevmodel) => ({
+    //         ...prevmodel,
+    //         [name]: value
+    //     }))
+    // }
 
+    const {
+        values,
+        errors,
+        handleChange,
+        handleExpiryDateChange,
+        handleSubmit,
+    } = useForm(login, validate);
 
+    function login() {
+        console.log('No errors, submit callback called!');
+    }
 
+    // const handleExpiryDateChange = (date) => {
+    //     setjobModel((prevmodel) => ({
+    //         ...prevmodel,
+    //         expiryDate: date[0]
+    //     }))
+
+    // }
 
     const handleSaveJob = async () => {
         try {
@@ -48,37 +69,14 @@ const CreateJob = () => {
                     'Authorization': 'Bearer ' + token
                 }
             };
-            let response = await axios.post('http://localhost:5873/jobs/createjob', values, config);
+            let response = await axios.post('http://localhost:5873/jobs/createjob', jobModel, config);
             console.log(response);
-            if (response.data.status === "Success") {
-                navigate("/jobs", { replace: true });
-                toast.success(response.data.message);
-
-            }
-            else {
-                toast.error(response.data.message);
-            }
+            navigate("/jobs", { replace: true });
 
         } catch (error) {
             console.log(error);
         }
     }
-
-
-    //   usefORM HOOKS
-
-    const {
-        values,
-        errors,
-        handleChange,
-        handleExpiryDateChange,
-        handleSubmit,
-    } = useForm(handleSaveJob, validate);
-
-
-
-
-
     // ****************** Flatpicker Content ***********
     const options = {
 
@@ -100,30 +98,16 @@ const CreateJob = () => {
     }
     return (
         <div className='bscontainer-fluid'>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
             <form onSubmit={handleSubmit} noValidate>
                 <div className='row p-11'>
 
                     <div className='col-12 mb-6'>
                         <header className="  py-4">
-                            <h2 className="font-semibold text-slate-800">Add new job </h2>
+                            <h2 className="font-semibold text-slate-800">Add new Candidate</h2>
                         </header>
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
+                    <div className='col-lg-4 mb-4'>
                         <label className="block text-sm font-medium mb-1" htmlFor="job_title">Job Title</label>
-                        <div className='absolute right-5 top-10'>
-                            {!errors.job_title && values.job_title > 0 ? <FcCheckmark /> : errors.job_title || values.job_title < 0 ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
                         <input
                             onChange={handleChange}
                             autoComplete="off"
@@ -139,12 +123,8 @@ const CreateJob = () => {
                             <p className="text-red-500 text-sm">{errors.job_title}</p>
                         )}
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="salary">Salary </label>
-                        {/* <small>suggestion: US$ 150,000 / Anum</small> */}
-                        <div className='absolute right-5 top-10'>
-                            {!errors.salary && values.salary ? <FcCheckmark /> : errors.salary ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
+                    <div className='col-lg-4 mb-4'>
+                        <label className="block text-sm font-medium mb-1" htmlFor="salary">Salary</label>
                         <input
                             onChange={handleChange}
                             autoComplete="off"
@@ -153,7 +133,7 @@ const CreateJob = () => {
                             name='salary' id="salary"
                             // className="form-input w-full"
                             type="text"
-                            placeholder="US$ 150,000 / Anum"
+                            placeholder="Salary"
 
                         />
 
@@ -161,11 +141,8 @@ const CreateJob = () => {
                             <p className="text-red-500 text-sm">{errors.salary}</p>
                         )}
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
+                    <div className='col-lg-4 mb-4'>
                         <label className="block text-sm font-medium mb-1" htmlFor="description">Description</label>
-                        <div className='absolute right-5 top-10'>
-                            {!errors.description && values.description ? <FcCheckmark /> : errors.description ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
                         <input
                             onChange={handleChange}
                             autoComplete="off"
@@ -181,11 +158,8 @@ const CreateJob = () => {
                             <p className="text-red-500 text-sm">{errors.description}</p>
                         )}
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
+                    <div className='col-lg-4 mb-4'>
                         <label className="block text-sm font-medium mb-1" htmlFor="employer">Employer</label>
-                        <div className='absolute right-5 top-10'>
-                            {!errors.employer && values.employer ? <FcCheckmark /> : errors.employer ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
                         <input
                             onChange={handleChange}
                             autoComplete="off"
@@ -201,11 +175,8 @@ const CreateJob = () => {
                             <p className="text-red-500 text-sm">{errors.employer}</p>
                         )}
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
+                    <div className='col-lg-4 mb-4'>
                         <label className="block text-sm font-medium mb-1" htmlFor="jobtype">jobtype</label>
-                        <div className='absolute right-10 top-10'>
-                            {!errors.jobtype && values.jobtype ? <FcCheckmark /> : errors.jobtype ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
                         <select
                             onChange={handleChange}
                             value={values.jobtype}
@@ -214,19 +185,16 @@ const CreateJob = () => {
                             className={`form-input w-full  ${errors.jobtype && 'border-red-500'}`}
                         >
                             <option defaultChecked disabled>Select Job Type</option>
-                            <option>full time</option>
-                            <option>part time</option>
-                            <option>internship</option>
+                            <option>Full Time</option>
+                            <option>Part Time</option>
+                            <option>Hybrid</option>
                         </select>
                         {errors.jobtype && (
                             <p className="text-red-500 text-sm">{errors.jobtype}</p>
                         )}
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
+                    <div className='col-lg-4 mb-4'>
                         <label className="block text-sm font-medium mb-1" htmlFor="jobstatus">Job Status</label>
-                        <div className='absolute right-10 top-10'>
-                            {!errors.jobstatus && values.jobstatus ? <FcCheckmark /> : errors.jobstatus ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
                         <select
                             onChange={handleChange}
                             value={values.jobstatus}
@@ -235,19 +203,15 @@ const CreateJob = () => {
                             className={`form-input w-full  ${errors.jobstatus && 'border-red-500'}`}
                         >
                             <option defaultChecked disabled>Select Job Status </option>
-                            <option >active</option>
-                            <option >pending</option>
-                            <option>completed</option>
+                            <option >Active</option>
+                            <option>Deactive</option>
                         </select>
                         {errors.jobstatus && (
                             <p className="text-red-500 text-sm">{errors.jobstatus}</p>
                         )}
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
+                    <div className='col-lg-4 mb-4'>
                         <label className="block text-sm font-medium mb-1" htmlFor="jobclass">Job Class</label>
-                        <div className='absolute right-10 top-10'>
-                            {!errors.jobclass && values.jobclass ? <FcCheckmark /> : errors.jobclass ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
                         <select
                             onChange={handleChange}
                             value={values.jobclass}
@@ -256,20 +220,16 @@ const CreateJob = () => {
                             className={`form-input w-full   ${errors.jobclass && 'border-red-500'}`}
                         >
                             <option defaultChecked disabled>Select Job Class </option>
-                            <option>onsite</option>
-                            <option >remote</option>
-                            <option >hybrid</option>
+                            <option>Physical</option>
+                            <option >Remote</option>
                         </select>
                         {errors.jobclass && (
                             <p className="text-red-500 text-sm">{errors.jobclass}</p>
                         )}
                     </div>
-                    <div className='col-lg-4 mb-4 '>
+                    <div className='col-lg-4 mb-4'>
                         <label className="block text-sm font-medium mb-1"  >Expiry Date</label>
                         <div className="relative">
-                            {/* <div className='absolute right-20 top-0 z-2'>
-                            {!errors.jobtype && values.jobtype  ? <FcCheckmark /> : errors.jobtype ? <div className=' text-red-500'><MdClose/></div> : null }
-                        </div> */}
                             <Flatpickr data-enable-time
                                 value={values.expiryDate}
                                 placeholder="dd-mm-yyyy"
@@ -294,4 +254,4 @@ const CreateJob = () => {
     )
 }
 
-export default CreateJob
+export default CreateCandiate

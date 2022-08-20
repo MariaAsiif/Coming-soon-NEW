@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
-import ModalBasic from '../../components/ModalBasic';
+// import ModalBasic from '../../components/ModalBasic';
 import ModalCookies from '../../components/ModalCookies';
 import ModalBlank from '../../components/ModalBlank';
 import ModalAction from '../../components/ModalAction';
@@ -61,27 +61,8 @@ function ModalPage() {
 
                     {/* Basic Modal */}
                     <div className="m-1.5">
-                      {/* Start */}
                       <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white" aria-controls="basic-modal" onClick={(e) => { e.stopPropagation(); setBasicModalOpen(true); }}>Basic Modal</button>
-                      <ModalBasic id="basic-modal" modalOpen={basicModalOpen} setModalOpen={setBasicModalOpen} title="Basic Modal">
-                        {/* Modal content */}
-                        <div className="px-5 pt-4 pb-1">
-                          <div className="text-sm">
-                            <div className="font-medium text-slate-800 mb-2">Let’s Talk Paragraph</div>
-                            <div className="space-y-2">
-                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            </div>
-                          </div>
-                        </div>
-                        {/* Modal footer */}
-                        <div className="px-5 py-4">
-                          <div className="flex flex-wrap justify-end space-x-2">
-                            <button className="btn-sm border-slate-200 hover:border-slate-300 text-slate-600" onClick={(e) => { e.stopPropagation(); setBasicModalOpen(false); }}>Close</button>
-                            <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">I Understand</button>
-                          </div>
-                        </div>
-                      </ModalBasic>
+                      
                       {/* End */}
                     </div>
 
@@ -90,8 +71,7 @@ function ModalPage() {
                     <div className="m-1.5">
                       {/* Start */}
                       <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white" aria-controls="scrollbar-modal" onClick={(e) => { e.stopPropagation(); setScrollbarModalOpen(true); }}>Modal w/ Scroll Bar</button>
-                      <ModalBasic id="scrollbar-modal" modalOpen={scrollbarModalOpen} setModalOpen={setScrollbarModalOpen} title="Modal w/ Scroll Bar">
-                        {/* Modal content */}
+                      {/* <ModalBasic id="scrollbar-modal" modalOpen={scrollbarModalOpen} setModalOpen={setScrollbarModalOpen} title="Modal w/ Scroll Bar">
                         <div className="px-5 py-4">
                           <div className="text-sm">
                             <div className="font-medium text-slate-800 mb-2">Let’s Talk Paragraph</div>
@@ -105,14 +85,13 @@ function ModalPage() {
                             </div>
                           </div>
                         </div>
-                        {/* Modal footer */}
                         <div className="sticky bottom-0 px-5 py-4 bg-white border-t border-slate-200">
                           <div className="flex flex-wrap justify-end space-x-2">
                             <button className="btn-sm border-slate-200 hover:border-slate-300 text-slate-600" onClick={(e) => { e.stopPropagation(); setScrollbarModalOpen(false); }}>Close</button>
                             <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">I Understand</button>
                           </div>
                         </div>
-                      </ModalBasic>
+                      </ModalBasic> */}
                       {/* End */}
                     </div>
 
@@ -262,8 +241,8 @@ function ModalPage() {
                     <div className="m-1.5">
                       {/* Start */}
                       <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white" aria-controls="feedback-modal" onClick={(e) => { e.stopPropagation(); setFeedbackModalOpen(true); }}>Send Feedback</button>
-                      <ModalBasic id="feedback-modal" modalOpen={feedbackModalOpen} setModalOpen={setFeedbackModalOpen} title="Send Feedback">
-                        {/* Modal content */}
+                      {/* <ModalBasic id="feedback-modal" modalOpen={feedbackModalOpen} setModalOpen={setFeedbackModalOpen} title="Send Feedback">
+                  
                         <div className="px-5 py-4">
                           <div className="text-sm">
                             <div className="font-medium text-slate-800 mb-3">Let us know what you think 🙌</div>
@@ -283,14 +262,14 @@ function ModalPage() {
                             </div>
                           </div>
                         </div>
-                        {/* Modal footer */}
+                       
                         <div className="px-5 py-4 border-t border-slate-200">
                           <div className="flex flex-wrap justify-end space-x-2">
                             <button className="btn-sm border-slate-200 hover:border-slate-300 text-slate-600" onClick={(e) => { e.stopPropagation(); setFeedbackModalOpen(false); }}>Cancel</button>
                             <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">Send</button>
                           </div>
                         </div>
-                      </ModalBasic>
+                      </ModalBasic> */}
                       {/* End */}
                     </div>
 
@@ -484,12 +463,12 @@ function ModalPage() {
                     <div className="m-1.5">
                       {/* Start */}
                       <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white" aria-controls="feedback-modal" onClick={(e) => { e.stopPropagation(); setPlanModalOpen(true); }}>Change your Plan</button>
-                      <ModalBasic id="feedback-modal" modalOpen={planModalOpen} setModalOpen={setPlanModalOpen} title="Change your Plan">
-                        {/* Modal content */}
+                      {/* <ModalBasic id="feedback-modal" modalOpen={planModalOpen} setModalOpen={setPlanModalOpen} title="Change your Plan">
+                    
                         <div className="px-5 pt-4 pb-1">
                           <div className="text-sm">
                             <div className="mb-4">Upgrade or downgrade your plan:</div>
-                            {/* Options */}
+                          
                             <ul className="space-y-2 mb-4">
                               <li>
                                 <button className="w-full h-full text-left py-3 px-4 rounded bg-white border-2 border-indigo-400 shadow-sm duration-150 ease-in-out">
@@ -537,14 +516,14 @@ function ModalPage() {
                             <div className="text-xs text-slate-500">Your workspace’s Mosaic Light Plan is set to $39 per month and will renew on August 9, 2021.</div>
                           </div>
                         </div>
-                        {/* Modal footer */}
+                       
                         <div className="px-5 py-4">
                           <div className="flex flex-wrap justify-end space-x-2">
                             <button className="btn-sm border-slate-200 hover:border-slate-300 text-slate-600" onClick={(e) => { e.stopPropagation(); setPlanModalOpen(false); }}>Cancel</button>
                             <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">Change Plan</button>
                           </div>
                         </div>
-                      </ModalBasic>
+                      </ModalBasic> */}
                       {/* End */}
                     </div>
 

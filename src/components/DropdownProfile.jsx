@@ -4,6 +4,7 @@ import Transition from '../utils/Transition';
 import UserAvatar from '../images/user-avatar-32.png';
 import { useDispatch } from 'react-redux'
 import { signout } from '../Redux/UserAuthSlice/UserAuthSlice'
+import logo from '../images/logo-curtain.png';
 
 
 const DropdownProfile = ({ align }) => {
@@ -47,7 +48,9 @@ const DropdownProfile = ({ align }) => {
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
       >
-        <img className="w-8 h-8 rounded-full" src={UserAvatar} width="32" height="32" alt="User" />
+        <img className="w-8 h-8 rounded-full" src={logo} width="32" height="32" alt="User" />
+        {/* <img src={logo} alt="logo" className="w-[50px] lg:sidebar-expanded:w-[55px] h-[50px]" /> */}
+
         <div className="flex items-center truncate">
           <span className="truncate ml-2 text-sm font-medium group-hover:text-slate-800">Admin</span>
           <svg className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
