@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import axios from 'axios'
 import moment from "moment"
 import { Link } from 'react-router-dom';
 import viewSvg from '../../images/eye-svgrepo-com.svg'
 import ShowUser from '../../components/UerShow/ShowUser';
+import { callApi } from '../../utils/CallApi';
 
 const Jobs = () => {
-    const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [alljobs, setalljobs] = useState([])
     const [showUser, setshowUser] = useState('')
     // const [selectedjobs, setselectedjobs] = useState([])
@@ -48,31 +46,23 @@ const Jobs = () => {
     //     }
     // };
 
-    console.log("Show", showUser)
     useEffect(() => {
         (async () => {
             try {
-                const config = {
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    }
-                };
-                let response = await axios.post('http://localhost:5873/jobs/listjobs', {
+                const payload = {
                     sortproperty: "created_at",
                     sortorder: -1,
                     offset: 0,
                     limit: 50
-                }, config);
-
-                console.log("rs", response)
-
-                const updatedjobs = response.data.data.jobs.map((job) => ({ ...job, isChecked: false }))
+                }
+                const response = await callApi("/jobs/listjobs", "post", payload)
+                const updatedjobs = response.data.jobs.map((job) => ({ ...job, isChecked: false }))
                 setalljobs(updatedjobs)
             } catch (error) {
                 console.log(error);
             }
         })();
-    }, [token])
+    }, [])
     return (
         <div className='bscontainer-fluid'>
             <div className='row py-5'>
@@ -210,9 +200,9 @@ const Jobs = () => {
                 </div>
             </div>
 
-            
 
-            { showUser &&  <ShowUser show={showUser} setShow={("")} title={showUser} /> }
+
+            {showUser && <ShowUser show={showUser} setShow={("")} title={showUser} />}
         </div>
     )
 }

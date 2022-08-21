@@ -7,7 +7,7 @@ import validate from '../../helpers/validation';
 import useForm from '../../helpers/useForm';
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose, MdOutlineClose } from 'react-icons/md';
-import { toast  , ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 const CreateJob = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     let navigate = useNavigate();
