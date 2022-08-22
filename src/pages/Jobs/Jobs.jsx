@@ -28,6 +28,14 @@ const Jobs = () => {
         setjobRow(data)
     }
 
+    const deletejob = async () => {
+        try {
+            const response = await callApi("")
+        } catch (error) {
+
+        }
+    }
+
     // const [selectedjobs, setselectedjobs] = useState([])
 
     // const handleChange = (e) => {
@@ -202,7 +210,7 @@ const Jobs = () => {
 
 
                                                             </button>
-                                                            <button className="text-rose-500 hover:text-rose-600 rounded-full">
+                                                            <button onClick={deletejob} className="text-rose-500 hover:text-rose-600 rounded-full">
                                                                 <span className="sr-only">Delete</span>
                                                                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
                                                                     <path d="M13 15h2v6h-2zM17 15h2v6h-2z" />
