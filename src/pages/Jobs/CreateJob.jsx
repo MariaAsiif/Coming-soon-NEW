@@ -9,6 +9,7 @@ import { AiFillCalendar } from 'react-icons/ai'
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose, MdOutlineClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
+<<<<<<< HEAD
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -29,6 +30,8 @@ const schema = yup.object({
     age: yup.number().positive().integer().required(),
 }).required();
 
+=======
+>>>>>>> ce11051282014e502c212ca9ef05f00f79eb1aae
 const CreateJob = () => {
     const [dateob, setdateob] = useState('')
     const token = useSelector((state) => state.userAuth.loginInfo.token);
