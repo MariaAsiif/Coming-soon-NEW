@@ -9,7 +9,7 @@ import { useFormJob } from '../../helpers/useForm';
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose, MdOutlineClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
-const ShowUser = ({ permition,toggle , title, data, type }) => {
+const EditJob = ({ permition,toggle , title, data, type }) => {
     const [feedbackModalOpen, setFeedbackModalOpen] = useState(false)
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     let navigate = useNavigate();
@@ -298,4 +298,4 @@ const ShowUser = ({ permition,toggle , title, data, type }) => {
     )
 }
 
-export default ShowUser
+export default EditJob

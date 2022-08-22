@@ -4,12 +4,16 @@ import axios from 'axios'
 import moment from "moment"
 import { Link } from 'react-router-dom';
 import viewSvg from '../../images/eye-svgrepo-com.svg'
-import ShowUser from '../../components/UerShow/ShowUser';
+
+import ViewJob from '../../components/EditJob/ViewJob';
+import EditJob from '../../components/EditJob/EditJob';
 
 const Jobs = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [alljobs, setalljobs] = useState([])
-    const [showUser, setshowUser] = useState('')
+    const [showUser, setshowUser] = useState(false)
+    const [viewUser, setviewUser] = useState(false)
+    const [userType, setUserType] = useState('')
     // const [selectedjobs, setselectedjobs] = useState([])
 
     // const handleChange = (e) => {
@@ -49,6 +53,7 @@ const Jobs = () => {
     // };
 
     console.log("Show", showUser)
+    console.log("Show", userType)
     useEffect(() => {
         (async () => {
             try {
@@ -176,13 +181,13 @@ const Jobs = () => {
 
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                         <div className="space-x-1">
-                                                            <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={() => setshowUser("edit")}>
+                                                            <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => { e.stopPropagation(); setshowUser(true); setUserType('edit') }}>
                                                                 <span className="sr-only">Edit</span>
                                                                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
                                                                     <path d="M19.7 8.3c-.4-.4-1-.4-1.4 0l-10 10c-.2.2-.3.4-.3.7v4c0 .6.4 1 1 1h4c.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4l-4-4zM12.6 22H10v-2.6l6-6 2.6 2.6-6 6zm7.4-7.4L17.4 12l1.6-1.6 2.6 2.6-1.6 1.6z" />
                                                                 </svg>
                                                             </button>
-                                                            <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={() => setshowUser("Show")}>
+                                                            <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => { e.stopPropagation(); setshowUser(true); setUserType('view') }}>
                                                                 <img src={viewSvg} className="w-6 h-7" alt='delete' />
                                                                 {/* <span className="sr-only">Show</span>
                                                                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
@@ -210,9 +215,10 @@ const Jobs = () => {
                 </div>
             </div>
 
-            
-
-            { showUser &&  <ShowUser show={showUser} setShow={("")} title={showUser} /> }
+            <button onClick={(e) => { e.stopPropagation(); setshowUser(true); setUserType('edit') }}>Show</button>
+            <button onClick={(e) => { e.stopPropagation(); setviewUser(true); setUserType('view') }}>View </button>
+            <ViewJob permition={showUser} toggle={(value) => setshowUser(value)} title={"View"} />
+            <EditJob permition={viewUser} toggle={(value) => setviewUser(value)} title={"Edit a Job"} />
         </div>
     )
 }

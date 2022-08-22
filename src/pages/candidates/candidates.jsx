@@ -4,10 +4,14 @@ import axios from 'axios'
 import moment from "moment"
 import { Link } from 'react-router-dom';
 import viewSvg from '../../images/eye-svgrepo-com.svg'
-
+import ViewCandidate from '../../components/EditCandidate/ViewCandidate'
+import EditCandidate from '../../components/EditCandidate/EditCandidate'
 const Candidates = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [alljobs, setalljobs] = useState([])
+    const [showUser, setshowUser] = useState(false)
+    const [viewUser, setviewUser] = useState(false)
+    const [userType, setUserType] = useState('')
     // const [selectedjobs, setselectedjobs] = useState([])
 
     // const handleChange = (e) => {
@@ -205,6 +209,11 @@ const Candidates = () => {
                     </div>
                 </div>
             </div>
+
+            <button onClick={(e) => { e.stopPropagation(); setshowUser(true); setUserType('edit') }}>Show</button>
+            <button onClick={(e) => { e.stopPropagation(); setviewUser(true); setUserType('view') }}>View </button>
+            <ViewCandidate permition={showUser} toggle={(value) => setshowUser(value)} title={"View"} />
+            <EditCandidate permition={viewUser} toggle={(value) => setviewUser(value)} title={"Edit a Job"} />
         </div>
     )
 }

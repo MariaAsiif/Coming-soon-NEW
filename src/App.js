@@ -108,7 +108,7 @@ function App() {
 
       <Routes>
         <Route exact path="/" element={<CommingSoon />} />
-        <Route path="/dashboard" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route path="/dashboard" element={<MainWrapper />} >
           <Route index element={<Dashboard />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="fintech" element={<Fintech />} />
@@ -119,9 +119,13 @@ function App() {
           <Route path="create-job" element={<CreateJob />} />
         </Route>
 
-        <Route path="/candidates" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route path="/candidates" element={<MainWrapper />} >
           <Route index element={<Candidate />} />
           <Route path="create-candidate" element={<CreateCandidate />} />
+        </Route>
+        <Route path="/applied-jobs" element={<MainWrapper />} >
+          <Route index element={<Candidate />} />
+          <Route path="view-candidate" element={<CreateCandidate />} />
         </Route>
 
 

@@ -59,7 +59,7 @@ function ModalBasic({
         leaveStart="opacity-100 translate-y-0"
         leaveEnd="opacity-0 translate-y-4"
       >
-        <div ref={modalContent} className="bg-white rounded shadow-lg overflow-auto max-w-lg w-full max-h-full">
+        <div ref={modalContent} className="bg-white rounded shadow-lg  overflow-auto  max-w-[900px] max-h-full">
           {/* Modal header */}
           <div className="px-5 py-3 border-b border-slate-200">
             <div className="flex justify-between items-center">
@@ -72,8 +72,11 @@ function ModalBasic({
               </button>
             </div>
           </div>
-          {children}     
-        </div>        
+          <div className='p-4'>
+
+            {children}
+          </div>
+        </div>
       </Transition>
     </>
   );
