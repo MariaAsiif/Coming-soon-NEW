@@ -46,10 +46,10 @@ const SidebarObj = () => {
                             label: "Create job",
                             pathname: "/jobs/create-job",
                         },
-                        // {
-                        //     label: "Fintech",
-                        //     pathname: "/dashboard/fintech",
-                        // },
+                        {
+                            label: "Applied Jobs",
+                            pathname: "/applied-jobs",
+                        },
                     ]
                 },
                 {
@@ -86,7 +86,7 @@ const SidebarObj = () => {
                             label: "Applied Jobs",
                             pathname: "/applied-jobs",
                         },
-                        
+
                         // {
                         //     label: "Fintech",
                         //     pathname: "/dashboard/fintech",
