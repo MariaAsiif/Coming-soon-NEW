@@ -108,7 +108,7 @@ function App() {
 
       <Routes>
         <Route exact path="/" element={<CommingSoon />} />
-        <Route path="/dashboard" element={<MainWrapper />} >
+        <Route path="/dashboard" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Dashboard />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="fintech" element={<Fintech />} />

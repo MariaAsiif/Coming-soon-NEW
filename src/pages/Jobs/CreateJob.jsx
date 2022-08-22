@@ -9,9 +9,8 @@ import { AiFillCalendar } from 'react-icons/ai'
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose, MdOutlineClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
-<<<<<<< HEAD
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
@@ -26,14 +25,11 @@ const schema = yup.object({
     jobstatus: yup.string().required(),
     jobclass: yup.string().required(),
     employer: yup.string().required(),
-    expiryDate: yup.string().required(),
-    age: yup.number().positive().integer().required(),
+    // age: yup.number().positive().integer().required(),
 }).required();
 
-=======
->>>>>>> ce11051282014e502c212ca9ef05f00f79eb1aae
 const CreateJob = () => {
-    const [dateob, setdateob] = useState('')
+    const [expiryDate, setexpiryDate] = useState({ day: 10, month: 8, year: 2022 })
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     let navigate = useNavigate();
     // const [jobModel, setjobModel] = useState({
@@ -94,30 +90,29 @@ const CreateJob = () => {
 
 
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm({
-        resolver: yupResolver(schema)
-    });
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
     const onSubmit = async (data) => {
-        try {
-            const config = {
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            };
-            let response = await axios.post('http://localhost:5873/jobs/createjob', data, config);
-            console.log(response);
-            if (response.data.status === "Success") {
-                navigate("/jobs", { replace: true });
-                toast.success(response.data.message);
+        console.log(data);
+        // try {
+        //     const config = {
+        //         headers: {
+        //             'Authorization': 'Bearer ' + token
+        //         }
+        //     };
+        //     let response = await axios.post('http://localhost:5873/jobs/createjob', data, config);
+        //     console.log(response);
+        //     if (response.data.status === "Success") {
+        //         navigate("/jobs", { replace: true });
+        //         toast.success(response.data.message);
 
-            }
-            else {
-                toast.error(response.data.message);
-            }
+        //     }
+        //     else {
+        //         toast.error(response.data.message);
+        //     }
 
-        } catch (error) {
-            console.log(error);
-        }
+        // } catch (error) {
+        //     console.log(error);
+        // }
     }
 
 
@@ -126,21 +121,11 @@ const CreateJob = () => {
     // ****************** Flatpicker Content ***********
     const renderCustomInput = ({ ref }) => (
         < div className='relative cursor-pointer'>
-            <input
-                readOnly
-                ref={ref} // necessary
-                placeholder="yyy-mm-dd"
-                value={"2022/03/09"}
-                className={`date_picker w-full outline-blue-400 cursor-pointer z-30  border-2 px-2 py-2 ${dateob ? "border-red-400" : "border-gray-400"}`}
-            // a styling class
+            <input readOnly ref={ref} // necessary  placeholder="yyy-mm-dd"
+                value={expiryDate ? `${expiryDate.year}/${expiryDate.month}/${expiryDate.day}` : ''}
+                className={`date_picker w-full outline-blue-400 cursor-pointer z-30  border-2 px-2 py-2  border-gray-400`}
             />
-            <div className={dateob.length ? `visible absolute top-3 cursor-pointer right-5` : `visible absolute top-3 cursor-pointer right-5`}>
-                {dateob ?
-                    <FcCheckmark />
-                    :
-                    <AiFillCalendar />
-                }
-            </div>
+            <div className={`visible absolute top-3 cursor-pointer right-5`}>   <FcCheckmark />   </div>
 
         </div >
     )
@@ -300,7 +285,7 @@ const CreateJob = () => {
                             <p className="text-red-500 text-sm">{errors.jobclass.message}</p>
                         )}
                     </div>
-                    <div className='col-lg-4 mb-4 '>
+                    {/* <div className='col-lg-4 mb-4 '>
                         <label className="block text-sm font-medium mb-1"  >Expiry Date</label>
                         <div className="relative">
 
@@ -316,11 +301,6 @@ const CreateJob = () => {
                                     />
                                 )}
                             />
-
-
-
-
-
                             <div className="absolute inset-0 right-auto flex items-center pointer-events-none">
                                 <svg className="w-4 h-4 fill-current text-slate-500 ml-3" viewBox="0 0 16 16">
                                     <path d="M15 2h-2V0h-2v2H9V0H7v2H5V0H3v2H1a1 1 0 00-1 1v12a1 1 0 001 1h14a1 1 0 001-1V3a1 1 0 00-1-1zm-1 12H2V6h12v8z" />
@@ -333,6 +313,15 @@ const CreateJob = () => {
                         {errors.expiryDate && (
                             <p className="text-red-500 text-sm">{errors.expiryDate.message}</p>
                         )}
+                    </div> */}
+                    <div className='col-lg-4'>
+                        <label className="block text-sm font-medium mb-1"  >Expiry Date</label>
+                        <DatePicker
+                            value={expiryDate}
+                            onChange={setexpiryDate}
+                            renderInput={renderCustomInput} // render a custom input
+                            shouldHighlightWeekends
+                        />
                     </div>
 
                     {/*  */}

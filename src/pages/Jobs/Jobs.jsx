@@ -2,20 +2,30 @@ import React, { useState, useEffect } from 'react'
 import moment from "moment"
 import { Link } from 'react-router-dom';
 import viewSvg from '../../images/eye-svgrepo-com.svg'
-<<<<<<< HEAD
 
 import ViewJob from '../../components/EditJob/ViewJob';
 import EditJob from '../../components/EditJob/EditJob';
-=======
 import ShowUser from '../../components/UerShow/ShowUser';
 import { callApi } from '../../utils/CallApi';
->>>>>>> ce11051282014e502c212ca9ef05f00f79eb1aae
+
+import ViewEditJobPopup from '../../components/Popups/ViewEditJobPopup';
 
 const Jobs = () => {
     const [alljobs, setalljobs] = useState([])
     const [showUser, setshowUser] = useState(false)
     const [viewUser, setviewUser] = useState(false)
     const [userType, setUserType] = useState('')
+    const [jobPopup, setjobPopup] = useState(false)
+    const [jobMode, setjobMode] = useState("view")
+    const [jobRow, setjobRow] = useState({})
+
+    const openJobPopup = (e, mode, data) => {
+        e.stopPropagation()
+        setjobPopup(true)
+        setjobMode(mode)
+        setjobRow(data)
+    }
+
     // const [selectedjobs, setselectedjobs] = useState([])
 
     // const handleChange = (e) => {
@@ -54,30 +64,29 @@ const Jobs = () => {
     //     }
     // };
 
-<<<<<<< HEAD
-    console.log("Show", showUser)
-    console.log("Show", userType)
-=======
->>>>>>> ce11051282014e502c212ca9ef05f00f79eb1aae
     useEffect(() => {
-        (async () => {
-            try {
-                const payload = {
-                    sortproperty: "created_at",
-                    sortorder: -1,
-                    offset: 0,
-                    limit: 50
+        if (!jobPopup) {
+            (async () => {
+                try {
+                    const payload = {
+                        sortproperty: "created_at",
+                        sortorder: -1,
+                        offset: 0,
+                        limit: 50
+                    }
+                    const response = await callApi("/jobs/listjobs", "post", payload)
+                    const updatedjobs = response.data.jobs.map((job) => ({ ...job, isChecked: false }))
+                    setalljobs(updatedjobs)
+                } catch (error) {
+                    console.log(error);
                 }
-                const response = await callApi("/jobs/listjobs", "post", payload)
-                const updatedjobs = response.data.jobs.map((job) => ({ ...job, isChecked: false }))
-                setalljobs(updatedjobs)
-            } catch (error) {
-                console.log(error);
-            }
-        })();
-    }, [])
+            })();
+        }
+
+    }, [jobPopup])
     return (
         <div className='bscontainer-fluid'>
+            <ViewEditJobPopup id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />
             <div className='row py-5'>
                 <div className='col-12  mb-5'>
                     <Link to="create-job" className="btn bg-indigo-500 hover:bg-indigo-600 text-white" >
@@ -138,7 +147,7 @@ const Jobs = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="text-sm divide-y divide-slate-200">
-                                        {alljobs.map((job, i) => {
+                                        {alljobs.map((job) => {
                                             return (
                                                 <tr key={job._id}>
                                                     {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
@@ -179,13 +188,13 @@ const Jobs = () => {
 
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                         <div className="space-x-1">
-                                                            <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => { e.stopPropagation(); setshowUser(true); setUserType('edit') }}>
+                                                            <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openJobPopup(e, "edit", job)}>
                                                                 <span className="sr-only">Edit</span>
                                                                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
                                                                     <path d="M19.7 8.3c-.4-.4-1-.4-1.4 0l-10 10c-.2.2-.3.4-.3.7v4c0 .6.4 1 1 1h4c.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4l-4-4zM12.6 22H10v-2.6l6-6 2.6 2.6-6 6zm7.4-7.4L17.4 12l1.6-1.6 2.6 2.6-1.6 1.6z" />
                                                                 </svg>
                                                             </button>
-                                                            <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => { e.stopPropagation(); setshowUser(true); setUserType('view') }}>
+                                                            <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openJobPopup(e, "view", job)}>
                                                                 <img src={viewSvg} className="w-6 h-7" alt='delete' />
                                                                 {/* <span className="sr-only">Show</span>
                                                                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
@@ -213,16 +222,13 @@ const Jobs = () => {
                 </div>
             </div>
 
-<<<<<<< HEAD
+
             <button onClick={(e) => { e.stopPropagation(); setshowUser(true); setUserType('edit') }}>Show</button>
             <button onClick={(e) => { e.stopPropagation(); setviewUser(true); setUserType('view') }}>View </button>
             <ViewJob permition={showUser} toggle={(value) => setshowUser(value)} title={"View"} />
             <EditJob permition={viewUser} toggle={(value) => setviewUser(value)} title={"Edit a Job"} />
-=======
-
 
             {showUser && <ShowUser show={showUser} setShow={("")} title={showUser} />}
->>>>>>> ce11051282014e502c212ca9ef05f00f79eb1aae
         </div>
     )
 }

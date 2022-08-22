@@ -13,6 +13,10 @@ import { Country, State, City } from 'country-state-city';
 import { GoDeviceMobile } from 'react-icons/go'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
+import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
+
+
 const CreateCandidate = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     let navigate = useNavigate();
@@ -23,7 +27,7 @@ const CreateCandidate = () => {
     const [mobile, setmobile] = useState("")
     const [defaultCountry, setDefaultCountry] = useState("")
     const [defaultCity, setDefaultCity] = useState("")
-
+    const [expiryDate, setexpiryDate] = useState({ day: 10, month: 8, year: 2022 })
     const [recruitModel, setrecruitModel] = useState({
         surname: "Mr",
         fullname: "",
@@ -122,6 +126,19 @@ const CreateCandidate = () => {
         nextArrow: '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M1.4 10.8L0 9.4l4-4-4-4L1.4 0l5.4 5.4z" /></svg>',
 
     }
+
+
+    // ****************** Datepicker Content ***********
+    const renderCustomInput = ({ ref }) => (
+        < div className='relative cursor-pointer'>
+            <input readOnly ref={ref} // necessary  placeholder="yyy-mm-dd"
+                value={expiryDate ? `${expiryDate.year}/${expiryDate.month}/${expiryDate.day}` : ''}
+                className={`date_picker w-full outline-blue-400 cursor-pointer z-30  border-2 px-2 py-2  border-gray-400`}
+            />
+            <div className={`visible absolute top-3 cursor-pointer right-5`}>   <FcCheckmark />   </div>
+
+        </div >
+    )
 
     useEffect(() => {
         console.log("useEffect 1 run");
@@ -513,19 +530,13 @@ const CreateCandidate = () => {
                     <div className='col-lg-4 mb-4 '>
                         <label className="block text-sm font-medium mb-1 "  >Expiry Date</label>
                         <div className="relative">
-                            {/* <div className='absolute right-20 top-0 z-2'>
-                            {!errors.jobtype && values.jobtype  ? <FcCheckmark /> : errors.jobtype ? <div className=' text-red-500'><MdClose/></div> : null }
-                        </div> */}
-                            <Flatpickr data-enable-time
-                                value={values.expiryDate}
-                                placeholder="dd-mm-yyyy"
-                                onChange={handleExpiryDateChange}
-                                className={`form-input w-full pl-9 text-slate-500 hover:text-slate-600 font-medium focus:border-slate-300  first-letter: ${errors.expiryDate && 'border-red-500'}`} options={options} />
-                            <div className="absolute inset-0 right-auto flex items-center pointer-events-none">
-                                <svg className="w-4 h-4 fill-current text-slate-500 ml-3" viewBox="0 0 16 16">
-                                    <path d="M15 2h-2V0h-2v2H9V0H7v2H5V0H3v2H1a1 1 0 00-1 1v12a1 1 0 001 1h14a1 1 0 001-1V3a1 1 0 00-1-1zm-1 12H2V6h12v8z" />
-                                </svg>
-                            </div>
+
+                            <DatePicker
+                                value={expiryDate}
+                                onChange={setexpiryDate}
+                                renderInput={renderCustomInput} // render a custom input
+                                shouldHighlightWeekends
+                            />
                         </div>
                         {errors.expiryDate && (
                             <p className="text-red-500 text-sm">{errors.expiryDate}</p>
