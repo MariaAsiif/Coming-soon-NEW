@@ -5,12 +5,14 @@ import SidebarLinkGroup from './SidebarLinkGroup';
 import SidebarObj from './SidebarObj';
 
 import logo from '../images/logo-curtain.png';
+import hproxlogo from '../images/hporx_logo.png';
 
 function Sidebar({
   sidebarOpen,
   setSidebarOpen
 }) {
   const sidebaritems = SidebarObj()
+
   const location = useLocation();
   const { pathname } = location;
 
@@ -19,6 +21,7 @@ function Sidebar({
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true');
+  // const [expand] = useState(storedSidebarExpanded)
 
   // close on click outside
   // useEffect(() => {
@@ -46,13 +49,15 @@ function Sidebar({
   });
 
   useEffect(() => {
-    localStorage.setItem('sidebar-expanded', sidebarExpanded);
+    let expand = localStorage.setItem('sidebar-expanded', sidebarExpanded);
     if (sidebarExpanded) {
       document.querySelector('body').classList.add('sidebar-expanded');
     } else {
       document.querySelector('body').classList.remove('sidebar-expanded');
     }
   }, [sidebarExpanded]);
+
+  console.log("storedSidebarExpanded", storedSidebarExpanded)
 
   return (
     <div>
@@ -72,7 +77,11 @@ function Sidebar({
           </button>
           {/* Logo */}
           <NavLink end to="/" className="block">
-            <img src={logo} alt="logo" className="w-[50px] lg:sidebar-expanded:w-[50px] h-[50px]" />
+            {sidebarExpanded ?
+              <img src={hproxlogo} alt="hprox_lgo" className="lg:sidebar-expanded:block  lg:sidebar-expanded:w-[300px] h-[50px] " />
+              :
+              <img src={logo} alt="logo" className="w-[50px]  lg:sidebar-expanded:hidden  h-[50px]" />
+            }
           </NavLink>
         </div>
 

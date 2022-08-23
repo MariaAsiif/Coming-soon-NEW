@@ -43,18 +43,18 @@ const schema = yup.object({
     age: yup.string().required(),
 });
 
-const CreateCandidate = () => {
+const CreateEmployer = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     let navigate = useNavigate();
-    
+
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    const [expiryDate, setexpiryDate] = useState({ day: dd , month: mm, year: yyyy })
-    const [all_Countries , setall_Countries] = useState([])
-    const [all_States, setall_States] = useState([] )
+    const [expiryDate, setexpiryDate] = useState({ day: dd, month: mm, year: yyyy })
+    const [all_Countries, setall_Countries] = useState([])
+    const [all_States, setall_States] = useState([])
     const [all_Cities, setall_Cities] = useState([])
     const [countryCode, setCountryCode] = useState("")
     const [mobile, setmobile] = useState("")
@@ -92,15 +92,15 @@ const CreateCandidate = () => {
         if (name === "country") {
             const updatedStates = State.getStatesOfCountry(value)
             const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
-            const updatedCities = City.getCitiesOfState( value , stateCode)
+            const updatedCities = City.getCitiesOfState(value, stateCode)
             setall_States(updatedStates)
             setall_Cities(updatedCities)
-         
+
         }
         else if (name === "state") {
             const updatedStates = State.getStatesOfCountry(value)
             const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
-           const updatedCities = City.getCitiesOfState( value , stateCode)
+            const updatedCities = City.getCitiesOfState(value, stateCode)
             setall_Cities(updatedCities)
 
         }
@@ -112,7 +112,7 @@ const CreateCandidate = () => {
         }
     }
 
-    console.log("red", recruitModel)
+    console.log("red", all_Cities)
 
     const onSubmit = async (data) => {
         console.log("Data", data)
@@ -160,7 +160,7 @@ const CreateCandidate = () => {
                 let id = response.data.location.country.tld
                 let removeDot = id.replace('.', "")
                 setCountryCode(removeDot)
-                const get_countris =  Country.getAllCountries()
+                const get_countris = Country.getAllCountries()
                 const CurrentStates = State.getStatesOfCountry(currentCountryCode)
                 const CurrentCities = City.getCitiesOfState(currentCountryCode, CurrentStates[0].isoCode)
                 setrecruitModel((prevmodel) => ({
@@ -201,7 +201,7 @@ const CreateCandidate = () => {
 
                     <div className='col-12 mb-6'>
                         <header className="py-4">
-                            <h2 className="font-semibold text-slate-800">Add new Candidate</h2>
+                            <h2 className="font-semibold text-slate-800">Add new Employer</h2>
                         </header>
                     </div>
 
@@ -346,12 +346,12 @@ const CreateCandidate = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="country">Country</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.country  ? <FcCheckmark /> : errors.country ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.country ? <FcCheckmark /> : errors.country ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
 
 
                         <select
-                            value={recruitModel.country}
+                            value={all_Countries.find((contry) => contry.isoCode === recruitModel.country)?.name}
                             onChange={handleChange}
                             name="country"
                             id="country"
@@ -360,7 +360,7 @@ const CreateCandidate = () => {
                             <option defaultChecked disabled>Select Country </option>
                             {all_Countries.map((contry) => {
                                 return (
-                                    <option value={contry.isoCode}>{contry.name }</option>
+                                    <option value={contry.isoCode}>{contry.name}</option>
 
                                 )
                             })
@@ -449,36 +449,65 @@ const CreateCandidate = () => {
                                     />
                                 )}
                             />
-                            {/* <PhoneInput
-                                country={countryCode}
-                                dropdownClass={"custom-dropdown"}
-                                enableSearch
-                                disableSearchIcon
-                                placeholder="000 000 000"
-                                countryCodeEditable={false}
-                                value={mobile}
-                                onChange={handleMobileChange} /> */}
+
                         </div>
                         {errors.mobile && (
                             <p className="text-red-500 text-sm">{errors.mobile.message}</p>
                         )}
                     </div>
                     <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="industry">Industry </label>
+                        <label className="block text-sm font-medium mb-1" htmlFor="city">Departmant</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.industry && watch('industry') ? <FcCheckmark /> : errors.industry ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.department ? <FcCheckmark /> : errors.department ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
-                        <input
-                            {...register('industry')}
-                            autoComplete="off"
-                            className={`form-input w-full  ${errors.industry && 'border-red-500'}`}
-                            name='industry' id="industry"
-                            placeholder="Current Industry"
+                        <select
+                            // {...register('city')}
+                            // value={recruitModel.department}
+                            onChange={handleChange}
+                            name="city"
+                            id="city"
+                            className={`form-input w-full   ${errors.city && 'border-red-500'}`}
+                        >
+                            <option  disabled>Select city </option>
+                            {all_Cities.map((contry) => {
+                                return (
+                                    <option >{contry.name}</option>
 
-                            type="text" />
-                        {errors.industry && (
-                            <p className="text-red-500 text-sm">{errors.industry.message}</p>
-                        )}
+                                )
+                            })
+                            }
+
+                        </select>
+                        {/* {errors.city && (
+                            <p className="text-red-500 text-sm">{errors.city.message}</p>
+                        )} */}
+                    </div>
+                    <div className='col-lg-4 mb-4 relative'>
+                        <label className="block text-sm font-medium mb-1" htmlFor="city">Designation</label>
+                        <div className='absolute right-10 top-10'>
+                            {!errors.designation ? <FcCheckmark /> : errors.designation ? <div className=' text-red-500'><MdClose /></div> : null}
+                        </div>
+                        <select
+                            // {...register('designation')}
+                            // value={recruitModel.designation}
+                            onChange={handleChange}
+                            name="designation"
+                            id="designation"
+                            className={`form-input w-full   ${errors.designation && 'border-red-500'}`}
+                        >
+                            <option  disabled>Select designation </option>
+                            {all_Cities.map((contry) => {
+                                return (
+                                    <option >{contry.name}</option>
+
+                                )
+                            })
+                            }
+
+                        </select>
+                        {/* {errors.designation && (
+                            <p className="text-red-500 text-sm">{errors.city.message}</p>
+                        )} */}
                     </div>
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="position">Position </label>
@@ -516,54 +545,8 @@ const CreateCandidate = () => {
                             <p className="text-red-500 text-sm">{errors.age.message}</p>
                         )}
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="secondFname">Cv </label>
-                        <div className='absolute right-5 top-10'>
-                            {!errors.cv && watch('cv') ? <FcCheckmark /> : errors.cv ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
-                        <Controller
-                            control={control}
-                            name="cv"
-                            render={({ field: { onChange, onBlur, } }) => (
-                                <input
-                                    onBlur={onBlur}
-                                    onChange={onChange}
-                                    type="file"
-                                    className={`form-input w-full h-[42px]  ${errors.cv && 'border-red-500'}`}
-                                    name='cv' id="cv"
-                                />
-                            )}
-                        />
-                        {/* <input
-                            {...register('cv')}
-                            autoComplete="off"
-                            className={`form-input w-full h-[42px]  ${errors.cv && 'border-red-500'}`}
-                            name='cv' id="cv"
-                            type="file" /> */}
-
-                        {errors.cv && (
-                            <p className="text-red-500 text-sm">{errors.cv.message}</p>
-                        )}
-                    </div>
-                    <div className='col-lg-4 mb-4 '>
-                        <label className="block text-sm font-medium mb-1 "  >Expiry Date</label>
-                        <div className="relative">
-                            <Controller
-                                control={control}
-                                name="expiryDate"
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <DatePicker
-                                        value={value}
-                                        onChange={setexpiryDate}
-                                        renderInput={renderCustomInput} // render a custom input
-                                        shouldHighlightWeekends
-                                    />
-                                )}
-                            />
-                        </div>
 
 
-                    </div>
 
                     <div className='col-lg-12'>
                         <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
@@ -574,4 +557,4 @@ const CreateCandidate = () => {
     )
 }
 
-export default CreateCandidate
+export default CreateEmployer

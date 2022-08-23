@@ -4,14 +4,12 @@ import axios from 'axios'
 import moment from "moment"
 import { Link } from 'react-router-dom';
 import { callApi } from '../../utils/CallApi';
-import ViewEditCandidate from '../../components/Popups/ViewEditCandidate';
 import { IoEyeOutline } from 'react-icons/io5';
-const Candidates = () => {
+import ViewEditEmployer from '../../components/Popups/ViewEditEmployer';
+const Employers = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [alljobs, setalljobs] = useState([])
     const [showUser, setshowUser] = useState(false)
-    const [viewUser, setviewUser] = useState(false)
-    const [userType, setUserType] = useState('')
     const [jobPopup, setjobPopup] = useState(false)
     const [jobMode, setjobMode] = useState("view")
     const [jobRow, setjobRow] = useState({})
@@ -95,21 +93,20 @@ const Candidates = () => {
     }, [token])
     return (
         <div className='bscontainer-fluid'>
-            <ViewEditCandidate id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />
-
+            <ViewEditEmployer id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />
             <div className='row py-5'>
                 <div className='col-12  mb-5'>
                     <Link to="create-candidate" className="btn bg-red-500 hover:bg-green-600 text-white" >
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                         </svg>
-                        <span className="ml-2">Create Candidate</span>
+                        <span className="ml-2">Create Employer</span>
                     </Link>
                 </div>
                 <div className='col-12 border'>
                     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                         <header className="px-5 py-4">
-                            <h2 className="font-semibold text-slate-800">All Candidates <span className="text-slate-400 font-medium">{alljobs.length}</span></h2>
+                            <h2 className="font-semibold text-slate-800">All Employers <span className="text-slate-400 font-medium">{alljobs.length}</span></h2>
                         </header>
                         <div>
                             <div className="overflow-x-auto">
@@ -240,4 +237,4 @@ const Candidates = () => {
     )
 }
 
-export default Candidates
+export default Employers

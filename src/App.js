@@ -82,6 +82,8 @@ import CreateJob from './pages/Jobs/CreateJob';
 
 import Candidate from './pages/candidates/candidates';
 import CreateCandidate from './pages/candidates/CreateCandidate';
+import Employers from './pages/employers/employers';
+import CreateEmployer from './pages/employers/CreateEmployer';
 
 const RequireAuth = ({ children }) => {
   const token = useSelector((state) => state.userAuth.loginInfo.token);
@@ -119,13 +121,13 @@ function App() {
           <Route path="create-job" element={<CreateJob />} />
         </Route>
 
-        <Route path="/candidates" element={<MainWrapper />} >
+        <Route path="/candidates" element={<RequireAuth><MainWrapper /> </RequireAuth>} >
           <Route index element={<Candidate />} />
           <Route path="create-candidate" element={<CreateCandidate />} />
         </Route>
-        <Route path="/applied-jobs" element={<MainWrapper />} >
-          <Route index element={<Candidate />} />
-          <Route path="view-candidate" element={<CreateCandidate />} />
+        <Route path="/employers" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Employers />} />
+          <Route path="create-employers" element={<CreateEmployer />} />
         </Route>
 
 
