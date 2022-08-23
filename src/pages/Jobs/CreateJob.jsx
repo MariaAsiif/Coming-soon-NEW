@@ -29,10 +29,12 @@ const schema = yup.object({
 }).required();
 
 const CreateJob = () => {
-    const timeElapsed = Date.now();
-    const date = new Date(timeElapsed);
-    console.log("Date" , date.getDay() )
-    const [expiryDate, setexpiryDate] = useState({ day:date.getDay() , month: date.getMonth(), year: date.getFullYear() })
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    const [expiryDate, setexpiryDate] = useState({ day: dd , month: mm, year: yyyy })
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     let navigate = useNavigate();
     // const [jobModel, setjobModel] = useState({
