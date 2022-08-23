@@ -78,7 +78,7 @@ function Sidebar({
           {/* Logo */}
           <NavLink end to="/" className="block">
             {sidebarExpanded ?
-              <img src={hproxlogo} alt="hprox_lgo" className="lg:sidebar-expanded:block  lg:sidebar-expanded:w-[300px] h-[50px] " />
+              <img src={hproxlogo} alt="hprox_lgo" className=" w-10/12 " />
               :
               <img src={logo} alt="logo" className="w-[50px]  lg:sidebar-expanded:hidden  h-[50px]" />
             }
