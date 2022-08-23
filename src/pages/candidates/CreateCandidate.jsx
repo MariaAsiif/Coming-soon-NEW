@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import Flatpickr from 'react-flatpickr';
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
-import { validateCandidate, validateJob } from '../../helpers/validation';
-import { useFormJob, useFormCandidate } from '../../helpers/useForm';
 import { surnames } from '../../utils/enum';
 import { FcCheckmark } from 'react-icons/fc'
-import { MdClose, MdOutlineClose } from 'react-icons/md';
+import { MdClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
 import { Country, State, City } from 'country-state-city';
 import { GoDeviceMobile } from 'react-icons/go'
@@ -15,7 +12,39 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+const schema = yup.object({
+    fullname: yup.string().required(),
+    firstFname: yup.string().required(),
+    secondFname: yup.string().required(),
+    thirdFname: yup.string().required(),
+    email: yup.string().email('Invalid email format').required(),
+    reEmail: yup.string().email('Invalid email format').required(),
+    city: yup.string().required(),
+    state: yup.string().required(),
+    industry: yup.string().required(),
+    country: yup.string().required(),
+    position: yup.string().required(),
+    mobile: yup.string().required(),
+    cv: yup.mixed()
+        .test("required", "You need to provide a file", (file) => {
+            // return file && file.size <-- u can use this if you don't want to allow empty files to be uploaded;
+            if (file) return true;
+            return false;
+        })
+    ,
+    // cv: yup.mixed()
+    //     .required("You need to provide a file")
+    //     .test("fileSize", "File Size is too large", (value) => {
+    //         return value && value[0].size <= 5242880;
+    //     })
+    //     .test("fileType", "Unsupported File Format", (value) =>
+    //         ["image/jpeg", "image/png", "image/jpg",].includes(value.type)
+    //     ),
+    age: yup.string().required(),
+});
 
 const CreateCandidate = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
@@ -47,93 +76,79 @@ const CreateCandidate = () => {
     })
 
 
-    // const handlePlaces = (iso_Code, name) => {
-    //     localStorage.setItem(name, iso_Code);
-    //     let updatedCities = []
-    //     let cityName = ""
-    //     if (name === "country") {
-    //         console.log(iso_Code);
-    //         const updatedStates = State.getStatesOfCountry(iso_Code)
-    //         const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
-    //         updatedCities = City.getCitiesOfState(iso_Code, stateCode)
-    //         cityName = updatedCities.length > 0 ? updatedCities[0].name : ""
-    //         setall_States(updatedStates)
-    //         setall_Cities(updatedCities)
-    //         setrecruitModel((prevmodel) => ({
-    //             ...prevmodel,
-    //             state: stateCode,
-    //             city: cityName
-    //         }))
-    //     }
-    //     else if (name === "state") {
-    //         updatedCities = City.getCitiesOfState(recruitModel.country, iso_Code)
-    //         cityName = updatedCities.length > 0 ? updatedCities[0].name : ""
-    //         setall_Cities(updatedCities)
-    //         setrecruitModel((prevmodel) => ({
-    //             ...prevmodel,
-    //             city: cityName
-    //         }))
-    //     }
-    //     setrecruitModel((prevmodel) => ({
-    //         ...prevmodel,
-    //         [name]: iso_Code
-    //     }))
-    // }
-
-    // ================ check Name ========
-
-
-
-
     const handleMobileChange = (value) => {
         setmobile(value)
     }
 
 
-    const handleSaveJob = async () => {
-        try {
-            const config = {
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            };
-            let response = await axios.post('http://localhost:5873/jobs/createjob', values, config);
-            console.log(response);
-            if (response.data.status === "Success") {
-                navigate("/jobs", { replace: true });
-                toast.success(response.data.message);
+    const { register, watch, setValue, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
-            }
-            else {
-                toast.error(response.data.message);
-            }
 
-        } catch (error) {
-            console.log(error);
+    const handleChange = (e) => {
+        let { name, value } = e.target
+        let cityName = ""
+        let updatedCities = []
+        if (name === "country") {
+            const updatedStates = State.getStatesOfCountry(value)
+            const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
+            updatedCities = City.getCitiesOfState(value, stateCode)
+            cityName = updatedCities.length > 0 ? updatedCities[0].name : ""
+            setall_States(updatedStates)
+            setall_Cities(updatedCities)
+            // setrecruitModel((prevmodel) => ({
+            //     ...prevmodel,
+            //     state: stateCode,
+            //     city: cityName
+            // }))
+        }
+        else if (name === "state") {
+            updatedCities = City.getCitiesOfState(recruitModel.country, value)
+            // cityName = updatedCities.length > 0 ? updatedCities[0].name : ""
+            setall_Cities(updatedCities)
+
+        }
+        else {
+            setrecruitModel((prevmodel) => ({
+                ...prevmodel,
+                [name]: value
+            }))
         }
     }
 
+    console.log("red", recruitModel.country)
 
-    // ****************** Flatpicker Content ***********
-    const options = {
+    const onSubmit = async (data) => {
+        console.log("Data", data)
+        // try {
+        //     const config = {
+        //         headers: {
+        //             'Authorization': 'Bearer ' + token
+        //         }
+        //     };
+        //     let response = await axios.post('http://localhost:5873/jobs/createjob', config);
+        //     console.log(response);
+        //     if (response.data.status === "Success") {
+        //         navigate("/jobs", { replace: true });
+        //         toast.success(response.data.message);
 
-        static: true,
-        monthSelectorType: 'static',
-        enableTime: false,
-        dateFormat: 'M j, Y',
-        defaultDate: [new Date().setDate(new Date().getDate() - 6), new Date()],
-        prevArrow: '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
-        nextArrow: '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M1.4 10.8L0 9.4l4-4-4-4L1.4 0l5.4 5.4z" /></svg>',
+        //     }
+        //     else {
+        //         toast.error(response.data.message);
+        //     }
 
+        // } catch (error) {
+        //     console.log(error);
+        // }
     }
+
 
 
     // ****************** Datepicker Content ***********
     const renderCustomInput = ({ ref }) => (
-        < div className='relative cursor-pointer'>
+        < div className='relative cursor-pointe w-full'>
             <input readOnly ref={ref} // necessary  placeholder="yyy-mm-dd"
                 value={expiryDate ? `${expiryDate.year}/${expiryDate.month}/${expiryDate.day}` : ''}
-                className={`date_picker w-full outline-blue-400 cursor-pointer z-30  border-2 px-2 py-2  border-gray-400`}
+                className={` form-input w-full outline-blue-400 cursor-pointer z-30  px-2 py-2  border-gray-400`}
             />
             <div className={`visible absolute top-3 cursor-pointer right-5`}>   <FcCheckmark />   </div>
 
@@ -146,11 +161,19 @@ const CreateCandidate = () => {
             (async () => {
                 const response = await axios('https://api.ipregistry.co/?key=m7irmmf8ey12rx7o')
                 const currentCountryCode = response.data.location.country.code
+                const currentCountryName = response.data.location.country.name
                 let id = response.data.location.country.tld
                 let removeDot = id.replace('.', "")
                 setCountryCode(removeDot)
+
                 const CurrentStates = State.getStatesOfCountry(currentCountryCode)
                 const CurrentCities = City.getCitiesOfState(currentCountryCode, CurrentStates[0].isoCode)
+                setrecruitModel((prevmodel) => ({
+                    ...prevmodel,
+                    country: currentCountryName,
+                    state: CurrentStates.length > 0 ? CurrentStates[0].isoCode : "",
+                    city: CurrentCities.length > 0 ? CurrentCities[0].name : ""
+                }))
                 setall_States(CurrentStates)
                 setall_Cities(CurrentCities)
 
@@ -162,19 +185,7 @@ const CreateCandidate = () => {
     }, [])
 
 
-
-
-    //   usefORM HOOKS
-    const {
-        values,
-        errors,
-        handleChange,
-        handleExpiryDateChange,
-        handleSubmit,
-    } = useFormCandidate(handleSaveJob, validateCandidate);
-
-
-    console.log("valus", values)
+    console.log(errors);
 
     return (
         <div className='bscontainer-fluid'>
@@ -189,7 +200,7 @@ const CreateCandidate = () => {
                 draggable
                 pauseOnHover
             />
-            <form onSubmit={handleSubmit} noValidate>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='row p-11'>
 
                     <div className='col-12 mb-6'>
@@ -197,161 +208,155 @@ const CreateCandidate = () => {
                             <h2 className="font-semibold text-slate-800">Add new Candidate</h2>
                         </header>
                     </div>
+
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="fullname">Full Name </label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.fullname && values.fullname ? <FcCheckmark /> : errors.fullname || values.fullname < 0 ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.fullname ? <FcCheckmark /> : errors.fullname ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
-                        <div className='text-gray-500 text-base font-medium bg-light-gray flex h-11'>
+                        <div className='text-gray-500 text-base bg-light-gray flex h-11'>
                             <div className="dropdown relative w-1/5">
-                                <button className=" w-full bg-white border border-r-0 h-full  border-gray-400 text-gray-400 dropdown-toggle p-2   focus:outline-blue-400 focus:ring-0 active:border-blue-400   transition duration-150 ease-in-out flex items-center whitespace-nowrap " type="button" id="surdropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                {/* <button className=" w-full bg-white border border-r-0 h-full  border-gray-400 text-gray-400 dropdown-toggle p-2   focus:outline-blue-400 focus:ring-0 active:border-blue-400   transition duration-150 ease-in-out flex items-center whitespace-nowrap " type="button" id="surdropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                     {surnames.find((s_name) => s_name === values.surname)}
                                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" className="w-3 ml-auto" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                         <path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z" />
                                     </svg>
-                                </button>
-                                <ul className=" dropdown-menu absolute w-full  max-h-52 overflow-y-auto overflow-x-hidden bg-white text-base z-100 float-left py-2 list-none text-left shadow-lg mt-1 hidden m-0 bg-clip-padding border-none " aria-labelledby="surdropdown">
+                                </button> */}
+                                <select className=" w-full h-full" {...register('surname')} id="dropdown">
                                     {surnames.map((sur, i) => {
-                                        if (values.surname !== "sur")
-                                            return (
-                                                <li key={i} >
-                                                    <span className=" cursor-pointer dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100 "  >{sur}</span>
-                                                </li>
-                                            )
+                                        // if (values.surname !== "sur")
+                                        return (
+                                            <option>{sur}</option>
+                                        )
                                     })}
-                                </ul>
+                                </select>
                             </div>
                             <div className='relative inline-block w-4/5 '>
                                 <input name='fullname'
-                                    value={values.fullname}
-                                    onChange={handleChange}
                                     type="text"
-                                    placeholder='Name '
-                                    // className={`form-input w-full h-full ${errors.fullname && 'border-red-500'}`}
-
-                                    className={`w-full h-full  ${errors.fullname ? "border-red-400" : "border-gray-400"} `}
+                                    {...register('fullname')}
+                                    placeholder='Name'
+                                    className={`form-input w-full h-full  ${errors.fullname ? "border-red-400" : "border-gray-400"} `}
                                 />
-                                <span hidden={values.fullname.length} className='absolute  text-red-400 font-medium text-lg top-1/4 left-[70px]'>*</span>
-                                <span className={values.fullname.length ? `visible absolute top-1/4 right-3` : `invisible`}>
+                                {errors.fullname && (
+                                    <p className="text-red-500 text-sm">{errors.fullname.message}</p>
+                                )}
+                                <span hidden={watch('fullname')} className='absolute  text-red-400 font-medium text-lg top-1/4 left-[70px]'>*</span>
+                                <span className={watch('fullname') ? `visible absolute top-1/4 right-3` : `invisible`}>
                                     <FcCheckmark />
                                 </span>
+
                             </div>
                         </div>
                     </div>
+
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="salary">First Family Name </label>
-                        {/* <small>suggestion: US$ 150,000 / Anum</small> */}
                         <div className='absolute right-5 top-10'>
-                            {!errors.firstFname && values.firstFname ? <FcCheckmark /> : errors.firstFname ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.firstFname && watch("firstFname") ? <FcCheckmark /> : errors.firstFname ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
-                            onChange={handleChange}
+                            {...register('firstFname')}
                             autoComplete="off"
                             className={`w-full  ${errors.firstFname ? "border-red-400" : "border-gray-400"}`}
-                            value={values.firstFname || ''}
                             name='firstFname' id="firstFname"
-                            // className="form-input w-full"
                             type="text"
                             placeholder="FIRST FAMILY NAME "
 
                         />
-                        <span hidden={values?.firstFname.length} className='absolute text-red-400 text-lg font-medium  top-9 left-[175px]'>*</span>
+                        <span hidden={watch("firstFname")} className='absolute text-red-400 text-lg font-medium  top-9 left-[175px]'>*</span>
 
                         {errors.firstFname && (
-                            <p className="text-red-500 text-sm">{errors.firstFname}</p>
+                            <p className="text-red-500 text-sm">{errors.firstFname.message}</p>
                         )}
                     </div>
+
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="secondFname">Second Family Name </label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.secondFname && values.secondFname ? <FcCheckmark /> : errors.secondFname ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.secondFname && watch('secondFname') ? <FcCheckmark /> : errors.secondFname ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
-                            onChange={handleChange}
+                            {...register('secondFname')}
                             autoComplete="off"
                             className={`form-input w-full  ${errors.secondFname && 'border-red-500'}`}
-                            value={values.secondFname || ''}
                             name='secondFname' id="secondFname"
-                            // className="form-input w-full"
-                            placeholder="2nd Family Name "
+                            placeholder="2nd Family Name"
 
                             type="text" />
-                        <span hidden={values?.secondFname.length} className='absolute text-red-400 text-sm font-medium  top-9 left-[170px]'>(optional)</span>
+                        <span hidden={watch('secondFname')} className='absolute text-red-400 text-sm font-medium  top-9 left-[170px]'>(optional)</span>
 
 
                         {errors.secondFname && (
-                            <p className="text-red-500 text-sm">{errors.secondFname}</p>
+                            <p className="text-red-500 text-sm">{errors.secondFname.message}</p>
                         )}
                     </div>
+
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="thirdFname">Third Family Name </label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.thirdFname && values.thirdFname ? <FcCheckmark /> : errors.thirdFname ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.thirdFname && watch('thirdFname') ? <FcCheckmark /> : errors.thirdFname ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
-                            onChange={handleChange}
+                            {...register('thirdFname')}
                             autoComplete="off"
                             className={`form-input w-full  ${errors.thirdFname && 'border-red-500'}`}
-                            value={values.thirdFname || ''}
                             name='thirdFname' id="thirdFname"
-                            // className="form-input w-full"
                             placeholder="3rd Family Name"
+                            type="text"
+                        />
+                        <span hidden={watch('thirdFname')} className='absolute text-red-400 text-sm font-medium  top-9 left-[170px]'>(optional)</span>
 
-                            type="text" />
-                        <span hidden={values?.thirdFname.length} className='absolute text-red-400 text-sm font-medium  top-9 left-[170px]'>(optional)</span>
-
-                        {errors.employer && (
-                            <p className="text-red-500 text-sm">{errors.employer}</p>
+                        {errors.thirdFname && (
+                            <p className="text-red-500 text-sm">{errors.thirdFname.message}</p>
                         )}
                     </div>
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="email">Email</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.email && values.email ? <FcCheckmark /> : errors.email ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.email && watch('email') ? <FcCheckmark /> : errors.email ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
-                            onChange={handleChange}
+                            {...register('email')}
                             autoComplete="off"
                             className={`form-input w-full  ${errors.email && 'border-red-500'}`}
-                            value={values.email || ''}
                             name='email' id="email"
-                            // className="form-input w-full"
                             placeholder="Email Address"
-
                             type="text" />
-                        <span hidden={values?.email.length} className='absolute text-red-400 text-lg font-medium  top-9 left-[150px]'>*</span>
+                        <span hidden={watch('email')} className='absolute text-red-400 text-lg font-medium  top-9 left-[150px]'>*</span>
 
                         {errors.email && (
-                            <p className="text-red-500 text-sm">{errors.email}</p>
+                            <p className="text-red-500 text-sm">{errors.email.message}</p>
                         )}
                     </div>
+
                     <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="Remail">Re Email </label>
+                        <label className="block text-sm font-medium mb-1" htmlFor="reEmail">Re Email </label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.Remail && values.Remail ? <FcCheckmark /> : errors.Remail ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.reEmail && watch('reEmail') ? <FcCheckmark /> : errors.reEmail ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
-                            onChange={handleChange}
+                            {...register('reEmail')}
                             autoComplete="off"
-                            className={`form-input w-full  ${errors.Remail && 'border-red-500'}`}
-                            value={values.Remail || ''}
-                            name='Remail' id="Remail"
-                            // className="form-input w-full"
+                            className={`form-input w-full  ${errors.reEmail && 'border-red-500'}`}
+                            name='reEmail' id="reEmail"
                             placeholder="Re Email Address "
-
                             type="text" />
-                        {errors.jobstatus && (
-                            <p className="text-red-500 text-sm">{errors.jobstatus}</p>
+                        {errors.reEmail && (
+                            <p className="text-red-500 text-sm">{errors.reEmail.message}</p>
                         )}
                     </div>
+
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="country">Country</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.country && values.country ? <FcCheckmark /> : errors.country ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.country && watch('country') ? <FcCheckmark /> : errors.country ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
+
+
                         <select
+                            value={recruitModel.country}
                             onChange={handleChange}
-                            value={values.country}
                             name="country"
                             id="country"
                             className={`form-input w-full   ${errors.country && 'border-red-500'}`}
@@ -359,25 +364,25 @@ const CreateCandidate = () => {
                             <option defaultChecked disabled>Select Country </option>
                             {all_Countries.map((contry) => {
                                 return (
-                                    <option>{contry.name}</option>
+                                    <option value={contry.isoCode}>{contry.name}</option>
 
                                 )
                             })
                             }
 
                         </select>
-                        {errors.country && (
-                            <p className="text-red-500 text-sm">{errors.country}</p>
-                        )}
+
                     </div>
+
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="state">State</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.state && values.state ? <FcCheckmark /> : errors.state ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.state && watch('state') ? <FcCheckmark /> : errors.state ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <select
+                            // {...register('state')}
+                            value={recruitModel.state}
                             onChange={handleChange}
-                            value={values.state}
                             name="state"
                             id="state"
                             className={`form-input w-full   ${errors.state && 'border-red-500'}`}
@@ -385,7 +390,7 @@ const CreateCandidate = () => {
                             <option defaultChecked disabled>Select State </option>
                             {all_States.map((contry) => {
                                 return (
-                                    <option>{contry.name}</option>
+                                    <option value={contry.isoCode}>{contry.name}</option>
 
                                 )
                             })
@@ -393,17 +398,18 @@ const CreateCandidate = () => {
 
                         </select>
                         {errors.state && (
-                            <p className="text-red-500 text-sm">{errors.state}</p>
+                            <p className="text-red-500 text-sm">{errors.state.message}</p>
                         )}
                     </div>
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="city">City</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.city && values.city ? <FcCheckmark /> : errors.city ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.city && watch('city') ? <FcCheckmark /> : errors.city ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <select
+                            // {...register('city')}
+                            value={recruitModel.city}
                             onChange={handleChange}
-                            value={values.city}
                             name="city"
                             id="city"
                             className={`form-input w-full   ${errors.city && 'border-red-500'}`}
@@ -411,7 +417,7 @@ const CreateCandidate = () => {
                             <option defaultChecked disabled>Select city </option>
                             {all_Cities.map((contry) => {
                                 return (
-                                    <option>{contry.name}</option>
+                                    <option >{contry.name}</option>
 
                                 )
                             })
@@ -419,23 +425,35 @@ const CreateCandidate = () => {
 
                         </select>
                         {errors.city && (
-                            <p className="text-red-500 text-sm">{errors.city}</p>
+                            <p className="text-red-500 text-sm">{errors.city.message}</p>
                         )}
                     </div>
                     <div className='col-lg-4 mb-4 relative '>
                         <label className="block text-sm font-medium mb-1" htmlFor="phone">Phone</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.phone && values.phone ? <FcCheckmark /> : errors.phone ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.mobile && watch('mobile') ? <FcCheckmark /> : errors.mobile ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
 
-                        {
-                            !mobile || countryCode &&
-                            <div className='flags absolute flex items-center top-[6px]  left-[8px] z-[1]  w-[122px] h-[32px] '><div>
-                                <GoDeviceMobile />
-                            </div></div>
-                        }
                         <div className='w-full '>
-                            <PhoneInput
+                            <Controller
+                                name="mobile"
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field: { onChange, value } }) => (
+                                    <PhoneInput
+                                        value={value}
+                                        enableSearch
+                                        disableSearchIcon
+                                        country={countryCode}
+                                        onChange={onChange}
+                                        placeholder="000 000 000"
+                                        // countryCodeEditable={false}
+                                        className={` w-full  ${errors.mobile && 'error_form'}`}
+                                        dropdownClass={"custom-dropdown"}
+                                    />
+                                )}
+                            />
+                            {/* <PhoneInput
                                 country={countryCode}
                                 dropdownClass={"custom-dropdown"}
                                 enableSearch
@@ -443,105 +461,114 @@ const CreateCandidate = () => {
                                 placeholder="000 000 000"
                                 countryCodeEditable={false}
                                 value={mobile}
-                                onChange={handleMobileChange} />
+                                onChange={handleMobileChange} /> */}
                         </div>
-                        {errors.phone && (
-                            <p className="text-red-500 text-sm">{errors.phone}</p>
+                        {errors.mobile && (
+                            <p className="text-red-500 text-sm">{errors.mobile.message}</p>
                         )}
                     </div>
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="industry">Industry </label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.industry && values.industry ? <FcCheckmark /> : errors.industry ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.industry && watch('industry') ? <FcCheckmark /> : errors.industry ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
-                            onChange={handleChange}
+                            {...register('industry')}
                             autoComplete="off"
                             className={`form-input w-full  ${errors.industry && 'border-red-500'}`}
-                            value={values.industry || ''}
                             name='industry' id="industry"
-                            // className="form-input w-full"
                             placeholder="Current Industry"
 
                             type="text" />
-                        {errors.jobstatus && (
-                            <p className="text-red-500 text-sm">{errors.jobstatus}</p>
+                        {errors.industry && (
+                            <p className="text-red-500 text-sm">{errors.industry.message}</p>
                         )}
                     </div>
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="position">Position </label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.position && values.position ? <FcCheckmark /> : errors.position ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.position && watch('position') ? <FcCheckmark /> : errors.position ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
-                            onChange={handleChange}
+                            {...register('position')}
                             autoComplete="off"
                             className={`form-input w-full  ${errors.position && 'border-red-500'}`}
-                            value={values.position || ''}
                             name='position' id="position"
-                            // className="form-input w-full"
                             placeholder="Position of Interest? "
 
                             type="text" />
-                        {errors.jobstatus && (
-                            <p className="text-red-500 text-sm">{errors.jobstatus}</p>
+                        {errors.position && (
+                            <p className="text-red-500 text-sm">{errors.position.message}</p>
                         )}
                     </div>
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="age">Age </label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.age && values.age ? <FcCheckmark /> : errors.age ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.age && watch('age') ? <FcCheckmark /> : errors.age ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
-                            onChange={handleChange}
+
                             autoComplete="off"
                             className={`form-input w-full  ${errors.age && 'border-red-500'}`}
-                            value={values.age || ''}
+                            {...register('age')}
                             name='age' id="age"
-                            // className="form-input w-full"
                             placeholder="Age"
                             pattern="[0-9]+"
                             type="number" />
 
-                        {errors.description && (
-                            <p className="text-red-500 text-sm">{errors.description}</p>
+                        {errors.age && (
+                            <p className="text-red-500 text-sm">{errors.age.message}</p>
                         )}
                     </div>
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="secondFname">Cv </label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.cv && values.cv ? <FcCheckmark /> : errors.cv ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.cv && watch('cv') ? <FcCheckmark /> : errors.cv ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
-                        <input
-                            onChange={handleChange}
+                        <Controller
+                            control={control}
+                            name="cv"
+                            render={({ field: { onChange, onBlur, } }) => (
+                                <input
+                                    onBlur={onBlur}
+                                    onChange={onChange}
+                                    type="file"
+                                    className={`form-input w-full h-[42px]  ${errors.cv && 'border-red-500'}`}
+                                    name='cv' id="cv"
+                                />
+                            )}
+                        />
+                        {/* <input
+                            {...register('cv')}
                             autoComplete="off"
                             className={`form-input w-full h-[42px]  ${errors.cv && 'border-red-500'}`}
-                            value={values.cv || ''}
                             name='cv' id="cv"
-                            // className="form-input w-full"
-                            placeholder="2nd Family Name "
+                            type="file" /> */}
 
-                            type="file" />
-
-                        {errors.description && (
-                            <p className="text-red-500 text-sm">{errors.description}</p>
+                        {errors.cv && (
+                            <p className="text-red-500 text-sm">{errors.cv.message}</p>
                         )}
                     </div>
                     <div className='col-lg-4 mb-4 '>
                         <label className="block text-sm font-medium mb-1 "  >Expiry Date</label>
                         <div className="relative">
-
-                            <DatePicker
-                                value={expiryDate}
-                                onChange={setexpiryDate}
-                                renderInput={renderCustomInput} // render a custom input
-                                shouldHighlightWeekends
+                            <Controller
+                                control={control}
+                                name="expiryDate"
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <DatePicker
+                                        value={value}
+                                        onChange={setexpiryDate}
+                                        renderInput={renderCustomInput} // render a custom input
+                                        shouldHighlightWeekends
+                                    />
+                                )}
                             />
                         </div>
-                        {errors.expiryDate && (
-                            <p className="text-red-500 text-sm">{errors.expiryDate}</p>
-                        )}
+
+
                     </div>
+
                     <div className='col-lg-12'>
                         <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
                     </div>

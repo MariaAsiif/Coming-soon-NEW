@@ -113,17 +113,6 @@ const ViewEditJobPopup = ({ id, modalOpen, onClose, mode, data }) => {
         </div >
     )
 
-    // close on click outside
-    // useEffect(() => {
-    //     const clickHandler = ({ target }) => {
-    //         if (!modalOpen || modalContent.current.contains(target)) return
-    //         onClose();
-    //     };
-    //     document.addEventListener('click', clickHandler);
-    //     return () => document.removeEventListener('click', clickHandler);
-    // });
-
-    // close if the esc key is pressed
     useEffect(() => {
         const keyHandler = ({ keyCode }) => {
             if (!modalOpen || keyCode !== 27) return;

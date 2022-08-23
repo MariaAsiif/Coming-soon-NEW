@@ -29,7 +29,10 @@ const schema = yup.object({
 }).required();
 
 const CreateJob = () => {
-    const [expiryDate, setexpiryDate] = useState({ day: 10, month: 8, year: 2022 })
+    const timeElapsed = Date.now();
+    const date = new Date(timeElapsed);
+    console.log("Date" , date.getDay() )
+    const [expiryDate, setexpiryDate] = useState({ day:date.getDay() , month: date.getMonth(), year: date.getFullYear() })
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     let navigate = useNavigate();
     // const [jobModel, setjobModel] = useState({
@@ -62,57 +65,30 @@ const CreateJob = () => {
 
 
 
-    // const handleSaveJob = async () => {
-    //     try {
-    //         const config = {
-    //             headers: {
-    //                 'Authorization': 'Bearer ' + token
-    //             }
-    //         };
-    //         let response = await axios.post('http://localhost:5873/jobs/createjob', values, config);
-    //         console.log(response);
-    //         if (response.data.status === "Success") {
-    //             navigate("/jobs", { replace: true });
-    //             toast.success(response.data.message);
-
-    //         }
-    //         else {
-    //             toast.error(response.data.message);
-    //         }
-
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
 
 
-    //   usefORM HOOKS
-
-
-
-    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
+    const { register, handleSubmit, watch,  formState: { errors } } = useForm({ resolver: yupResolver(schema) });
     const onSubmit = async (data) => {
-        console.log(data);
-        // try {
-        //     const config = {
-        //         headers: {
-        //             'Authorization': 'Bearer ' + token
-        //         }
-        //     };
-        //     let response = await axios.post('http://localhost:5873/jobs/createjob', data, config);
-        //     console.log(response);
-        //     if (response.data.status === "Success") {
-        //         navigate("/jobs", { replace: true });
-        //         toast.success(response.data.message);
+        try {
+            const config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            };
+            let response = await axios.post('http://localhost:5873/jobs/createjob', data, config);
+            console.log(response);
+            if (response.data.status === "Success") {
+                navigate("/jobs", { replace: true });
+                toast.success(response.data.message);
 
-        //     }
-        //     else {
-        //         toast.error(response.data.message);
-        //     }
+            }
+            else {
+                toast.error(response.data.message);
+            }
 
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
@@ -154,10 +130,11 @@ const CreateJob = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="job_title">Job Title</label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.job_title ? <FcCheckmark /> : errors.job_title ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.job_title && watch('job_title') ? <FcCheckmark /> : errors.job_title ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
                             autoComplete="off"
+                            
                             className={`form-input w-full  ${errors.job_title && 'border-red-500'}`}
                             {...register('job_title')}
                             name='job_title' id="job_title"
@@ -173,7 +150,7 @@ const CreateJob = () => {
                         <label className="block text-sm font-medium mb-1" htmlFor="salary">Salary </label>
                         {/* <small>suggestion: US$ 150,000 / Anum</small> */}
                         <div className='absolute right-5 top-10'>
-                            {!errors.salary ? <FcCheckmark /> : errors.salary ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.salary && watch('salary') ? <FcCheckmark /> : errors.salary ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
                             {...register('salary')}
@@ -191,7 +168,7 @@ const CreateJob = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="description">Description</label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.description ? <FcCheckmark /> : errors.description ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.description && watch('description')? <FcCheckmark /> : errors.description ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
                             autoComplete="off"
@@ -210,7 +187,7 @@ const CreateJob = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="employer">Employer</label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.employer ? <FcCheckmark /> : errors.employer ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.employer  && watch('employer')? <FcCheckmark /> : errors.employer ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
                             {...register('employer')}
@@ -227,7 +204,7 @@ const CreateJob = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="jobtype">jobtype</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.jobtype ? <FcCheckmark /> : errors.jobtype ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.jobtype && watch('jobtype')? <FcCheckmark /> : errors.jobtype ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <select
                             {...register('jobtype')}
@@ -248,7 +225,7 @@ const CreateJob = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="jobstatus">Job Status</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.jobstatus ? <FcCheckmark /> : errors.jobstatus ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.jobstatus && watch('jobstatus')? <FcCheckmark /> : errors.jobstatus ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <select
                             {...register('jobstatus')}
@@ -268,7 +245,7 @@ const CreateJob = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="jobclass">Job Class</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.jobclass ? <FcCheckmark /> : errors.jobclass ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.jobclass && watch('jobclass')? <FcCheckmark /> : errors.jobclass ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <select
                             {...register('jobclass')}

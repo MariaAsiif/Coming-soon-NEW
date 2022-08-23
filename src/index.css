@@ -264,6 +264,13 @@ video {
 
 }
 
+.DatePicker {
+  position: relative;
+  display: inline-block;
+  z-index: 100;
+  width: 100%;
+}
+
 
 
 
@@ -288,7 +295,7 @@ select {
 	border: none;
 	font-family: inherit;
 	outline: none;
-  border: 1pt solid rgb(36, 36, 36);
+  border: 1pt solid gray;
 }
 
 .react-tel-input .flag-dropdown {
