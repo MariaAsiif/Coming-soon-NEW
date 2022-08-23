@@ -1,4 +1,5 @@
 import { FaUserGraduate, FaBriefcase } from "react-icons/fa";
+import { AiFillDashboard } from "react-icons/ai";
 
 
 const SidebarObj = () => {
@@ -10,8 +11,8 @@ const SidebarObj = () => {
             menuitems: [
                 {
                     label: "Coming soon",
-                    leftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current text-slate-400 hover:text-green-600`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-slate-600 hover:text-green-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-slate-400`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
-                    activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current !text-green-500`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-green-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-indigo-200`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
+                    leftIcon: (<AiFillDashboard size={22} className=" text-red-500" />),
+                    activeLeftIcon: (<AiFillDashboard size={22} className=" text-red-500" />),
                     rightIcon: "sadf",
                     path: "/dashboard",
                     pathname: "dashboard",
@@ -32,8 +33,8 @@ const SidebarObj = () => {
                 },
                 {
                     label: "Jobs Management",
-                    leftIcon: (<FaBriefcase size={22} className="hover:text-green-600" />),
-                    activeLeftIcon: (<FaBriefcase size={22} className="text-green-600" />),
+                    leftIcon: (<FaBriefcase size={22} className=" text-red-500" />),
+                    activeLeftIcon: (<FaBriefcase size={22} className="text-red-500" />),
                     rightIcon: "sadf",
                     path: "/jobs",
                     pathname: "jobs",
@@ -54,8 +55,8 @@ const SidebarObj = () => {
                 },
                 {
                     label: "Candidate Management",
-                    leftIcon: (<FaUserGraduate size={22} className="hover:text-green-600" />),
-                    activeLeftIcon: (<FaUserGraduate size={22} className="text-green-600" />),
+                    leftIcon: (<FaUserGraduate size={22} className=" text-red-500" />),
+                    activeLeftIcon: (<FaUserGraduate size={22} className="text-red-500" />),
                     rightIcon: "sadf",
                     path: "/candidates",
                     pathname: "candidates",
@@ -76,8 +77,8 @@ const SidebarObj = () => {
                 },
                 {
                     label: "Employer Management",
-                    leftIcon: (<svg className="shrink-0 h-6 w-6 hover:text-green-600" viewBox="0 0 24 24"> <path className={`fill-current text-slate-600 hover:text-green-600`} d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" /> <path className={`fill-current text-slate-400 hover:text-green-600`} d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" /> </svg>),
-                    activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current text-green-500`} d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" /> <path className={`fill-current text-green-300`} d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" /> </svg>),
+                    leftIcon: (<svg className="shrink-0 h-6 w-6 hover:text-red-500" viewBox="0 0 24 24"> <path className={`fill-current text-slate-600 hover:text-red-500`} d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" /> <path className={`fill-current text-slate-400 hover:text-red-500`} d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" /> </svg>),
+                    activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current text-red-500`} d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" /> <path className={`fill-current text-red-300`} d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" /> </svg>),
                     rightIcon: "sadf",
                     path: "/employers",
                     pathname: "employers",
