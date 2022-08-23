@@ -22,10 +22,7 @@ const schema = yup.object({
     thirdFname: yup.string().required(),
     email: yup.string().email('Invalid email format').required(),
     reEmail: yup.string().email('Invalid email format').required(),
-    city: yup.string().required(),
-    state: yup.string().required(),
     industry: yup.string().required(),
-    country: yup.string().required(),
     position: yup.string().required(),
     mobile: yup.string().required(),
     cv: yup.mixed()
@@ -49,14 +46,20 @@ const schema = yup.object({
 const CreateCandidate = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     let navigate = useNavigate();
-    const [all_Countries] = useState(() => Country.getAllCountries())
-    const [all_States, setall_States] = useState(() => State.getStatesOfCountry("AF"))
-    const [all_Cities, setall_Cities] = useState(() => City.getCitiesOfState("AF", "BDS"))
+    
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    const [expiryDate, setexpiryDate] = useState({ day: dd , month: mm, year: yyyy })
+    const [all_Countries , setall_Countries] = useState([])
+    const [all_States, setall_States] = useState([] )
+    const [all_Cities, setall_Cities] = useState([])
     const [countryCode, setCountryCode] = useState("")
     const [mobile, setmobile] = useState("")
     const [defaultCountry, setDefaultCountry] = useState("")
     const [defaultCity, setDefaultCity] = useState("")
-    const [expiryDate, setexpiryDate] = useState({ day: 10, month: 8, year: 2022 })
     const [recruitModel, setrecruitModel] = useState({
         surname: "Mr",
         fullname: "",
@@ -86,24 +89,18 @@ const CreateCandidate = () => {
 
     const handleChange = (e) => {
         let { name, value } = e.target
-        let cityName = ""
-        let updatedCities = []
         if (name === "country") {
             const updatedStates = State.getStatesOfCountry(value)
             const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
-            updatedCities = City.getCitiesOfState(value, stateCode)
-            cityName = updatedCities.length > 0 ? updatedCities[0].name : ""
+            const updatedCities = City.getCitiesOfState( value , stateCode)
             setall_States(updatedStates)
             setall_Cities(updatedCities)
-            // setrecruitModel((prevmodel) => ({
-            //     ...prevmodel,
-            //     state: stateCode,
-            //     city: cityName
-            // }))
+         
         }
         else if (name === "state") {
-            updatedCities = City.getCitiesOfState(recruitModel.country, value)
-            // cityName = updatedCities.length > 0 ? updatedCities[0].name : ""
+            const updatedStates = State.getStatesOfCountry(value)
+            const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
+           const updatedCities = City.getCitiesOfState( value , stateCode)
             setall_Cities(updatedCities)
 
         }
@@ -115,7 +112,7 @@ const CreateCandidate = () => {
         }
     }
 
-    console.log("red", recruitModel.country)
+    console.log("red", all_Cities)
 
     const onSubmit = async (data) => {
         console.log("Data", data)
@@ -156,24 +153,23 @@ const CreateCandidate = () => {
     )
 
     useEffect(() => {
-        console.log("useEffect 1 run");
         try {
             (async () => {
                 const response = await axios('https://api.ipregistry.co/?key=m7irmmf8ey12rx7o')
                 const currentCountryCode = response.data.location.country.code
-                const currentCountryName = response.data.location.country.name
                 let id = response.data.location.country.tld
                 let removeDot = id.replace('.', "")
                 setCountryCode(removeDot)
-
+                const get_countris =  Country.getAllCountries()
                 const CurrentStates = State.getStatesOfCountry(currentCountryCode)
                 const CurrentCities = City.getCitiesOfState(currentCountryCode, CurrentStates[0].isoCode)
                 setrecruitModel((prevmodel) => ({
                     ...prevmodel,
-                    country: currentCountryName,
+                    country: currentCountryCode,
                     state: CurrentStates.length > 0 ? CurrentStates[0].isoCode : "",
                     city: CurrentCities.length > 0 ? CurrentCities[0].name : ""
                 }))
+                setall_Countries(get_countris)
                 setall_States(CurrentStates)
                 setall_Cities(CurrentCities)
 
@@ -185,7 +181,7 @@ const CreateCandidate = () => {
     }, [])
 
 
-    console.log(errors);
+
 
     return (
         <div className='bscontainer-fluid'>
@@ -350,7 +346,7 @@ const CreateCandidate = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="country">Country</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.country && watch('country') ? <FcCheckmark /> : errors.country ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.country  ? <FcCheckmark /> : errors.country ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
 
 
@@ -377,7 +373,7 @@ const CreateCandidate = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="state">State</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.state && watch('state') ? <FcCheckmark /> : errors.state ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.state ? <FcCheckmark /> : errors.state ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <select
                             // {...register('state')}
@@ -397,14 +393,14 @@ const CreateCandidate = () => {
                             }
 
                         </select>
-                        {errors.state && (
+                        {/* {errors.state && (
                             <p className="text-red-500 text-sm">{errors.state.message}</p>
-                        )}
+                        )} */}
                     </div>
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="city">City</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.city && watch('city') ? <FcCheckmark /> : errors.city ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.city ? <FcCheckmark /> : errors.city ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <select
                             // {...register('city')}
@@ -424,9 +420,9 @@ const CreateCandidate = () => {
                             }
 
                         </select>
-                        {errors.city && (
+                        {/* {errors.city && (
                             <p className="text-red-500 text-sm">{errors.city.message}</p>
-                        )}
+                        )} */}
                     </div>
                     <div className='col-lg-4 mb-4 relative '>
                         <label className="block text-sm font-medium mb-1" htmlFor="phone">Phone</label>
