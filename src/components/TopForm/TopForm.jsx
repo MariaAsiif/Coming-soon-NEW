@@ -305,14 +305,27 @@ const TopForm = (props) => {
                     draggable
                     pauseOnHover
                 />
+
                 <div className="flex item-center">
+                    {activeField === "familyname" && (
+                        <button onClick={() => setactiveField("firstname")} className=' w-24 bg-white  border-r text-center flex flex-col text-[20px] pt-[7px] ' >
+                            <BiLeftArrow className='ml-4 text-gray-400' />
+                            <span className='hover:underline ml-4 text-[9px] text-red-500 font-bold ' >BACK</span>
+                        </button>
+                    )}
+
+                    {activeField === "email" && (
+                        <button onClick={() => setactiveField("additionalfamilyname")} className=' w-24 bg-white  border-r text-center flex flex-col text-[20px] pt-[7px] ' >
+                            <BiLeftArrow className='ml-4 text-gray-400' />
+                            <span className='hover:underline ml-4 text-[9px] text-red-500 font-bold ' >BACK</span>
+                        </button>
+                    )}
+
                     <div className='text-center mt-5 relative form_input w-full'>
-
-
-
                         {activeField === "firstname" ?
                             (
                                 <>
+
                                     <ReactFlagsSelect
                                         selected={select}
                                         onSelect={onSelect}
@@ -336,6 +349,7 @@ const TopForm = (props) => {
                         {activeField === "familyname" &&
                             (
                                 <>
+
                                     <div className='w-4/5 relative inline-block'>
                                         <input name='familyname' value={familyName.value} onChange={handleChangeFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Family Name?" />
                                         <span className={`absolute top-1/4 right-3 ${familyName.value.length ? "visible" : "invisible"} `}>
@@ -431,11 +445,7 @@ const TopForm = (props) => {
 
 
                     </div>
-                    <div className='skip_field'>
-                        {activeField === "familyname" &&
-                            <span className='hover:underline' onClick={() => setactiveField("firstname")}>back</span>
-                        }
-                    </div>
+
                     <div className='skip_field  '>
                         {activeField === "additionalfamilyname" &&
                             <>
@@ -447,19 +457,9 @@ const TopForm = (props) => {
                         }
                     </div>
 
-                    <div className='skip_field'>
-                        {activeField === "email" &&
-                            <span className='hover:underline' onClick={() => setactiveField("additionalfamilyname")}>back</span>
-                        }
-                    </div>
 
-                    <div className='skip_field'>
-                        {activeField === "mobile" && error === true &&
 
-                            <span className='hover:underline' onClick={() => setactiveField("email")}>back</span>
 
-                        }
-                    </div>
 
 
                 </div>
