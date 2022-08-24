@@ -115,6 +115,14 @@ function App() {
           <Route path="analytics" element={<Analytics />} />
           <Route path="fintech" element={<Fintech />} />
         </Route>
+        <Route path="/department" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Employers />} />
+          <Route path="create-department" element={<CreateEmployer />} />
+        </Route>
+        <Route path="/designation" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Employers />} />
+          <Route path="create-designation" element={<CreateEmployer />} />
+        </Route>
 
         <Route path="/jobs" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Jobs />} />
@@ -129,6 +137,7 @@ function App() {
           <Route index element={<Employers />} />
           <Route path="create-employers" element={<CreateEmployer />} />
         </Route>
+
 
 
         <Route path="/ecommerce" element={<RequireAuth> <MainWrapper /></RequireAuth>} >
