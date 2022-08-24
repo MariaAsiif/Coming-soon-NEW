@@ -30,7 +30,7 @@
 }
 
 .form_input {
-    max-width: 82% !important;
+    /* max-width: 82% !important; */
     margin: auto !important;
     background-color: white !important;
 }
