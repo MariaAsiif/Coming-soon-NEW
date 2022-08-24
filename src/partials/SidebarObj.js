@@ -41,7 +41,7 @@ const SidebarObj = () => {
                     activeLeftIcon: (<RiLuggageDepositLine size={22} className="text-red-500"/>),
                     rightIcon: "sadf",
                     path: "/department",
-                    pathname: "candidates",
+                    pathname: "department",
                     subMenuItems: [
                         {
                             label: "All Departments",
@@ -63,7 +63,7 @@ const SidebarObj = () => {
                     activeLeftIcon: (<SiSlideshare size={22} className=" text-red-500"/>),
                     rightIcon: "sadf",
                     path: "/designation",
-                    pathname: "candidates",
+                    pathname: "designation",
                     subMenuItems: [
                         {
                             label: "All Designations",
