@@ -368,7 +368,7 @@ const TopForm = (props) => {
                                         <button onClick={goToSecondFamilyField} className={`${firstFamilyName || secondFamilyName || thirdFamilyName ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-[140px] h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                         <button className='ml-3  text-center flex flex-col text-[20px] pt-[7px] ' >
                                             <BiRightArrow className='text-gray-400 ' />
-                                            <span className='hover:underline text-[9px] text-green-500 text-bold' onClick={() => setactiveField("familyname")}>SKIP</span>
+                                            <span className='hover:underline text-[9px] text-green-500 text-bold' onClick={() => setactiveField("email")}>SKIP</span>
                                         </button>
 
                                     </div>
