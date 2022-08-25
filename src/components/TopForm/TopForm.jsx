@@ -30,7 +30,7 @@ const TopForm = (props) => {
     const [mobileno, setmobileno] = useState({ fmobile: "mobile", value: "", isempty: true })
     const [product, setproduct] = useState("")
     const [areaofInterest, setareaofInterest] = useState([])
-    const [activeField, setactiveField] = useState("additionalfamilyname")//firstname
+    const [activeField, setactiveField] = useState("firstname")//firstname
     const [countryCode, setCountryCode] = useState("")
     const [name, setName] = useState({})
     const [isSuccess, setIsSuccess] = useState(false)
@@ -346,30 +346,7 @@ const TopForm = (props) => {
 
                         {activeField === "additionalfamilyname" &&
                             (
-                                // <div className='flex item-center'>
 
-                                //     <div className=' w-3/12 flex'>
-                                //         <button onClick={() => setactiveField("familyname")} className=' w-20  border-r text-center flex flex-col text-[20px] pt-[7px] ' >
-                                //             <BiLeftArrow className='ml-4 text-gray-400' />
-                                //             <span className='hover:underline ml-4 text-[9px] text-red-500 font-bold ' >BACK</span>
-                                //         </button>
-                                //         <input name='firstFamilyName' value={firstFamilyName} onChange={handleChangeFirstFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="1st Family Name" />
-                                //     </div>
-                                //     <div className=' w-3/12 relative inline-block'>
-                                //         <input name='secondFamilyName' value={secondFamilyName} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-l-2 border-r-2 border-gray-400  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="2nd Family Name" />
-                                //     </div>
-                                //     <div className=' w-3/12 relative inline-block'>
-                                //         <input name='thirdFamilyName' value={thirdFamilyName} onChange={handleChangeThirdFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="3rd Family Name" />
-                                //     </div>
-                                //     <div className='item-center flex'>
-                                //         <button onClick={goToSecondFamilyField} className={`${firstFamilyName || secondFamilyName || thirdFamilyName ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-[140px] h-[40px] text-white font-Poppins font-medium`}>Enter</button>
-                                //         <button onClick={() => setactiveField("email")} className='ml-3  text-center flex flex-col text-[20px] pt-[7px] ' >
-                                //             <BiRightArrow className='text-gray-400 ' />
-                                //             <span className='hover:underline text-[9px] text-green-500 text-bold' >SKIP</span>
-                                //         </button>
-
-                                //     </div>
-                                // </div>
                                 <div className='flex'>
                                     <div className='col-1'>
                                         <button onClick={() => setactiveField("familyname")} className=' w-full border-r-2 border-gray-400 text-center flex h-full justify-end items-center flex-col  ' >
