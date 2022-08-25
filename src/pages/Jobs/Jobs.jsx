@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import moment from "moment"
 import { Link } from 'react-router-dom';
-import viewSvg from '../../images/eye-svgrepo-com.svg'
 
 import ViewJob from '../../components/EditJob/ViewJob';
 import EditJob from '../../components/EditJob/EditJob';
@@ -205,10 +204,7 @@ const Jobs = () => {
                                                                 </svg>
                                                             </button>
                                                             <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openJobPopup(e, "view", job)}>
-
                                                                 <IoEyeOutline className='text-red-500 hover:text-green-600' size={23} />
-
-
                                                             </button>
                                                             <button onClick={deletejob} className="text-rose-500 hover:text-rose-600 rounded-full">
                                                                 <span className="sr-only">Delete</span>

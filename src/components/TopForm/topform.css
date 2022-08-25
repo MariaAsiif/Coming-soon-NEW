@@ -115,3 +115,15 @@
         background-color: white;
     }
 }
+
+
+/* reacttags input css */
+.custom-react-tagsinput-input {
+    border: none !important
+}
+
+.custom-react-tagsinput-input:focus {
+    outline: none;
+    box-shadow: none !important;
+    border: none !important
+}

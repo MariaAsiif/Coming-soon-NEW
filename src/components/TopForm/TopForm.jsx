@@ -12,6 +12,12 @@ import PopUp from '../popup/popup';
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md'
 import { BiRightArrow, BiLeftArrow } from 'react-icons/bi'
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css'
+
+import { callPublicApi } from '../../utils/CallApi';
+
+
 const TopForm = (props) => {
 
     const [select, setSelect] = useState("SE");
@@ -22,7 +28,9 @@ const TopForm = (props) => {
     const [thirdFamilyName, setthirdFamilyName] = useState("")
     const [email, setemail] = useState({ femail: "email", value: "", isempty: true })
     const [mobileno, setmobileno] = useState({ fmobile: "mobile", value: "", isempty: true })
-    const [activeField, setactiveField] = useState("firstname")
+    const [product, setproduct] = useState("")
+    const [areaofInterest, setareaofInterest] = useState([])
+    const [activeField, setactiveField] = useState("firstname")//firstname
     const [countryCode, setCountryCode] = useState("")
     const [name, setName] = useState({})
     const [isSuccess, setIsSuccess] = useState(false)
@@ -108,6 +116,13 @@ const TopForm = (props) => {
             ...prevname,
             value: e
         }))
+    }
+
+    const handleChangeProduct = (e) => {
+        setproduct(e.target.value)
+    }
+    const handleAreaofInterest = (tags) => {
+        setareaofInterest(tags)
     }
     // ===============================================================================
     const goToNameField = () => {
@@ -199,8 +214,6 @@ const TopForm = (props) => {
     }
 
     const goToMobileField = async () => {
-
-
         if (mobileno.value === "") {
             seterrors((preverrors) => ({
                 ...preverrors,
@@ -213,74 +226,42 @@ const TopForm = (props) => {
                 mobileError: null,
                 emailError: null,
             })
+            setactiveField("productfield")
 
-            try {
-
-
-
-                const response = await axios.post("http://localhost:5873/users/signup",
-                    {
-                        first_name: firstname.value,
-                        first_family_name: familyName.value,
-                        second_family_name: secondFamilyName,
-                        third_family_name: thirdFamilyName,
-                        email: email.value,
-                        userName: firstname.value,
-                        password: "test",
-                        platform: "email",
-                        role: "subscriber",
-                        location: {
-                            type: "Point",
-                            coordinates: [
-                                0,
-                                0
-                            ]
-                        },
-                        phoneNumber: mobileno.value
-                    })
-                if (response.data.status === "Fail") {
-                    toast.error(response.data.message);
-                    setErrors(true)
-                } else {
-
-                    toast.success(response.data.message);
-                    console.log("response", response)
-                    setIsSuccess(true)
-                    setName({ fname: firstname.value, fmname: familyName.value, smname: secondFamilyName.value })
-                    setTimeout(() => {
-
-                        setfirstname((prevname) => ({
-                            ...prevname,
-                            value: ""
-                        }))
-                        setFamilyName((prevname) => ({
-                            ...prevname,
-                            value: ""
-                        }))
-
-                        setemail((prevname) => ({
-                            ...prevname,
-                            value: ""
-                        }))
-                        setmobileno((prevname) => ({
-                            ...prevname,
-                            value: ""
-                        }))
-                        setfirstFamilyName('')
-                        setsecondFamilyName('')
-                        setthirdFamilyName('')
-                        setactiveField("firstname")
-                        setErrors(false)
-
-                    }, 1000);
+        }
+    }
 
 
-                }
+    const goToProductField = () => {
+        setactiveField("areaofinterestfield")
+    }
 
-
-            } catch (error) {
-                console.log("api will error", error);
+    const goToareaodinterestfield = async () => {
+        try {
+            const payload = {
+                first_name: firstname.value,
+                first_family_name: familyName.value,
+                second_family_name: secondFamilyName,
+                third_family_name: thirdFamilyName,
+                email: email.value,
+                password: "shayan09",
+                phoneNumber: mobileno.value,
+                interest: areaofInterest,
+                channel: "sms",
+                role: "subscriber",
+                approved: false,
+                location: { type: "Point", coordinates: [74.28911285869138, 31.624888273644956] }
             }
+            const response = await callPublicApi("/users/signup", "post", payload)
+            if (response.data.status === "Fail") {
+                toast.error(response.message);
+                setErrors(true)
+            } else {
+                toast.success(response.message);
+                console.log("response", response)
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -431,16 +412,49 @@ const TopForm = (props) => {
                                                 onChange={handleChangeMobile} />
                                         </div>
 
-                                        {/* <Input
-                                        className=" focus:outline-none border-0 w-4/5  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Your Mobile?"
-                                        country={select}
-                                        international
-                                        withCountryCallingCode
-                                        value={mobileno.value}
-                                        onChange={handleChangeMobile} /> */}
+
                                         <button onClick={goToMobileField}
                                             className={`${!errors.mobileError && mobileno.value !== "" ? `bg-green-600` : 'bg-light-red'} border-red-600 w-1/5 h-[42px] text-white font-Poppins font-medium`}>
                                             Enter</button>
+                                    </div>
+                                </>
+                            ) : null}
+
+                        {activeField === "productfield" ?
+                            (
+                                <>
+                                    <div className='row g-0'>
+                                        <div className='col-8'>
+                                            <input name='product' value={product} onChange={handleChangeProduct} type="text " className=" focus:outline-none border-0 w-full  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Product" />
+                                        </div>
+                                        <div className='col-4'>
+                                            <button onClick={goToProductField}
+                                                className={`${!errors.mobileError && mobileno.value !== "" ? `bg-green-600` : 'bg-light-red'} border-red-600  w-full h-[42px] text-white font-Poppins font-medium`}>
+                                                Enter</button>
+                                        </div>
+                                    </div>
+                                </>
+                            ) : null}
+
+                        {activeField === "areaofinterestfield" ?
+                            (
+                                <>
+                                    <div className='row g-0'>
+                                        <div className='col-8'>
+                                            <TagsInput
+                                                maxTags={5}
+                                                inputProps={{
+                                                    className: 'custom-react-tagsinput-input',
+                                                    placeholder: 'Add area of interest'
+                                                }}
+                                                value={areaofInterest}
+                                                onChange={handleAreaofInterest} />
+                                        </div>
+                                        <div className='col-4'>
+                                            <button onClick={goToareaodinterestfield}
+                                                className={`${!errors.mobileError && mobileno.value !== "" ? `bg-green-600` : 'bg-light-red'} border-red-600  w-full h-[42px] text-white font-Poppins font-medium`}>
+                                                Enter</button>
+                                        </div>
                                     </div>
                                 </>
                             ) : null}

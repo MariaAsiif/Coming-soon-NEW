@@ -88,8 +88,8 @@ import Department from './pages/department/departments';
 import CreateDepartment from './pages/department/CreateDepartment';
 import Designation from './pages/designation/designation';
 import CreateDesignation from './pages/designation/CreateDesignation';
-import Inspire from './pages/inspire/inspire';
-import CreateInspire from './pages/inspire/CreateInspire';
+import Inspire from './pages/Inspire/Inspire';
+import CreateInspire from './pages/Inspire/CreateInspire';
 import Ticker from './pages/ticker/ticker';
 import CreateTicker from './pages/ticker/CreateTicker';
 
