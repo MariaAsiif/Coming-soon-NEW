@@ -90,6 +90,8 @@ import Designation from './pages/designation/designation';
 import CreateDesignation from './pages/designation/CreateDesignation';
 import Inspire from './pages/inspire/inspire';
 import CreateInspire from './pages/inspire/CreateInspire';
+import Ticker from './pages/ticker/ticker';
+import CreateTicker from './pages/ticker/CreateTicker';
 
 const RequireAuth = ({ children }) => {
   const token = useSelector((state) => state.userAuth.loginInfo.token);
@@ -150,6 +152,11 @@ function App() {
         <Route path="/inspire" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Inspire />} />
           <Route path="create-inspire" element={<CreateInspire />} />
+        </Route>
+
+        <Route path="/ticker" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Ticker />} />
+          <Route path="create-ticker" element={<CreateTicker />} />
         </Route>
 
 

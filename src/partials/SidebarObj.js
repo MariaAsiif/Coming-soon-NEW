@@ -1,7 +1,7 @@
 import { FaUserGraduate, FaBriefcase } from "react-icons/fa";
 import { AiFillDashboard } from "react-icons/ai";
 
-import { FaUsers } from 'react-icons/fa'
+import { BiSticker } from 'react-icons/bi'
 import { RiLuggageDepositLine } from 'react-icons/ri'
 import { SiSlideshare } from 'react-icons/si'
 import { GiInspiration } from 'react-icons/gi'
@@ -158,8 +158,8 @@ const SidebarObj = () => {
                 {
 
                     label: "Inpire Management",
-                    leftIcon: (<GiInspiration size={22} className="hover:text-red-500"  />),
-                    activeLeftIcon: (<GiInspiration size={22} className=" text-red-500"  />),
+                    leftIcon: (<GiInspiration size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<GiInspiration size={22} className=" text-red-500" />),
                     rightIcon: "sadf",
                     path: "/inspire",
                     pathname: "inspire",
@@ -172,10 +172,27 @@ const SidebarObj = () => {
                             label: "Create Inspire",
                             pathname: "/inspire/create-inspire",
                         },
-                        // {
-                        //     label: "Fintech",
-                        //     pathname: "/dashboard/fintech",
-                        // },
+
+                    ]
+                },
+                {
+
+                    label: "Ticker Management",
+                    leftIcon: (<BiSticker size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<BiSticker size={22} className=" text-red-500" />),
+                    rightIcon: "sadf",
+                    path: "/ticker",
+                    pathname: "ticker",
+                    subMenuItems: [
+                        {
+                            label: "All Ticker",
+                            pathname: "/ticker",
+                        },
+                        {
+                            label: "Create Ticker",
+                            pathname: "/ticker/create-ticker",
+                        },
+
                     ]
                 },
                 // {
