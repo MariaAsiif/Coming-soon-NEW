@@ -100,7 +100,7 @@ const Inspire = () => {
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                         </svg>
-                        <span className="ml-2">Create Department</span>
+                        <span className="ml-2">Create Inspire</span>
                     </Link>
                 </div>
                 <div className='col-12 border'>
@@ -133,9 +133,7 @@ const Inspire = () => {
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">QUOTE DATE</div>
                                             </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">DESCRIPTION </div>
-                                            </th>
+                                            
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">AUTHOR NAME </div>
                                             </th>

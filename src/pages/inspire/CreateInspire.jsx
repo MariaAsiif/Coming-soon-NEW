@@ -115,6 +115,7 @@ const CreateInspire = () => {
                                 onChange={setexpiryDate}
                                 renderInput={renderCustomInput} // render a custom input
                                 shouldHighlightWeekends
+                                calendarPopperPosition={'bottom'}
                             />
 
                         </div>
