@@ -84,6 +84,12 @@ import Candidate from './pages/candidates/candidates';
 import CreateCandidate from './pages/candidates/CreateCandidate';
 import Employers from './pages/employers/employers';
 import CreateEmployer from './pages/employers/CreateEmployer';
+import Department from './pages/department/departments';
+import CreateDepartment from './pages/department/CreateDepartment';
+import Designation from './pages/designation/designation';
+import CreateDesignation from './pages/designation/CreateDesignation';
+import Inspire from './pages/inspire/inspire';
+import CreateInspire from './pages/inspire/CreateInspire';
 
 const RequireAuth = ({ children }) => {
   const token = useSelector((state) => state.userAuth.loginInfo.token);
@@ -110,7 +116,7 @@ function App() {
 
 
 
-    
+
 
       <Routes>
         <Route exact path="/" element={<CommingSoon />} />
@@ -120,12 +126,12 @@ function App() {
           <Route path="fintech" element={<Fintech />} />
         </Route>
         <Route path="/department" element={<RequireAuth><MainWrapper /></RequireAuth>} >
-          <Route index element={<Employers />} />
-          <Route path="create-department" element={<CreateEmployer />} />
+          <Route index element={<Department />} />
+          <Route path="create-department" element={<CreateDepartment />} />
         </Route>
         <Route path="/designation" element={<RequireAuth><MainWrapper /></RequireAuth>} >
-          <Route index element={<Employers />} />
-          <Route path="create-designation" element={<CreateEmployer />} />
+          <Route index element={<Designation />} />
+          <Route path="create-designation" element={<CreateDesignation />} />
         </Route>
 
         <Route path="/jobs" element={<RequireAuth><MainWrapper /></RequireAuth>} >
@@ -141,7 +147,10 @@ function App() {
           <Route index element={<Employers />} />
           <Route path="create-employers" element={<CreateEmployer />} />
         </Route>
-
+        <Route path="/inspire" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Inspire />} />
+          <Route path="create-inspire" element={<CreateInspire />} />
+        </Route>
 
 
         <Route path="/ecommerce" element={<RequireAuth> <MainWrapper /></RequireAuth>} >

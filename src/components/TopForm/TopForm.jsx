@@ -25,7 +25,7 @@ const TopForm = (props) => {
     const [activeField, setactiveField] = useState("firstname")
     const [countryCode, setCountryCode] = useState("")
     const [name, setName] = useState({})
-    const [isSuccess, seIsSuccess] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
     const [error, setErrors] = useState(false)
     const [errors, seterrors] = useState({
         nameError: null,
@@ -185,11 +185,13 @@ const TopForm = (props) => {
                 })
             }
             else {
-                seterrors({
-                    nameError: null,
-                    mobileError: null,
-                    emailError: null,
-                })
+                // seterrors({
+                //     nameError: null,
+                //     mobileError: null,
+                //     emailError: null,
+                // })
+
+                setIsSuccess(true)
                 setactiveField("mobile")
             }
 
@@ -216,7 +218,7 @@ const TopForm = (props) => {
 
 
 
-                const response = await axios.post("https://hporx-admin-backend.herokuapp.com/users/signup",
+                const response = await axios.post("http://localhost:5873/users/signup",
                     {
                         first_name: firstname.value,
                         first_family_name: familyName.value,
@@ -243,7 +245,7 @@ const TopForm = (props) => {
 
                     toast.success(response.data.message);
                     console.log("response", response)
-                    seIsSuccess(true)
+                    setIsSuccess(true)
                     setName({ fname: firstname.value, fmname: familyName.value, smname: secondFamilyName.value })
                     setTimeout(() => {
 
@@ -406,7 +408,7 @@ const TopForm = (props) => {
                                             <PhoneInput
                                                 country={countryCode}
                                                 containerClass="flex items-center h-full "
-                                                inputClass="phone_custom_input"
+                                                inputClass="phone_custom_input focus:outline-none"
                                                 dropdownClass={"custom-dropdown"}
                                                 enableSearch
                                                 disableSearchIcon
@@ -423,7 +425,7 @@ const TopForm = (props) => {
                                         value={mobileno.value}
                                         onChange={handleChangeMobile} /> */}
                                         <button onClick={goToMobileField}
-                                            className={`${!errors.mobileError && mobileno.value !== "" ? `bg-green-600` : 'bg-light-red'} border-red-600 w-1/5 h-[40px] text-white font-Poppins font-medium`}>
+                                            className={`${!errors.mobileError && mobileno.value !== "" ? `bg-green-600` : 'bg-light-red'} border-red-600 w-1/5 h-[42px] text-white font-Poppins font-medium`}>
                                             Enter</button>
                                     </div>
                                 </>
@@ -472,7 +474,7 @@ const TopForm = (props) => {
 
             </div>
 
-            {isSuccess && <PopUp permition={isSuccess} Toggle={(value) => seIsSuccess(value)} Firstname={name} />}
+            {isSuccess && <PopUp permition={isSuccess} type="verification" Toggle={(value) => setIsSuccess(value)} Firstname={name} />}
 
         </section>
     )

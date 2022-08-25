@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { callApi } from '../../utils/CallApi';
 import { IoEyeOutline } from 'react-icons/io5';
 import ViewEditEmployer from '../../components/Popups/ViewEditEmployer';
-const Employers = () => {
+const Department = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [alljobs, setalljobs] = useState([])
     const [showUser, setshowUser] = useState(false)
@@ -100,13 +100,13 @@ const Employers = () => {
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                         </svg>
-                        <span className="ml-2">Create Employer</span>
+                        <span className="ml-2">Create Department</span>
                     </Link>
                 </div>
                 <div className='col-12 border'>
                     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                         <header className="px-5 py-4">
-                            <h2 className="font-semibold text-slate-800">All Employers <span className="text-slate-400 font-medium">{alljobs.length}</span></h2>
+                            <h2 className="font-semibold text-slate-800">All Department <span className="text-slate-400 font-medium">{alljobs.length}</span></h2>
                         </header>
                         <div>
                             <div className="overflow-x-auto">
@@ -125,29 +125,18 @@ const Employers = () => {
                                                 <div className="font-semibold text-left">ID</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">FIRST NAME</div>
+                                                <div className="font-semibold text-left">DEPARTMENT NAME</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">FAMILY NAME </div>
+                                                <div className="font-semibold text-left">HEAD OF DEPARTMENT</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">SECOND FAMILY NAME </div>
+                                                <div className="font-semibold text-left">ADDED BY</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">THIRD FAMILY NAME</div>
+                                                <div className="font-semibold text-left">DESCRIPTION </div>
                                             </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">COUNTRY</div>
-                                            </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Job Class</div>
-                                            </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Expiry Date</div>
-                                            </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Employeer</div>
-                                            </th>
+                                            
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Actions</div>
                                             </th>
@@ -177,21 +166,7 @@ const Employers = () => {
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{job.description}</div>
                                                     </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{job.jobtype}</div>
-                                                    </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{job.jobstatus}</div>
-                                                    </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{job.jobclass}</div>
-                                                    </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{moment(job.expiryDate).format('MM/DD/YYYY')}</div>
-                                                    </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{job.employer}</div>
-                                                    </td>
+                                                    
 
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                         <div className="space-x-1">
@@ -237,4 +212,4 @@ const Employers = () => {
     )
 }
 
-export default Employers
+export default Department

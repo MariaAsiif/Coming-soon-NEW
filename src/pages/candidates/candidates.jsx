@@ -77,7 +77,7 @@ const Candidates = () => {
                         'Authorization': 'Bearer ' + token
                     }
                 };
-                let response = await axios.post('http://localhost:5873/jobs/listjobs', {
+                let response = await axios.post('http://localhost:5873/candiate/candidatelist', {
                     sortproperty: "created_at",
                     sortorder: -1,
                     offset: 0,
@@ -157,17 +157,9 @@ const Candidates = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="text-sm divide-y divide-slate-200">
-                                        {alljobs.map((job, i) => {
+                                        {alljobs.map((job) => {
                                             return (
                                                 <tr key={job._id}>
-                                                    {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-                                                        <div className="flex items-center">
-                                                            <label className="inline-flex">
-                                                                <span className="sr-only">Select</span>
-                                                                <input id={job._id} onChange={handleChange} name={job._id} checked={job?.isChecked || false} className="form-checkbox" type="checkbox" />
-                                                            </label>
-                                                        </div>
-                                                    </td> */}
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{job._id}</div>
                                                     </td>

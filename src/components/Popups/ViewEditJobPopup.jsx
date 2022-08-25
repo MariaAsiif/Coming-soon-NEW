@@ -51,6 +51,9 @@ const ViewEditJobPopup = ({ id, modalOpen, onClose, mode, data }) => {
     })
 
 
+    console.log("jobModel", jobModel)
+
+
 
     const setValidation = () => {
         let myvalidation_Obj = {
@@ -201,7 +204,7 @@ const ViewEditJobPopup = ({ id, modalOpen, onClose, mode, data }) => {
                                     (
                                         <p>{data.salary}</p>
                                     ) : (
-                                        <input name='salary' value={jobModel.salary} onChange={handleChange} type="number" className={`form-input w-full`} />
+                                        <input name='salary' value={jobModel.salary} onChange={handleChange} type="text" className={`form-input w-full`} />
                                     )}
                                 {validationModel.salaryError}
                             </div>
