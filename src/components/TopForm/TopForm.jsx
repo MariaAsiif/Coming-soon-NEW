@@ -307,14 +307,27 @@ const TopForm = (props) => {
                     draggable
                     pauseOnHover
                 />
+
                 <div className="flex item-center">
+                    {activeField === "familyname" && (
+                        <button onClick={() => setactiveField("firstname")} className=' w-16 bg-white border-gray-500 border-r text-center flex flex-col text-[20px] pt-[7px] ' >
+                            <BiLeftArrow className='ml-4 text-gray-400' />
+                            <span className='hover:underline ml-4 text-[9px] text-red-500 font-bold ' >BACK</span>
+                        </button>
+                    )}
+
+                    {activeField === "email" && (
+                        <button onClick={() => setactiveField("additionalfamilyname")} className=' w-16 bg-white  border-gray-500 border-r text-center flex flex-col text-[20px] pt-[7px] ' >
+                            <BiLeftArrow className='ml-4 text-gray-400' />
+                            <span className='hover:underline ml-4 text-[9px] text-red-500 font-bold ' >BACK</span>
+                        </button>
+                    )}
+
                     <div className='text-center mt-5 relative form_input w-full'>
-
-
-
                         {activeField === "firstname" ?
                             (
                                 <>
+
                                     <ReactFlagsSelect
                                         selected={select}
                                         onSelect={onSelect}
@@ -338,6 +351,7 @@ const TopForm = (props) => {
                         {activeField === "familyname" &&
                             (
                                 <>
+
                                     <div className='w-4/5 relative inline-block'>
                                         <input name='familyname' value={familyName.value} onChange={handleChangeFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Family Name?" />
                                         <span className={`absolute top-1/4 right-3 ${familyName.value.length ? "visible" : "invisible"} `}>
@@ -354,9 +368,9 @@ const TopForm = (props) => {
                                 <div className='flex item-center'>
 
                                     <div className=' w-3/12 flex'>
-                                        <button className=' w-20  border-r text-center flex flex-col text-[20px] pt-[7px] ' >
-                                            <BiLeftArrow className='ml-4 text-gray-400'/>
-                                            <span className='hover:underline ml-4 text-[9px] text-red-500 font-bold ' onClick={() => setactiveField("familyname")}>BACK</span>
+                                        <button onClick={() => setactiveField("familyname")} className=' w-20  border-r text-center flex flex-col text-[20px] pt-[7px] ' >
+                                            <BiLeftArrow className='ml-4 text-gray-400' />
+                                            <span className='hover:underline ml-4 text-[9px] text-red-500 font-bold ' >BACK</span>
                                         </button>
                                         <input name='firstFamilyName' value={firstFamilyName} onChange={handleChangeFirstFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="1st Family Name" />
                                     </div>
@@ -368,9 +382,9 @@ const TopForm = (props) => {
                                     </div>
                                     <div className='item-center flex'>
                                         <button onClick={goToSecondFamilyField} className={`${firstFamilyName || secondFamilyName || thirdFamilyName ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-[140px] h-[40px] text-white font-Poppins font-medium`}>Enter</button>
-                                        <button className='ml-3  text-center flex flex-col text-[20px] pt-[7px] ' >
+                                        <button onClick={() => setactiveField("email")} className='ml-3  text-center flex flex-col text-[20px] pt-[7px] ' >
                                             <BiRightArrow className='text-gray-400 ' />
-                                            <span className='hover:underline text-[9px] text-green-500 text-bold' onClick={() => setactiveField("email")}>SKIP</span>
+                                            <span className='hover:underline text-[9px] text-green-500 text-bold' >SKIP</span>
                                         </button>
 
                                     </div>
@@ -433,16 +447,11 @@ const TopForm = (props) => {
 
 
                     </div>
-                    <div className='skip_field'>
-                        {activeField === "familyname" &&
-                            <span className='hover:underline' onClick={() => setactiveField("firstname")}>back</span>
-                        }
-                    </div>
+
                     <div className='skip_field  '>
                         {activeField === "additionalfamilyname" &&
                             <>
-                                {/* <button className='absolute left-20'>left </button>
-                                <button className='right-0'>right</button> */}
+
 
                                 {/* <span className='hover:underline mr-3 ml-2' onClick={() => setactiveField("familyname")}>back</span>
                                 <span className='hover:underline' onClick={() => setactiveField("email")}>or skip</span> */}
@@ -450,19 +459,9 @@ const TopForm = (props) => {
                         }
                     </div>
 
-                    <div className='skip_field'>
-                        {activeField === "email" &&
-                            <span className='hover:underline' onClick={() => setactiveField("additionalfamilyname")}>back</span>
-                        }
-                    </div>
 
-                    <div className='skip_field'>
-                        {activeField === "mobile" && error === true &&
 
-                            <span className='hover:underline' onClick={() => setactiveField("email")}>back</span>
 
-                        }
-                    </div>
 
 
                 </div>
