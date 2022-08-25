@@ -372,9 +372,11 @@ const TopForm = (props) => {
                                 // </div>
                                 <div className='row g-0'>
                                     <div className='col-1'>
-                                        <button onClick={() => setactiveField("familyname")} className='  w-full  border-r text-center flex flex-col text-[20px] pt-[7px] ' >
-                                            <BiLeftArrow className='ml-4 text-gray-400' />
-                                            <span className='hover:underline ml-4 text-[9px] text-red-500 font-bold ' >BACK</span>
+
+
+                                        <button onClick={() => setactiveField("familyname")} className=' w-full border-r-2 border-gray-400 text-center flex h-full justify-end items-center flex-col  ' >
+                                            <BiLeftArrow size={24} className='text-gray-400  block   ' />
+                                            <span className='hover:underline text-[9px] text-green-500 text-bold block'  >BACK</span>
                                         </button>
                                     </div>
                                     <div className='col-3'>
