@@ -88,8 +88,8 @@ import Department from './pages/department/departments';
 import CreateDepartment from './pages/department/CreateDepartment';
 import Designation from './pages/designation/designation';
 import CreateDesignation from './pages/designation/CreateDesignation';
-import Inspire from './pages/Inspire/Inspire';
-import CreateInspire from './pages/Inspire/CreateInspire';
+// import Inspire from './pages/Inspire/Inspire';
+// import CreateInspire from './pages/Inspire/CreateInspire';
 import Ticker from './pages/ticker/ticker';
 import CreateTicker from './pages/ticker/CreateTicker';
 
@@ -149,12 +149,11 @@ function App() {
           <Route index element={<Employers />} />
           <Route path="create-employers" element={<CreateEmployer />} />
         </Route>
-        <Route path="/inspire" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        {/* <Route path="/inspire" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Inspire />} />
           <Route path="create-inspire" element={<CreateInspire />} />
           <Route path="create-inspire/:id" element={<CreateInspire />} />
-
-        </Route>
+        </Route> */}
 
         <Route path="/ticker" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Ticker />} />
