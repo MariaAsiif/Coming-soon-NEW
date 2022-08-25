@@ -152,11 +152,14 @@ function App() {
         <Route path="/inspire" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Inspire />} />
           <Route path="create-inspire" element={<CreateInspire />} />
+          <Route path="create-inspire/:id" element={<CreateInspire />} />
+
         </Route>
 
         <Route path="/ticker" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Ticker />} />
           <Route path="create-ticker" element={<CreateTicker />} />
+          <Route path="create-ticker/:id" element={<CreateTicker />} />
         </Route>
 
 

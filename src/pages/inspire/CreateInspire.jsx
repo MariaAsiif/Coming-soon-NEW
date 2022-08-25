@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
-import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
-import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-import { useForm, Controller } from "react-hook-form";
+import { useForm, } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { callApi } from '../../utils/CallApi';
 const schema = yup.object({
     name: yup.string().required("Author Name is Required"),
     quote: yup.string().required("Quotation is Required"),
@@ -16,40 +14,36 @@ const schema = yup.object({
 });
 
 const CreateInspire = () => {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-
+    // var today = new Date();
+    // var dd = String(today.getDate()).padStart(2, '0');
+    // var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    // var yyyy = today.getFullYear();
+    
     const [companySetting, setCompanySetting] = useState(true)
 
-    const { register, watch, setValue, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
-
-
+    const { register, watch, reset, handleSubmit,  formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
     const onSubmit = async (data) => {
-        console.log("Data", data)
-        // try {
-        //     const config = {
-        //         headers: {
-        //             'Authorization': 'Bearer ' + token
-        //         }
-        //     };
-        //     let response = await axios.post('http://localhost:5873/jobs/createjob', config);
-        //     console.log(response);
-        //     if (response.data.status === "Success") {
-        //         navigate("/jobs", { replace: true });
-        //         toast.success(response.data.message);
+        let value = {
+            quoteText: data.quote,
+            authorName: data.name,
+            quoteColor: "Red",
+            quoteDate: Date.now(),
+            addedby: "6305dac13c594d3538c790b8"
+        }
+        const res = await callApi("/quotes/createQuote", "post", value)
+        if (res.status === "Success") {
+            toast.success(res.message);
+            reset()
+        }
+        else {
+            toast.error(res.message);
 
-        //     }
-        //     else {
-        //         toast.error(response.data.message);
-        //     }
-
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        }
     }
+
+
+
     return (
         <div className='bscontainer-fluid'>
             <ToastContainer
