@@ -253,7 +253,7 @@ const TopForm = (props) => {
                 location: { type: "Point", coordinates: [74.28911285869138, 31.624888273644956] }
             }
             const response = await callPublicApi("/users/signup", "post", payload)
-            if (response.data.status === "Fail") {
+            if (response.status === "Fail") {
                 toast.error(response.message);
                 setErrors(true)
             } else {
