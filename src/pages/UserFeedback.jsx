@@ -59,24 +59,24 @@ const UserFeedback = () => {
                                                 <div className=''>
                                                     <div className='mb-3'>
                                                         <label className='block font-semibold text-lg mb-2'>User name</label>
-                                                        <input  {...register('username', { required: true })} className='border-gray-300 w-full rounded' type="text" />
+                                                        <input  {...register('username', { required: true })} className='border-gray-300 w-full rounded' type="text" placeholder='john doe' />
                                                         {errors.username && (<p className="text-red-500 text-sm">User name is required</p>)}
                                                     </div>
                                                     <div className='mb-3'>
                                                         <label className='block font-semibold text-lg mb-2'>Email address</label>
-                                                        <input  {...register('email', { required: true })} className='border-gray-300 w-full rounded' type="email" />
+                                                        <input  {...register('email', { required: true })} className='border-gray-300 w-full rounded' type="email" placeholder='john@gmail.com' />
                                                         {errors.email && (<p className="text-red-500 text-sm">Email is required</p>)}
                                                     </div>
                                                     <div className='mb-3'>
-                                                        <p className='font-semibold text-lg mb-2 '>Image</p>
-                                                        <label className='block text-center cursor-pointer font-semibold text-lg mb-2 border p-2 border-gray-300 w-full rounded'>
-                                                            Upload
-                                                            <input {...register('feedbackimg')} type="file" hidden className='border-gray-300 w-full rounded' />
-                                                        </label>
+
+                                                        <label className='font-semibold text-lg mb-2'>Image</label>
+                                                        <input className='border border-gray-300 w-full rounded p-2'{...register('feedbackimg')} type="file" />
+
                                                     </div>
                                                     <div className='mb-3'>
                                                         <label className='block font-semibold text-lg mb-2'>Your feedback</label>
-                                                        <input   {...register('feedback', { required: true })} className='border-gray-300 w-full rounded' type="text" />
+
+                                                        <textarea rows={4} placeholder="feedback" className='border-gray-300 w-full rounded' {...register('feedback', { required: true })} />
                                                         {errors.feedback && (<p className="text-red-500 text-sm">Feedback is required</p>)}
                                                     </div>
                                                     <div >
