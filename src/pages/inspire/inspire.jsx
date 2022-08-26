@@ -27,7 +27,7 @@ const Inspire = () => {
         setDelPopup(true)
     }
 
-    const deleteInspire = async() => {
+    const deleteInspire = async () => {
         let value = {
             id: delId
         }
@@ -78,7 +78,7 @@ const Inspire = () => {
         <div className='bscontainer-fluid'>
             <ViewEditInspire id="job-modal" data={inspireRow} mode={inspireMode} modalOpen={inspirePopup} onClose={() => setinspirePopup(false)} />
             {delPopup && <PopUp permition={delPopup} callback={deleteInspire} Toggle={() => setDelPopup('')} type="deleteinfo" />}
-            
+
             <ToastContainer
                 position="top-right"
                 autoClose={5000}

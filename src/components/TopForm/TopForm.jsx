@@ -446,9 +446,10 @@ const TopForm = (props) => {
                             (
                                 <>
                                     <div className='row g-0'>
-                                        <div className='col-8'>
+                                        <div className='col-10'>
                                             <TagsInput
                                                 maxTags={5}
+                                                className={"custom-react-tagsinput"}
                                                 inputProps={{
                                                     className: 'custom-react-tagsinput-input',
                                                     placeholder: 'Add area of interest'
@@ -456,7 +457,7 @@ const TopForm = (props) => {
                                                 value={areaofInterest}
                                                 onChange={handleAreaofInterest} />
                                         </div>
-                                        <div className='col-4'>
+                                        <div className='col-2'>
                                             <button onClick={goToareaodinterestfield}
                                                 className={`${!errors.mobileError && mobileno.value !== "" ? `bg-green-600` : 'bg-light-red'} border-red-600  w-full h-[42px] text-white font-Poppins font-medium`}>
                                                 Enter</button>

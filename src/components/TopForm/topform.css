@@ -119,7 +119,8 @@
 
 /* reacttags input css */
 .custom-react-tagsinput-input {
-    border: none !important
+    border: none !important;
+    width: 100px
 }
 
 .custom-react-tagsinput-input:focus {
