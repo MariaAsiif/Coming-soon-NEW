@@ -38,27 +38,27 @@ const CreateFeedback = () => {
     const onSubmit = async (data) => {
         debugger
         console.log("find")
-        // try {
-        //     let formdata = new FormData()
-        //     formdata.append('feedbackimg', file);
-        //     formdata.append('request', JSON.stringify({
-        //         userEmail: data.email,
-        //         feedbackDescription: data.desc,
-        //         userName: data.username
-        //     }));
-        //     const res = await callApi("/feedbacks/createFeedback", "post", formdata)
-        //     if (res.status === "Success") {
-        //         toast.success(res.message);
-        //         reset()
-        //     }
-        //     else {
-        //         toast.error(res.message);
+        try {
+            let formdata = new FormData()
+            formdata.append('feedbackimg', file);
+            formdata.append('request', JSON.stringify({
+                userEmail: data.email,
+                feedbackDescription: data.desc,
+                userName: data.username
+            }));
+            const res = await callApi("/feedbacks/createFeedback", "post", formdata)
+            if (res.status === "Success") {
+                toast.success(res.message);
+                reset()
+            }
+            else {
+                toast.error(res.message);
 
-        //     }
+            }
 
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
         <div className='bscontainer-fluid'>
@@ -73,7 +73,7 @@ const CreateFeedback = () => {
                 draggable
                 pauseOnHover
             />
-            <form onSubmit={handleSubmit(hellow)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='row p-11'>
 
                     <div className='col-12 mb-6'>
@@ -158,23 +158,7 @@ const CreateFeedback = () => {
                             <p className="text-red-500 text-sm">{errors.feedback.message}</p>
                         )}
                     </div>
-                    <div className='col-lg-12 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="desc">Description</label>
-                        <div className='absolute right-10 top-10'>
-                            {!errors.desc && watch('desc') ? <FcCheckmark /> : errors.desc ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
-                        <textarea
-                            {...register('desc')}
-                            autoComplete="off"
-                            className={`form-input w-full  ${errors.desc && 'border-red-500'}`}
-                            name='desc' id="desc"
-                            placeholder="Description"
-                        ></textarea>
-
-                        {errors.desc && (
-                            <p className="text-red-500 text-sm">{errors.desc.message}</p>
-                        )}
-                    </div>
+                    
 
                     <div className='col-lg-12'>
                         <button  className="btn bg-red-500 hover:bg-green-600 text-white" type='submit'>Submit</button>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
-const DeletePopup = (permition, Toggle, callback) => {
+const DeletePopup = ({permition, Toggle, callback}) => {
    const [show] = useState(permition)
 
     const handleClose = (info) => {
