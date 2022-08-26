@@ -2,51 +2,79 @@ import React, { useRef, useEffect, useState } from 'react'
 import Transition from '../../utils/Transition';
 import { callApi } from '../../utils/CallApi';
 
+// ========================= 3rd party packages
+
+import { useForm } from "react-hook-form";
+import moment from "moment"
+import { FcCheckmark } from 'react-icons/fc'
 import { toast, ToastContainer } from 'react-toastify';
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
 
-const schema = yup.object({
-    name: yup.string().required("Author Name is Required"),
-    quote: yup.string().required("Quotation is Required"),
-});
 
-const ViewEditCandidate = ({ id, modalOpen, onClose, mode, data }) => {
-    debugger
+
+
+const ViewEditTicker = ({ id, modalOpen, onClose, mode, data }) => {
     const modalContent = useRef(null);
+    const { register, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange ', });
+    const [file, setFile] = useState('')
+    const [fileUrl, setFileUrl] = useState('')
 
-    const { register, watch, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
+    const onSubmit = async (values) => {
+        let value = {
+            tickerid: data._id,
+            tickerText: values.name,
+            active: true
+        }
+        const res = await callApi("/quotes/updateTicker", "post", value)
+        if (res.status === "Success") {
+            console.log("Res", res)
+            toast.success(res.message);
+            onClose()
+        }
+        else {
+            toast.error(res.message);
 
-
-    const onSubmit = async (data) => {
-        console.log("Data", data)
-        try {
-            let value = {
-                quoteText: data.quote,
-                authorName: data.name,
-                quoteColor: "Red",
-                quoteDate: Date.now(),
-                addedby: "6305dac13c594d3538c790b8"
-            }
-            const res = await callApi("/quotes/createQuote", "post", value)
-            if (res.status === "Success") {
-                toast.success(res.message);
-                reset()
-            }
-            else {
-                toast.error(res.message);
-    
-            }
-
-        } catch (error) {
-            console.log(error);
         }
     }
 
+
+    const handleChangeImage = (e) => {
+        let file = e.target.files[0]
+        setFile(file)
+
+        let url = URL.createObjectURL(file)
+        setFileUrl(url)
+
+    }
+
+
+    console.log("file", fileUrl)
+    useEffect(() => {
+        const keyHandler = ({ keyCode }) => {
+            if (!modalOpen || keyCode !== 27) return;
+            onClose();
+        };
+        document.addEventListener('keydown', keyHandler);
+        return () => document.removeEventListener('keydown', keyHandler);
+    });
+    useEffect(() => {
+        reset(data);
+
+    }, [data, reset]);
+
     return (
         <>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             {/* Modal backdrop */}
             <Transition
                 className="fixed inset-0 bg-slate-900 bg-opacity-30 z-50 transition-opacity"
@@ -73,23 +101,11 @@ const ViewEditCandidate = ({ id, modalOpen, onClose, mode, data }) => {
                 leaveStart="opacity-100 translate-y-0"
                 leaveEnd="opacity-0 translate-y-4"
             >
-                <div ref={modalContent} className="bg-white rounded shadow-lg  overflow-x-hidden  max-w-[1200px] max-h-full">
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                    />
-
-                      {/* Modal header */}
-                      <div className="px-5 py-3 border-b border-slate-200">
+                <div ref={modalContent} className="bg-white rounded shadow-lg overflow-auto w-3/4 h-2/3">
+                    {/* Modal header */}
+                    <div className="px-5 py-3 border-b border-slate-200">
                         <div className="flex justify-between items-center">
-                            <div className="font-semibold text-slate-800">View Candidate</div>
+                            <div className="font-semibold text-slate-800">{mode === "edit" ? "Edit Ticker" : "View Ticker"}</div>
                             <button className="text-slate-400 hover:text-slate-500" onClick={onClose}>
                                 <div className="sr-only">Close</div>
                                 <svg className="w-4 h-4 fill-current">
@@ -98,96 +114,57 @@ const ViewEditCandidate = ({ id, modalOpen, onClose, mode, data }) => {
                             </button>
                         </div>
                     </div>
+                    <div className='bscontainer'>
 
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='row p-11'>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <div className='row p-5'>
 
-                    <div className='col-12 mb-6'>
-                        <header className="py-4">
-                            <h2 className="font-semibold text-slate-800">Add new Ticker</h2>
-                        </header>
-                    </div>
+                                <div className='col-lg-6 mb-5'>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">LOGO IMAGE</label>
+                                    {mode === "view" ?
+                                        (
 
-                    <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="name">Text</label>
-                        <div className='absolute right-5 top-10'>
-                            {!errors.name && watch("name") ? <FcCheckmark /> : errors.name ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
-                        <input
-                            {...register('name')}
-                            autoComplete="off"
-                            className={`w-full  ${errors.name ? "border-red-400" : "border-gray-400"}`}
-                            name='name' id="name"
-                            type="text"
-                            placeholder="AUTHOR NAME"
+                                            <img src={`http://localhost:5873/${data?.logoFile}`} className="w-full h-[90px]" alt="image_logo" />
 
-                        />
-                        <span hidden={watch("name")} className='absolute text-red-400 text-lg font-medium  top-9 left-[145px]'>*</span>
+                                        ) : (
+                                            <>
+                                                <label htmlFor='logo'>
+                                                    {fileUrl ?
+                                                        <img src={fileUrl} className="w-full h-[90px]" alt="image_logo" />
+                                                        :
+                                                        <img src={`http://localhost:5873/${data?.logoFile}`} className="w-full h-[90px] " alt="image_logo" />
+                                                    }
+                                                </label>
 
-                        {errors.name && (
-                            <p className="text-red-500 text-sm">{errors.name.message}</p>
-                        )}
-                    </div>
-
-
-
-                    <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="secondFname">logo </label>
-                        <div className='absolute right-5 top-10'>
-                            {!errors.logo && watch('logo') ? <FcCheckmark /> : errors.logo ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
-                        <Controller
-                            control={control}
-                            name="logo"
-                            render={({ field: { onChange, onBlur, } }) => (
-                                <input
-                                    onBlur={onBlur}
-                                    onChange={onChange}
-                                    type="file"
-                                    className={`form-input w-full h-[42px]  ${errors.logo && 'border-red-500'}`}
-                                    name='logo' id="logo"
-                                />
-                            )}
-                        />
-
-
-                        {errors.cv && (
-                            <p className="text-red-500 text-sm">{errors.cv.message}</p>
-                        )}
-                    </div>
-
-                    <div className='col-lg-4 mb-4 relative'>
-                        <div>
-                            <div className="text-sm text-slate-800 font-semibold mb-3">Active/DeActive</div>
-                            <div className="flex items-center">
-                                <div className="form-switch">
-                                    <input
-                                        type="checkbox"
-                                        id="company-toggle"
-                                        className="sr-only"
-                                        checked={companySetting}
-                                        onChange={() => setCompanySetting(!companySetting)}
-                                    />
-                                    <label className="bg-slate-400" htmlFor="company-toggle">
-                                        <span className="bg-white shadow-sm" aria-hidden="true"></span>
-                                        <span className="sr-only">Company Culture</span>
-                                    </label>
+                                                <input id="logo" onChange={handleChangeImage} type="file" className='hidden pointer' />
+                                            </>
+                                        )}
+                                    {errors.logoFile && <span className='text-red-500'>This field is required</span>}
                                 </div>
-                                <div className="text-sm text-slate-400 italic ml-2">{companySetting ? 'Active' : 'DeActive'}</div>
+                                <div className='col-lg-6 mb-5'>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">TICKER TEXT</label>
+                                    {mode === "view" ?
+                                        (
+                                            <p>{data.tickerText}</p>
+                                        ) : (
+
+                                            <input    {...register("tickerText", { required: true })} className={`form-input w-full ${errors.tickerText ? "border-red-500" : "border-green-500"}`} />
+                                        )}
+                                    {errors.tickerText && <span className='text-red-500'>This field is required</span>}
+                                </div>
+                                <div className='col-lg-12 mt-10'>
+                                    {mode === "edit" &&
+                                        <button className="btn bg-red-500 hover:bg-green-600 text-white" type='submit' >Update</button>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </form>
 
-                    <div className='col-lg-12'>
-                        <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
                     </div>
-                </div>
-            </form >
-
                 </div>
             </Transition>
         </>
     )
 }
 
-export default ViewEditCandidate
+export default ViewEditTicker

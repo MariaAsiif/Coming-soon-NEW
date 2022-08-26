@@ -6,11 +6,10 @@ const PopUp = ({ permition, Toggle, Firstname, type }) => {
   const [otp, setOtp] = useState(new Array(4).fill(""));
   const [activeOtp, setActiveOtp] = useState(0);
 
-  const currentActiveIndex = 0
 
   const optRef = useRef(null)
 
-  const handleClose = () => Toggle(false);
+
 
   const handleChange = (e, index) => {
     const { value } = e.target
@@ -23,6 +22,13 @@ const PopUp = ({ permition, Toggle, Firstname, type }) => {
 
   const handleKeyDown = (key, index) => {
     if (key === "Backspace") setActiveOtp(index - 1)
+
+  }
+
+
+
+  const handleClose = () => {
+    Toggle(false)
 
   }
 
@@ -42,14 +48,8 @@ const PopUp = ({ permition, Toggle, Firstname, type }) => {
                   <h1 className="text-2xl font-bold">Email Verification</h1>
                   <div className="flex flex-col mt-4">
                     <span>we have sent you a code on your email please verify</span>
-                    {/* <span className="font-bold">+91 ******876</span> */}
                   </div>
-                  {/* <div id="otp" className="flex flex-row justify-center text-center px-2 mt-5">
-                    <input className="m-2 border h-10 w-10 text-center form-control rounded" type="text" id="second" maxlength="1" />
-                    <input className="m-2 border h-10 w-10 text-center form-control rounded" type="text" id="third" maxlength="1" />
-                    <input className="m-2 border h-10 w-10 text-center form-control rounded" type="text" id="fourth" maxlength="1" />
-
-                  </div> */}
+               
                   {otp.map((_, index) => {
                     return (
                       <React.Fragment key={index} >
@@ -80,9 +80,10 @@ const PopUp = ({ permition, Toggle, Firstname, type }) => {
             </div>
           </div>
           :
+
           <div className='p-2 thank_you_form ' >
             <h1 className='text-[30px] font-bold'> Thank You </h1>
-            <p className='text-[20px] font-bold  '>{Firstname.fname} {Firstname.fmname} {Firstname.smname} </p>
+            <p className='text-[20px] font-bold  '>{Firstname?.fname} {Firstname?.fmname} {Firstname?.smname} </p>
 
             <p className='text-[15px] font-samibold mt-2'> Your submition has been recieved. </p>
             <p className='text-[15px] font-samibold '> We will be in touch and contact you soon!</p>

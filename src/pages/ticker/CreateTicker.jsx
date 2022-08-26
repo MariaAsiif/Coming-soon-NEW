@@ -29,15 +29,13 @@ const CreateTicker = () => {
 
 
     const onSubmit = async (data) => {
-        console.log("Data", data)
+        console.log("data", data)
         try {
             let formdata = new FormData()
             formdata.append('logoimg', file);
             formdata.append('request', JSON.stringify({
-                request: {
-                    tickerText: data.name,
-                    "active": true
-                    }
+                tickerText: data.name,
+                "active": true
             }));
             const res = await callApi("/tickers/createTicker", "post", formdata)
             if (res.status === "Success") {
@@ -104,12 +102,13 @@ const CreateTicker = () => {
                             {!errors.logo && watch('logo') ? <FcCheckmark /> : errors.logo ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
-                                   
-                                    onChange={(e) => setFile(e.target.files[0]) }
-                                    type="file"
-                                    className={`form-input w-full h-[42px]  ${errors.logo && 'border-red-500'}`}
-                                    name='logo' id="logo"
-                                />
+
+                            onChange={(e) => setFile(e.target.files[0])}
+                            type="file"
+                            className={`form-input w-full h-[42px]  ${errors.logo && 'border-red-500'}`}
+                            name='logo' id="logo"
+                        />
+                        <small className='text-red-500'>only png, svg images can be added</small>
                         {/* <Controller
                             control={control}
                             name="logo"
@@ -132,7 +131,7 @@ const CreateTicker = () => {
 
                     <div className='col-lg-4 mb-4 relative'>
                         <div>
-                            <div className="text-sm text-slate-800 font-semibold mb-3">Active/DeActive</div>
+                            <div className="text-sm text-slate-800 font-semibold mb-3">Active/Deactivate</div>
                             <div className="flex items-center">
                                 <div className="form-switch">
                                     <input
@@ -147,7 +146,7 @@ const CreateTicker = () => {
                                         <span className="sr-only">Company Culture</span>
                                     </label>
                                 </div>
-                                <div className="text-sm text-slate-400 italic ml-2">{companySetting ? 'Active' : 'DeActive'}</div>
+                                <div className="text-sm text-slate-400 italic ml-2">{companySetting ? 'Active' : 'Deactivate'}</div>
                             </div>
                         </div>
                     </div>

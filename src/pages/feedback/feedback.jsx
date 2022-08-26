@@ -7,8 +7,7 @@ import { toast, ToastContainer } from 'react-toastify';
 
 import ViewEditTicker from '../../components/Popups/ViewEditTicker';
 import DeletePopup from '../../components/deletePopups/DeletePopups';
-const Ticker = () => {
-    const token = useSelector((state) => state.userAuth.loginInfo.token);
+const FeedBack = () => {
     const [allTicker, setallTicker] = useState([])
     const [jobPopup, setjobPopup] = useState(false)
     const [delPopup, setDelPopup] = useState(false)
@@ -33,7 +32,7 @@ const Ticker = () => {
             id: delId
         }
         try {
-            const res = await callApi("/quotes/removeQuote", "post", value)
+            const res = await callApi("/quotes/removeFeedback", "post", value)
             if (res.status === "Success") {
                 toast.success(res.message);
             }
@@ -57,17 +56,13 @@ const Ticker = () => {
                         "offset": 0,
                         "limit": 50,
                         "query": {
-                            "critarion": { "active": true },
-
-                            "addedby": "_id email first_name",
-
-                            "lastModifiedBy": "_id email first_name"
+                            "critarion": { "active": true }
                         }
 
                     }
-                    const response = await callApi("/tickers/getTickersWithFullDetails", "post", payload)
+                    const response = await callApi("/feedbacks/getFeedbacksWithFullDetails", "post", payload)
                     console.log("res", response)
-                    setallTicker(response.data.tickers)
+                    setallTicker(response.data.feedbacks)
                 } catch (error) {
                     console.log(error);
                 }
@@ -78,20 +73,20 @@ const Ticker = () => {
     return (
         <div className='bscontainer-fluid'>
             <ViewEditTicker id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />
-            {delPopup &&  <DeletePopup permition={delPopup} Toggle={() => setDelPopup(false )} callback={deleteTicker} /> }
+            {delPopup && <DeletePopup permition={delPopup} Toggle={() => setDelPopup(false)} callback={deleteTicker} />}
             <div className='row py-5'>
                 <div className='col-12  mb-5'>
                     <Link to="create-candidate" className="btn bg-red-500 hover:bg-green-600 text-white" >
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                         </svg>
-                        <span className="ml-2">Create Ticker</span>
+                        <span className="ml-2">Create FeedBack</span>
                     </Link>
                 </div>
                 <div className='col-12 border'>
                     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                         <header className="px-5 py-4">
-                            <h2 className="font-semibold text-slate-800">All Ticker <span className="text-slate-400 font-medium">{allTicker.length}</span></h2>
+                            <h2 className="font-semibold text-slate-800">All FeedBack <span className="text-slate-400 font-medium">{allTicker.length}</span></h2>
                         </header>
                         <div>
                             <div className="overflow-x-auto">
@@ -106,10 +101,16 @@ const Ticker = () => {
                                                 <div className="font-semibold text-left">IMAGE</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">DESCRIPTION</div>
+                                                <div className="font-semibold text-left">USER NAME</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">STATUS</div>
+                                                <div className="font-semibold text-left">EMAIL</div>
+                                            </th>
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">FEEDBACK</div>
+                                            </th>
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">DESCRIPTION</div>
                                             </th>
 
 
@@ -128,13 +129,22 @@ const Ticker = () => {
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         {/* <div className="text-left">{job.}</div> */}
-                                                        <img src={`http://localhost:5873/${job?.logoFile}`} className="w-[80px] h-[50px]" alt="image_logo" />
+                                                        <img src={`http://localhost:5873/${job?.imageUrl}`} className="w-[80px] h-[50px]" alt="image_logo" />
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{job.tickerText}</div>
+                                                        <div className="text-left">{job.userName}</div>
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{job.active ? "Active" : "Deactive"}</div>
+                                                        <div className="text-left">{job.userEmail}</div>
+                                                    </td>
+                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                        <div className="text-left">{job.userEmail}</div>
+                                                    </td>
+                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                        <div className="text-left">{job.userEmail}</div>
+                                                    </td>
+                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                        <div className="text-left">{job.feedbackDescription}</div>
                                                     </td>
 
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
@@ -181,4 +191,4 @@ const Ticker = () => {
     )
 }
 
-export default Ticker
+export default FeedBack

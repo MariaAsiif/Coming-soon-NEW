@@ -1,6 +1,6 @@
 import { FaUserGraduate, FaBriefcase } from "react-icons/fa";
 import { AiFillDashboard } from "react-icons/ai";
-
+import { VscFeedback} from 'react-icons/vsc'
 import { BiSticker } from 'react-icons/bi'
 import { RiLuggageDepositLine } from 'react-icons/ri'
 import { SiSlideshare } from 'react-icons/si'
@@ -191,6 +191,26 @@ const SidebarObj = () => {
                         {
                             label: "Create Ticker",
                             pathname: "/ticker/create-ticker",
+                        },
+
+                    ]
+                },
+                {
+
+                    label: "Feedback Management",
+                    leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),
+                    rightIcon: "sadf",
+                    path: "/feedback",
+                    pathname: "feedback",
+                    subMenuItems: [
+                        {
+                            label: "All Feedback",
+                            pathname: "/feedback",
+                        },
+                        {
+                            label: "Create Feedback",
+                            pathname: "/feedback/create-feedback",
                         },
 
                     ]

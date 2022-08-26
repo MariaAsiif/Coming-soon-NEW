@@ -2,10 +2,15 @@ import React, { useState } from 'react'
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
-import { useForm, } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { callApi } from '../../utils/CallApi';
+
+import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
+import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
+import moment from 'moment';
+
 const schema = yup.object({
     name: yup.string().required("Author Name is Required"),
     quote: yup.string().required("Quotation is Required"),
@@ -14,21 +19,47 @@ const schema = yup.object({
 });
 
 const CreateInspire = () => {
-    // var today = new Date();
-    // var dd = String(today.getDate()).padStart(2, '0');
-    // var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    // var yyyy = today.getFullYear();
-    
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    const [quoteDate, setquoteDate] = useState({day : dd , month :mm , year :yyyy})
     const [companySetting, setCompanySetting] = useState(true)
 
-    const { register, watch, reset, handleSubmit,  formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+    const { register, watch, reset, control, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+
+
+    // ****************** Datepicker Content ***********
+    const renderCustomInput = ({ ref }) => (
+        < div className='relative cursor-pointe w-full'>
+            <input readOnly ref={ref} // necessary  placeholder="yyy-mm-dd"
+                value={quoteDate ? `${quoteDate.year}/${quoteDate.month}/${quoteDate.day}` : ''}
+                className={` form-input w-full outline-blue-400 cursor-pointer z-30  px-2 py-2  border-gray-400`}
+            />
+            <div className={`visible absolute top-3 cursor-pointer right-5`}>   <FcCheckmark />   </div>
+
+        </div >
+    )
+
+
+
+    const handleChangeDate = (data) => {
+        const date = moment(data).format('yyyy-M-D').split('-')
+        setquoteDate({ day: +date[2], month: +date[1], year: +date[0] })
+    }
+    
+   
+
 
     const onSubmit = async (data) => {
+
+        let updated = `${quoteDate.year}-${quoteDate.month}-${quoteDate.day}`;
+
         let value = {
             quoteText: data.quote,
             authorName: data.name,
             quoteColor: "Red",
-            quoteDate: Date.now(),
+            quoteDate: updated,
             addedby: "6305dac13c594d3538c790b8"
         }
         const res = await callApi("/quotes/createQuote", "post", value)
@@ -41,6 +72,8 @@ const CreateInspire = () => {
 
         }
     }
+
+
 
 
 
@@ -66,7 +99,7 @@ const CreateInspire = () => {
                         </header>
                     </div>
 
-                    <div className='col-lg-6 mb-4 relative'>
+                    <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="name">Author Name </label>
                         <div className='absolute right-5 top-10'>
                             {!errors.name && watch("name") ? <FcCheckmark /> : errors.name ? <div className=' text-red-500'><MdClose /></div> : null}
@@ -107,6 +140,23 @@ const CreateInspire = () => {
                                 <div className="text-sm text-slate-400 italic ml-2">{companySetting ? 'Active' : 'DeActive'}</div>
                             </div>
                         </div>
+                    </div>
+
+                    <div className='col-lg-4 mb-4 '>
+                        <label className="block text-sm font-medium mb-1 "  >Quote Date</label>
+                        <div className="relative">
+                            <DatePicker
+                                value={quoteDate}
+                                name="quoteDate"
+                                onChange={(date) => setquoteDate(date)}
+                                renderInput={renderCustomInput} // render a custom input
+                                shouldHighlightWeekends
+                                calendarPopperPosition="bottom"
+
+                            />
+                        </div>
+
+
                     </div>
 
                     <div className='col-lg-12 mb-4 relative'>

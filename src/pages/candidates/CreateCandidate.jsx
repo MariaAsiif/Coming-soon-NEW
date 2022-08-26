@@ -7,7 +7,7 @@ import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
 import { Country, State, City } from 'country-state-city';
-import { GoDeviceMobile } from 'react-icons/go'
+// import { GoDeviceMobile } from 'react-icons/go'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
@@ -44,8 +44,8 @@ const schema = yup.object({
 });
 
 const CreateCandidate = () => {
-    const token = useSelector((state) => state.userAuth.loginInfo.token);
-    let navigate = useNavigate();
+    // const token = useSelector((state) => state.userAuth.loginInfo.token);
+    // let navigate = useNavigate();
     
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');

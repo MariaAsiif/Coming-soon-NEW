@@ -4,11 +4,15 @@ import { callApi } from '../../utils/CallApi';
 import moment from "moment"
 import { IoEyeOutline } from "react-icons/io5";
 import ViewEditInspire from "../../components/Popups/ViewEditInspire"
+import PopUp from '../../components/popup/popup';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Inspire = () => {
 
     const [allInspires, setallInspires] = useState([])
     const [inspirePopup, setinspirePopup] = useState(false)
+    const [delPopup, setDelPopup] = useState(false)
+    const [delId, setDelId] = useState('')
     const [inspireMode, setinspireMode] = useState("view")
     const [inspireRow, setinspireRow] = useState({})
     const openInspirePopup = (e, mode, data) => {
@@ -18,14 +22,32 @@ const Inspire = () => {
         setinspireRow(data)
     }
 
-
-
-    const deleteInspire = () => {
-
+    const deletePopToggle = (id) => {
+        setDelId(id)
+        setDelPopup(true)
     }
 
+    const deleteInspire = async() => {
+        let value = {
+            id: delId
+        }
+        try {
+            const res = await callApi("/quotes/removeQuote", "post", value)
+            if (res.status === "Success") {
+                toast.success(res.message);
+
+            }
+            else {
+                toast.error(res.message);
+
+            }
+        } catch (error) {
+
+        }
+    }
     useEffect(() => {
-        if (!inspirePopup) {
+        console.log("useeffect run")
+        if (!inspirePopup || !delPopup) {
             (async () => {
                 try {
                     const payload = {
@@ -48,13 +70,29 @@ const Inspire = () => {
             })();
         }
 
-    }, [inspirePopup])
+    }, [inspirePopup || delPopup])
+
+
+
     return (
         <div className='bscontainer-fluid'>
             <ViewEditInspire id="job-modal" data={inspireRow} mode={inspireMode} modalOpen={inspirePopup} onClose={() => setinspirePopup(false)} />
+            {delPopup && <PopUp permition={delPopup} callback={deleteInspire} Toggle={() => setDelPopup('')} type="deleteinfo" />}
+            
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className='row py-5'>
                 <div className='col-12  mb-5'>
-                    <Link to="create-job" className="btn bg-red-500 hover:bg-green-600 text-white" >
+                    <Link to="create-inspire" className="btn bg-red-500 hover:bg-green-600 text-white" >
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                         </svg>
@@ -112,7 +150,7 @@ const Inspire = () => {
                                                     <div className="text-left">{inspire.quoteColor}</div>
                                                 </td>
                                                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                    <div className="text-left">{moment(inspire.quoteDate).format('MM/DD/YYYY')}</div>
+                                                    <div className="text-left">{inspire.quoteDate}</div>
                                                 </td>
                                                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                     <div className="text-left">{inspire.quoteText}</div>
@@ -131,7 +169,7 @@ const Inspire = () => {
                                                         <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openInspirePopup(e, "view", inspire)}>
                                                             <IoEyeOutline className='text-red-500 hover:text-green-600' size={23} />
                                                         </button>
-                                                        <button onClick={deleteInspire} className="text-rose-500 hover:text-rose-600 rounded-full">
+                                                        <button onClick={() => deletePopToggle(inspire?._id)} className="text-rose-500 hover:text-rose-600 rounded-full">
                                                             <span className="sr-only">Delete</span>
                                                             <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
                                                                 <path d="M13 15h2v6h-2zM17 15h2v6h-2z" />

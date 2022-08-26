@@ -88,10 +88,12 @@ import Department from './pages/department/departments';
 import CreateDepartment from './pages/department/CreateDepartment';
 import Designation from './pages/designation/designation';
 import CreateDesignation from './pages/designation/CreateDesignation';
-// import Inspire from './pages/Inspire/Inspire';
-// import CreateInspire from './pages/Inspire/CreateInspire';
+import Inspire from './pages/inspire/inspire';
+import CreateInspire from './pages/inspire/CreateInspire';
 import Ticker from './pages/ticker/ticker';
 import CreateTicker from './pages/ticker/CreateTicker';
+import FeedBack from './pages/feedback/feedback';
+import CreateFeedback from './pages/feedback/CreateFeedback';
 
 const RequireAuth = ({ children }) => {
   const token = useSelector((state) => state.userAuth.loginInfo.token);
@@ -149,20 +151,24 @@ function App() {
           <Route index element={<Employers />} />
           <Route path="create-employers" element={<CreateEmployer />} />
         </Route>
-        {/* <Route path="/inspire" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route path="/inspire" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Inspire />} />
           <Route path="create-inspire" element={<CreateInspire />} />
-          <Route path="create-inspire/:id" element={<CreateInspire />} />
-        </Route> */}
+        </Route>
 
         <Route path="/ticker" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Ticker />} />
           <Route path="create-ticker" element={<CreateTicker />} />
-          <Route path="create-ticker/:id" element={<CreateTicker />} />
+        </Route>
+
+        <Route path="/feedback" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<FeedBack />} />
+          <Route path="create-feedback" element={<CreateFeedback />} />
+
         </Route>
 
 
-        <Route path="/ecommerce" element={<RequireAuth> <MainWrapper /></RequireAuth>} >
+        {/* <Route path="/ecommerce" element={<RequireAuth> <MainWrapper /></RequireAuth>} >
           <Route index path="customers" element={<Customers />} />
           <Route path="orders" element={<Orders />} />
           <Route path="invoices" element={<Invoices />} />
@@ -274,7 +280,7 @@ function App() {
           <Route path="tooltip" element={<TooltipPage />} />
           <Route path="accordion" element={<AccordionPage />} />
           <Route path="icons" element={<IconsPage />} />
-        </Route>
+        </Route> */}
         <Route path="*" element={<PageNotFound />} />
 
       </Routes>

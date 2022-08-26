@@ -1,19 +1,60 @@
 import React, { useRef, useEffect, useState } from 'react'
 import Transition from '../../utils/Transition';
 import { callApi } from '../../utils/CallApi';
+import { FcCheckmark } from 'react-icons/fc'
 
 // ========================= 3rd party packages
 import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import { useForm } from "react-hook-form";
 import moment from "moment"
-import { FcCheckmark } from 'react-icons/fc'
+// import { FcCheckmark } from 'react-icons/fc'
+import { toast, ToastContainer } from 'react-toastify';
+
+
+
 
 const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
     const modalContent = useRef(null);
-    const { register, reset, handleSubmit, formState: { errors } } = useForm({});
+    const { register, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange ', });
     const [quoteDate, setquoteDate] = useState({ day: 10, month: 8, year: 2022 })
-    const onSubmit = data => console.log(data);
+
+
+    console.log("quts", quoteDate)
+
+
+    const handleChangeDate = (data) => {
+        const date = moment(data).format('yyyy-M-D').split('-')
+
+        // setquoteDate({ day: +date[2], month: +date[1], year: +date[0] })
+        console.log("quots", date)
+    }
+
+
+
+    const onSubmit = async (values) => {
+        let updated = `${quoteDate.year}-${quoteDate.month}-${quoteDate.day}`;
+        let value = {
+            quoteid: data._id,
+            quoteText: values.quoteText,
+            authorName: values.authorName,
+            quoteColor: values.quoteColor,
+            quoteDate: updated,
+
+            active: true
+
+        }
+        const res = await callApi("/quotes/updateQuote", "post", value)
+        if (res.status === "Success") {
+            console.log("Res", res)
+            toast.success(res.message);
+            onClose()
+        }
+        else {
+            toast.error(res.message);
+
+        }
+    }
 
 
     // ****************** Datepicker Content ***********
@@ -38,14 +79,26 @@ const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
         return () => document.removeEventListener('keydown', keyHandler);
     });
     useEffect(() => {
-        console.log("useEffect");
         reset(data);
-        const date = moment(data.quoteDate).format('yyyy-M-D').split('-')
+        // var parts = data?.quoteDate?.split('-');
+        // var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
+        const date = moment(data?.quoteDate).format('yyyy-M-D').split('-')
         setquoteDate({ day: +date[2], month: +date[1], year: +date[0] })
     }, [data, reset]);
 
     return (
         <>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             {/* Modal backdrop */}
             <Transition
                 className="fixed inset-0 bg-slate-900 bg-opacity-30 z-50 transition-opacity"
@@ -86,6 +139,7 @@ const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
                         </div>
                     </div>
                     <div className='bscontainer'>
+
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className='row p-5'>
                                 <div className='col-lg-4 mb-5'>
@@ -111,7 +165,7 @@ const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
                                     {errors.quoteText && <span className='text-red-500'>This field is required</span>}
                                 </div>
                                 <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Quote Color</label>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">QUOTE COLOR</label>
                                     {mode === "view" ?
                                         (
                                             <p>{data.quoteColor}</p>
@@ -122,16 +176,17 @@ const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
                                     {errors.quoteColor && <span className='text-red-500'>This field is required</span>}
                                 </div>
                                 <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">EXPIRY DATE</label>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">QUOTE DATE</label>
                                     {mode === "view" ?
                                         (
                                             <p>{moment(data.quoteDate).format('MM/DD/YYYY')}</p>
                                         ) : (
                                             <DatePicker
                                                 value={quoteDate}
-                                                onChange={setquoteDate}
+                                                onChange={(date) => setquoteDate(date)}
                                                 renderInput={renderCustomInput} // render a custom input
                                                 shouldHighlightWeekends
+                                            // calendarPopperPosition="bottom"
                                             />
                                         )}
                                 </div>
