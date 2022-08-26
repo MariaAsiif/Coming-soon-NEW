@@ -94,6 +94,7 @@ import Ticker from './pages/ticker/ticker';
 import CreateTicker from './pages/ticker/CreateTicker';
 import FeedBack from './pages/feedback/feedback';
 import CreateFeedback from './pages/feedback/CreateFeedback';
+import UserFeedback from './pages/UserFeedback';
 
 const RequireAuth = ({ children }) => {
   const token = useSelector((state) => state.userAuth.loginInfo.token);
@@ -119,6 +120,7 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<CommingSoon />} />
+        <Route exact path="/user-feedback" element={<UserFeedback />} />
         <Route path="/dashboard" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Dashboard />} />
           <Route path="analytics" element={<Analytics />} />

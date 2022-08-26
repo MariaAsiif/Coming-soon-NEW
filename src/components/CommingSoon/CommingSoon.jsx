@@ -6,6 +6,7 @@ import sabadelLogo from "../../assets/images/sabadel.png"
 import worldBankLogo from "../../assets/images/world.png"
 import ReadMore from '../readmore/readmore'
 import { Translator, Translate } from 'react-auto-translate';
+import { Link } from "react-router-dom"
 import './style.css'
 import axios from 'axios';
 const CommingSoon = () => {
@@ -39,7 +40,7 @@ const CommingSoon = () => {
                                         “The University of Chicago Medical Center (UChicago Medicine) finds that Cannabidiol inhibits SARS-CoV-2
                                         replication through induction of the host ER stress and innate immune responses”.
                                     </a>
-                                    <br/>
+                                    <br />
                                     <small className='source'>SOURCE: The University of Chicago Medical Center linked above for voracity</small>
                                 </span>
                             </div>
@@ -100,6 +101,9 @@ const CommingSoon = () => {
 
                         <div className="company_info_name text-red-600">
                             <span>A Fairman Company</span>
+                        </div>
+                        <div>
+                            <Link className='text-blue-600 underline text-sm' to="/user-feedback">Feedback</Link>
                         </div>
 
                     </div>
