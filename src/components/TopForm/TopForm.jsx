@@ -30,7 +30,7 @@ const TopForm = (props) => {
     const [mobileno, setmobileno] = useState({ fmobile: "mobile", value: "", isempty: true })
     const [product, setproduct] = useState("")
     const [areaofInterest, setareaofInterest] = useState([])
-    const [activeField, setactiveField] = useState("areaofinterestfield")//firstname
+    const [activeField, setactiveField] = useState("firstname")//firstname
     const [countryCode, setCountryCode] = useState("")
     const [name, setName] = useState({})
     const [isSuccess, setIsSuccess] = useState(false)

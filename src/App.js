@@ -117,11 +117,6 @@ function App() {
 
   return (
     <>
-
-
-
-
-
       <Routes>
         <Route exact path="/" element={<CommingSoon />} />
         <Route path="/dashboard" element={<RequireAuth><MainWrapper /></RequireAuth>} >
