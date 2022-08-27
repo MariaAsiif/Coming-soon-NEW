@@ -121,6 +121,8 @@ function App() {
       <Routes>
         <Route exact path="/" element={<CommingSoon />} />
         <Route exact path="/user-feedback" element={<UserFeedback />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Dashboard />} />
           <Route path="analytics" element={<Analytics />} />

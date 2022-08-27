@@ -67,17 +67,15 @@ const UserFeedback = () => {
                                                         <input  {...register('email', { required: true })} className='border-gray-300 w-full rounded' type="email" placeholder='john@gmail.com' />
                                                         {errors.email && (<p className="text-red-500 text-sm">Email is required</p>)}
                                                     </div>
-                                                    <div className='mb-3'>
 
-                                                        <label className='font-semibold text-lg mb-2'>Image</label>
-                                                        <input className='border border-gray-300 w-full rounded p-2'{...register('feedbackimg')} type="file" />
-
-                                                    </div>
                                                     <div className='mb-3'>
                                                         <label className='block font-semibold text-lg mb-2'>Your feedback</label>
-
                                                         <textarea rows={4} placeholder="feedback" className='border-gray-300 w-full rounded' {...register('feedback', { required: true })} />
                                                         {errors.feedback && (<p className="text-red-500 text-sm">Feedback is required</p>)}
+                                                    </div>
+                                                    <div className='mb-3'>
+                                                        <label className='font-semibold text-lg mb-2'>Image</label>
+                                                        <input className='border border-gray-300 w-full rounded p-2'{...register('feedbackimg')} type="file" />
                                                     </div>
                                                     <div >
                                                         <button type='submit' className='bg-red-500 hover:bg-green-600 w-full rounded p-3 text-white font-semibold'>SUBMIT</button>

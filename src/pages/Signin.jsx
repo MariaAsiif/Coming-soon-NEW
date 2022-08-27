@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux'
 import { signin } from "../Redux/UserAuthSlice/UserAuthSlice"
+import { callPublicApi } from "../utils/CallApi"
 
 function Signin() {
   let navigate = useNavigate();
@@ -67,18 +68,18 @@ function Signin() {
       })
     }
     else {
-
       try {
-        const response = await axios.post("https://hporx-admin-backend.herokuapp.com/users/signin", authValue);
+
+        const response = await callPublicApi("/users/signin", "post", authValue)
         if (response.data.status === "Fail") {
-          toast.error(response.data.message);
+          toast.error(response.message);
         } else {
-          dispatch(signin(response.data.token))
+          dispatch(signin({ token: response.token, userdata: response.data }))
           navigate("../dashboard");
         }
       }
       catch (err) {
-
+        console.log(err);
         dispatch(signin("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhIjp0cnVlLCJuIjoiSmFtc2hhaWQgU2FiaXIiLCJlIjoiamFtc2hhaWRzYWJpcjQxMTk4MEBnbWFpbC5jb20iLCJkIjoiNjJmNGUxMzI1NmYwNmQxMDg4NGY5NDRlIiwicCI6Ii91cGxvYWRzL2RwL2RlZmF1bHQucG5nIiwiciI6Il9hIiwiaWF0IjoxNjYwMjMxNTE1fQ.Q8gTpV9EW5ha1ujb4qLedGV4wQuQTIr12J0vPeLrhn4"))
         navigate("../dashboard");
       }

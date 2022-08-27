@@ -5,7 +5,10 @@ const initialState = {
         token: null
     },
     userInfo: {
-        name: ""
+        name: null,
+        email: null,
+        role: null,
+        userid: null,
     }
 }
 export const UserAuthSlice = createSlice({
@@ -13,10 +16,24 @@ export const UserAuthSlice = createSlice({
     initialState,
     reducers: {
         signin: (state, action) => {
-            state.loginInfo.token = action.payload
+            state.loginInfo.token = action.payload.token
+            state.userInfo.name = action.payload.userdata.first_name
+            state.userInfo.email = action.payload.userdata.email
+            state.userInfo.role = action.payload.userdata.role
+            state.userInfo.userid = action.payload.userdata._id
         },
         signout: (state) => {
-            state.loginInfo.token = null
+            return {
+                loginInfo: {
+                    token: null
+                },
+                userInfo: {
+                    name: null,
+                    email: null,
+                    role: null,
+                    userid: null,
+                }
+            }
         },
     },
 })
