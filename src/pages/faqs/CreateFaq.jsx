@@ -1,8 +1,10 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom"
+import { useSelector } from 'react-redux'
 
 const CreateFaq = () => {
+    const useername = useSelector((state) => state.userAuth.userInfo.name);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
@@ -77,7 +79,7 @@ const CreateFaq = () => {
                     <div className='col-lg-10 mb-4'>
                         <label className="block text-sm font-medium mb-1"  >Added by </label>
                         <select {...register('addedby', { required: true })} className={`form-input w-full    ${errors.addedby ? "border-red-400" : "border-gray-400"} `} >
-                            <option>Admin</option>
+                            <option>{useername}</option>
                         </select>
                     </div>
                     <div className='col-lg-12'>
