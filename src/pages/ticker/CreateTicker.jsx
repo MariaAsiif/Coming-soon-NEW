@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { FcCheckmark, FcDataEncryption } from 'react-icons/fc'
+import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { callApi } from '../../utils/CallApi';
@@ -25,7 +25,7 @@ const CreateTicker = () => {
     const [companySetting, setCompanySetting] = useState(true)
     const [file, setFile] = useState('')
 
-    const { register, watch, reset, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+    const { register, watch, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
 
 

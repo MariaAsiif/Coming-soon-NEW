@@ -50,7 +50,7 @@ import Billing from './pages/settings/Billing';
 import Feedback from './pages/settings/Feedback';
 import Changelog from './pages/utility/Changelog';
 import Roadmap from './pages/utility/Roadmap';
-import Faqs from './pages/utility/Faqs';
+// import Faqs from './pages/utility/Faqs';
 import EmptyState from './pages/utility/EmptyState';
 import PageNotFound from './pages/utility/PageNotFound';
 import KnowledgeBase from './pages/utility/KnowledgeBase';
@@ -95,6 +95,8 @@ import CreateTicker from './pages/ticker/CreateTicker';
 import FeedBack from './pages/feedback/feedback';
 import CreateFeedback from './pages/feedback/CreateFeedback';
 import UserFeedback from './pages/UserFeedback';
+import Faqs from './pages/faqs/Faqs';
+import CreateFaq from './pages/faqs/CreateFaq';
 
 const RequireAuth = ({ children }) => {
   const token = useSelector((state) => state.userAuth.loginInfo.token);
@@ -163,7 +165,11 @@ function App() {
         <Route path="/feedback" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<FeedBack />} />
           <Route path="create-feedback" element={<CreateFeedback />} />
+        </Route>
 
+        <Route path="/faq" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Faqs />} />
+          <Route path="create-faq" element={<CreateFaq />} />
         </Route>
 
 

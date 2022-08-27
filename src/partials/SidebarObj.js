@@ -194,7 +194,6 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-
                     label: "Feedback Management",
                     leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
                     activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),
@@ -209,6 +208,25 @@ const SidebarObj = () => {
                         {
                             label: "Create Feedback",
                             pathname: "/feedback/create-feedback",
+                        },
+
+                    ]
+                },
+                {
+                    label: "FAQ Management",
+                    leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),
+                    rightIcon: "sadf",
+                    path: "/faq",
+                    pathname: "faq",
+                    subMenuItems: [
+                        {
+                            label: "All FAQ",
+                            pathname: "/faq",
+                        },
+                        {
+                            label: "Create FAQ",
+                            pathname: "/faq/create-faq",
                         },
 
                     ]
