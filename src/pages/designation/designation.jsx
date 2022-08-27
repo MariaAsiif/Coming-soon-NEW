@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
-import moment from "moment"
 import { Link } from 'react-router-dom';
-import { callApi } from '../../utils/CallApi';
 import { IoEyeOutline } from 'react-icons/io5';
 import ViewEditEmployer from '../../components/Popups/ViewEditEmployer';
 const Designation = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [alljobs, setalljobs] = useState([])
-    const [showUser, setshowUser] = useState(false)
     const [jobPopup, setjobPopup] = useState(false)
     const [jobMode, setjobMode] = useState("view")
     const [jobRow, setjobRow] = useState({})
@@ -21,15 +18,8 @@ const Designation = () => {
         setjobRow(data)
     }
 
-    const deletejob = async () => {
-        try {
-            const response = await callApi("")
-        } catch (error) {
 
-        }
-    }
 
-    console.log("view", showUser)
     // const [selectedjobs, setselectedjobs] = useState([])
 
     // const handleChange = (e) => {

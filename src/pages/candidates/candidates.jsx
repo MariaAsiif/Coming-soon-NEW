@@ -9,9 +9,6 @@ import { IoEyeOutline } from 'react-icons/io5';
 const Candidates = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [alljobs, setalljobs] = useState([])
-    const [showUser, setshowUser] = useState(false)
-    const [viewUser, setviewUser] = useState(false)
-    const [userType, setUserType] = useState('')
     const [jobPopup, setjobPopup] = useState(false)
     const [jobMode, setjobMode] = useState("view")
     const [jobRow, setjobRow] = useState({})
@@ -31,7 +28,6 @@ const Candidates = () => {
         }
     }
 
-    console.log("view", showUser)
     // const [selectedjobs, setselectedjobs] = useState([])
 
     // const handleChange = (e) => {
@@ -102,13 +98,13 @@ const Candidates = () => {
                     <div className='mb-3'>
                         <ul className="inline-flex flex-wrap text-sm font-medium">
                             <li className="flex items-center">
-                                <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >dashboard </Link>
+                                <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
                                 <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
                                     <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
                                 </svg>
                             </li>
                             <li className="flex items-center">
-                                <Link to="/candidates" className="text-slate-500 hover:text-indigo-500" href="#0">candidates</Link>
+                                <Link to="/candidates" className="text-slate-500 hover:text-indigo-500" href="#0">Candidates</Link>
                             </li>
                         </ul>
                     </div>

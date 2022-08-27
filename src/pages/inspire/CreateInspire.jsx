@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { callApi } from '../../utils/CallApi';
@@ -10,6 +10,7 @@ import { callApi } from '../../utils/CallApi';
 import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import moment from 'moment';
+import { Link } from "react-router-dom"
 
 const schema = yup.object({
     name: yup.string().required("Author Name is Required"),
@@ -23,10 +24,10 @@ const CreateInspire = () => {
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
-    const [quoteDate, setquoteDate] = useState({day : dd , month :mm , year :yyyy})
+    const [quoteDate, setquoteDate] = useState({ day: dd, month: mm, year: yyyy })
     const [companySetting, setCompanySetting] = useState(true)
 
-    const { register, watch, reset, control, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+    const { register, watch, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
 
     // ****************** Datepicker Content ***********
@@ -47,8 +48,8 @@ const CreateInspire = () => {
         const date = moment(data).format('yyyy-M-D').split('-')
         setquoteDate({ day: +date[2], month: +date[1], year: +date[0] })
     }
-    
-   
+
+
 
 
     const onSubmit = async (data) => {
@@ -94,6 +95,25 @@ const CreateInspire = () => {
                 <div className='row p-11'>
 
                     <div className='col-12 mb-6'>
+                        <div className='mb-3'>
+                            <ul className="inline-flex flex-wrap text-sm font-medium">
+                                <li className="flex items-center">
+                                    <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <Link to="/inspire" className="text-slate-500 hover:text-indigo-500" >Inspire </Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <Link to="/inspire/create-inspire" className="text-slate-500 hover:text-indigo-500" href="#0">Create inspire</Link>
+                                </li>
+                            </ul>
+                        </div>
                         <header className="py-4">
                             <h2 className="font-semibold text-slate-800">Add new Inspire</h2>
                         </header>

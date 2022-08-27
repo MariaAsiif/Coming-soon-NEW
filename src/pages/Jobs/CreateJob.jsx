@@ -17,6 +17,8 @@ import * as yup from "yup";
 import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 
+import { Link } from "react-router-dom"
+
 const schema = yup.object({
     job_title: yup.string().required(),
     salary: yup.string().required(),
@@ -34,7 +36,7 @@ const CreateJob = () => {
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    const [expiryDate, setexpiryDate] = useState({ day: dd , month: mm, year: yyyy })
+    const [expiryDate, setexpiryDate] = useState({ day: dd, month: mm, year: yyyy })
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     let navigate = useNavigate();
     // const [jobModel, setjobModel] = useState({
@@ -69,7 +71,7 @@ const CreateJob = () => {
 
 
 
-    const { register, handleSubmit, watch,  formState: { errors } } = useForm({ resolver: yupResolver(schema) });
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
     const onSubmit = async (data) => {
         try {
             const config = {
@@ -125,6 +127,26 @@ const CreateJob = () => {
                 <div className='row p-11'>
 
                     <div className='col-12 mb-6'>
+                        <div className='mb-3'>
+                            <ul className="inline-flex flex-wrap text-sm font-medium">
+                                <li className="flex items-center">
+                                    <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <Link to="/jobs" className="text-slate-500 hover:text-indigo-500" >Jobs</Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <Link to="/jobs/create-job" className="text-slate-500 hover:text-indigo-500" href="#0">Create job</Link>
+                                </li>
+                            </ul>
+                        </div>
+
                         <header className="  py-4">
                             <h2 className="font-semibold text-slate-800">Add new job </h2>
                         </header>
@@ -136,7 +158,7 @@ const CreateJob = () => {
                         </div>
                         <input
                             autoComplete="off"
-                            
+
                             className={`form-input w-full  ${errors.job_title && 'border-red-500'}`}
                             {...register('job_title')}
                             name='job_title' id="job_title"
@@ -170,7 +192,7 @@ const CreateJob = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="description">Description</label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.description && watch('description')? <FcCheckmark /> : errors.description ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.description && watch('description') ? <FcCheckmark /> : errors.description ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
                             autoComplete="off"
@@ -189,7 +211,7 @@ const CreateJob = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="employer">Employer</label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.employer  && watch('employer')? <FcCheckmark /> : errors.employer ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.employer && watch('employer') ? <FcCheckmark /> : errors.employer ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
                             {...register('employer')}
@@ -206,7 +228,7 @@ const CreateJob = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="jobtype">jobtype</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.jobtype && watch('jobtype')? <FcCheckmark /> : errors.jobtype ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.jobtype && watch('jobtype') ? <FcCheckmark /> : errors.jobtype ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <select
                             {...register('jobtype')}
@@ -227,7 +249,7 @@ const CreateJob = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="jobstatus">Job Status</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.jobstatus && watch('jobstatus')? <FcCheckmark /> : errors.jobstatus ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.jobstatus && watch('jobstatus') ? <FcCheckmark /> : errors.jobstatus ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <select
                             {...register('jobstatus')}
@@ -247,7 +269,7 @@ const CreateJob = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="jobclass">Job Class</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.jobclass && watch('jobclass')? <FcCheckmark /> : errors.jobclass ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.jobclass && watch('jobclass') ? <FcCheckmark /> : errors.jobclass ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <select
                             {...register('jobclass')}

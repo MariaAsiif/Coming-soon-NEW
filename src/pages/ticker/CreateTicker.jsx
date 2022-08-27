@@ -7,6 +7,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { callApi } from '../../utils/CallApi';
+import { Link } from "react-router-dom"
 const schema = yup.object({
     name: yup.string().required("Author Name is Required"),
     // logo: yup.mixed()
@@ -68,6 +69,25 @@ const CreateTicker = () => {
                 <div className='row p-11'>
 
                     <div className='col-12 mb-6'>
+                        <div className='mb-3'>
+                            <ul className="inline-flex flex-wrap text-sm font-medium">
+                                <li className="flex items-center">
+                                    <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <Link to="/ticker" className="text-slate-500 hover:text-indigo-500" >Ticker </Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <Link to="/ticker/create-ticker" className="text-slate-500 hover:text-indigo-500" href="#0">Create ticker</Link>
+                                </li>
+                            </ul>
+                        </div>
                         <header className="py-4">
                             <h2 className="font-semibold text-slate-800">Add new Ticker</h2>
                         </header>

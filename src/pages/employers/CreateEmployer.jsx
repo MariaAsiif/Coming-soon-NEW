@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
 import { surnames } from '../../utils/enum';
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { Country, State, City } from 'country-state-city';
-import { GoDeviceMobile } from 'react-icons/go'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
-import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Link } from "react-router-dom"
 import * as yup from "yup";
 const schema = yup.object({
     fullname: yup.string().required(),
@@ -44,22 +40,13 @@ const schema = yup.object({
 });
 
 const CreateEmployer = () => {
-    const token = useSelector((state) => state.userAuth.loginInfo.token);
-    let navigate = useNavigate();
 
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
 
-    const [expiryDate, setexpiryDate] = useState({ day: dd, month: mm, year: yyyy })
+
     const [all_Countries, setall_Countries] = useState([])
     const [all_States, setall_States] = useState([])
     const [all_Cities, setall_Cities] = useState([])
     const [countryCode, setCountryCode] = useState("")
-    const [mobile, setmobile] = useState("")
-    const [defaultCountry, setDefaultCountry] = useState("")
-    const [defaultCity, setDefaultCity] = useState("")
     const [recruitModel, setrecruitModel] = useState({
         surname: "Mr",
         fullname: "",
@@ -79,12 +66,9 @@ const CreateEmployer = () => {
     })
 
 
-    const handleMobileChange = (value) => {
-        setmobile(value)
-    }
 
 
-    const { register, watch, setValue, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+    const { register, watch, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
 
     const handleChange = (e) => {
@@ -140,17 +124,7 @@ const CreateEmployer = () => {
 
 
 
-    // ****************** Datepicker Content ***********
-    const renderCustomInput = ({ ref }) => (
-        < div className='relative cursor-pointe w-full'>
-            <input readOnly ref={ref} // necessary  placeholder="yyy-mm-dd"
-                value={expiryDate ? `${expiryDate.year}/${expiryDate.month}/${expiryDate.day}` : ''}
-                className={` form-input w-full outline-blue-400 cursor-pointer z-30  px-2 py-2  border-gray-400`}
-            />
-            <div className={`visible absolute top-3 cursor-pointer right-5`}>   <FcCheckmark />   </div>
 
-        </div >
-    )
 
     useEffect(() => {
         try {
@@ -200,6 +174,25 @@ const CreateEmployer = () => {
                 <div className='row p-11'>
 
                     <div className='col-12 mb-6'>
+                        <div className='mb-3'>
+                            <ul className="inline-flex flex-wrap text-sm font-medium">
+                                <li className="flex items-center">
+                                    <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <Link to="/employer" className="text-slate-500 hover:text-indigo-500" >Employer </Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <Link to="/employer/create-employer" className="text-slate-500 hover:text-indigo-500" href="#0">Create employer</Link>
+                                </li>
+                            </ul>
+                        </div>
                         <header className="py-4">
                             <h2 className="font-semibold text-slate-800">Add new Employer</h2>
                         </header>
@@ -468,7 +461,7 @@ const CreateEmployer = () => {
                             id="city"
                             className={`form-input w-full   ${errors.city && 'border-red-500'}`}
                         >
-                            <option  disabled>Select city </option>
+                            <option disabled>Select city </option>
                             {all_Cities.map((contry) => {
                                 return (
                                     <option >{contry.name}</option>
@@ -495,7 +488,7 @@ const CreateEmployer = () => {
                             id="designation"
                             className={`form-input w-full   ${errors.designation && 'border-red-500'}`}
                         >
-                            <option  disabled>Select designation </option>
+                            <option disabled>Select designation </option>
                             {all_Cities.map((contry) => {
                                 return (
                                     <option >{contry.name}</option>

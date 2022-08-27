@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
 import { surnames } from '../../utils/enum';
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { Country, State, City } from 'country-state-city';
 // import { GoDeviceMobile } from 'react-icons/go'
 import PhoneInput from 'react-phone-input-2'
@@ -15,6 +13,7 @@ import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { Link } from "react-router-dom"
 const schema = yup.object({
     fullname: yup.string().required(),
     firstFname: yup.string().required(),
@@ -46,20 +45,17 @@ const schema = yup.object({
 const CreateCandidate = () => {
     // const token = useSelector((state) => state.userAuth.loginInfo.token);
     // let navigate = useNavigate();
-    
+
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    const [expiryDate, setexpiryDate] = useState({ day: dd , month: mm, year: yyyy })
-    const [all_Countries , setall_Countries] = useState([])
-    const [all_States, setall_States] = useState([] )
+    const [expiryDate, setexpiryDate] = useState({ day: dd, month: mm, year: yyyy })
+    const [all_Countries, setall_Countries] = useState([])
+    const [all_States, setall_States] = useState([])
     const [all_Cities, setall_Cities] = useState([])
     const [countryCode, setCountryCode] = useState("")
-    const [mobile, setmobile] = useState("")
-    const [defaultCountry, setDefaultCountry] = useState("")
-    const [defaultCity, setDefaultCity] = useState("")
     const [recruitModel, setrecruitModel] = useState({
         surname: "Mr",
         fullname: "",
@@ -79,12 +75,8 @@ const CreateCandidate = () => {
     })
 
 
-    const handleMobileChange = (value) => {
-        setmobile(value)
-    }
 
-
-    const { register, watch, setValue, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+    const { register, watch, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
 
     const handleChange = (e) => {
@@ -92,15 +84,15 @@ const CreateCandidate = () => {
         if (name === "country") {
             const updatedStates = State.getStatesOfCountry(value)
             const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
-            const updatedCities = City.getCitiesOfState( value , stateCode)
+            const updatedCities = City.getCitiesOfState(value, stateCode)
             setall_States(updatedStates)
             setall_Cities(updatedCities)
-         
+
         }
         else if (name === "state") {
             const updatedStates = State.getStatesOfCountry(value)
             const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
-           const updatedCities = City.getCitiesOfState( value , stateCode)
+            const updatedCities = City.getCitiesOfState(value, stateCode)
             setall_Cities(updatedCities)
 
         }
@@ -160,7 +152,7 @@ const CreateCandidate = () => {
                 let id = response.data.location.country.tld
                 let removeDot = id.replace('.', "")
                 setCountryCode(removeDot)
-                const get_countris =  Country.getAllCountries()
+                const get_countris = Country.getAllCountries()
                 const CurrentStates = State.getStatesOfCountry(currentCountryCode)
                 const CurrentCities = City.getCitiesOfState(currentCountryCode, CurrentStates[0].isoCode)
                 setrecruitModel((prevmodel) => ({
@@ -200,6 +192,25 @@ const CreateCandidate = () => {
                 <div className='row p-11'>
 
                     <div className='col-12 mb-6'>
+                        <div className='mb-3'>
+                            <ul className="inline-flex flex-wrap text-sm font-medium">
+                                <li className="flex items-center">
+                                    <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <Link to="/candidate" className="text-slate-500 hover:text-indigo-500" >Candidate </Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <Link to="/candidate/create-candidate" className="text-slate-500 hover:text-indigo-500" href="#0">Create candidate</Link>
+                                </li>
+                            </ul>
+                        </div>
                         <header className="py-4">
                             <h2 className="font-semibold text-slate-800">Add new Candidate</h2>
                         </header>
@@ -346,7 +357,7 @@ const CreateCandidate = () => {
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="country">Country</label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.country  ? <FcCheckmark /> : errors.country ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.country ? <FcCheckmark /> : errors.country ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
 
 
@@ -360,7 +371,7 @@ const CreateCandidate = () => {
                             <option defaultChecked disabled>Select Country </option>
                             {all_Countries.map((contry) => {
                                 return (
-                                    <option value={contry.isoCode}>{contry.name }</option>
+                                    <option value={contry.isoCode}>{contry.name}</option>
 
                                 )
                             })

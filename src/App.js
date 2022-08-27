@@ -124,7 +124,7 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<RequireAuth><MainWrapper /></RequireAuth>} >
-          <Route index element={<Dashboard title="away" />} />
+          <Route index element={<Dashboard />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="fintech" element={<Fintech />} />
         </Route>

@@ -3,13 +3,11 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import moment from "moment"
 import { Link } from 'react-router-dom';
-import { callApi } from '../../utils/CallApi';
 import { IoEyeOutline } from 'react-icons/io5';
 import ViewEditEmployer from '../../components/Popups/ViewEditEmployer';
 const Employers = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [alljobs, setalljobs] = useState([])
-    const [showUser, setshowUser] = useState(false)
     const [jobPopup, setjobPopup] = useState(false)
     const [jobMode, setjobMode] = useState("view")
     const [jobRow, setjobRow] = useState({})
@@ -21,15 +19,8 @@ const Employers = () => {
         setjobRow(data)
     }
 
-    const deletejob = async () => {
-        try {
-            const response = await callApi("")
-        } catch (error) {
 
-        }
-    }
 
-    console.log("view", showUser)
     // const [selectedjobs, setselectedjobs] = useState([])
 
     // const handleChange = (e) => {
@@ -99,13 +90,13 @@ const Employers = () => {
                     <div className='mb-3'>
                         <ul className="inline-flex flex-wrap text-sm font-medium">
                             <li className="flex items-center">
-                                <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >dashboard </Link>
+                                <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
                                 <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
                                     <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
                                 </svg>
                             </li>
                             <li className="flex items-center">
-                                <Link to="/employers" className="text-slate-500 hover:text-indigo-500" href="#0">employers</Link>
+                                <Link to="/employers" className="text-slate-500 hover:text-indigo-500" href="#0">Employers</Link>
                             </li>
                         </ul>
                     </div>

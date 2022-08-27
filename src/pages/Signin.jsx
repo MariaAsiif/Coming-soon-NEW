@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import AuthImage from '../images/signin.jpg';
 import AuthDecoration from '../images/auth-decoration.png';
@@ -9,7 +9,9 @@ import { signin } from "../Redux/UserAuthSlice/UserAuthSlice"
 import { callPublicApi } from "../utils/CallApi"
 
 function Signin() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "../dashboard"
   const dispatch = useDispatch()
 
   const [authValue, setAuthValue] = useState({
@@ -71,7 +73,7 @@ function Signin() {
 
         } else {
           dispatch(signin({ token: response.token, userdata: response.data }))
-          navigate("../dashboard");
+          navigate(from, { replace: true });
         }
       }
       catch (err) {
