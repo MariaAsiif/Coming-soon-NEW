@@ -97,6 +97,8 @@ import CreateFeedback from './pages/feedback/CreateFeedback';
 import UserFeedback from './pages/UserFeedback';
 import Faqs from './pages/faqs/Faqs';
 import CreateFaq from './pages/faqs/CreateFaq';
+import Policy from './pages/policies/Policy';
+import CreatePolicy from './pages/policies/CreatePolicy';
 
 const RequireAuth = ({ children }) => {
   const token = useSelector((state) => state.userAuth.loginInfo.token);
@@ -170,6 +172,11 @@ function App() {
         <Route path="/faq" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Faqs />} />
           <Route path="create-faq" element={<CreateFaq />} />
+        </Route>
+
+        <Route path="/policy" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Policy />} />
+          <Route path="create-policy" element={<CreatePolicy />} />
         </Route>
 
 
