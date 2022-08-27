@@ -56,7 +56,7 @@ const CreateFaq = () => {
                             <h2 className="font-semibold text-slate-800">Add new FAQ</h2>
                         </header>
                     </div>
-                    <div className='col-lg-3 mb-4'>
+                    <div className='col-lg-10 mb-4'>
                         <label className="block text-sm font-medium mb-1"  >Section </label>
                         <select {...register('section', { required: true })} className={`form-input w-full    ${errors.section ? "border-red-400" : "border-gray-400"} `} >
                             <option>Finance</option>
@@ -64,19 +64,23 @@ const CreateFaq = () => {
                             <option>Ecommerce </option>
                         </select>
                     </div>
-                    <div className='col-lg-3 mb-4'>
+                    <div className='col-lg-10 mb-4'>
                         <label className="block text-sm font-medium mb-1"  >Question </label>
                         <textarea rows={4}{...register('question', { required: true })} className={`form-input w-full    ${errors.question ? "border-red-400" : "border-gray-400"} `} />
 
                     </div>
-                    <div className='col-lg-3 mb-4'>
+                    <div className='col-lg-10 mb-4'>
                         <label className="block text-sm font-medium mb-1"  >Answer </label>
                         <textarea rows={4}{...register('answer', { required: true })} className={`form-input w-full   ${errors.answer ? "border-red-400" : "border-gray-400"} `} />
                     </div>
 
-                    <div className='col-lg-3 mb-4'>
+                    <div className='col-lg-10 mb-4'>
                         <label className="block text-sm font-medium mb-1"  >Added by </label>
-                        <input rows={4}{...register('addedby', { required: true })} className={`form-input w-full   ${errors.addedby ? "border-red-400" : "border-gray-400"} `} />
+                        <select {...register('addedby', { required: true })} className={`form-input w-full    ${errors.addedby ? "border-red-400" : "border-gray-400"} `} >
+                            <option>Admin</option>
+                            <option>User</option>
+                            <option>Editor </option>
+                        </select>
                     </div>
                     <div className='col-lg-12'>
                         <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
