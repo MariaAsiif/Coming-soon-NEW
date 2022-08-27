@@ -95,6 +95,19 @@ const Designation = () => {
         <div className='bscontainer-fluid'>
             <ViewEditEmployer id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />
             <div className='row py-5'>
+                <div className='mb-3'>
+                    <ul className="inline-flex flex-wrap text-sm font-medium">
+                        <li className="flex items-center">
+                            <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >dashboard </Link>
+                            <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                            </svg>
+                        </li>
+                        <li className="flex items-center">
+                            <Link to="/designation" className="text-slate-500 hover:text-indigo-500" href="#0">designation</Link>
+                        </li>
+                    </ul>
+                </div>
                 <div className='col-12  mb-5'>
                     <Link to="create-candidate" className="btn bg-red-500 hover:bg-green-600 text-white" >
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
@@ -127,7 +140,7 @@ const Designation = () => {
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">DESIGNATION NAME</div>
                                             </th>
-                                           
+
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">ADDED BY</div>
                                             </th>
@@ -155,7 +168,7 @@ const Designation = () => {
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{job._id}</div>
                                                     </td>
-                                                 
+
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{job.salary}</div>
                                                     </td>
