@@ -78,8 +78,6 @@ const CreateFaq = () => {
                         <label className="block text-sm font-medium mb-1"  >Added by </label>
                         <select {...register('addedby', { required: true })} className={`form-input w-full    ${errors.addedby ? "border-red-400" : "border-gray-400"} `} >
                             <option>Admin</option>
-                            <option>User</option>
-                            <option>Editor </option>
                         </select>
                     </div>
                     <div className='col-lg-12'>
