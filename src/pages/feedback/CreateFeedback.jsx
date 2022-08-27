@@ -145,23 +145,24 @@ const CreateFeedback = () => {
                         <div className='absolute right-10 top-10'>
                             {!errors.feedback && watch('feedback') ? <FcCheckmark /> : errors.feedback ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
-                        <input
+                        <textarea
                             {...register('feedback')}
                             autoComplete="off"
                             className={`form-input w-full  ${errors.feedback && 'border-red-500'}`}
                             name='feedback' id="feedback"
                             placeholder="Your Feedback"
-                            type="text" />
+                            rows={4}
+                        />
                         <span hidden={watch('feedback')} className='absolute text-red-400 text-lg font-medium  top-9 left-[150px]'>*</span>
 
                         {errors.feedback && (
                             <p className="text-red-500 text-sm">{errors.feedback.message}</p>
                         )}
                     </div>
-                    
+
 
                     <div className='col-lg-12'>
-                        <button  className="btn bg-red-500 hover:bg-green-600 text-white" type='submit'>Submit</button>
+                        <button className="btn bg-red-500 hover:bg-green-600 text-white" type='submit'>Submit</button>
                     </div>
                 </div>
             </form >

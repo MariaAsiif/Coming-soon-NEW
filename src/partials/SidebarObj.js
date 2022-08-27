@@ -1,16 +1,14 @@
 import { FaUserGraduate, FaBriefcase } from "react-icons/fa";
 import { AiFillDashboard } from "react-icons/ai";
-import { VscFeedback} from 'react-icons/vsc'
+import { VscFeedback } from 'react-icons/vsc'
 import { BiSticker } from 'react-icons/bi'
 import { RiLuggageDepositLine } from 'react-icons/ri'
 import { SiSlideshare } from 'react-icons/si'
 import { GiInspiration } from 'react-icons/gi'
 const SidebarObj = () => {
-
-
     return [
         {
-            groupname: "ADMIN",
+            groupname: "DASHBOARD | ADMIN",
             menuitems: [
                 {
                     label: "Coming soon",
