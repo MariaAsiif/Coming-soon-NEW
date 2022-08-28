@@ -71,7 +71,7 @@ const FeedBack = () => {
             })();
         }
 
-    }, [])
+    }, [jobPopup , delPopup])
     return (
         <div className='bscontainer-fluid'>
             <ViewEditFeedBack id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
@@ -8,43 +8,29 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { callApi } from '../../utils/CallApi';
 const schema = yup.object({
-    username: yup.string().required("User Name is Required"),
-    email: yup.string().required("Author Name is Required"),
-    feedback: yup.string().required("Your Feedback is Required"),
-    des: yup.string().required("Description is Required"),
-    // logo: yup.mixed()
-    //     .test("required", "You need to provide a file", (file) => {
-    //         // return file && file.size <-- u can use this if you don't want to allow empty files to be uploaded;
-    //         if (file) return true;
-    //         return false;
-    //     })
-
+    name: yup.string().required("User Name is Required"),
+    email: yup.string().email("Invalid email").required("Email is Required"),
+    desc: yup.string().required(" Feedback is Required"),
+   
 
 });
 
 const CreateFeedback = () => {
 
-    const [companySetting, setCompanySetting] = useState(true)
     const [file, setFile] = useState('')
 
-    const { register, watch, reset, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+    const { register, watch, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
 
-    const hellow = () => {
-
-        console.log("hellow")
-    }
 
     const onSubmit = async (data) => {
-        debugger
-        console.log("find")
         try {
             let formdata = new FormData()
             formdata.append('feedbackimg', file);
             formdata.append('request', JSON.stringify({
                 userEmail: data.email,
                 feedbackDescription: data.desc,
-                userName: data.username
+                userName : data.name,
             }));
             const res = await callApi("/feedbacks/createFeedback", "post", formdata)
             if (res.status === "Success") {
@@ -78,90 +64,98 @@ const CreateFeedback = () => {
 
                     <div className='col-12 mb-6'>
                         <header className="py-4">
-                            <h2 className="font-semibold text-slate-800">Add new Feedback</h2>
+                            <h2 className="font-semibold text-slate-800">Add new Ticker</h2>
                         </header>
                     </div>
 
                     <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="username">User Name</label>
+                        <label className="block text-sm font-medium mb-1" htmlFor="name">User Name</label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.name && watch("username") ? <FcCheckmark /> : errors.name ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.name && watch("name") ? <FcCheckmark /> : errors.name ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
-                            {...register('username')}
+                            {...register('name')}
                             autoComplete="off"
                             className={`w-full  ${errors.name ? "border-red-400" : "border-gray-400"}`}
-                            name='username' id="username"
+                            name='name' id="name"
                             type="text"
                             placeholder="User Name"
 
                         />
-                        <span hidden={watch("username")} className='absolute text-red-400 text-lg font-medium  top-9 left-[125px]'>*</span>
+                        <span hidden={watch("name")} className='absolute text-red-400 text-lg font-medium  top-9 left-[125px]'>*</span>
 
-                        {errors.username && (
-                            <p className="text-red-500 text-sm">{errors.username.message}</p>
+                        {errors.name && (
+                            <p className="text-red-500 text-sm">{errors.name.message}</p>
                         )}
                     </div>
 
-
                     <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="email">Email Address</label>
-                        <div className='absolute right-10 top-10'>
-                            {!errors.email && watch('email') ? <FcCheckmark /> : errors.email ? <div className=' text-red-500'><MdClose /></div> : null}
+                        <label className="block text-sm font-medium mb-1" htmlFor="email">Email Address </label>
+                        <div className='absolute right-5 top-10'>
+                            {!errors.email && watch("email") ? <FcCheckmark /> : errors.email ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
                             {...register('email')}
                             autoComplete="off"
-                            className={`form-input w-full  ${errors.email && 'border-red-500'}`}
+                            className={`w-full  ${errors.email ? "border-red-400" : "border-gray-400"}`}
                             name='email' id="email"
-                            placeholder="Email Address"
-                            type="text" />
-                        <span hidden={watch('email')} className='absolute text-red-400 text-lg font-medium  top-9 left-[150px]'>*</span>
+                            type="text"
+                            placeholder="AUTHOR NAME"
+
+                        />
+                        <span hidden={watch("email")} className='absolute text-red-400 text-lg font-medium  top-9 left-[145px]'>*</span>
 
                         {errors.email && (
                             <p className="text-red-500 text-sm">{errors.email.message}</p>
                         )}
                     </div>
+
+
+
                     <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="image">Image</label>
-                        <div className='absolute right-10 top-10'>
-                            {!errors.image ? <FcCheckmark /> : errors.image ? <div className=' text-red-500'><MdClose /></div> : null}
+                        <label className="block text-sm font-medium mb-1" htmlFor="secondFname">Image </label>
+                        <div className='absolute right-5 top-10'>
+                            {!errors.logo && watch('logo') ? <FcCheckmark /> : errors.logo ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <input
-                            // {...register('image')}
-                            onChange={(e) => setFile(e.target.files[0])}
-                            autoComplete="off"
-                            className={`form-input w-full h-[43px]  ${errors.image && 'border-red-500'}`}
-                            name='image' id="image"
-                            type="file" />
 
-                        {/* {errors.image && (
-                            <p className="text-red-500 text-sm">{errors.image.message}</p>
-                        )} */}
+                            onChange={(e) => setFile(e.target.files[0])}
+                            type="file"
+                            className={`form-input w-full h-[42px]  ${errors.logo && 'border-red-500'}`}
+                            name='logo' id="logo"
+                        />
+                        <small className='text-red-500'>only png, svg images can be added</small>
+                        
+
+
+                
                     </div>
 
                     <div className='col-lg-12 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="feedback">Your FeedBack</label>
-                        <div className='absolute right-10 top-10'>
-                            {!errors.feedback && watch('feedback') ? <FcCheckmark /> : errors.feedback ? <div className=' text-red-500'><MdClose /></div> : null}
+                        <label className="block text-sm font-medium mb-1" htmlFor="desc">Your Feedback</label>
+                        <div className='absolute right-5 top-10'>
+                            {!errors.desc && watch("desc") ? <FcCheckmark /> : errors.desc ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
-                        <input
-                            {...register('feedback')}
+                        <textarea
+                            {...register('desc')}
                             autoComplete="off"
-                            className={`form-input w-full  ${errors.feedback && 'border-red-500'}`}
-                            name='feedback' id="feedback"
-                            placeholder="Your Feedback"
-                            type="text" />
-                        <span hidden={watch('feedback')} className='absolute text-red-400 text-lg font-medium  top-9 left-[150px]'>*</span>
+                            className={`w-full  ${errors.desc ? "border-red-400" : "border-gray-400"}`}
+                            name='desc' id="desc"
+                            placeholder="AUTHOR NAME"
 
-                        {errors.feedback && (
-                            <p className="text-red-500 text-sm">{errors.feedback.message}</p>
+                        />
+                        <span hidden={watch("desc")} className='absolute text-red-400 text-lg font-medium  top-9 left-[145px]'>*</span>
+
+                        {errors.desc && (
+                            <p className="text-red-500 text-sm">{errors.desc.message}</p>
                         )}
                     </div>
-                    
+
+
+                   
 
                     <div className='col-lg-12'>
-                        <button  className="btn bg-red-500 hover:bg-green-600 text-white" type='submit'>Submit</button>
+                        <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
                     </div>
                 </div>
             </form >

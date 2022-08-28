@@ -3,6 +3,8 @@ import comming_soonvideo from "../assets/videos/comming-soon.mp4"
 import { useForm } from "react-hook-form";
 import { callApi } from '../utils/CallApi';
 import { toast, ToastContainer } from 'react-toastify';
+import { IoArrowBackCircle } from 'react-icons/io5'
+import { Link } from 'react-router-dom';
 const UserFeedback = () => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
 
@@ -51,11 +53,15 @@ const UserFeedback = () => {
                         <div className='absolute top-0 left-0 w-full h-full bg-[#00000066] mix-blend-overlay'></div>
                         <div className='w-full z-[1]'>
                             <div className='bscontainer'>
+
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <div className='row justify-center'>
                                         <div className='col-md-4  '>
                                             <div className='bg-white px-8 py-6 rounded-md'>
-                                                <h1 className='text-center text-2xl font-semibold mb-6'>Feedback</h1>
+                                                <Link to="/">
+                                                    <span className='text-center text-3xl'><IoArrowBackCircle /></span>
+                                                </Link>
+                                                <h1 className='text-center text-2xl font-semibold mb-6'>  Feedback</h1>
                                                 <div className=''>
                                                     <div className='mb-3'>
                                                         <label className='block font-semibold text-lg mb-2'>User name</label>

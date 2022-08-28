@@ -52,6 +52,7 @@
     background: #ffffff75;
     padding: 30px 90px;
     text-align: center;
+    
 }
 
 .text h2 {
@@ -103,8 +104,8 @@
 
     color: black;
     padding: 20px 0px;
-    text-align: left;
-    align-items: center;
+    text-align: justify;
+    align-items: justify;
     font-weight: 500;
     max-width: 500px !important;
 }
@@ -138,6 +139,10 @@
 .text .link_wrapper {
 
     padding: 0px 50px;
+    align-items: left;
+    text-align: left
+    
+    ;
 }
 
 .source{

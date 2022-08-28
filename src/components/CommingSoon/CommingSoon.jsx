@@ -103,7 +103,7 @@ const CommingSoon = () => {
                             <span>A Fairman Company</span>
                         </div>
                         <div>
-                            <Link className='text-blue-600 underline text-sm' to="/user-feedback">Feedback</Link>
+                            <Link className='text-white underline text-sm' to="/user-feedback">Feedback</Link>
                         </div>
 
                     </div>
@@ -119,7 +119,7 @@ const CommingSoon = () => {
                         <div className="bottom_block_center ">
                             <div className="company_detail">
                                 <h5>A Public Service Company</h5>
-                                <span>COPYRIGHT © 2022 HPORx LTD.</span>
+                                <span>COPYRIGHT © 2022 HPORX LIMITED, IRELAND.</span>
 
                             </div>
                         </div>

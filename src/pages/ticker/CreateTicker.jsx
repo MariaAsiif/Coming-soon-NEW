@@ -1,21 +1,15 @@
 import React, { useState } from 'react'
-import { FcCheckmark, FcDataEncryption } from 'react-icons/fc'
+import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { callApi } from '../../utils/CallApi';
 const schema = yup.object({
     name: yup.string().required("Author Name is Required"),
-    // logo: yup.mixed()
-    //     .test("required", "You need to provide a file", (file) => {
-    //         // return file && file.size <-- u can use this if you don't want to allow empty files to be uploaded;
-    //         if (file) return true;
-    //         return false;
-    //     })
-
+   
 
 });
 
@@ -24,12 +18,11 @@ const CreateTicker = () => {
     const [companySetting, setCompanySetting] = useState(true)
     const [file, setFile] = useState('')
 
-    const { register, watch, reset, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+    const { register, watch, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
 
 
     const onSubmit = async (data) => {
-        console.log("data", data)
         try {
             let formdata = new FormData()
             formdata.append('logoimg', file);

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { callApi } from '../../utils/CallApi';
 import { IoEyeOutline } from 'react-icons/io5';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import ViewEditTicker from '../../components/Popups/ViewEditTicker';
 import DeletePopup from '../../components/deletePopups/DeletePopups';
 const Ticker = () => {
-    const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [allTicker, setallTicker] = useState([])
     const [jobPopup, setjobPopup] = useState(false)
     const [delPopup, setDelPopup] = useState(false)
@@ -49,6 +47,7 @@ const Ticker = () => {
     }
 
     useEffect(() => {
+        console.log("call")
         if (!jobPopup || !delPopup) {
             (async () => {
                 try {
@@ -68,7 +67,6 @@ const Ticker = () => {
 
                     }
                     const response = await callApi("/tickers/getTickersWithFullDetails", "post", payload)
-                    console.log("res", response)
                     setallTicker(response.data.tickers)
                 } catch (error) {
                     console.log(error);
@@ -76,7 +74,7 @@ const Ticker = () => {
             })();
         }
 
-    }, [])
+    }, [jobPopup , delPopup])
     return (
         <div className='bscontainer-fluid'>
             <ViewEditTicker id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />
