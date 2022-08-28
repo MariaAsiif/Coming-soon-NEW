@@ -6,11 +6,9 @@ import { RiLuggageDepositLine } from 'react-icons/ri'
 import { SiSlideshare } from 'react-icons/si'
 import { GiInspiration } from 'react-icons/gi'
 const SidebarObj = () => {
-
-
     return [
         {
-            groupname: "ADMIN",
+            groupname: "DASHBOARD | ADMIN",
             menuitems: [
                 {
                     label: "Coming soon",
@@ -196,7 +194,6 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-
                     label: "Feedback Management",
                     leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
                     activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),
@@ -216,6 +213,54 @@ const SidebarObj = () => {
                     ]
                 },
                 {
+<<<<<<< HEAD
+=======
+                    label: "FAQ Management",
+                    leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),
+                    rightIcon: "sadf",
+                    path: "/faq",
+                    pathname: "faq",
+                    subMenuItems: [
+                        {
+                            label: "All FAQ",
+                            pathname: "/faq",
+                        },
+                        {
+                            label: "Create FAQ",
+                            pathname: "/faq/create-faq",
+                        },
+
+                    ]
+                },
+                {
+                    label: "Policy Management",
+                    leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),
+                    rightIcon: "sadf",
+                    path: "/policy",
+                    pathname: "policy",
+                    subMenuItems: [
+                        {
+                            label: "All Policy",
+                            pathname: "/policy",
+                        },
+                        {
+                            label: "Create Policy",
+                            pathname: "/policy/create-policy",
+                        },
+
+                    ]
+                },
+                // {
+                //     label: "Candidate Management",
+                //     leftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current text-slate-400`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-slate-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-slate-400`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
+                //     activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current !text-indigo-500`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-indigo-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-indigo-200`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
+                //     rightIcon: "sadf",
+                //     path: "/candidates",
+                //     pathname: "candidates",
+                //     subMenuItems: [
+>>>>>>> 8803bf2a9c0932138c92a94c8fd7287f1b7098bf
 
                     label: "Locate Management",
                     leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),

@@ -137,11 +137,22 @@ const CreateFeedback = () => {
                             {!errors.desc && watch("desc") ? <FcCheckmark /> : errors.desc ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <textarea
+<<<<<<< HEAD
                             {...register('desc')}
                             autoComplete="off"
                             className={`w-full  ${errors.desc ? "border-red-400" : "border-gray-400"}`}
                             name='desc' id="desc"
                             placeholder="AUTHOR NAME"
+=======
+                            {...register('feedback')}
+                            autoComplete="off"
+                            className={`form-input w-full  ${errors.feedback && 'border-red-500'}`}
+                            name='feedback' id="feedback"
+                            placeholder="Your Feedback"
+                            rows={4}
+                        />
+                        <span hidden={watch('feedback')} className='absolute text-red-400 text-lg font-medium  top-9 left-[150px]'>*</span>
+>>>>>>> 8803bf2a9c0932138c92a94c8fd7287f1b7098bf
 
                         />
                         <span hidden={watch("desc")} className='absolute text-red-400 text-lg font-medium  top-9 left-[145px]'>*</span>
@@ -151,11 +162,17 @@ const CreateFeedback = () => {
                         )}
                     </div>
 
+<<<<<<< HEAD
 
                    
 
                     <div className='col-lg-12'>
                         <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
+=======
+
+                    <div className='col-lg-12'>
+                        <button className="btn bg-red-500 hover:bg-green-600 text-white" type='submit'>Submit</button>
+>>>>>>> 8803bf2a9c0932138c92a94c8fd7287f1b7098bf
                     </div>
                 </div>
             </form >

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Customers from './ecommerce/Customers';
 import WelcomeBanner from '../partials/dashboard/WelcomeBanner';
-
+import { Link } from "react-router-dom"
 
 
 
@@ -13,7 +13,7 @@ function Dashboard() {
   // useEffect
   useEffect(() => {
     setTimeout(() => {
-       setLoading(false);
+      setLoading(false);
     }, 2000);
   }, []);
 
@@ -22,8 +22,15 @@ function Dashboard() {
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full  mx-auto">
 
       {/* Welcome banner */}
-      
-      { loading  &&  <WelcomeBanner /> }
+      <div className='mb-3'>
+        <ul className="inline-flex flex-wrap text-sm font-medium">
+          <li className="flex items-center">
+            <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
+          </li>
+        </ul>
+      </div>
+
+      {loading && <WelcomeBanner />}
 
       {/* Dashboard actions */}
       <div className="sm:flex sm:justify-between sm:items-center mb-8">

@@ -78,6 +78,21 @@ const FeedBack = () => {
             {delPopup && <DeletePopup permition={delPopup} Toggle={(value) => setDelPopup(false)} callback={deleteTicker} />}
             <div className='row py-5'>
                 <div className='col-12  mb-5'>
+                    <div className='mb-3'>
+                        <ul className="inline-flex flex-wrap text-sm font-medium">
+                            <li className="flex items-center">
+                                <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >dashboard </Link>
+                                <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                    <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                </svg>
+                            </li>
+                            <li className="flex items-center">
+                                <Link to="/feedback" className="text-slate-500 hover:text-indigo-500" href="#0">feedback</Link>
+                            </li>
+                        </ul>
+                    </div>
+
+
                     <Link to="create-feedback" className="btn bg-red-500 hover:bg-green-600 text-white" >
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
@@ -100,19 +115,18 @@ const FeedBack = () => {
                                                 <div className="font-semibold text-left">ID</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">IMAGE</div>
-                                            </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">USER NAME</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">EMAIL</div>
                                             </th>
-                                           
+
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">DESCRIPTION</div>
                                             </th>
-
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">IMAGE</div>
+                                            </th>
 
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Actions</div>
@@ -127,22 +141,22 @@ const FeedBack = () => {
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{feed._id}</div>
                                                     </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        {/* <div className="text-left">{FcFeedback.}</div> */}
-                                                        <img src={`http://localhost:5873/${feed?.imageUrl}`} className="w-[80px] h-[50px]" alt="image_logo" />
-                                                    </td>
+
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{feed.userName}</div>
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{feed.userEmail}</div>
                                                     </td>
-                                                   
-                                                   
+
+
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{feed.feedbackDescription}</div>
                                                     </td>
-
+                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                        {/* <div className="text-left">{FcFeedback.}</div> */}
+                                                        <img src={`http://localhost:5873/${feed?.imageUrl}`} className="w-[80px] h-[50px]" alt="image_logo" />
+                                                    </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                         <div className="space-x-1">
                                                             <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openJobPopup(e, "edit", feed)}>
@@ -160,7 +174,7 @@ const FeedBack = () => {
                                                                     <path d="M16 20c.3 0 .5-.1.7-.3l5.7-5.7-1.4-1.4-4 4V8h-2v8.6l-4-4L9.6 14l5.7 5.7c.2.2.4.3.7.3zM9 22h14v2H9z" />
                                                                 </svg> */}
                                                             </button>
-                                                            <button className="text-rose-500 hover:text-rose-600 rounded-full" onClick={() =>  deletePopToggle(feed?._id)}>
+                                                            <button className="text-rose-500 hover:text-rose-600 rounded-full" onClick={() => deletePopToggle(feed?._id)}>
                                                                 <span className="sr-only">Delete</span>
                                                                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
                                                                     <path d="M13 15h2v6h-2zM17 15h2v6h-2z" />

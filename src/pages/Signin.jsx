@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import AuthImage from '../images/signin.jpg';
 import AuthDecoration from '../images/auth-decoration.png';
 import logo from '../images/hporx_logo.png';
-
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux'
 import { signin } from "../Redux/UserAuthSlice/UserAuthSlice"
 import { callPublicApi } from "../utils/CallApi"
 
 function Signin() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "../dashboard"
   const dispatch = useDispatch()
 
   const [authValue, setAuthValue] = useState({
@@ -72,10 +70,10 @@ function Signin() {
 
         const response = await callPublicApi("/users/signin", "post", authValue)
         if (response.data.status === "Fail") {
-          toast.error(response.message);
+
         } else {
           dispatch(signin({ token: response.token, userdata: response.data }))
-          navigate("../dashboard");
+          navigate(from, { replace: true });
         }
       }
       catch (err) {
@@ -127,7 +125,7 @@ function Signin() {
                   </div>
 
 
-                  <button type="submit" className="btn bg-indigo-500 bg-red-600 text-white ml-3" >Sign In</button>
+                  <button type="submit" className="btn bg-red-600 text-white ml-3" >Sign In</button>
 
                 </div>
               </form>

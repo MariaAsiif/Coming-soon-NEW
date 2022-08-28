@@ -12,6 +12,47 @@ import './charts/ChartjsConfig';
 import Dashboard from './pages/Dashboard';
 import Analytics from './pages/Analytics';
 import Fintech from './pages/Fintech';
+
+// import Customers from './pages/ecommerce/Customers';
+// import Orders from './pages/ecommerce/Orders';
+// import Invoices from './pages/ecommerce/Invoices';
+// import Shop from './pages/ecommerce/Shop';
+// import Shop2 from './pages/ecommerce/Shop2';
+// import Product from './pages/ecommerce/Product';
+// import Cart from './pages/ecommerce/Cart';
+// import Cart2 from './pages/ecommerce/Cart2';
+// import Cart3 from './pages/ecommerce/Cart3';
+// import Pay from './pages/ecommerce/Pay';
+// import Campaigns from './pages/Campaigns';
+// import UsersTabs from './pages/community/UsersTabs';
+// import UsersTiles from './pages/community/UsersTiles';
+// import Profile from './pages/community/Profile';
+// import Feed from './pages/community/Feed';
+// import Forum from './pages/community/Forum';
+// import ForumPost from './pages/community/ForumPost';
+// import Meetups from './pages/community/Meetups';
+// import MeetupsPost from './pages/community/MeetupsPost';
+// import CreditCards from './pages/finance/CreditCards';
+// import Transactions from './pages/finance/Transactions';
+// import TransactionDetails from './pages/finance/TransactionDetails';
+// import JobListing from './pages/job/JobListing';
+// import JobPost from './pages/job/JobPost';
+// import CompanyProfile from './pages/job/CompanyProfile';
+// import Messages from './pages/Messages';
+// import TasksKanban from './pages/tasks/TasksKanban';
+// import TasksList from './pages/tasks/TasksList';
+// import Inbox from './pages/Inbox';
+// import Calendar from './pages/Calendar';
+// import Account from './pages/settings/Account';
+// import Notifications from './pages/settings/Notifications';
+// import Apps from './pages/settings/Apps';
+// import Plans from './pages/settings/Plans';
+// import Billing from './pages/settings/Billing';
+// import Feedback from './pages/settings/Feedback';
+// import Changelog from './pages/utility/Changelog';
+// import Roadmap from './pages/utility/Roadmap';
+// import Faqs from './pages/utility/Faqs';
+// import EmptyState from './pages/utility/EmptyState';
 import PageNotFound from './pages/utility/PageNotFound';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
@@ -37,6 +78,10 @@ import CreateTicker from './pages/ticker/CreateTicker';
 import FeedBack from './pages/feedback/feedback';
 import CreateFeedback from './pages/feedback/CreateFeedback';
 import UserFeedback from './pages/UserFeedback';
+import Faqs from './pages/faqs/Faqs';
+import CreateFaq from './pages/faqs/CreateFaq';
+import Policy from './pages/policies/Policy';
+import CreatePolicy from './pages/policies/CreatePolicy';
 
 import Locate from './pages/locate/locate';
 import CreateDoctor from './pages/locate/CreateDoctor';
@@ -118,6 +163,15 @@ function App() {
           <Route path="create-docker" element={<CreateDoctor />} />
           <Route path="create-lawyer" element={<CreateLawyer />} />
           <Route path="create-services" element={<CreateServices />} />
+
+        <Route path="/faq" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Faqs />} />
+          <Route path="create-faq" element={<CreateFaq />} />
+        </Route>
+
+        <Route path="/policy" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Policy />} />
+          <Route path="create-policy" element={<CreatePolicy />} />
         </Route>
 
 

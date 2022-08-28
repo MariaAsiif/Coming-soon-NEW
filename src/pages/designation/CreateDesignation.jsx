@@ -1,20 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import axios from 'axios'
-import { useNavigate } from "react-router-dom";
-import { surnames } from '../../utils/enum';
+import React from 'react'
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
-import { toast, ToastContainer } from 'react-toastify';
-import { Country, State, City } from 'country-state-city';
-import { GoDeviceMobile } from 'react-icons/go'
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
-import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
-import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-import { useForm, Controller } from "react-hook-form";
+import { ToastContainer } from 'react-toastify';
+import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { Link } from "react-router-dom"
 const schema = yup.object({
     name: yup.string().required("Designation Name is Required"),
     added: yup.string().required("Add By Designation is Required"),
@@ -25,7 +16,7 @@ const schema = yup.object({
 const CreateDesignation = () => {
 
 
-    const { register, watch, setValue, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+    const { register, watch, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
 
 
@@ -71,6 +62,25 @@ const CreateDesignation = () => {
 
                     <div className='col-12 mb-6'>
                         <header className="py-4">
+                            <div className='mb-3'>
+                                <ul className="inline-flex flex-wrap text-sm font-medium">
+                                    <li className="flex items-center">
+                                        <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
+                                        <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                            <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                        </svg>
+                                    </li>
+                                    <li className="flex items-center">
+                                        <Link to="/designation" className="text-slate-500 hover:text-indigo-500" >Designation </Link>
+                                        <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                            <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                        </svg>
+                                    </li>
+                                    <li className="flex items-center">
+                                        <Link to="/designation/create-designation" className="text-slate-500 hover:text-indigo-500" href="#0">Create designation</Link>
+                                    </li>
+                                </ul>
+                            </div>
                             <h2 className="font-semibold text-slate-800">Add new Designation</h2>
                         </header>
                     </div>
@@ -96,7 +106,7 @@ const CreateDesignation = () => {
                         )}
                     </div>
 
-                   
+
 
                     <div className='col-lg-6 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="head">Added By </label>
