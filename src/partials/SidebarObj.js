@@ -213,8 +213,7 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-<<<<<<< HEAD
-=======
+
                     label: "FAQ Management",
                     leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
                     activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),
@@ -260,8 +259,7 @@ const SidebarObj = () => {
                 //     path: "/candidates",
                 //     pathname: "candidates",
                 //     subMenuItems: [
->>>>>>> 8803bf2a9c0932138c92a94c8fd7287f1b7098bf
-
+{
                     label: "Locate Management",
                     leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
                     activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),

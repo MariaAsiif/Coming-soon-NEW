@@ -163,6 +163,7 @@ function App() {
           <Route path="create-docker" element={<CreateDoctor />} />
           <Route path="create-lawyer" element={<CreateLawyer />} />
           <Route path="create-services" element={<CreateServices />} />
+        </Route>
 
         <Route path="/faq" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Faqs />} />
