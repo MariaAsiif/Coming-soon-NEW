@@ -55,7 +55,7 @@ const UserFeedback = () => {
                             <div className='bscontainer'>
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <div className='row justify-center'>
-                                        <div className='col-md-4'>
+                                        <div className='col-md-8 col-lg-4'>
                                             <div className='bg-white px-8 py-6 pt-3  rounded-md'>
                                                 <Link to="/">
                                                    <IoCloseCircleOutline  className='hover:text-red-500 text-3xl cursor-pointer  '/>
