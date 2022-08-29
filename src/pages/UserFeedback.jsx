@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import comming_soonvideo from "../assets/videos/comming-soon.mp4"
 import { useForm } from "react-hook-form";
 import { callApi } from '../utils/CallApi';
 import { toast, ToastContainer } from 'react-toastify';
 import { IoCloseCircleOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom';
+import FeedbackThankyouPopup from '../components/Popups/FeedbackThankyouPopup';
 const UserFeedback = () => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
-
+    const [userFeedbackPopup, setuserFeedbackPopup] = useState(false)
     const onSubmit = async (data) => {
 
         console.log(data)
@@ -23,6 +24,7 @@ const UserFeedback = () => {
             if (res.status === "Success") {
                 toast.success(res.message);
                 reset()
+                setuserFeedbackPopup(true)
             }
             else {
                 toast.error(res.message);
@@ -35,6 +37,7 @@ const UserFeedback = () => {
     }
     return (
         <div className='bscontainer-fluid'>
+            <FeedbackThankyouPopup modalOpen={userFeedbackPopup} onClose={() => setuserFeedbackPopup(false)} />
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -58,7 +61,7 @@ const UserFeedback = () => {
                                         <div className='col-md-8 col-lg-4'>
                                             <div className='bg-white px-8 py-6 pt-3  rounded-md'>
                                                 <Link to="/">
-                                                   <IoCloseCircleOutline  className='hover:text-red-500 text-3xl cursor-pointer  '/>
+                                                    <IoCloseCircleOutline className='hover:text-red-500 text-3xl cursor-pointer  ' />
                                                 </Link>
                                                 <h1 className='text-center text-2xl font-semibold mb-6'>  Feedback</h1>
                                                 <div className=''>
