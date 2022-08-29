@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
-const PopUp = ({ permition, Toggle, Firstname, type }) => {
+import { toast } from 'react-toastify';
+import { callApi, callPublicApi } from '../../utils/CallApi';
+
+const PopUp = ({ permition, Toggle, Firstname, type, isVerify, email }) => {
   const [show] = useState(permition);
   const [otp, setOtp] = useState(new Array(4).fill(""));
+  const [otps, setOtps] = useState("");
   const [activeOtp, setActiveOtp] = useState(0);
 
 
@@ -17,6 +21,8 @@ const PopUp = ({ permition, Toggle, Firstname, type }) => {
     newOtp[index] = value.substring(value.length - 1)
     if (!value) setActiveOtp(index - 1)
     else setActiveOtp(index + 1)
+    let Otp = newOtp.join('')
+    setOtps(Otp)
     setOtp(newOtp)
   }
 
@@ -31,6 +37,33 @@ const PopUp = ({ permition, Toggle, Firstname, type }) => {
     Toggle(false)
 
   }
+
+
+  const Verification = async (e) => {
+    e.preventDefault()
+    try {
+      let payload = {
+        email: email,
+        emailverificationcode: otps
+      }
+      const response = await callPublicApi("/verifications/verifyemailCode", "post", payload)
+      if (response.status === "Success") {
+        isVerify(true)
+        toast.success(response.data.message)
+      }
+      else {
+        toast.error(response.data.message)
+
+      }
+
+    } catch (error) {
+
+    }
+  }
+
+
+
+
 
   useEffect(() => {
     optRef.current?.focus()
@@ -49,7 +82,7 @@ const PopUp = ({ permition, Toggle, Firstname, type }) => {
                   <div className="flex flex-col mt-4">
                     <span>we have sent you a code on your email please verify</span>
                   </div>
-               
+
                   {otp.map((_, index) => {
                     return (
                       <React.Fragment key={index} >
@@ -73,7 +106,7 @@ const PopUp = ({ permition, Toggle, Firstname, type }) => {
                   })}
 
                   <div className="flex justify-center text-center mt-5">
-                    <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
+                    <button className="btn bg-red-500 hover:bg-green-600 text-white" onClick={() => Verification()}>Submit</button>
                   </div>
                 </div>
               </div>

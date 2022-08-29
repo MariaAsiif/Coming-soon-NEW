@@ -18,18 +18,22 @@ const ViewEditTicker = ({ id, modalOpen, onClose, mode, data }) => {
 
 
     const onSubmit = async (values) => {
-        let value = {
-            tickerid: data._id,
-            logoFile : file || data?.logoFile,
-            tickerText: values.tickerText,
-            active: true
-        }
+        // let value = {
+        //     tickerid: data._id,
+        //     logoFile : file || data?.logoFile,
+        //     tickerText: values.tickerText,
+        //     active: true
+        // }
 
-        // let formdata = new FormData()
-        // formdata.append('tickerid', data._id);
-        // formdata.append('logoFile', file);
-        // formdata.append("tickerText", values.tickerText);
-        const res = await callApi("/tickers/updateTicker", "post", value)
+        let formdata = new FormData()
+        formdata.append( 'logoFile' , file ||  data?.logoFile,);
+        formdata.append('request', JSON.stringify({
+            tickerid: data._id,
+            tickerText: values.tickerText || data?.tickerText,
+            "active": true
+        }));
+
+        const res = await callApi("/tickers/updateTicker", "post", formdata)
         if (res.status === "Success") {
             console.log("Res", res)
             toast.success(res.message);

@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "../store";
 
 const callApi = (endpoint, method, payload) => {
-    const HOSTNAME = "http://localhost:5873";
+    const HOSTNAME = "http://localhost:5873" ;
     let token = store.getState().userAuth.loginInfo.token;
     const authHeaders = token
         ? {

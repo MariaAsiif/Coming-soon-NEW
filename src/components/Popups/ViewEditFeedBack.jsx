@@ -19,7 +19,7 @@ const ViewEditFeedBack = ({ id, modalOpen, onClose, mode, data }) => {
     const [fileUrl, setFileUrl] = useState('')
 
 
-    
+
     const handleChangeImage = (e) => {
         let file = e.target.files[0]
         setFile(file)
@@ -33,20 +33,23 @@ const ViewEditFeedBack = ({ id, modalOpen, onClose, mode, data }) => {
     const onSubmit = async (values) => {
         try {
             let formdata = new FormData()
-            formdata.append('feedbackimg', file);
-            formdata.append('feedbackid', data._id);
-            formdata.append('userEmail', values.userEmail);
-            formdata.append('userName', values.userName);
-            formdata.append('feedbackDescription', values.feedbackDescription);
-            // formdata.append('userEmail', JSON.stringify({
-            //     userEmail: data.email,
-            //     feedbackDescription: data.desc,
-            //     userName: data.username
-            // }));
+            formdata.append('feedbackimg', file || data?.imageUrl);
+            // formdata.append('feedbackid', data._id);
+            // formdata.append('userEmail', values.userEmail);
+            // formdata.append('userName', values.userName);
+            // formdata.append('feedbackDescription', values.feedbackDescription);
+            formdata.append('userEmail', JSON.stringify(
+                {
+                    feedbackid: data?._id,
+                    userEmail: values.userEmail || data?.userEmail,
+                    feedbackDescription: values.feedbackDescription || data?.feedbackDescription,
+                    userName: values.userName || data?.userName
+
+                }));
             const res = await callApi("/feedbacks/updateFeedback", "post", formdata)
             if (res.status === "Success") {
                 toast.success(res.message);
-                 onClose()
+                onClose()
 
             }
             else {
@@ -63,7 +66,7 @@ const ViewEditFeedBack = ({ id, modalOpen, onClose, mode, data }) => {
         //    feedbackDescription : values.feedbackDescription,
         //    userName : values.userName,
         //    userEmail: values.userEmail
-            
+
         // }
         // const res = await callApi("/feedbacks/updateFeedback", "post", value)
         // if (res.status === "Success") {

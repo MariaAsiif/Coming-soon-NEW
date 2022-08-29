@@ -32,6 +32,7 @@ const TopForm = (props) => {
     const [areaofInterest, setareaofInterest] = useState([])
     const [activeField, setactiveField] = useState("firstname")//firstname
     const [countryCode, setCountryCode] = useState("")
+    const [verify, setVerify] = useState(false)
     const [name, setName] = useState({})
     const [isSuccess, setIsSuccess] = useState(false)
     const [error, setErrors] = useState(false)
@@ -181,7 +182,7 @@ const TopForm = (props) => {
 
     }
 
-    const goToEmailField = () => {
+    const goToEmailField = async () => {
         if (email.value === "") {
             seterrors({
                 nameError: null,
@@ -206,7 +207,24 @@ const TopForm = (props) => {
                 //     emailError: null,
                 // })
 
-                setIsSuccess(true)
+                // try {
+                //     let payload = {
+                //       email: email.value,
+                //     }
+                //     const response = await callPublicApi("/verifications/sendCodeOnEmail", "post", payload)
+                //     if (response.status === "Success") {
+                //       toast.success(response.data.message)
+                //       setIsSuccess(true)
+                //       setVerify(false)
+                //     }
+                //     else {
+                //       toast.error(response.data.message)
+              
+                //     }
+              
+                //   } catch (error) {
+              
+                //   }
                 setactiveField("mobile")
             }
 
@@ -263,6 +281,12 @@ const TopForm = (props) => {
         } catch (error) {
             console.log(error);
         }
+    }
+
+
+    const VerificationEmail = (value) => {
+        setIsSuccess(value)
+        // isVerify()
     }
 
     useEffect(() => {
@@ -494,7 +518,7 @@ const TopForm = (props) => {
 
             </div>
 
-            {isSuccess && <PopUp permition={isSuccess} type="verification" Toggle={(value) => setIsSuccess(value)} Firstname={name} />}
+            {isSuccess && <PopUp permition={isSuccess} email={email.value} isVerify={(value) => setVerify(value)} type="verification" Toggle={(value) => VerificationEmail(value)} Firstname={name} />}
 
         </section>
     )

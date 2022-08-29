@@ -103,7 +103,7 @@ const CommingSoon = () => {
                             <span>A Fairman Company</span>
                         </div>
                         <div>
-                            <Link className='text-white underline text-xs italic' to="/user-feedback">Any Feedback?</Link>
+                            <Link className='text-white underline text-xs italic' to="/user-feedback">Feedback Welcome.</Link>
                         </div>
 
                     </div>
