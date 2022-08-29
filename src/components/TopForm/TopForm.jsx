@@ -371,26 +371,32 @@ const TopForm = (props) => {
                         {activeField === "additionalfamilyname" &&
                             (
 
-                                <div className='flex'>
-                                    <div className='col-1'>
+                                <div className='flex flex-wrap'>
+                                    <div className='col-md-1 md:block hidden'>
                                         <button onClick={() => setactiveField("familyname")} className=' w-full border-r-2 border-gray-400 text-center flex h-full justify-end items-center flex-col  ' >
                                             <BiLeftArrow size={24} className='text-gray-400  block   ' />
                                             <span className='hover:underline text-[9px] text-green-500 text-bold block'  >BACK</span>
                                         </button>
                                     </div>
-                                    <div className='col-3'>
-                                        <input name='firstFamilyName' value={firstFamilyName} onChange={handleChangeFirstFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="1st Family Name" />
+                                    <div className='col-md-3 col-12'>
+                                        <input name='firstFamilyName' value={firstFamilyName} onChange={handleChangeFirstFamilyName} type="text " className=" focus:outline-none md:border-0  border-x-2  border-gray-400 w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="1st Name" />
                                     </div>
-                                    <div className='col-3'>
-                                        <input name='secondFamilyName' value={secondFamilyName} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-l-2 border-r-2 border-gray-400  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="2nd Family Name" />
+                                    <div className='col-md-3 col-12'>
+                                        <input name='secondFamilyName' value={secondFamilyName} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-none border-l-2 border-r-2 border-gray-400  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="2nd Name" />
                                     </div>
-                                    <div className='col-3'>
-                                        <input name='thirdFamilyName' value={thirdFamilyName} onChange={handleChangeThirdFamilyName} type="text " className=" focus:outline-none border-0  w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="3rd Family Name" />
+                                    <div className='col-md-3 col-12'>
+                                        <input name='thirdFamilyName' value={thirdFamilyName} onChange={handleChangeThirdFamilyName} type="text " className=" focus:outline-none md:border-0  border-x-2  border-gray-400 w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="3rd Name" />
                                     </div>
-                                    <div className='col-1'>
+                                    <div className='col-md-1 col-4 md:hidden block'>
+                                        <button onClick={() => setactiveField("familyname")} className=' w-full border-r-2 border-gray-400 text-center flex h-full justify-end items-center flex-col  ' >
+                                            <BiLeftArrow size={24} className='text-gray-400  block   ' />
+                                            <span className='hover:underline text-[9px] text-green-500 text-bold block'  >BACKll</span>
+                                        </button>
+                                    </div>
+                                    <div className='col-md-1 col-4'>
                                         <button onClick={goToSecondFamilyField} className={`${firstFamilyName || secondFamilyName || thirdFamilyName ? 'bg-green-600' : 'bg-light-red'} border-red-600 w-full  h-[40px] text-white font-Poppins font-medium`}>Enter</button>
                                     </div>
-                                    <div className='col-1'>
+                                    <div className='col-md-1 col-4'>
                                         <button onClick={() => setactiveField("email")} className=' w-full text-center flex h-full justify-end items-center flex-col  ' >
                                             <BiRightArrow size={24} className='text-gray-400  block   ' />
                                             <span className='hover:underline text-[9px] text-green-500 text-bold block'  >SKIP</span>
