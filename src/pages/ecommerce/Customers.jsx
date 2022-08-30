@@ -5,36 +5,41 @@ import DateSelect from '../../components/DateSelect';
 import FilterButton from '../../components/DropdownFilter';
 import CustomersTable from '../../partials/customers/CustomersTable';
 import PaginationClassic from '../../components/PaginationClassic';
-import { useSelector } from 'react-redux'
 import { callApi } from '../../utils/CallApi';
+import DeletePopup from '../../components/deletePopups/DeletePopups';
 function Customers() {
-  const token = useSelector((state) => state.userAuth.loginInfo.token);
   const [selectedItems, setSelectedItems] = useState([]);
 
   const [users, setusers] = useState([]);
+  const [deletePopup, setdeletePopup] = useState(false)
+  const [deleteID, setdeleteID] = useState(null)
 
   const handleSelectedItems = (selectedItems) => {
     setSelectedItems([...selectedItems]);
   };
+  const deletePopupHandler = async () => {
+    console.log(deleteID);
+    try {
 
+    } catch (error) {
+
+    }
+  }
+  const openDeletePopup = (deleteid) => {
+    setdeleteID(deleteid)
+    setdeletePopup(true)
+  }
 
   useEffect(() => {
 
     (async () => {
       try {
-       
-        // let response = await axios.post('http://localhost:5873/users/listAllUsers', {
-        //   sortproperty: "full_name",
-        //   sortorder: 1,
-        //   offset: 0,
-        //   limit: 50
-        // }, config);
         let payload = {
           sortproperty: "full_name",
           sortorder: 1,
           offset: 0,
           limit: 50
-      };
+        };
         const response = await callApi("/users/listAllUsers", "post", payload)
 
         setusers(response.data.users)
@@ -42,14 +47,14 @@ function Customers() {
         console.log(error);
       }
     })();
-
-
   }, [])
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
-
+      {deletePopup ? (
+        <DeletePopup permition={deletePopup} Toggle={() => setdeletePopup(false)} callback={deletePopupHandler} />
+      ) : null}
       <div className="relative flex flex-col flex-1">
 
 
@@ -93,6 +98,7 @@ function Customers() {
               tableRows={users}
 
               selectedItems={handleSelectedItems}
+              handleDelete={openDeletePopup}
             />
 
             {/* Pagination */}

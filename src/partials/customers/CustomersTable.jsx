@@ -1,28 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import DeletePopup from '../../components/deletePopups/DeletePopups';
 import Customer from './CustomersTableItem';
 
 
-// import Image01 from '../../images/user-40-01.jpg';
-// import Image02 from '../../images/user-40-02.jpg';
-// import Image03 from '../../images/user-40-03.jpg';
-// import Image04 from '../../images/user-40-04.jpg';
-// import Image05 from '../../images/user-40-05.jpg';
-// import Image06 from '../../images/user-40-06.jpg';
-// import Image07 from '../../images/user-40-07.jpg';
-// import Image08 from '../../images/user-40-08.jpg';
-// import Image09 from '../../images/user-40-09.jpg';
-// import Image10 from '../../images/user-40-10.jpg';
-
-function CustomersTable({
-  tableRows,
-  selectedItems,
-}) {
+function CustomersTable({ tableRows, selectedItems, handleDelete }) {
 
 
 
   const [selectAll, setSelectAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
   const [list, setList] = useState([]);
+
 
   useEffect(() => {
 
@@ -47,6 +35,9 @@ function CustomersTable({
     }
   };
 
+
+
+
   useEffect(() => {
     selectedItems(isCheck);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,6 +49,7 @@ function CustomersTable({
         <h2 className="font-semibold text-slate-800">All Users <span className="text-slate-400 font-medium">{list.length}</span></h2>
       </header>
       <div>
+
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="table-auto w-full">
@@ -137,6 +129,7 @@ function CustomersTable({
                       // fav={customer.fav}
                       handleClick={handleClick}
                       isChecked={isCheck.includes(customer._id)}
+                      handleDelete={handleDelete}
                     />
                   )
                 })
