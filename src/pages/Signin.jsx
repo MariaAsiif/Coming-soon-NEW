@@ -77,9 +77,9 @@ function Signin() {
         }
       }
       catch (err) {
-        console.log(err);
-        dispatch(signin("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhIjp0cnVlLCJuIjoiSmFtc2hhaWQgU2FiaXIiLCJlIjoiamFtc2hhaWRzYWJpcjQxMTk4MEBnbWFpbC5jb20iLCJkIjoiNjJmNGUxMzI1NmYwNmQxMDg4NGY5NDRlIiwicCI6Ii91cGxvYWRzL2RwL2RlZmF1bHQucG5nIiwiciI6Il9hIiwiaWF0IjoxNjYwMjMxNTE1fQ.Q8gTpV9EW5ha1ujb4qLedGV4wQuQTIr12J0vPeLrhn4"))
-        navigate("../dashboard");
+        console.log("err", err )
+        // dispatch(signin({ token: response.token} ))
+        // navigate("../dashboard");
       }
     }
   }

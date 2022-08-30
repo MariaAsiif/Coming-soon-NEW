@@ -135,11 +135,11 @@ const CommingSoon = () => {
 
                 </div>
                 <Link  to="/user-feedback">
-                    <div className='fixed bottom-20 right-10 w-12'>
-                        <div className="rounded-full border bg-white p-2">
-                            <RiMessage2Line className='text-3xl' />
+                    <div className='fixed bottom-[50px] right-10 w-12'>
+                        <div className="rounded-full border bg-white p-3">
+                            <RiMessage2Line className='text-[22px]' />
                         </div>
-                        <span className='text-white text-center ml-[-10px]'>
+                        <span className='text-white text-[14px] text-center ml-[-8px]'>
 
                             Feedback
                         </span>
