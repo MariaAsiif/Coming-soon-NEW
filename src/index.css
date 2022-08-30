@@ -385,6 +385,9 @@ select {
     display: flex;
   }
 
+  .user-feedback {
+    z-index: 999;
+  }
 
 
 }
