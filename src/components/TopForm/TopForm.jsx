@@ -412,13 +412,13 @@ const TopForm = (props) => {
                                         </button>
                                     </div>
                                     <div className='col-md-3 col-12'>
-                                        <input name='firstFamilyName' value={firstFamilyName} onChange={handleChangeFirstFamilyName} type="text " className=" focus:outline-blue-500 md:border-0 text-center   border-b-2 border-gray-500 w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="1st NAME" />
+                                        <input name='firstFamilyName' value={firstFamilyName} onChange={handleChangeFirstFamilyName} type="text " className=" focus:outline-blue-500 md:border-0 text-center   border-b-2 border-gray-500 w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="NAME" />
                                     </div>
                                     <div className='col-md-3 col-12'>
-                                        <input name='secondFamilyName' value={secondFamilyName} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-blue-500 text-center   md:border-x-2 border-x-0  md:border-b-0 border-b-2 md:border-gray-400 border-gray-500   w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="2nd NAME" />
+                                        <input name='secondFamilyName' value={secondFamilyName} onChange={handleChangeSecondFamilyName} type="text " className=" focus:outline-blue-500 text-center   md:border-x-2 border-x-0  md:border-b-0 border-b-2 md:border-gray-400 border-gray-500   w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="NAME" />
                                     </div>
                                     <div className='col-md-3 col-12'>
-                                        <input name='thirdFamilyName' value={thirdFamilyName} onChange={handleChangeThirdFamilyName} type="text " className=" focus:outline-blue-500 text-center  md:border-0    border-b-2 border-gray-500 w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="3rd NAME" />
+                                        <input name='thirdFamilyName' value={thirdFamilyName} onChange={handleChangeThirdFamilyName} type="text " className=" focus:outline-blue-500 text-center  md:border-0    border-b-2 border-gray-500 w-full placeholder:font-Poppins placeholder:font-medium p-2" placeholder="NAME" />
                                     </div>
                                     <div className='col-md-1 col-4 md:hidden block'>
                                         <button onClick={() => setactiveField("familyname")} className=' w-full border-r-2 border-gray-400 text-center flex h-full justify-end items-center flex-col  ' >

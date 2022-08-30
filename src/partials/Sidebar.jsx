@@ -93,7 +93,7 @@ function Sidebar({
           {sidebaritems.map((group, i) => {
             return (
               <div key={i}>
-                <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
+                <h3 className="text-xs uppercase text-gray-500 font-semibold pl-3">
                   <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">{group.groupname}</span>
                 </h3>
                 <ul className="mt-3  overflow-auto">
@@ -140,7 +140,7 @@ function Sidebar({
                                   {item.subMenuItems.map((subitem, s_index) => {
                                     return (
                                       <li key={s_index} className="mb-1 last:mb-0">
-                                        <NavLink end to={subitem.pathname} className={({ isActive }) => 'block text-slate-800 hover:text-red-500 sdfdsf transition duration-150 truncate ' + (isActive ? '!text-red-500' : '')}>
+                                        <NavLink end to={subitem.pathname} className={({ isActive }) => 'block text-gray-400 hover:text-red-500 sdfdsf transition duration-150 truncate ' + (isActive ? '!text-red-500 font-bold' : '')}>
                                           <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                             {subitem.label}
                                           </span>

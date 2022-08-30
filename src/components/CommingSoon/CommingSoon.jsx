@@ -30,7 +30,7 @@ const CommingSoon = () => {
                     <div className='text '>
                         <h2>Coming </h2>
                         <h4>Something Awesome is Coming</h4>
-                        <h3>THERAPEUTIC</h3>
+                        <h3>THERAPEUTICS</h3>
                         <h5>The life saved may be your own!</h5>
 
                         <p>

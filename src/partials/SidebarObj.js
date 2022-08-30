@@ -15,7 +15,7 @@ const SidebarObj = () => {
                 {
                     label: "Coming soon",
                     leftIcon: (<AiFillDashboard size={22} className=" hover:text-red-500" />),
-                    activeLeftIcon: (<AiFillDashboard size={22} className=" text-red-500" />),
+                    activeLeftIcon: (<AiFillDashboard size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
                     path: "/dashboard",
                     pathname: "dashboard",
@@ -38,7 +38,7 @@ const SidebarObj = () => {
                     // <<<<<<< HEAD
                     label: "Department Manage",
                     leftIcon: (<RiLuggageDepositLine size={22} className=" hover:text-red-500" />),
-                    activeLeftIcon: (<RiLuggageDepositLine size={22} className="text-red-500" />),
+                    activeLeftIcon: (<RiLuggageDepositLine size={22} className="text-green-500" />),
                     rightIcon: "sadf",
                     path: "/department",
                     pathname: "department",
@@ -60,7 +60,7 @@ const SidebarObj = () => {
                 {
                     label: "Designation Manage",
                     leftIcon: (<SiSlideshare size={22} className=" hover:text-red-500" />),
-                    activeLeftIcon: (<SiSlideshare size={22} className=" text-red-500" />),
+                    activeLeftIcon: (<SiSlideshare size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
                     path: "/designation",
                     pathname: "designation",
@@ -86,7 +86,7 @@ const SidebarObj = () => {
                     // =======
                     label: "Jobs Manage",
                     leftIcon: (<FaBriefcase size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<FaBriefcase size={22} className="text-red-500" />),
+                    activeLeftIcon: (<FaBriefcase size={22} className="text-green-500" />),
                     rightIcon: "sadf",
                     path: "/jobs",
                     pathname: "jobs",
@@ -113,7 +113,7 @@ const SidebarObj = () => {
                     // =======
                     label: "Candidate Manage",
                     leftIcon: (<FaUserGraduate size={22} className=" hover:text-red-500" />),
-                    activeLeftIcon: (<FaUserGraduate size={22} className="text-red-500" />),
+                    activeLeftIcon: (<FaUserGraduate size={22} className="text-green-500" />),
                     rightIcon: "sadf",
                     path: "/candidates",
                     pathname: "candidates",
@@ -159,7 +159,7 @@ const SidebarObj = () => {
 
                     label: "Inpire Manage",
                     leftIcon: (<GiInspiration size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<GiInspiration size={22} className=" text-red-500" />),
+                    activeLeftIcon: (<GiInspiration size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
                     path: "/inspire",
                     pathname: "inspire",
@@ -179,7 +179,7 @@ const SidebarObj = () => {
 
                     label: "Ticker Manage",
                     leftIcon: (<BiSticker size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<BiSticker size={22} className=" text-red-500" />),
+                    activeLeftIcon: (<BiSticker size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
                     path: "/ticker",
                     pathname: "ticker",
@@ -198,7 +198,7 @@ const SidebarObj = () => {
                 {
                     label: "Feedback Manage",
                     leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),
+                    activeLeftIcon: (<VscFeedback size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
                     path: "/feedback",
                     pathname: "feedback",
@@ -218,7 +218,7 @@ const SidebarObj = () => {
 
                     label: "FAQ Manage",
                     leftIcon: (<FaDna size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<FaDna size={22} className=" text-red-500" />),
+                    activeLeftIcon: (<FaDna size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
                     path: "/faq",
                     pathname: "faq",
@@ -237,7 +237,7 @@ const SidebarObj = () => {
                 {
                     label: "Policy Manage",
                     leftIcon: (<MdOutlinePolicy size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<MdOutlinePolicy size={22} className=" text-red-500" />),
+                    activeLeftIcon: (<MdOutlinePolicy size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
                     path: "/policy",
                     pathname: "policy",
@@ -264,7 +264,7 @@ const SidebarObj = () => {
                 {
                     label: "Locate Manage",
                     leftIcon: (<IoMdLocate size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<IoMdLocate size={22} className=" text-red-500" />),
+                    activeLeftIcon: (<IoMdLocate size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
                     path: "/locate",
                     pathname: "locate",
@@ -273,7 +273,7 @@ const SidebarObj = () => {
                         {
                             label: "Doctors",
                             leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
-                            activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),
+                            activeLeftIcon: (<VscFeedback size={22} className=" text-green-500" />),
                             rightIcon: "sadf",
                             path: "/doctor",
                             pathname: "doctor",
@@ -291,7 +291,7 @@ const SidebarObj = () => {
                         {
                             label: "Lawyers",
                             leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
-                            activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),
+                            activeLeftIcon: (<VscFeedback size={22} className=" text-green-500" />),
                             rightIcon: "sadf",
                             path: "/lawyer",
                             pathname: "lawyer",
@@ -309,7 +309,7 @@ const SidebarObj = () => {
                         {
                             label: "Services",
                             leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
-                            activeLeftIcon: (<VscFeedback size={22} className=" text-red-500" />),
+                            activeLeftIcon: (<VscFeedback size={22} className="text-green-500" />),
                             rightIcon: "sadf",
                             path: "/services",
                             pathname: "services",
