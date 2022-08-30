@@ -5,7 +5,8 @@ import TopForm from '../TopForm/TopForm'
 import sabadelLogo from "../../assets/images/sabadel.png"
 import worldBankLogo from "../../assets/images/world.png"
 import ReadMore from '../readmore/readmore'
-import { Translator, Translate } from 'react-auto-translate';
+// import { Translator, Translate } from 'react-auto-translate';
+import { RiMessage2Line } from 'react-icons/ri'
 import { Link } from "react-router-dom"
 import './style.css'
 import axios from 'axios';
@@ -21,7 +22,7 @@ const CommingSoon = () => {
 
     return (
         <>
-            <section className="showcase">
+            <section className="showcase relative">
 
                 <video src={comming_soonvideo} autoPlay muted loop />
                 <div className="overlay" />
@@ -134,6 +135,16 @@ const CommingSoon = () => {
 
                     </div>
 
+                </div>
+
+                <div className='fixed bottom-20 right-10 w-12'>
+                    <div className="rounded-full border bg-white p-2">
+                        <RiMessage2Line className='text-3xl' />
+                    </div>
+                    <span className='text-white text-center ml-[-10px]'>
+
+                        FeedBack
+                    </span>
                 </div>
 
             </section>
