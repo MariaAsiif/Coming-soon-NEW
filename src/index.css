@@ -234,7 +234,7 @@ video {
   letter-spacing: .01rem;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
-  padding-left: 60px !important;
+  padding-left: 70px !important;
   margin-left: 0;
   background: #FFFFFF;
   border: none !important;
@@ -303,7 +303,7 @@ select {
   top: 0;
   bottom: 0;
   padding: 0;
-  width: 18% !important;
+  width: 15% !important;
   background-color: white !important;
   border-right: 1px solid #cacaca !important;
   border-left: 0px !important;
@@ -336,6 +336,23 @@ select {
   border-left: 3px solid transparent;
   border-right: 3px solid transparent;
   border-top: 4px solid #555;
+}
+
+
+
+.input_style{
+  appearance: none;
+  background-color: #fff;
+  border-color: #6b7280;
+  border-width: 1px;
+  border-radius: 0px;
+  padding-top: 0px !important;
+  padding-right: 0.75rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0 !important;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  --tw-shadow: 0 0 #0000;
 }
 
 /*  ================================ RESPONSIVE CSS ================== */

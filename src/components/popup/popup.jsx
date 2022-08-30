@@ -1,34 +1,35 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import { toast } from 'react-toastify';
-import { callApi, callPublicApi } from '../../utils/CallApi';
+import { callPublicApi } from '../../utils/CallApi';
+import OTPInput from "otp-input-react";
 
 const PopUp = ({ permition, Toggle, Firstname, type, isVerify, email }) => {
-  const [otp, setOtp] = useState(new Array(4).fill(""));
-  const [otps, setOtps] = useState("");
-  const [activeOtp, setActiveOtp] = useState(0);
+  const [otp, setOtp] = useState("");
+  // const [otps, setOtps] = useState("");
+  // const [activeOtp, setActiveOtp] = useState(0);
 
 
-  const optRef = useRef(null)
+  // const optRef = useRef(null)
 
 
 
-  const handleChange = (e, index) => {
-    const { value } = e.target
-    const newOtp = [...otp]
-    newOtp[index] = value.substring(value.length - 1)
-    if (!value) setActiveOtp(index - 1)
-    else setActiveOtp(index + 1)
-    let Otp = newOtp.join('')
-    setOtps(Otp)
-    setOtp(newOtp)
-  }
+  // const handleChange = (e, index) => {
+  //   const { value } = e.target
+  //   const newOtp = [...otp]
+  //   newOtp[index] = value.substring(value.length - 1)
+  //   if (!value) setActiveOtp(index - 1)
+  //   else setActiveOtp(index + 1)
+  //   let Otp = newOtp.join('')
+  //   setOtps(Otp)
+  //   setOtp(newOtp)
+  // }
 
-  const handleKeyDown = (key, index) => {
-    if (key === "Backspace") setActiveOtp(index - 1)
+  // const handleKeyDown = (key, index) => {
+  //   if (key === "Backspace") setActiveOtp(index - 1)
 
-  }
+  // }
 
 
 
@@ -43,15 +44,15 @@ const PopUp = ({ permition, Toggle, Firstname, type, isVerify, email }) => {
     try {
       let payload = {
         email: email,
-        emailverificationcode: otps
+        emailverificationcode: otp
       }
       const response = await callPublicApi("/verifications/verifyemailCode", "post", payload)
       if (response.status === "Success") {
         isVerify(true)
-        toast.success(response.data.message)
+        toast.success(response.message)
       }
       else {
-        toast.error(response.data.message)
+        toast.error(response.message)
 
       }
 
@@ -64,13 +65,15 @@ const PopUp = ({ permition, Toggle, Firstname, type, isVerify, email }) => {
 
 
 
-  useEffect(() => {
-    optRef.current?.focus()
-  }, [activeOtp])
+  // useEffect(() => {
+  //   optRef.current?.focus()
+  // }, [activeOtp])
 
 
   return (
     <>
+     
+
       <Modal open={permition} onClose={handleClose} center>
         {type === "verification" ?
           <div>
@@ -81,8 +84,19 @@ const PopUp = ({ permition, Toggle, Firstname, type, isVerify, email }) => {
                   <div className="flex flex-col mt-4">
                     <span>we have sent you a code on your email please verify</span>
                   </div>
+                  <OTPInput
+                    value={otp}
+                    onChange={setOtp}
+                    autoFocus
+                    style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', width: '100%' }}
+                    OTPLength={4}
+                    otpType="number"
+                    inputStyles={{padding:'0px'}}
+                    disabled={false}
+                    secure={false}
 
-                  {otp.map((_, index) => {
+                  />
+                  {/* {otp.map((_, index) => {
                     return (
                       <React.Fragment key={index} >
                         <input
@@ -93,16 +107,13 @@ const PopUp = ({ permition, Toggle, Firstname, type, isVerify, email }) => {
                           onChange={(e) => handleChange(e, index)}
                           onKeyDown={(e) => handleKeyDown(e, index)}
                           id="first" maxlength="1" />
-                        {/* <input
-                          type="number"
-                          className="w-12 h-12 border-2 rounded bg-transparent outline-none text-center font-semibold text-xl spin-button-none border-gray-400 focus:border-gray-700 focus:text-gray-700 text-gray-400 transition"
-                        /> */}
+                       
                         {index === otp.length - 1 ? null : (
                           <span className="w-2 py-0.5 bg-gray-400" />
                         )}
                       </React.Fragment>
                     );
-                  })}
+                  })} */}
 
                   <div className="flex justify-center text-center mt-5">
                     <button className="btn bg-red-500 hover:bg-green-600 text-white" onClick={Verification}>Submit</button>

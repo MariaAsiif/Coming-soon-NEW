@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "../store";
 
 const callApi = (endpoint, method, payload) => {
-    const HOSTNAME = "http://localhost:5873" ;
+    const HOSTNAME = "https://hporxadminbackend.herokuapp.com" ;
     let token = store.getState().userAuth.loginInfo.token;
     const authHeaders = token
         ? {
@@ -35,7 +35,7 @@ const callApi = (endpoint, method, payload) => {
 };
 
 const callPublicApi = (endpoint, method, payload) => {
-    const HOSTNAME = "http://localhost:5873";
+    const HOSTNAME = "https://hporxadminbackend.herokuapp.com";
     const configaxios = {
         method,
         url: `${HOSTNAME}${endpoint}`,

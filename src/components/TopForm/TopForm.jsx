@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import uk from "../../assets/images/u_k.png"
+// import uk from "../../assets/images/u_k.png"
 import ReactFlagsSelect from 'react-flags-select';
 import './topform.css'
-import axios from 'axios';
+// import axios from 'axios';
 // import Input from 'react-phone-number-input/input'
 import 'react-phone-input-2/lib/style.css'
 import PhoneInput from 'react-phone-input-2'
@@ -16,7 +16,7 @@ import TagsInput from 'react-tagsinput'
 import 'react-tagsinput/react-tagsinput.css'
 
 import { callPublicApi } from '../../utils/CallApi';
-
+import MobileOtpPopup from '../Popups/MobileOtpPopup';
 
 const TopForm = (props) => {
 
@@ -30,9 +30,10 @@ const TopForm = (props) => {
     const [mobileno, setmobileno] = useState({ fmobile: "mobile", value: "", isempty: true })
     const [product, setproduct] = useState("")
     const [areaofInterest, setareaofInterest] = useState([])
-    const [activeField, setactiveField] = useState("email")//firstname
+    const [activeField, setactiveField] = useState("mobile")
     const [countryCode, setCountryCode] = useState("")
     const [verify, setVerify] = useState(false)
+    const [mobileCode, setMobileCode] = useState(false)
     const [name, setName] = useState({})
     const [isSuccess, setIsSuccess] = useState(false)
     const [error, setErrors] = useState(false)
@@ -239,12 +240,32 @@ const TopForm = (props) => {
             }))
         }
         else {
-            seterrors({
-                nameError: null,
-                mobileError: null,
-                emailError: null,
-            })
-            setactiveField("productfield")
+
+            try {
+                let payload = {
+                    phonenumber: mobileno.value,
+                    channel: "sms"
+                }
+                const response = await callPublicApi("/verifications/sendCodeOnMobile", "post", payload)
+                if (response.status === "Success") {
+                    toast.success(response.message)
+                    setMobileCode(true)
+                    setVerify(false)
+                }
+                else {
+                    toast.error("phone number  already exist")
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+           
+            // seterrors({
+            //     nameError: null,
+            //     mobileError: null,
+            //     emailError: null,
+            // })
+            // setactiveField("productfield")
 
         }
     }
@@ -276,7 +297,7 @@ const TopForm = (props) => {
                 setErrors(true)
             } else {
                 toast.success(response.message);
-                console.log("response", response)
+                setactiveField('firstname')
             }
         } catch (error) {
             console.log(error);
@@ -294,6 +315,12 @@ const TopForm = (props) => {
         setIsSuccess(false)
         setactiveField("mobile")
     }
+
+    const onSuccessMobileVarification = () => {
+        setMobileCode(false)
+        setactiveField("productfield")
+
+    } 
 
     useEffect(() => {
 
@@ -531,6 +558,7 @@ const TopForm = (props) => {
             </div>
 
             {isSuccess && <PopUp permition={isSuccess} email={email.value} isVerify={onSuccessEmailVarification} type="verification" Toggle={(value) => VerificationEmail(value)} Firstname={name} />}
+            {mobileCode && <MobileOtpPopup permition={mobileCode} email={email.value} mobile={mobileno.value} isVerify={onSuccessMobileVarification} type="verification" Toggle={(value) => VerificationEmail(value)} />}
 
         </section>
     )
