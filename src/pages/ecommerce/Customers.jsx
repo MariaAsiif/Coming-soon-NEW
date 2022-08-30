@@ -5,8 +5,8 @@ import DateSelect from '../../components/DateSelect';
 import FilterButton from '../../components/DropdownFilter';
 import CustomersTable from '../../partials/customers/CustomersTable';
 import PaginationClassic from '../../components/PaginationClassic';
-import axios from 'axios'
 import { useSelector } from 'react-redux'
+import { callApi } from '../../utils/CallApi';
 function Customers() {
   const token = useSelector((state) => state.userAuth.loginInfo.token);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -22,18 +22,22 @@ function Customers() {
 
     (async () => {
       try {
-        const config = {
-          headers: {
-            'Authorization': 'Bearer ' + token
-          }
-        };
-        let response = await axios.post('http://localhost:5873/users/listAllUsers', {
+       
+        // let response = await axios.post('http://localhost:5873/users/listAllUsers', {
+        //   sortproperty: "full_name",
+        //   sortorder: 1,
+        //   offset: 0,
+        //   limit: 50
+        // }, config);
+        let payload = {
           sortproperty: "full_name",
           sortorder: 1,
           offset: 0,
           limit: 50
-        }, config);
-        setusers(response.data.data.users)
+      };
+        const response = await callApi("/users/listAllUsers", "post", payload)
+
+        setusers(response.data.users)
       } catch (error) {
         console.log(error);
       }
