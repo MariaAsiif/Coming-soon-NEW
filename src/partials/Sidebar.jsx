@@ -94,7 +94,7 @@ function Sidebar({
             return (
               <div key={i}>
                 <h3 className="text-xs uppercase text-gray-500 font-semibold pl-3">
-                  <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">{group.groupname}</span>
+                  <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">{group.groupname}sdsds</span>
                 </h3>
                 <ul className="mt-3  overflow-auto">
                   {group.menuitems.map((item, index) => {

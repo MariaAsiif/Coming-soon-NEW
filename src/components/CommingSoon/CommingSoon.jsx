@@ -110,7 +110,6 @@ const CommingSoon = () => {
                         <div className="bottom_block_left">
                             <div className="logo_first text-center text-1xl text-red-600 font-samibold">
                                 <img className=' w-[130px]' src={sabadelLogo} alt="sabadel" />
-                                <span  >sponser</span>
 
                             </div>
                         </div>
@@ -126,7 +125,6 @@ const CommingSoon = () => {
                         <div className="bottom_block_right">
                             <div className="world_logo text-center text-1xl text-red-600 font-samibold">
                                 <img className='w-[160px] ' src={worldBankLogo} alt="world bank" />
-                                <span >sponser</span>
 
                             </div>
                         </div>
