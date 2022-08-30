@@ -85,9 +85,26 @@ function CustomersTable({
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Phone no</div>
                 </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold text-left">Country</div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold text-left">State</div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold text-left">City</div>
+                </th>
 
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold">Location</div>
+                  <div className="font-semibold text-left">Interest</div>
+                </th>
+
+
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold">Roles</div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold">Action</div>
                 </th>
 
               </tr>
@@ -106,12 +123,13 @@ function CustomersTable({
                       email={customer.email}
                       phone={customer.phoneNumber}
                       jobrole={customer.role}
+                      interests={customer.interest}
                       // verificationCode={customer.verification_code}
                       // isVerified={customer.is_verified}
                       location={""}
-                      // city={customer.city}
-                      // state={customer.state}
-                      // country={customer.country}
+                      city={customer.city}
+                      state={customer.state}
+                      country={customer.country}
                       // orders={customer.orders}
                       // lastOrder={customer.lastOrder}
                       // spent={customer.spent}

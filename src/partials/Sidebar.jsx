@@ -78,9 +78,9 @@ function Sidebar({
           {/* Logo */}
           <NavLink end to="/" className="block">
             {sidebarExpanded ?
-// <<<<<<< HEAD
-//               <img src={hproxlogo} alt="hprox_lgo" className="lg:sidebar-expanded:block  lg:sidebar-expanded:w-[300px] h-[50px] " style={{objectFit:'contain'}}/>
-// =======
+              // <<<<<<< HEAD
+              //               <img src={hproxlogo} alt="hprox_lgo" className="lg:sidebar-expanded:block  lg:sidebar-expanded:w-[300px] h-[50px] " style={{objectFit:'contain'}}/>
+              // =======
               <img src={hproxlogo} alt="hprox_lgo" className=" w-10/12 " />
               :
               <img src={logo} alt="logo" className="w-[50px]  lg:sidebar-expanded:hidden  h-[50px]" />
@@ -94,7 +94,7 @@ function Sidebar({
             return (
               <div key={i}>
                 <h3 className="text-xs uppercase text-gray-500 font-semibold pl-3">
-                  <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">{group.groupname}sdsds</span>
+                  <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">{group.groupname}</span>
                 </h3>
                 <ul className="mt-3  overflow-auto">
                   {group.menuitems.map((item, index) => {

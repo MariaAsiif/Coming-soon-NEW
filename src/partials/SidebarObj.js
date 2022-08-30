@@ -10,7 +10,7 @@ import { IoMdLocate } from 'react-icons/io'
 const SidebarObj = () => {
     return [
         {
-            groupname: "DASHBOARD | ADMIN",
+            groupname: "DASHBOARD | ADMINISTRATOR",
             menuitems: [
                 {
                     label: "Coming soon",

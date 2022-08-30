@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthImage from '../images/auth-image.jpg';
 import AuthDecoration from '../images/auth-decoration.png';
 import axios from "axios"
+import { callPublicApi } from "../utils/CallApi"
 
 function Signup() {
   let navigate = useNavigate();
@@ -36,9 +37,9 @@ function Signup() {
   }
   const handleSignup = async () => {
     try {
-      const response = await axios.post("http://localhost:5873/users/signup", formdata)
+      const response = await callPublicApi("/users/signup", "post", formdata)
       console.log("response", response);
-      if (response.data.status === "Success") {
+      if (response.status === "Success") {
         console.log("Successs");
         navigate("/ecommerce/orders", { replace: true });
 
