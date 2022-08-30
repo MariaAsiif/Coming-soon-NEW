@@ -100,7 +100,7 @@ function Sidebar({
                   {group.menuitems.map((item, index) => {
                     if (item.subMenuItems.length === 0) {
                       return (
-                        <li key={index} className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes(item.pathname) && 'bg-slate-900'}`}>
+                        <li key={index} className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes(item.pathname) && 'bg-gray-500'}`}>
                           <NavLink end to={item.path} className={`block text-slate-800 hover:text-red-500 truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-red-500' : ""}`} >
                             <div className="flex items-center justify-between">
                               <div className="grow flex items-center">
@@ -126,7 +126,7 @@ function Sidebar({
                                 <div className="flex items-center justify-between">
                                   <div className="flex items-center">
                                     {pathname.includes(item.pathname) ? item.activeLeftIcon : item.leftIcon}
-                                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                    <span className="text-sm font-medium text-gray-500 ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                       {item.label}
                                     </span>
                                   </div>
@@ -140,7 +140,7 @@ function Sidebar({
                                   {item.subMenuItems.map((subitem, s_index) => {
                                     return (
                                       <li key={s_index} className="mb-1 last:mb-0">
-                                        <NavLink end to={subitem.pathname} className={({ isActive }) => 'block text-gray-400 hover:text-red-500 sdfdsf transition duration-150 truncate ' + (isActive ? '!text-red-500 font-bold' : '')}>
+                                        <NavLink end to={subitem.pathname} className={({ isActive }) => 'block text-gray-400 hover:text-red-500 sdfdsf transition duration-150 truncate ' + (isActive ? '!text-black font-bold' : '')}>
                                           <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                             {subitem.label}
                                           </span>
