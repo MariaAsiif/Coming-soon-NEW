@@ -8,7 +8,7 @@ import ViewEditTicker from '../../components/Popups/ViewEditTicker';
 import DeletePopup from '../../components/deletePopups/DeletePopups';
 const Ticker = () => {
     const [allTicker, setallTicker] = useState([])
-    const [jobPopup, setjobPopup] = useState(false)
+    const [tickerPopup, settickerPopup] = useState(false)
     const [delPopup, setDelPopup] = useState(false)
     const [delId, setDelId] = useState('')
     const [jobMode, setjobMode] = useState("view")
@@ -16,7 +16,7 @@ const Ticker = () => {
 
     const openJobPopup = (e, mode, data) => {
         e.stopPropagation()
-        setjobPopup(true)
+        settickerPopup(true)
         setjobMode(mode)
         setjobRow(data)
     }
@@ -48,7 +48,7 @@ const Ticker = () => {
 
     useEffect(() => {
         console.log("call")
-        if (!jobPopup || !delPopup) {
+        if (!tickerPopup) {
             (async () => {
                 try {
                     const payload = {
@@ -74,10 +74,15 @@ const Ticker = () => {
             })();
         }
 
-    }, [jobPopup , delPopup])
+    }, [tickerPopup])
     return (
         <div className='bscontainer-fluid'>
-            <ViewEditTicker id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />
+            {
+                tickerPopup ? (
+                    <ViewEditTicker id="job-modal" data={jobRow} mode={jobMode} open={tickerPopup} onClose={() => settickerPopup(false)} />
+                ) : null
+            }
+
             {delPopup && <DeletePopup permition={delPopup} Toggle={() => setDelPopup(false)} callback={deleteTicker} />}
             <div className='row py-5'>
                 <div className='col-12  mb-5'>
@@ -142,7 +147,7 @@ const Ticker = () => {
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         {/* <div className="text-left">{tiker?.}</div> */}
-                                                        <img src={`http://localhost:5873/${tiker?.logoFile}`} className="w-[80px] h-[50px]" alt="image_logo" />
+                                                        <img src={`https://hporxadminbackend.herokuapp.com${tiker?.logoFile}`} className="w-[80px] h-[50px]" alt="image_logo" />
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{tiker?.tickerText}</div>
