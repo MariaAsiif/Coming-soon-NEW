@@ -3,7 +3,7 @@ import DeletePopup from '../../components/deletePopups/DeletePopups';
 import Customer from './CustomersTableItem';
 
 
-function CustomersTable({ tableRows, selectedItems, handleDelete }) {
+function CustomersTable({ tableRows, selectedItems, handleDelete, handleViewEdit }) {
 
 
 
@@ -122,6 +122,7 @@ function CustomersTable({ tableRows, selectedItems, handleDelete }) {
                       city={customer.city}
                       state={customer.state}
                       country={customer.country}
+                      row={customer}
                       // orders={customer.orders}
                       // lastOrder={customer.lastOrder}
                       // spent={customer.spent}
@@ -130,6 +131,7 @@ function CustomersTable({ tableRows, selectedItems, handleDelete }) {
                       handleClick={handleClick}
                       isChecked={isCheck.includes(customer._id)}
                       handleDelete={handleDelete}
+                      handleViewEdit={handleViewEdit}
                     />
                   )
                 })

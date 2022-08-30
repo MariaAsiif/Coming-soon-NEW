@@ -7,12 +7,17 @@ import CustomersTable from '../../partials/customers/CustomersTable';
 import PaginationClassic from '../../components/PaginationClassic';
 import { callApi } from '../../utils/CallApi';
 import DeletePopup from '../../components/deletePopups/DeletePopups';
+import ViewEditUser from '../../components/Popups/ViewEditUser';
 function Customers() {
   const [selectedItems, setSelectedItems] = useState([]);
 
   const [users, setusers] = useState([]);
   const [deletePopup, setdeletePopup] = useState(false)
   const [deleteID, setdeleteID] = useState(null)
+
+  const [viewEditPopup, setviewEditPopup] = useState(false)
+  const [userMode, setuserMode] = useState("view")
+  const [userRow, setuserRow] = useState({})
 
   const handleSelectedItems = (selectedItems) => {
     setSelectedItems([...selectedItems]);
@@ -30,6 +35,11 @@ function Customers() {
     setdeletePopup(true)
   }
 
+  const viewEditUserPopup = (mode, data) => {
+    setviewEditPopup(true)
+    setuserMode(mode)
+    setuserRow(data)
+  }
   useEffect(() => {
 
     (async () => {
@@ -51,7 +61,9 @@ function Customers() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-
+      {viewEditPopup ? (
+        <ViewEditUser show={viewEditPopup} mode={userMode} data={userRow} onClose={() => setviewEditPopup(false)} />
+      ) : null}
       {deletePopup ? (
         <DeletePopup permition={deletePopup} Toggle={() => setdeletePopup(false)} callback={deletePopupHandler} />
       ) : null}
@@ -99,6 +111,7 @@ function Customers() {
 
               selectedItems={handleSelectedItems}
               handleDelete={openDeletePopup}
+              handleViewEdit={viewEditUserPopup}
             />
 
             {/* Pagination */}
