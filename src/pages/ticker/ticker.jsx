@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { callApi } from '../../utils/CallApi';
 import { IoEyeOutline } from 'react-icons/io5';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 import ViewEditTicker from '../../components/Popups/ViewEditTicker';
 import DeletePopup from '../../components/deletePopups/DeletePopups';
+import ImageViewerPopup from '../../components/Popups/ImageViewerPopup';
 const Ticker = () => {
     const [allTicker, setallTicker] = useState([])
     const [tickerPopup, settickerPopup] = useState(false)
@@ -13,6 +14,8 @@ const Ticker = () => {
     const [delId, setDelId] = useState('')
     const [jobMode, setjobMode] = useState("view")
     const [jobRow, setjobRow] = useState({})
+    const [imagePopup, setimagePopup] = useState(false)
+    const [imagePopupUrl, setimagePopupUrl] = useState("")
 
     const openJobPopup = (e, mode, data) => {
         e.stopPropagation()
@@ -30,20 +33,31 @@ const Ticker = () => {
         let value = {
             id: delId
         }
-        setDelPopup(false)
+
 
         try {
             const res = await callApi("/tickers/removeTicker", "post", value)
             if (res.status === "Success") {
+
                 toast.success(res.message);
+                setDelPopup(false)
+                let oldtickers = allTicker
+                const updatedTickers = oldtickers.filter((ticker) => ticker._id !== res.data._id)
+                setallTicker(updatedTickers)
             }
             else {
                 toast.error(res.message);
+                setDelPopup(false)
 
             }
         } catch (error) {
-
+            setDelPopup(false)
         }
+    }
+
+    const openImagePopup = (url) => {
+        setimagePopup(true)
+        setimagePopupUrl(`https://hporxadminbackend.herokuapp.com${url}`)
     }
 
     useEffect(() => {
@@ -77,6 +91,22 @@ const Ticker = () => {
     }, [tickerPopup])
     return (
         <div className='bscontainer-fluid'>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+            {
+                imagePopup ? (
+                    <ImageViewerPopup imageUrl={imagePopupUrl} open={imagePopup} onClose={() => setimagePopup(false)} />
+                ) : null
+            }
             {
                 tickerPopup ? (
                     <ViewEditTicker id="job-modal" data={jobRow} mode={jobMode} open={tickerPopup} onClose={() => settickerPopup(false)} />
@@ -147,7 +177,7 @@ const Ticker = () => {
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         {/* <div className="text-left">{tiker?.}</div> */}
-                                                        <img src={`https://hporxadminbackend.herokuapp.com${tiker?.logoFile}`} className="w-[80px] h-[50px]" alt="image_logo" />
+                                                        <img onClick={() => openImagePopup(tiker.logoFile)} src={`https://hporxadminbackend.herokuapp.com${tiker?.logoFile}`} className="w-[80px] h-[50px] cursor-pointer" alt="image_logo" />
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{tiker?.tickerText}</div>

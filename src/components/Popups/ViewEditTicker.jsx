@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import { useForm } from "react-hook-form";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { callApi } from '../../utils/CallApi';
 const ViewEditTicker = (props) => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange ', });
@@ -49,7 +49,7 @@ const ViewEditTicker = (props) => {
 
     }, [props.data, reset]);
     return (
-        <Modal open={props.open} onClose={props.onClose} center classNames={{ root: "w-full" }}>
+        <Modal open={props.open} onClose={props.onClose} center  >
             <div className='bscontainer'>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='row p-5'>

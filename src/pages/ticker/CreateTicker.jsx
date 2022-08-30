@@ -10,7 +10,7 @@ import { callApi } from '../../utils/CallApi';
 import { Link } from "react-router-dom"
 const schema = yup.object({
     name: yup.string().required("Author Name is Required"),
-   
+
 
 });
 
@@ -97,7 +97,7 @@ const CreateTicker = () => {
                             className={`w-full  ${errors.name ? "border-red-400" : "border-gray-400"}`}
                             name='name' id="name"
                             type="text"
-                            placeholder="AUTHOR NAME"
+                            placeholder="Ticker text"
 
                         />
                         <span hidden={watch("name")} className='absolute text-red-400 text-lg font-medium  top-9 left-[145px]'>*</span>
