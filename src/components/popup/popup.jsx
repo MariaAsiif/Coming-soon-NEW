@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { callApi, callPublicApi } from '../../utils/CallApi';
 
 const PopUp = ({ permition, Toggle, Firstname, type, isVerify, email }) => {
-  const [show] = useState(permition);
   const [otp, setOtp] = useState(new Array(4).fill(""));
   const [otps, setOtps] = useState("");
   const [activeOtp, setActiveOtp] = useState(0);
@@ -72,7 +71,7 @@ const PopUp = ({ permition, Toggle, Firstname, type, isVerify, email }) => {
 
   return (
     <>
-      <Modal open={show} onClose={handleClose} center>
+      <Modal open={permition} onClose={handleClose} center>
         {type === "verification" ?
           <div>
             <div className="max-w-sm mx-auto md:max-w-lg">
@@ -106,7 +105,7 @@ const PopUp = ({ permition, Toggle, Firstname, type, isVerify, email }) => {
                   })}
 
                   <div className="flex justify-center text-center mt-5">
-                    <button className="btn bg-red-500 hover:bg-green-600 text-white" onClick={() => Verification()}>Submit</button>
+                    <button className="btn bg-red-500 hover:bg-green-600 text-white" onClick={Verification}>Submit</button>
                   </div>
                 </div>
               </div>

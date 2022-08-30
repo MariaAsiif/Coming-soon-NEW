@@ -30,7 +30,7 @@ const TopForm = (props) => {
     const [mobileno, setmobileno] = useState({ fmobile: "mobile", value: "", isempty: true })
     const [product, setproduct] = useState("")
     const [areaofInterest, setareaofInterest] = useState([])
-    const [activeField, setactiveField] = useState("firstname")//firstname
+    const [activeField, setactiveField] = useState("email")//firstname
     const [countryCode, setCountryCode] = useState("")
     const [verify, setVerify] = useState(false)
     const [name, setName] = useState({})
@@ -207,25 +207,25 @@ const TopForm = (props) => {
                 //     emailError: null,
                 // })
 
-                // try {
-                //     let payload = {
-                //       email: email.value,
-                //     }
-                //     const response = await callPublicApi("/verifications/sendCodeOnEmail", "post", payload)
-                //     if (response.status === "Success") {
-                //       toast.success(response.data.message)
-                //       setIsSuccess(true)
-                //       setVerify(false)
-                //     }
-                //     else {
-                //       toast.error(response.data.message)
+                try {
+                    let payload = {
+                        email: email.value,
+                    }
+                    const response = await callPublicApi("/verifications/sendCodeOnEmail", "post", payload)
+                    if (response.status === "Success") {
+                        toast.success(response.message)
+                        setIsSuccess(true)
+                        setVerify(false)
+                    }
+                    else {
+                        toast.error("Email already exist")
+                    }
 
-                //     }
+                } catch (error) {
+                    console.log(error);
+                }
+                // setactiveField("mobile")
 
-                //   } catch (error) {
-
-                //   }
-                setactiveField("mobile")
             }
 
         }
@@ -286,7 +286,13 @@ const TopForm = (props) => {
 
     const VerificationEmail = (value) => {
         setIsSuccess(value)
-        // isVerify()
+
+    }
+
+
+    const onSuccessEmailVarification = () => {
+        setIsSuccess(false)
+        setactiveField("mobile")
     }
 
     useEffect(() => {
@@ -524,7 +530,7 @@ const TopForm = (props) => {
 
             </div>
 
-            {isSuccess && <PopUp permition={isSuccess} email={email.value} isVerify={(value) => setVerify(value)} type="verification" Toggle={(value) => VerificationEmail(value)} Firstname={name} />}
+            {isSuccess && <PopUp permition={isSuccess} email={email.value} isVerify={onSuccessEmailVarification} type="verification" Toggle={(value) => VerificationEmail(value)} Firstname={name} />}
 
         </section>
     )
