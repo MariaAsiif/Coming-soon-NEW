@@ -6,6 +6,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import ViewEditInspire from "../../components/Popups/ViewEditInspire"
 import PopUp from '../../components/popup/popup';
 import { toast, ToastContainer } from 'react-toastify';
+import DeletePopup from '../../components/deletePopups/DeletePopups';
 
 const Inspire = () => {
 
@@ -35,7 +36,10 @@ const Inspire = () => {
             const res = await callApi("/quotes/removeQuote", "post", value)
             if (res.status === "Success") {
                 toast.success(res.message);
-
+                setDelPopup(false)
+                let oldinspires = allInspires
+                const updatedInspires = oldinspires.filter((inspire) => inspire._id !== res.data._id)
+                setallInspires(updatedInspires)
             }
             else {
                 toast.error(res.message);
@@ -47,7 +51,7 @@ const Inspire = () => {
     }
     useEffect(() => {
         console.log("useeffect run")
-        if (!inspirePopup || !delPopup) {
+        if (!inspirePopup) {
             (async () => {
                 try {
                     const payload = {
@@ -70,14 +74,14 @@ const Inspire = () => {
             })();
         }
 
-    }, [inspirePopup || delPopup])
+    }, [inspirePopup])
 
 
 
     return (
         <div className='bscontainer-fluid'>
             <ViewEditInspire id="job-modal" data={inspireRow} mode={inspireMode} modalOpen={inspirePopup} onClose={() => setinspirePopup(false)} />
-            {delPopup && <PopUp permition={delPopup} callback={deleteInspire} Toggle={() => setDelPopup('')} type="deleteinfo" />}
+            {delPopup && <DeletePopup permition={delPopup} callback={deleteInspire} Toggle={() => setDelPopup(false)} />}
 
             <ToastContainer
                 position="top-right"

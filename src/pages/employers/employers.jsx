@@ -5,6 +5,7 @@ import moment from "moment"
 import { Link } from 'react-router-dom';
 import { IoEyeOutline } from 'react-icons/io5';
 import ViewEditEmployer from '../../components/Popups/ViewEditEmployer';
+import { callApi } from '../../utils/CallApi';
 const Employers = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [alljobs, setalljobs] = useState([])
@@ -61,21 +62,17 @@ const Employers = () => {
     useEffect(() => {
         (async () => {
             try {
-                const config = {
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    }
-                };
-                let response = await axios.post('http://localhost:5873/employees/getEmployees', {
+                const payload = {
                     sortproperty: "created_at",
                     sortorder: -1,
                     offset: 0,
                     limit: 50
-                }, config);
+                }
+                let response = await callApi('/employees/getEmployees', "post", payload);
 
                 console.log("rs", response)
 
-                const updatedjobs = response.data.data.jobs.map((job) => ({ ...job, isChecked: false }))
+                const updatedjobs = response.data.jobs.map((job) => ({ ...job, isChecked: false }))
                 setalljobs(updatedjobs)
             } catch (error) {
                 console.log(error);
