@@ -103,9 +103,7 @@ const CommingSoon = () => {
                         <div className="company_info_name text-red-600">
                             <span>A Fairman Company</span>
                         </div>
-                        <div>
-                            <Link className='text-white underline text-xs italic' to="/user-feedback">Feedback Welcome</Link>
-                        </div>
+
 
                     </div>
                     <div className="bottom_block flex justify-between item-center relative mt-5 ">
@@ -136,16 +134,17 @@ const CommingSoon = () => {
                     </div>
 
                 </div>
+                <Link  to="/user-feedback">
+                    <div className='fixed bottom-20 right-10 w-12'>
+                        <div className="rounded-full border bg-white p-2">
+                            <RiMessage2Line className='text-3xl' />
+                        </div>
+                        <span className='text-white text-center ml-[-10px]'>
 
-                <div className='fixed bottom-20 right-10 w-12'>
-                    <div className="rounded-full border bg-white p-2">
-                        <RiMessage2Line className='text-3xl' />
+                            Feedback
+                        </span>
                     </div>
-                    <span className='text-white text-center ml-[-10px]'>
-
-                        FeedBack
-                    </span>
-                </div>
+                </Link>
 
             </section>
 
