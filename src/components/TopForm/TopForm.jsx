@@ -494,7 +494,7 @@ const TopForm = (props) => {
                                 <>
                                     <div className='row g-0'>
                                         <div className='col-8'>
-                                            <input name='product' value={product} onChange={handleChangeProduct} type="text " className=" focus:outline-none border-0 w-full  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Product" />
+                                            <input name='product' value={product} onChange={handleChangeProduct} type="text " className=" focus:outline-none border-0 w-full  placeholder:font-Poppins placeholder:font-medium p-2" placeholder="Product or service of interest?" />
                                         </div>
                                         <div className='col-4'>
                                             <button onClick={goToProductField}
