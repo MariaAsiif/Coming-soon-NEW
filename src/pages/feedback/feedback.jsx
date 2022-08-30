@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { callApi } from '../../utils/CallApi';
+import { callApi, HOSTNAME } from '../../utils/CallApi';
 import { IoEyeOutline } from 'react-icons/io5';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
-import ViewEditTicker from '../../components/Popups/ViewEditTicker';
+// import ViewEditTicker from '../../components/Popups/ViewEditTicker';
 import DeletePopup from '../../components/deletePopups/DeletePopups';
 import ViewEditFeedBack from '../../components/Popups/ViewEditFeedBack';
-import { FcFeedback } from 'react-icons/fc';
+import userAvatar from '../../assets/images/avatar.png'
+// import { FcFeedback } from 'react-icons/fc';
 const FeedBack = () => {
     const [allFeed, setallFeed] = useState([])
     const [jobPopup, setjobPopup] = useState(false)
@@ -71,7 +72,7 @@ const FeedBack = () => {
             })();
         }
 
-    }, [jobPopup , delPopup])
+    }, [jobPopup, delPopup])
     return (
         <div className='bscontainer-fluid'>
             <ViewEditFeedBack id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />
@@ -155,7 +156,8 @@ const FeedBack = () => {
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         {/* <div className="text-left">{FcFeedback.}</div> */}
-                                                        <img src={`http://localhost:5873/${feed?.imageUrl}`} className="w-[80px] h-[50px]" alt="image_logo" />
+                                                        
+                                                        <img src={`${HOSTNAME}/${feed?.imageUrl} ` || userAvatar} className="w-[80px] h-[50px]" alt="image_logo" />
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                         <div className="space-x-1">

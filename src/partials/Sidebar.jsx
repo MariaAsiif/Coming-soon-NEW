@@ -96,7 +96,7 @@ function Sidebar({
                 <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
                   <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">{group.groupname}</span>
                 </h3>
-                <ul className="mt-3">
+                <ul className="mt-3  overflow-auto">
                   {group.menuitems.map((item, index) => {
                     if (item.subMenuItems.length === 0) {
                       return (

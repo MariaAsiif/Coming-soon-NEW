@@ -1,8 +1,8 @@
 import axios from "axios";
 import { store } from "../store";
 
+const HOSTNAME = "https://hporxadminbackend.herokuapp.com" ;
 const callApi = (endpoint, method, payload) => {
-    const HOSTNAME = "https://hporxadminbackend.herokuapp.com" ;
     let token = store.getState().userAuth.loginInfo.token;
     const authHeaders = token
         ? {
@@ -60,4 +60,4 @@ const callPublicApi = (endpoint, method, payload) => {
     });
 };
 
-export { callPublicApi, callApi };
+export { callPublicApi, callApi , HOSTNAME };
