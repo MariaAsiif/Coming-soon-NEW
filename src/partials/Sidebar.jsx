@@ -96,7 +96,7 @@ function Sidebar({
                 <h3 className="text-xs uppercase text-gray-500 font-semibold pl-3">
                   <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">{group.groupname}</span>
                 </h3>
-                <ul className="mt-3  overflow-auto">
+                <ul className="mt-3 max-h-[400px] overflow-auto">
                   {group.menuitems.map((item, index) => {
                     if (item.subMenuItems.length === 0) {
                       return (
@@ -119,7 +119,7 @@ function Sidebar({
                     }
                     return (
                       <SidebarLinkGroup key={index} activecondition={pathname.includes(item.pathname)}>
-                        {(handleClick, open) => {
+                        {(handleClick, open, handleSubClick, subopen) => {
                           return (
                             <React.Fragment>
                               <a onClick={(e) => { e.preventDefault(); sidebarExpanded ? handleClick() : setSidebarExpanded(true); }} className={`block text-slate-800 hover:text-red-500 truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-red-500' : ""}`} href="#0" >
@@ -138,16 +138,63 @@ function Sidebar({
                               <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                                 <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
                                   {item.subMenuItems.map((subitem, s_index) => {
+                                    if (!subitem?.subMenusItems) {
+                                      return (
+                                        <li key={s_index} className="mb-1 last:mb-0">
+                                          <NavLink end to={subitem.pathname} className={({ isActive }) => 'block text-gray-400 hover:text-red-500 sdfdsf transition duration-150 truncate ' + (isActive ? '!text-black font-bold' : '')}>
+                                            <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                              {subitem.label}
+                                            </span>
+                                          </NavLink>
+                                        </li>
+                                      )
+                                    }
                                     return (
-                                      <li key={s_index} className="mb-1 last:mb-0">
-                                        <NavLink end to={subitem.pathname} className={({ isActive }) => 'block text-gray-400 hover:text-red-500 sdfdsf transition duration-150 truncate ' + (isActive ? '!text-black font-bold' : '')}>
-                                          <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                            {subitem.label}
-                                          </span>
-                                        </NavLink>
-                                      </li>
+                                      <>
+                                        <React.Fragment>
+                                          <a onClick={(e) => { e.preventDefault(); sidebarExpanded ? handleSubClick() : setSidebarExpanded(true); }} className={`block text-slate-800 hover:text-red-500 truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-red-500' : ""}`} href="#0" >
+                                            <div className="flex items-center justify-between mt-4">
+                                              <div className="flex items-center">
+                                                {pathname.includes(subitem.pathname) ? subitem.activeLeftIcon : subitem.leftIcon}
+                                                <span className="text-sm font-medium text-gray-500 ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                  {subitem.label}
+                                                </span>
+                                              </div>
+                                              <div className="flex shrink-0 ml-2">
+                                                <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-black ${subopen && 'rotate-180'}`} viewBox="0 0 12 12"><path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" /> </svg>
+                                              </div>
+                                            </div>
+                                          </a>
+                                          <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+
+                                            <ul className={`pl-9 mt-1 ${!subopen && 'hidden'}`}>
+                                              {subitem.subMenusItems.map((subitem, s_index) => {
+                                                if (!subitem?.subMenusItems) {
+                                                  // if (pathname.includes(subitem.pathname) )
+                                                    return (
+                                                      <li key={s_index} className="mb-1 last:mb-0">
+                                                        <NavLink end to={subitem.pathname} className={({ isActive }) => 'block text-gray-400  hover:text-red-500 sdfdsf transition duration-150 truncate ' + (isActive ? '!text-black font-bold' : '')}>
+                                                          <span className="text-sm  font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                            {subitem.label}
+                                                          </span>
+                                                        </NavLink>
+                                                      </li>
+                                                    )
+                                                }
+                                              }
+                                              )
+
+                                              }
+                                            </ul>
+                                          </div>
+                                        </React.Fragment>
+                                      </>
                                     )
-                                  })}
+
+                                  }
+                                  )
+
+                                  }
                                 </ul>
                               </div>
                             </React.Fragment>

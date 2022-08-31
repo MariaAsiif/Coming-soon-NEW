@@ -1,14 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react'
 import Transition from '../../utils/Transition';
-import { callApi } from '../../utils/CallApi';
+import { callApi , HOSTNAME } from '../../utils/CallApi';
 
 // ========================= 3rd party packages
 
 import { useForm } from "react-hook-form";
-import moment from "moment"
-import { FcCheckmark, } from 'react-icons/fc'
 import { toast, ToastContainer } from 'react-toastify';
-
 
 
 
@@ -33,19 +30,17 @@ const ViewEditFeedBack = ({ id, modalOpen, onClose, mode, data }) => {
     const onSubmit = async (values) => {
         try {
             let formdata = new FormData()
-            formdata.append('feedbackimg', file || data?.imageUrl);
+            formdata.append('feedbackimg', file || data?.feedbackimg);
             // formdata.append('feedbackid', data._id);
             // formdata.append('userEmail', values.userEmail);
             // formdata.append('userName', values.userName);
             // formdata.append('feedbackDescription', values.feedbackDescription);
-            formdata.append('userEmail', JSON.stringify(
-                {
-                    feedbackid: data?._id,
-                    userEmail: values.userEmail || data?.userEmail,
-                    feedbackDescription: values.feedbackDescription || data?.feedbackDescription,
-                    userName: values.userName || data?.userName
-
-                }));
+            formdata.append('request', JSON.stringify({
+                feedbackid:  data._id,
+                userEmail:values.userEmail ||  data.email ,
+                feedbackDescription: values.feedbackDescription || data.desc,
+                userName : values.userName ||  data.name,
+            }));
             const res = await callApi("/feedbacks/updateFeedback", "post", formdata)
             if (res.status === "Success") {
                 toast.success(res.message);
@@ -195,7 +190,7 @@ const ViewEditFeedBack = ({ id, modalOpen, onClose, mode, data }) => {
                                     {mode === "view" ?
                                         (
 
-                                            <img src={`http://localhost:5873/${data?.imageUrl}`} className="w-full h-[90px]" alt="image_logo" />
+                                            <img src={`${HOSTNAME}/${data?.feedbackimg}`} className="w-full h-[90px]" alt="image_logo" />
 
                                         ) : (
                                             <>
@@ -203,7 +198,7 @@ const ViewEditFeedBack = ({ id, modalOpen, onClose, mode, data }) => {
                                                     {fileUrl ?
                                                         <img src={fileUrl} className="w-full h-[90px]" alt="image_logo" />
                                                         :
-                                                        <img src={`http://localhost:5873/${data?.imageUrl}`} className="w-full h-[90px] " alt="image_logo" />
+                                                        <img src={`${HOSTNAME}/${data?.feedbackimg}`} className="w-full h-[90px] " alt="image_logo" />
                                                     }
                                                 </label>
 

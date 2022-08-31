@@ -4,9 +4,10 @@ import { VscFeedback } from 'react-icons/vsc'
 import { BiSticker } from 'react-icons/bi'
 import { RiLuggageDepositLine } from 'react-icons/ri'
 import { SiSlideshare } from 'react-icons/si'
-import { GiInspiration } from 'react-icons/gi'
-import { MdOutlinePolicy } from 'react-icons/md'
+import { GiInspiration , GiInjustice } from 'react-icons/gi'
+import { MdOutlinePolicy , MdMedicalServices } from 'react-icons/md'
 import { IoMdLocate } from 'react-icons/io'
+import { GrServices ,  } from 'react-icons/gr'
 const SidebarObj = () => {
     return [
         {
@@ -272,55 +273,55 @@ const SidebarObj = () => {
 
                         {
                             label: "Doctors",
-                            leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
-                            activeLeftIcon: (<VscFeedback size={22} className=" text-green-500" />),
+                            leftIcon: (<MdMedicalServices size={22} className="hover:text-red-500" />),
+                            activeLeftIcon: (<MdMedicalServices size={22} className=" text-green-500" />),
                             rightIcon: "sadf",
                             path: "/doctor",
                             pathname: "doctor",
-                            subMenuItems: [
+                            subMenusItems: [
                                 {
-                                    label: "Create Doctor",
+                                    label: "Doctors",
                                     pathname: "/locate/doctor",
                                 },
                                 {
                                     label: "Create Doctor",
-                                    pathname: "/locate/create-doctor",
+                                    pathname: "/locate/doctor/create-doctor",
                                 },
                             ]
                         },
                         {
                             label: "Lawyers",
-                            leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
-                            activeLeftIcon: (<VscFeedback size={22} className=" text-green-500" />),
+                            leftIcon: (<GiInjustice size={22} className="hover:text-red-500" />),
+                            activeLeftIcon: (<GiInjustice size={22} className=" text-green-500" />),
                             rightIcon: "sadf",
                             path: "/lawyer",
                             pathname: "lawyer",
-                            subMenuItems: [
+                            subMenusItems: [
                                 {
-                                    label: "Lawyer",
-                                    pathname: "/lawyer/create-lawyer",
+                                    label: "Lawyers",
+                                    pathname: "/locate/lawyer",
                                 },
                                 {
                                     label: "Create Lawyer",
-                                    pathname: "/lawyer/create-lawyer",
+                                    pathname: "/locate/lawyer/create-lawyer",
                                 },
                             ]
                         },
                         {
                             label: "Services",
-                            leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
-                            activeLeftIcon: (<VscFeedback size={22} className="text-green-500" />),
+                            leftIcon: (<GrServices size={22} className="hover:text-red-500" />),
+                            activeLeftIcon: (<GrServices size={22} className="text-green-500" />),
                             rightIcon: "sadf",
                             path: "/services",
                             pathname: "services",
-                            subMenuItems: [
+                            subMenusItems: [
                                 {
                                     label: "Services",
-                                    pathname: "/services/services",
+                                    pathname: "/locate/services",
                                 },
                                 {
                                     label: "Create services",
-                                    pathname: "/services/create-services",
+                                    pathname: "/locate/services/create-service",
                                 },
                             ]
                         },

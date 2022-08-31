@@ -158,11 +158,11 @@ function App() {
           <Route path="create-feedback" element={<CreateFeedback />} />
         </Route>
 
-        <Route path="/locate" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route path="/locate/" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Locate />} />
-          <Route path="create-docker" element={<CreateDoctor />} />
-          <Route path="create-lawyer" element={<CreateLawyer />} />
-          <Route path="create-services" element={<CreateServices />} />
+          <Route path="doctor/create-doctor" element={<CreateDoctor />} />
+          <Route path="lawyer/create-lawyer" element={<CreateLawyer />} />
+          <Route path="services/create-service" element={<CreateServices />} />
         </Route>
 
         <Route path="/faq" element={<RequireAuth><MainWrapper /></RequireAuth>} >
