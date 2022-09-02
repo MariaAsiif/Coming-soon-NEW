@@ -87,6 +87,7 @@ import Locate from './pages/locate/locate';
 import CreateDoctor from './pages/locate/CreateDoctor';
 import CreateLawyer from './pages/locate/CreateLawyer';
 import CreateServices from './pages/locate/CreateServices';
+import Doctors from './pages/locate/Doctors/Doctors';
 
 
 const RequireAuth = ({ children }) => {
@@ -160,6 +161,7 @@ function App() {
 
         <Route path="/locate/" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Locate />} />
+          <Route path="doctor" element={<Doctors />} />
           <Route path="doctor/create-doctor" element={<CreateDoctor />} />
           <Route path="lawyer/create-lawyer" element={<CreateLawyer />} />
           <Route path="services/create-service" element={<CreateServices />} />
