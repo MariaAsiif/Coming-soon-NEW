@@ -4,9 +4,13 @@ import { IoEyeOutline } from "react-icons/io5";
 import { callApi } from '../../../utils/CallApi';
 import { toast } from 'react-toastify';
 
+import ViewEditLawyerPopup from '../../../components/Popups/ViewEditLawyerPopup';
 
 const Lawyers = () => {
-    const [alldoctors, setallDoctors] = useState([])
+    const [alllawyers, setalllawyers] = useState([])
+    const [viewEditPopup, setviewEditPopup] = useState(false)
+    const [mode, setmode] = useState("view")
+    const [docRow, setdocRow] = useState({})
     const [jobPopup, setjobPopup] = useState(false)
     const [delPopup, setDelPopup] = useState(false)
     const [delId, setDelId] = useState('')
@@ -76,6 +80,7 @@ const Lawyers = () => {
     return (
         <div className='bscontainer-fluid'>
 
+            <ViewEditLawyerPopup id="doctor-modal" data={docRow} mode={mode} modalOpen={viewEditPopup} onClose={() => setviewEditPopup(false)} />
             <div className='row py-5'>
                 <div className='col-12  mb-5'>
                     <div className='mb-3'>
@@ -88,6 +93,7 @@ const Lawyers = () => {
                             </li>
                             <li className="flex items-center">
                                 <div className="text-slate-500 hover:text-indigo-500 cursor-pointer" >Lawyers</div>
+
                             </li>
                         </ul>
                     </div>
@@ -95,13 +101,13 @@ const Lawyers = () => {
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                         </svg>
-                        <span className="ml-2">Create Doctor</span>
+                        <span className="ml-2">Create Lawyer</span>
                     </Link>
                 </div>
                 <div className='col-12 border'>
                     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                         <header className="px-5 py-4">
-                            <h2 className="font-semibold text-slate-800">All Doctors <span className="text-slate-400 font-medium">{alldoctors.length}</span></h2>
+                            <h2 className="font-semibold text-slate-800">All Lawyers <span className="text-slate-400 font-medium">{alllawyers.length}</span></h2>
                         </header>
                         <div>
                             <div className="overflow-x-auto">
@@ -149,7 +155,7 @@ const Lawyers = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="text-sm divide-y divide-slate-200">
-                                        {alldoctors.map((doctor) => {
+                                        {alllawyers.map((doctor) => {
                                             return (
                                                 <tr key={doctor._id}>
                                                     {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
@@ -200,6 +206,7 @@ const Lawyers = () => {
                                                                 <IoEyeOutline className='text-red-500 hover:text-green-600' size={23} />
                                                             </button>
                                                             <button onClick={deletePopToggle} className="text-rose-500 hover:text-rose-600 rounded-full">
+
                                                                 <span className="sr-only">Delete</span>
                                                                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
                                                                     <path d="M13 15h2v6h-2zM17 15h2v6h-2z" />

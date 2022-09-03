@@ -95,9 +95,11 @@ import SinglePermission from './pages/role/Singlepermission/singlePermission';
 import CreateSinglePermission from './pages/role/Singlepermission/CreatePermission';
 import MutiplePermission from './pages/role/MultiplePermission/multiplepermission'
 import CreateMultiplePermission from './pages/role/MultiplePermission/CreatePermission';
-import Doctors from './pages/locate/Doctors/Doctors'
+
+import Doctors from './pages/locate/Doctors/Doctors';
 import Lawyers from './pages/locate/Lawyers/Lawyers';
 import Services from './pages/locate/Services/Services';
+
 
 const RequireAuth = ({ children }) => {
   const token = useSelector((state) => state.userAuth.loginInfo.token);

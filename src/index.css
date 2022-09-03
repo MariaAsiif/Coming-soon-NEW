@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 /* Additional styles */
@@ -38,9 +37,9 @@ COUNT DOWN CSS .countdown {
 }
 
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 }
 
 input[type=number] {
@@ -245,21 +244,21 @@ video {
   outline: none;
 }
 
-.react-tel-input{
-  border:1pt solid gray !important;
+.react-tel-input {
+  border: 1pt solid gray !important;
 
 }
 
-.error_form{
+.error_form {
   border-color: red !important;
 }
 
-.react-tel-input:focus{
+.react-tel-input:focus {
   --tw-ring-color: none !important;
 
 }
 
-.react-tel-input:hover{
+.react-tel-input:hover {
   border-color: #cccc !important;
 
 }
@@ -285,16 +284,16 @@ video {
 } */
 
 select {
-	appearance: none;
+  appearance: none;
 }
 
 #dropdown {
-	appearance: none;
-	padding: 5px;
-	color: darkgrey;
-	border: none;
-	font-family: inherit;
-	outline: none;
+  appearance: none;
+  padding: 5px;
+  color: darkgrey;
+  border: none;
+  font-family: inherit;
+  outline: none;
   border: 1pt solid gray;
 }
 
@@ -319,7 +318,7 @@ select {
   width: 41px;
   height: 100%;
   padding: 0 0 0px 20px !important;
-  border:none !important;
+  border: none !important;
   border-radius: 3px 0 0 3px;
 
 }
@@ -340,7 +339,7 @@ select {
 
 
 
-.input_style{
+.input_style {
   appearance: none;
   background-color: #fff;
   border-color: #6b7280;
@@ -393,7 +392,7 @@ select {
 }
 
 
-@media screen and (width: 280px){
+@media screen and (width: 280px) {
   .react-responsive-modal-modal {
     max-width: 250px !important;
     display: inline-block;
@@ -405,5 +404,5 @@ select {
     padding: 1.2rem;
     position: relative;
     overflow-y: auto;
-}
+  }
 }

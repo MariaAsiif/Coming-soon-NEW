@@ -3,21 +3,24 @@ import { Link } from 'react-router-dom';
 import { IoEyeOutline } from "react-icons/io5";
 import { callApi } from '../../../utils/CallApi';
 import { toast } from 'react-toastify';
+import ViewEditDoctorPopup from '../../../components/Popups/ViewEditDoctorPopup';
 
 
 const Doctors = () => {
-    const [alldoctors, setallDoctors] = useState([])
+    const [alldoctors, setalldoctors] = useState([])
+    const [allservices, setallservices] = useState([])
+    const [viewEditPopup, setviewEditPopup] = useState(false)
+    const [mode, setmode] = useState("view")
+    const [docRow, setdocRow] = useState({})
     const [jobPopup, setjobPopup] = useState(false)
     const [delPopup, setDelPopup] = useState(false)
     const [delId, setDelId] = useState('')
-    const [jobMode, setjobMode] = useState("view")
-    const [jobRow, setjobRow] = useState({})
-
-    const openDoctorPopup = (e, mode, data) => {
+    
+    const openDoctorPopup = (e, mode, doctorRow) => {
         e.stopPropagation()
-        setjobPopup(true)
-        setjobMode(mode)
-        setjobRow(data)
+        setviewEditPopup(true)
+        setmode(mode)
+        setdocRow(doctorRow)
     }
 
     const deletePopToggle = (id) => {
@@ -75,7 +78,7 @@ const Doctors = () => {
     }, [jobPopup, delPopup])
     return (
         <div className='bscontainer-fluid'>
-
+            <ViewEditDoctorPopup id="doctor-modal" data={docRow} mode={mode} modalOpen={viewEditPopup} onClose={() => setviewEditPopup(false)} />
             <div className='row py-5'>
                 <div className='col-12  mb-5'>
                     <div className='mb-3'>
@@ -101,7 +104,7 @@ const Doctors = () => {
                 <div className='col-12 border'>
                     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                         <header className="px-5 py-4">
-                            <h2 className="font-semibold text-slate-800">All Doctors <span className="text-slate-400 font-medium">{alldoctors.length}</span></h2>
+                            <h2 onClick={(e) => openDoctorPopup(e, "view", { name: "arslan" })} className="font-semibold text-slate-800">All Doctors <span className="text-slate-400 font-medium">{alldoctors.length}</span></h2>
                         </header>
                         <div>
                             <div className="overflow-x-auto">
