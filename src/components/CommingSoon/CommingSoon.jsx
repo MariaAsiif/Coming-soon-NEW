@@ -42,7 +42,7 @@ const CommingSoon = () => {
                                         replication through induction of the host ER stress and innate immune responses”.
                                     </a>
                                     <br />
-                                    <small className='source'>SOURCE: The University of Chicago Medical Center linked above for voracity</small>
+                                    <small className='source'>SOURCE: The University of Chicago Medical Center linked above for veracity</small>
                                 </span>
                             </div>
                             <br />
@@ -132,7 +132,7 @@ const CommingSoon = () => {
                     </div>
 
                 </div>
-                <Link  to="/user-feedback">
+                <Link to="/user-feedback">
                     <div className='user-feedback fixed bottom-[50px] right-10 w-12 '>
                         <div className="rounded-full border bg-white p-3">
                             <RiMessage2Line className='text-[22px]' />

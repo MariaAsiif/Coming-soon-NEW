@@ -100,7 +100,7 @@ const CreateDoctor = () => {
             }
 
             const res = await callApi("/locateservices/createService", "post", payload)
-            console.log("Rs", res )
+
         }
         catch (err) { }
 
