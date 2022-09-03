@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
-import {  ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { Country, State, City } from 'country-state-city';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { callApi } from '../../utils/CallApi';
 const schema = yup.object({
     title: yup.string().required(),
     content: yup.string().required(),
@@ -29,21 +30,11 @@ const CreateLawyer = () => {
     const [all_Cities, setall_Cities] = useState([])
     const [countryCode, setCountryCode] = useState("")
     const [recruitModel, setrecruitModel] = useState({
-        fullname: "",
-        firstFname: "",
-        secondFname: "",
-        thirdFname: "",
-        email: "",
-        reEmail: "",
         city: "",
         state: "",
-        industry: "",
         country: "",
-        // postcode:"",
-        position: "",
-        mobile: "",
-        age: "",
     })
+    const [file, setFile] = useState('')
 
 
 
@@ -76,8 +67,42 @@ const CreateLawyer = () => {
     }
 
 
-    const onSubmit = async (data) => {
-        console.log("Data", data)
+    const onSubmit = async (e) => {
+        e.preventDefault()
+        try {
+
+            let payload = {
+                title: "data.title",
+                content: "data.content",
+                gender: "data.gender",
+                category: "lawyer",
+                contactNo: "data.mobile",
+                address: "data.address",
+                state: "abc",
+                zip: "123",
+                email: "a@a.com",
+                website: "www.a.com",
+                facebook: "www.facebook.com",
+                twitter: "www.twitter.com",
+                instagram: "www.instagram.com",
+                linkedin: "www.linkedin.com",
+
+                "isIndividual": true,
+                "serviceCountry": "Spain",
+                "serviceCity": "Alava",
+                "serviceLocation": {
+                    "type": "Point",
+                    "coordinates": [
+                        -2.681792,
+                        42.859165
+                    ]
+                }
+            }
+
+            const res = await callApi("/locateservices/createService", "post", payload)
+            console.log("Rs", res )
+        }
+        catch (err) { }
 
     }
 
@@ -129,12 +154,12 @@ const CreateLawyer = () => {
                 draggable
                 pauseOnHover
             />
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form>
                 <div className='row p-11'>
 
                     <div className='col-12 mb-6'>
                         <header className="py-4">
-                            <h2 className="font-semibold text-slate-800">Add new Lawyer</h2>
+                            <h2 className="font-semibold text-slate-800">Add new Doctor</h2>
                         </header>
                     </div>
 
@@ -154,9 +179,9 @@ const CreateLawyer = () => {
                                 <p className="text-red-500 text-sm">{errors.title.message}</p>
                             )}
                             <span hidden={watch('title')} className='absolute  text-red-400 font-medium text-lg top-[36px] left-[60px]'>*</span>
-                            <span className={watch('title') ? `visible absolute top-1/4 right-3` : `invisible`}>
+                            {/* <span className={watch('title') ? `visible absolute top-1/4 right-3` : `invisible`}>
                                 <FcCheckmark />
-                            </span>
+                            </span> */}
 
                         </div>
                     </div>
@@ -186,7 +211,7 @@ const CreateLawyer = () => {
 
                         <label className="block text-sm font-medium mb-1" htmlFor="gender">Gender </label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.gender && watch("gender") ? <FcCheckmark className='mr-5'/> : errors.gender ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.gender && watch("gender") ? <FcCheckmark className='mr-5' /> : errors.gender ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <select
                             // value={recruitModel.gender}
@@ -225,46 +250,6 @@ const CreateLawyer = () => {
                         )}
                     </div>
 
-                    <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="longitude">Longitude </label>
-                        <div className='absolute right-5 top-10'>
-                            {!errors.longitude && watch('longitude') ? <FcCheckmark /> : errors.longitude ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
-                        <input
-                            {...register('longitude')}
-                            autoComplete="off"
-                            className={`form-input w-full  ${errors.longitude && 'border-red-500'}`}
-                            name='longitude' id="longitude"
-                            placeholder="Longitude"
-                            type="text"
-                        />
-                        <span hidden={watch('longitude')} className='absolute text-red-400 text-lg font-medium  top-9 left-[110px]'>*</span>
-                        {/* <span hidden={watch('longitude')} className='absolute text-red-400 text-sm font-medium  top-9 left-[170px]'>(optional)</span> */}
-
-                        {errors.longitude && (
-                            <p className="text-red-500 text-sm">{errors.longitude.message}</p>
-                        )}
-                    </div>
-                    
-
-                    <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="latitude">Latitude </label>
-                        <div className='absolute right-10 top-10'>
-                            {!errors.latitude && watch('latitude') ? <FcCheckmark /> : errors.latitude ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
-                        <input
-                            {...register('latitude')}
-                            autoComplete="off"
-                            className={`form-input w-full  ${errors.latitude && 'border-red-500'}`}
-                            name='latitude' id="latitude"
-                            placeholder="Latitude "
-                            type="text" />
-                        <span hidden={watch('latitude')} className='absolute text-red-400 text-lg font-medium  top-9 left-[95px]'>*</span>
-
-                        {errors.latitude && (
-                            <p className="text-red-500 text-sm">{errors.latitude.message}</p>
-                        )}
-                    </div>
 
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="country">Country</label>
@@ -454,7 +439,7 @@ const CreateLawyer = () => {
                             <p className="text-red-500 text-sm">{errors.twitter.message}</p>
                         )}
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
+                    <div className='col-lg-6 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="instagram">Instagram </label>
                         <div className='absolute right-10 top-10'>
                             {!errors.instagram && watch('instagram') ? <FcCheckmark /> : errors.instagram ? <div className=' text-red-500'><MdClose /></div> : null}
@@ -467,9 +452,9 @@ const CreateLawyer = () => {
                             placeholder="instagram"
 
                             type="text" />
-                       
+
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
+                    <div className='col-lg-6 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="linkedIn">LinkedIn </label>
                         <div className='absolute right-10 top-10'>
                             {!errors.linkedIn && watch('linkedIn') ? <FcCheckmark /> : errors.linkedIn ? <div className=' text-red-500'><MdClose /></div> : null}
@@ -482,9 +467,9 @@ const CreateLawyer = () => {
                             placeholder="LinkedIn"
 
                             type="text" />
-                       
+
                     </div>
-                    <div className='col-lg-8 mb-4 relative'>
+                    <div className='col-lg-6 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="address"> Permanet Address </label>
                         <div className='absolute right-5 top-10'>
                             {!errors.address && watch('address') ? <FcCheckmark /> : errors.address ? <div className=' text-red-500'><MdClose /></div> : null}
@@ -497,18 +482,31 @@ const CreateLawyer = () => {
                             name='address' id="address"
                             placeholder="Permanent Address "
                             type="text"
-                            // pattern="[0-9]+"
-                            // type="number"
-                             />
+                        // pattern="[0-9]+"
+                        // type="number"
+                        />
 
                         {errors.address && (
                             <p className="text-red-500 text-sm">{errors.address.message}</p>
                         )}
                     </div>
 
+                    <div className='col-lg-6 mb-4 relative'>
+                        <label className="block text-sm font-medium mb-1" htmlFor="image"> Image </label>
+
+                        <input
+                            className={`form-input w-full h-[42px]`}
+                            onChange={(e) => setFile(e.target.files[0])}
+                            name='image' id="image"
+                            type="file"
+                        />
+
+
+                    </div>
+
 
                     <div className='col-lg-12'>
-                        <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
+                        <button onClick={(e) => onSubmit(e)} className="btn bg-red-500 hover:bg-green-600 text-white" type="submit" >Submit</button>
                     </div>
                 </div>
             </form>

@@ -87,6 +87,14 @@ import Locate from './pages/locate/locate';
 import CreateDoctor from './pages/locate/CreateDoctor';
 import CreateLawyer from './pages/locate/CreateLawyer';
 import CreateServices from './pages/locate/CreateServices';
+import Permission from './pages/permission/permission';
+import CreatePermission from './pages/permission/CreatePermission';
+import CreateRole from './pages/role/Roles/CreateRole';
+import Roles from './pages/role/Roles/roles';
+import SinglePermission from './pages/role/Singlepermission/singlePermission';
+import CreateSinglePermission from './pages/role/Singlepermission/CreatePermission';
+import MutiplePermission from './pages/role/MultiplePermission/multiplepermission'
+import CreateMultiplePermission from './pages/role/MultiplePermission/CreatePermission';
 
 
 const RequireAuth = ({ children }) => {
@@ -173,6 +181,26 @@ function App() {
         <Route path="/policy" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Policy />} />
           <Route path="create-policy" element={<CreatePolicy />} />
+        </Route>
+
+        <Route path="/permission" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Permission />} />
+          <Route path="create-permission" element={<CreatePermission />} />
+        </Route>
+
+        <Route path="/roles" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<Roles />} />
+          <Route path="create-roles" element={<CreateRole />} />
+        </Route>
+
+        <Route path="/singlePermission" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<SinglePermission />} />
+          <Route path="create-permission" element={<CreateSinglePermission />} />
+        </Route>
+
+        <Route path="/multiplePermission" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<MutiplePermission />} />
+          <Route path="create-permission" element={<CreateMultiplePermission />} />
         </Route>
 
 

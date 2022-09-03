@@ -4,10 +4,10 @@ import { VscFeedback } from 'react-icons/vsc'
 import { BiSticker } from 'react-icons/bi'
 import { RiLuggageDepositLine } from 'react-icons/ri'
 import { SiSlideshare } from 'react-icons/si'
-import { GiInspiration , GiInjustice } from 'react-icons/gi'
-import { MdOutlinePolicy , MdMedicalServices } from 'react-icons/md'
+import { GiInspiration, GiInjustice } from 'react-icons/gi'
+import { MdOutlinePolicy, MdMedicalServices } from 'react-icons/md'
 import { IoMdLocate } from 'react-icons/io'
-import { GrServices ,  } from 'react-icons/gr'
+import { GrServices, } from 'react-icons/gr'
 const SidebarObj = () => {
     return [
         {
@@ -328,6 +328,95 @@ const SidebarObj = () => {
 
 
                     ]
+                },
+                {
+                    label: "Permission Manage",
+                    leftIcon: (<MdOutlinePolicy size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<MdOutlinePolicy size={22} className=" text-green-500" />),
+                    rightIcon: "sadf",
+                    path: "/permission",
+                    pathname: "permission",
+                    subMenuItems: [
+                        {
+                            label: "All Permissions",
+                            pathname: "/permission",
+                        },
+                        {
+                            label: "Create Permission",
+                            pathname: "/permission/create-permission",
+                        },
+
+                    ]
+                },
+                {
+                    label: "Role Manage",
+                    leftIcon: (<MdOutlinePolicy size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<MdOutlinePolicy size={22} className=" text-green-500" />),
+                    rightIcon: "sadf",
+                    path: "/role",
+                    pathname: "role",
+                    subMenuItems: [
+                        {
+                            label: "Roles",
+                            leftIcon: (<MdMedicalServices size={22} className="hover:text-red-500" />),
+                            activeLeftIcon: (<MdMedicalServices size={22} className=" text-green-500" />),
+                            rightIcon: "sadf",
+                            path: "/roles",
+                            pathname: "roles",
+                            subMenusItems: [
+                                {
+                                    label: "All Roles",
+                                    pathname: "/roles"
+                                },
+                                {
+                                    label: "Create Roles",
+                                    pathname: "/roles/create-roles",
+                                },
+                            ]
+                        },
+
+                        {
+                            label: "Single Permission",
+                            leftIcon: (<MdMedicalServices size={22} className="hover:text-red-500" />),
+                            activeLeftIcon: (<MdMedicalServices size={22} className=" text-green-500" />),
+                            rightIcon: "sadf",
+                            path: "/singlePermission",
+                            pathname: "singlePermission",
+                            subMenusItems: [
+                                {
+                                    label: "Single Roles",
+                                    pathname: "/singlePermission"
+                                },
+                                {
+                                    label: "Create Single Permission",
+                                    pathname: "/singlePermission/create-permission"
+                                },
+                            ]
+                        },
+                        {
+                            label: "Multiple Permission",
+                            leftIcon: (<MdMedicalServices size={22} className="hover:text-red-500" />),
+                            activeLeftIcon: (<MdMedicalServices size={22} className=" text-green-500" />),
+                            rightIcon: "sadf",
+                            path: "/multiplePermission",
+                            pathname: "multiplePermission",
+                            subMenusItems: [
+                                {
+                                    label: "Multiple Roles",
+                                    pathname: "/multiplePermission"
+                                },
+                                {
+                                    label: "Create Multiple Permission",
+                                    pathname: "/multiplePermission/create-permission"
+                                },
+                            ]
+                        },
+
+                    ],
+                    // {
+                    //     label: "Create Roles",
+                    //     pathname: "/role/create-role",
+                    // },
                 },
                 // {
                 //     label: "Candidate Manage",

@@ -9,6 +9,7 @@ import 'react-phone-input-2/lib/style.css'
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { callApi } from '../../utils/CallApi';
 const schema = yup.object({
     business: yup.string().required(),
     content: yup.string().required(),
@@ -76,8 +77,42 @@ const CreateServices = () => {
     }
 
 
-    const onSubmit = async (data) => {
-        console.log("Data", data)
+    const onSubmit = async (e) => {
+        e.preventDefault()
+        try {
+
+            let payload = {
+                businessName: "data.title",
+                content: "data.content",
+                gender: "data.gender",
+                category: "Associations & Clubs",
+                contactNo: "data.mobile",
+                address: "data.address",
+                state: "abc",
+                zip: "123",
+                email: "a@a.com",
+                website: "www.a.com",
+                facebook: "www.facebook.com",
+                twitter: "www.twitter.com",
+                instagram: "www.instagram.com",
+                linkedin: "www.linkedin.com",
+
+                "isIndividual": false,
+                "serviceCountry": "Spain",
+                "serviceCity": "Alava",
+                "serviceLocation": {
+                    "type": "Point",
+                    "coordinates": [
+                        -2.681792,
+                        42.859165
+                    ]
+                }
+            }
+
+            const res = await callApi("/locateservices/createService", "post", payload)
+            console.log("Rs", res )
+        }
+        catch (err) { }
 
     }
 
@@ -129,7 +164,7 @@ const CreateServices = () => {
                 draggable
                 pauseOnHover
             />
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form >
                 <div className='row p-11'>
 
                     <div className='col-12 mb-6'>
@@ -508,7 +543,7 @@ const CreateServices = () => {
 
 
                     <div className='col-lg-12'>
-                        <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
+                        <button  onClick={(e) => onSubmit(e)} className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
                     </div>
                 </div>
             </form>

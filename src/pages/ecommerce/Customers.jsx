@@ -108,7 +108,6 @@ function Customers() {
             {/* Table */}
             <CustomersTable
               tableRows={users}
-
               selectedItems={handleSelectedItems}
               handleDelete={openDeletePopup}
               handleViewEdit={viewEditUserPopup}

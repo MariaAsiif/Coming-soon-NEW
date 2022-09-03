@@ -30,21 +30,11 @@ const CreateDoctor = () => {
     const [all_Cities, setall_Cities] = useState([])
     const [countryCode, setCountryCode] = useState("")
     const [recruitModel, setrecruitModel] = useState({
-        fullname: "",
-        firstFname: "",
-        secondFname: "",
-        thirdFname: "",
-        email: "",
-        reEmail: "",
         city: "",
         state: "",
-        industry: "",
         country: "",
-        // postcode:"",
-        position: "",
-        mobile: "",
-        age: "",
     })
+    const [file, setFile] = useState('')
 
 
 
@@ -77,16 +67,17 @@ const CreateDoctor = () => {
     }
 
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (e) => {
+        e.preventDefault()
         try {
 
             let payload = {
-                title: data.title,
-                content: data.content,
-                gender: data.gender,
+                title: "data.title",
+                content: "data.content",
+                gender: "data.gender",
                 category: "doctor",
-                contactNo: data.mobile,
-                address: data.address,
+                contactNo: "data.mobile",
+                address: "data.address",
                 state: "abc",
                 zip: "123",
                 email: "a@a.com",
@@ -109,6 +100,7 @@ const CreateDoctor = () => {
             }
 
             const res = await callApi("/locateservices/createService", "post", payload)
+            console.log("Rs", res )
         }
         catch (err) { }
 
@@ -162,7 +154,7 @@ const CreateDoctor = () => {
                 draggable
                 pauseOnHover
             />
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form>
                 <div className='row p-11'>
 
                     <div className='col-12 mb-6'>
@@ -477,7 +469,7 @@ const CreateDoctor = () => {
                             type="text" />
 
                     </div>
-                    <div className='col-lg-12 mb-4 relative'>
+                    <div className='col-lg-6 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="address"> Permanet Address </label>
                         <div className='absolute right-5 top-10'>
                             {!errors.address && watch('address') ? <FcCheckmark /> : errors.address ? <div className=' text-red-500'><MdClose /></div> : null}
@@ -499,9 +491,22 @@ const CreateDoctor = () => {
                         )}
                     </div>
 
+                    <div className='col-lg-6 mb-4 relative'>
+                        <label className="block text-sm font-medium mb-1" htmlFor="image"> Image </label>
+
+                        <input
+                            className={`form-input w-full h-[42px]`}
+                            onChange={(e) => setFile(e.target.files[0])}
+                            name='image' id="image"
+                            type="file"
+                        />
+
+
+                    </div>
+
 
                     <div className='col-lg-12'>
-                        <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
+                        <button onClick={(e) => onSubmit(e)} className="btn bg-red-500 hover:bg-green-600 text-white" type="submit" >Submit</button>
                     </div>
                 </div>
             </form>
