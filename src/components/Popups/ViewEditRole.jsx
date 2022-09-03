@@ -10,18 +10,17 @@ import { toast, ToastContainer } from 'react-toastify';
 
 
 
-const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
+const ViewEditRole = ({ id, modalOpen, onClose, mode, data }) => {
     const modalContent = useRef(null);
-    const { register, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange ', });
+    let rolesList = ['superadmin', 'subscriber', 'jobapplicant', 'hr', 'interviewer', 'itsales', 'botonist', 'marketing', 'businessdevelopment', 'doctor', 'lawyer', 'chemist', 'pharmacist', 'vendor', 'agriculturescientist', 'customersupport']
+    const [role , setRole] = useState('')
 
-
-
-    const onSubmit = async (values) => {
-
+    const onSubmit = async (e) => {
+         e.preventDefault()
         let value = {
             roleid: data?._id,
-            roleName: values.roleName || data?.roleName,
-            
+            roleName: role || data?.roleName,
+
 
         }
         const res = await callApi("/roles/updateRole", "post", value)
@@ -35,6 +34,7 @@ const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
         }
     }
 
+    console.log("role" , data )
 
 
     useEffect(() => {
@@ -45,10 +45,7 @@ const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
         document.addEventListener('keydown', keyHandler);
         return () => document.removeEventListener('keydown', keyHandler);
     });
-    useEffect(() => {
-        reset(data);
-
-    }, [data, reset]);
+   
 
     return (
         <>
@@ -93,7 +90,7 @@ const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
                     {/* Modal header */}
                     <div className="px-5 py-3 border-b border-slate-200">
                         <div className="flex justify-between items-center">
-                            <div className="font-semibold text-slate-800">{ mode === "view" ? "View Permission" : "Edit Permission"}</div>
+                            <div className="font-semibold text-slate-800">{mode === "view" ? "View Role" : "Edit Role"}</div>
                             <button className="text-slate-400 hover:text-slate-500" onClick={onClose}>
                                 <div className="sr-only">Close</div>
                                 <svg className="w-4 h-4 fill-current">
@@ -104,30 +101,39 @@ const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
                     </div>
                     <div className='bscontainer'>
 
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form onSubmit={onSubmit}>
                             <div className='row p-5'>
                                 <div className='col-lg-6 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">PERMISSION NAME</label>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">ROLE NAME</label>
                                     {mode === "view" ?
                                         (
-                                            <p>{data.permissionName}</p>
+                                            <p>{data.roleName}</p>
                                         ) : (
 
-                                            <input  {...register("permissionName", { required: true })} className={`form-input w-full ${errors.permissionName ? "border-red-500" : "border-green-500"}`} />
-                                        )}
-                                    {errors.permissionName && <span className='text-red-500'>This field is required</span>}
-                                </div>
-                                <div className='col-lg-6 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">MODULE NAME</label>
-                                    {mode === "view" ?
-                                        (
-                                            <p>{data.moduleName}</p>
-                                        ) : (
+                                            <select
+                                                value={ role.length > 0 ? role : data.roleName }
+                                                onChange={(e) => setRole(e.target.value)}
+                                                // {...register('name')}
+                                                name="name"
+                                                id="name"
+                                                className={`form-input w-full`}
+                                            >
 
-                                            <input  {...register("moduleName", { required: true })} className={`form-input w-full ${errors.moduleName ? "border-red-500" : "border-green-500"}`} />
+                                                <option defaultChecked disabled>Select Country </option>
+                                                {rolesList.map((contry) => {
+                                                    return (
+                                                        <option value={contry}>{contry}</option>
+
+                                                    )
+                                                })
+                                                }
+
+                                            </select>
+
+                                            // <input  {...register("roleName", { required: true })} className={`form-input w-full ${errors.roleName ? "border-red-500" : "border-green-500"}`} />
                                         )}
-                                    {errors.moduleName && <span className='text-red-500'>This field is required</span>}
                                 </div>
+
 
                                 {
                                     mode !== "view" ? (
@@ -146,4 +152,4 @@ const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
     )
 }
 
-export default ViewEditInspire
+export default ViewEditRole

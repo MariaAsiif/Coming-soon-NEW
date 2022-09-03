@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { IoEyeOutline } from 'react-icons/io5';
-import ViewEditEmployer from '../../../components/Popups/ViewEditEmployer';
+import ViewEditRole from '../../../components/Popups/ViewEditRole';
 import { callApi } from '../../../utils/CallApi';
+import { toast } from 'react-toastify';
+import DeletePopup from '../../../components/deletePopups/DeletePopups';
 const Roles = () => {
     const [allrols, setallrols] = useState([])
     const [jobPopup, setjobPopup] = useState(false)
     const [jobMode, setjobMode] = useState("view")
+    const [delId, setDelId] = useState('')
     const [jobRow, setjobRow] = useState({})
+    const [delPopup, setDelPopup] = useState(false)
+
 
     const openJobPopup = (e, mode, data) => {
         e.stopPropagation()
@@ -16,8 +21,38 @@ const Roles = () => {
         setjobRow(data)
     }
 
+
+    const deletePopToggle = (id) => {
+        setDelId(id)
+        setDelPopup(true)
+    }
+
+    const deleteInspire = async () => {
+        let value = {
+            id: delId
+        }
+        try {
+            const res = await callApi("/roles/removeRole", "post", value)
+            if (res.status === "Success") {
+                toast.success(res.message);
+                setDelPopup(false)
+                let oldinspires = allrols
+                const updatedInspires = oldinspires.filter((inspire) => inspire._id !== res.data._id)
+                setallrols(updatedInspires)
+            }
+            else {
+                toast.error(res.message);
+
+            }
+        } catch (error) {
+
+        }
+    }
+
+    
+
     useEffect(() => {
-        if(!jobPopup )
+        if(!jobPopup  )
         (async () => {
             try {
 
@@ -42,10 +77,12 @@ const Roles = () => {
                 console.log(error);
             }
         })();
-    }, [jobPopup])
+    }, [jobPopup ])
     return (
         <div className='bscontainer-fluid'>
-            <ViewEditEmployer id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />
+            <ViewEditRole id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />
+            {delPopup && <DeletePopup permition={delPopup} callback={deleteInspire} Toggle={() => setDelPopup(false)} />}
+            
             <div className='row py-5'>
                 <div className='col-12  mb-5'>
                     <div className='mb-3'>
@@ -145,7 +182,7 @@ const Roles = () => {
                                                                     <path d="M16 20c.3 0 .5-.1.7-.3l5.7-5.7-1.4-1.4-4 4V8h-2v8.6l-4-4L9.6 14l5.7 5.7c.2.2.4.3.7.3zM9 22h14v2H9z" />
                                                                 </svg> */}
                                                             </button>
-                                                            <button className="text-rose-500 hover:text-rose-600 rounded-full">
+                                                            <button className="text-rose-500 hover:text-rose-600 rounded-full" onClick={() =>  deletePopToggle(job._id)}>
                                                                 <span className="sr-only">Delete</span>
                                                                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
                                                                     <path d="M13 15h2v6h-2zM17 15h2v6h-2z" />

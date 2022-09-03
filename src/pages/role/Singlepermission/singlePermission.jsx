@@ -57,7 +57,7 @@ const SinglePermission = () => {
                                 </svg>
                             </li>
                             <li className="flex items-center">
-                                <Link to="/department" className="text-slate-500 hover:text-indigo-500" href="#0">Single permission</Link>
+                                <Link to="/department" className="text-slate-500 hover:text-indigo-500" href="#0">Single Permission</Link>
                             </li>
                         </ul>
                     </div>
@@ -65,13 +65,13 @@ const SinglePermission = () => {
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                         </svg>
-                        <span className="ml-2">Create MltipleRoles</span>
+                        <span className="ml-2">Create Single Permission</span>
                     </Link>
                 </div>
                 <div className='col-12 border'>
                     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                         <header className="px-5 py-4">
-                            <h2 className="font-semibold text-slate-800">All MulipleRoles <span className="text-slate-400 font-medium">{setallrols.length}</span></h2>
+                            <h2 className="font-semibold text-slate-800">All Single Permissions <span className="text-slate-400 font-medium">{setallrols.length}</span></h2>
                         </header>
                         <div>
                             <div className="overflow-x-auto">

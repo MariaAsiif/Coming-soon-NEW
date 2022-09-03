@@ -5,7 +5,7 @@ import { callApi } from '../../../utils/CallApi';
 import { toast } from 'react-toastify';
 
 
-const Doctors = () => {
+const Services = () => {
     const [alldoctors, setallDoctors] = useState([])
     const [jobPopup, setjobPopup] = useState(false)
     const [delPopup, setDelPopup] = useState(false)
@@ -225,4 +225,4 @@ const Doctors = () => {
     )
 }
 
-export default Doctors
+export default Services

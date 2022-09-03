@@ -9,9 +9,10 @@ import 'react-phone-input-2/lib/style.css'
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { callApi } from '../../utils/CallApi';
+import { callApi } from '../../../utils/CallApi';
+import { Link } from 'react-router-dom';
 const schema = yup.object({
-    business: yup.string().required(),
+    title: yup.string().required(),
     content: yup.string().required(),
     gender: yup.string().required(),
     longitude: yup.string().required(),
@@ -23,28 +24,18 @@ const schema = yup.object({
     address: yup.string().required(),
 });
 
-const CreateServices = () => {
+const CreateDoctor = () => {
 
     const [all_Countries, setall_Countries] = useState([])
     const [all_States, setall_States] = useState([])
     const [all_Cities, setall_Cities] = useState([])
     const [countryCode, setCountryCode] = useState("")
     const [recruitModel, setrecruitModel] = useState({
-        fullname: "",
-        firstFname: "",
-        secondFname: "",
-        thirdFname: "",
-        email: "",
-        reEmail: "",
         city: "",
         state: "",
-        industry: "",
         country: "",
-        // postcode:"",
-        position: "",
-        mobile: "",
-        age: "",
     })
+    const [file, setFile] = useState('')
 
 
 
@@ -82,10 +73,10 @@ const CreateServices = () => {
         try {
 
             let payload = {
-                businessName: "data.title",
+                title: "data.title",
                 content: "data.content",
                 gender: "data.gender",
-                category: "Associations & Clubs",
+                category: "doctor",
                 contactNo: "data.mobile",
                 address: "data.address",
                 state: "abc",
@@ -97,7 +88,7 @@ const CreateServices = () => {
                 instagram: "www.instagram.com",
                 linkedin: "www.linkedin.com",
 
-                "isIndividual": false,
+                "isIndividual": true,
                 "serviceCountry": "Spain",
                 "serviceCity": "Alava",
                 "serviceLocation": {
@@ -110,7 +101,7 @@ const CreateServices = () => {
             }
 
             const res = await callApi("/locateservices/createService", "post", payload)
-            console.log("Rs", res )
+
         }
         catch (err) { }
 
@@ -164,34 +155,57 @@ const CreateServices = () => {
                 draggable
                 pauseOnHover
             />
-            <form >
+            <form>
                 <div className='row p-11'>
+
+                    <div className='col-12  mb-5'>
+                        <div className='mb-3'>
+                            <ul className="inline-flex flex-wrap text-sm font-medium">
+                                <li className="flex items-center">
+                                    <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <Link to="/doctor" className="text-slate-500 hover:text-indigo-500" href="#0">Doctors</Link>
+                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                    </svg>
+                                </li>
+                                <li className="flex items-center">
+                                    <div className="text-slate-500 hover:text-indigo-500" >Doctors</div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
 
                     <div className='col-12 mb-6'>
                         <header className="py-4">
-                            <h2 className="font-semibold text-slate-800">Add new Service</h2>
+                            <h2 className="font-semibold text-slate-800">Add new Doctor</h2>
                         </header>
                     </div>
 
                     <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="business">Business </label>
+                        <label className="block text-sm font-medium mb-1" htmlFor="title">Title </label>
                         <div className='absolute right-10 top-10'>
-                            {!errors.business && watch('business') ? <FcCheckmark /> : errors.business ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.title && watch('title') ? <FcCheckmark /> : errors.title ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
                         <div className='text-gray-500 text-base bg-light-gray  h-11'>
-                            <input name='business'
+                            <input name='title'
                                 type="text"
-                                {...register('business')}
-                                placeholder='business'
-                                className={`form-input w-full h-full  ${errors.business ? "border-red-400" : "border-gray-400"} `}
+                                {...register('title')}
+                                placeholder='Title'
+                                className={`form-input w-full h-full  ${errors.title ? "border-red-400" : "border-gray-400"} `}
                             />
-                            {errors.business && (
-                                <p className="text-red-500 text-sm">{errors.business.message}</p>
+                            {errors.title && (
+                                <p className="text-red-500 text-sm">{errors.title.message}</p>
                             )}
-                            <span hidden={watch('business')} className='absolute  text-red-400 font-medium text-lg top-[36px] left-[98px]'>*</span>
-                            <span className={watch('business') ? `visible absolute top-1/4 right-3` : `invisible`}>
+                            <span hidden={watch('title')} className='absolute  text-red-400 font-medium text-lg top-[36px] left-[60px]'>*</span>
+                            {/* <span className={watch('title') ? `visible absolute top-1/4 right-3` : `invisible`}>
                                 <FcCheckmark />
-                            </span>
+                            </span> */}
 
                         </div>
                     </div>
@@ -260,46 +274,6 @@ const CreateServices = () => {
                         )}
                     </div>
 
-                    <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="longitude">Longitude </label>
-                        <div className='absolute right-5 top-10'>
-                            {!errors.longitude && watch('longitude') ? <FcCheckmark /> : errors.longitude ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
-                        <input
-                            {...register('longitude')}
-                            autoComplete="off"
-                            className={`form-input w-full  ${errors.longitude && 'border-red-500'}`}
-                            name='longitude' id="longitude"
-                            placeholder="Longitude"
-                            type="text"
-                        />
-                        <span hidden={watch('longitude')} className='absolute text-red-400 text-lg font-medium  top-9 left-[110px]'>*</span>
-                        {/* <span hidden={watch('longitude')} className='absolute text-red-400 text-sm font-medium  top-9 left-[170px]'>(optional)</span> */}
-
-                        {errors.longitude && (
-                            <p className="text-red-500 text-sm">{errors.longitude.message}</p>
-                        )}
-                    </div>
-                    
-
-                    <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="latitude">Latitude </label>
-                        <div className='absolute right-10 top-10'>
-                            {!errors.latitude && watch('latitude') ? <FcCheckmark /> : errors.latitude ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
-                        <input
-                            {...register('latitude')}
-                            autoComplete="off"
-                            className={`form-input w-full  ${errors.latitude && 'border-red-500'}`}
-                            name='latitude' id="latitude"
-                            placeholder="Latitude "
-                            type="text" />
-                        <span hidden={watch('latitude')} className='absolute text-red-400 text-lg font-medium  top-9 left-[95px]'>*</span>
-
-                        {errors.latitude && (
-                            <p className="text-red-500 text-sm">{errors.latitude.message}</p>
-                        )}
-                    </div>
 
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="country">Country</label>
@@ -489,7 +463,7 @@ const CreateServices = () => {
                             <p className="text-red-500 text-sm">{errors.twitter.message}</p>
                         )}
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
+                    <div className='col-lg-6 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="instagram">Instagram </label>
                         <div className='absolute right-10 top-10'>
                             {!errors.instagram && watch('instagram') ? <FcCheckmark /> : errors.instagram ? <div className=' text-red-500'><MdClose /></div> : null}
@@ -502,9 +476,9 @@ const CreateServices = () => {
                             placeholder="instagram"
 
                             type="text" />
-                       
+
                     </div>
-                    <div className='col-lg-4 mb-4 relative'>
+                    <div className='col-lg-6 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="linkedIn">LinkedIn </label>
                         <div className='absolute right-10 top-10'>
                             {!errors.linkedIn && watch('linkedIn') ? <FcCheckmark /> : errors.linkedIn ? <div className=' text-red-500'><MdClose /></div> : null}
@@ -517,9 +491,9 @@ const CreateServices = () => {
                             placeholder="LinkedIn"
 
                             type="text" />
-                       
+
                     </div>
-                    <div className='col-lg-8 mb-4 relative'>
+                    <div className='col-lg-6 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="address"> Permanet Address </label>
                         <div className='absolute right-5 top-10'>
                             {!errors.address && watch('address') ? <FcCheckmark /> : errors.address ? <div className=' text-red-500'><MdClose /></div> : null}
@@ -532,18 +506,31 @@ const CreateServices = () => {
                             name='address' id="address"
                             placeholder="Permanent Address "
                             type="text"
-                            // pattern="[0-9]+"
-                            // type="number"
-                             />
+                        // pattern="[0-9]+"
+                        // type="number"
+                        />
 
                         {errors.address && (
                             <p className="text-red-500 text-sm">{errors.address.message}</p>
                         )}
                     </div>
 
+                    <div className='col-lg-6 mb-4 relative'>
+                        <label className="block text-sm font-medium mb-1" htmlFor="image"> Image </label>
+
+                        <input
+                            className={`form-input w-full h-[42px]`}
+                            onChange={(e) => setFile(e.target.files[0])}
+                            name='image' id="image"
+                            type="file"
+                        />
+
+
+                    </div>
+
 
                     <div className='col-lg-12'>
-                        <button  onClick={(e) => onSubmit(e)} className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
+                        <button onClick={(e) => onSubmit(e)} className="btn bg-red-500 hover:bg-green-600 text-white" type="submit" >Submit</button>
                     </div>
                 </div>
             </form>
@@ -551,4 +538,4 @@ const CreateServices = () => {
     )
 }
 
-export default CreateServices
+export default CreateDoctor
