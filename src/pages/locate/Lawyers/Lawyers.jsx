@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { IoEyeOutline } from "react-icons/io5";
 import ViewEditDoctorPopup from '../../../components/Popups/ViewEditDoctorPopup';
+import ViewEditLawyerPopup from '../../../components/Popups/ViewEditLawyerPopup';
 
 
-const Doctors = () => {
-    const [alldoctors, setalldoctors] = useState([])
+const Lawyers = () => {
+    const [alllawyers, setalllawyers] = useState([])
     const [viewEditPopup, setviewEditPopup] = useState(false)
     const [mode, setmode] = useState("view")
     const [docRow, setdocRow] = useState({})
@@ -22,7 +23,7 @@ const Doctors = () => {
     }
     return (
         <div className='bscontainer-fluid'>
-            <ViewEditDoctorPopup id="doctor-modal" data={docRow} mode={mode} modalOpen={viewEditPopup} onClose={() => setviewEditPopup(false)} />
+            <ViewEditLawyerPopup id="doctor-modal" data={docRow} mode={mode} modalOpen={viewEditPopup} onClose={() => setviewEditPopup(false)} />
             <div className='row py-5'>
                 <div className='col-12  mb-5'>
                     <div className='mb-3'>
@@ -48,7 +49,7 @@ const Doctors = () => {
                 <div className='col-12 border'>
                     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                         <header className="px-5 py-4">
-                            <h2 onClick={(e) => openDoctorPopup(e, "view", { name: "arslan" })} className="font-semibold text-slate-800">All Doctors <span className="text-slate-400 font-medium">{alldoctors.length}</span></h2>
+                            <h2 onClick={(e) => openDoctorPopup(e, "view", { name: "arslan" })} className="font-semibold text-slate-800">All Doctors <span className="text-slate-400 font-medium">{alllawyers.length}</span></h2>
                         </header>
                         <div>
                             <div className="overflow-x-auto">
@@ -96,7 +97,7 @@ const Doctors = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="text-sm divide-y divide-slate-200">
-                                        {alldoctors.map((doctor) => {
+                                        {alllawyers.map((doctor) => {
                                             return (
                                                 <tr key={doctor._id}>
                                                     {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
@@ -172,4 +173,4 @@ const Doctors = () => {
     )
 }
 
-export default Doctors
+export default Lawyers

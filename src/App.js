@@ -95,6 +95,9 @@ import SinglePermission from './pages/role/Singlepermission/singlePermission';
 import CreateSinglePermission from './pages/role/Singlepermission/CreatePermission';
 import MutiplePermission from './pages/role/MultiplePermission/multiplepermission'
 import CreateMultiplePermission from './pages/role/MultiplePermission/CreatePermission';
+import Doctors from './pages/locate/Doctors/Doctors';
+import Lawyers from './pages/locate/Lawyers/Lawyers';
+import Services from './pages/locate/Services/Services';
 
 
 const RequireAuth = ({ children }) => {
@@ -168,6 +171,9 @@ function App() {
 
         <Route path="/locate/" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Locate />} />
+          <Route path="doctor" element={<Doctors />} />
+          <Route path="lawyer" element={<Lawyers />} />
+          <Route path="services" element={<Services />} />
           <Route path="doctor/create-doctor" element={<CreateDoctor />} />
           <Route path="lawyer/create-lawyer" element={<CreateLawyer />} />
           <Route path="services/create-service" element={<CreateServices />} />
