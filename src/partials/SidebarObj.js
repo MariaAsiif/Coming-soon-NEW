@@ -4,8 +4,8 @@ import { VscFeedback } from 'react-icons/vsc'
 import { BiSticker } from 'react-icons/bi'
 import { RiLuggageDepositLine } from 'react-icons/ri'
 import { SiSlideshare } from 'react-icons/si'
-import { GiInspiration, GiInjustice  , GiScrollUnfurled , GiScrollQuill , } from 'react-icons/gi'
-import { MdOutlinePolicy, MdMedicalServices , MdCameraRoll, MdControlCamera} from 'react-icons/md'
+import { GiInspiration, GiInjustice, GiScrollUnfurled, GiScrollQuill, } from 'react-icons/gi'
+import { MdOutlinePolicy, MdMedicalServices, MdCameraRoll, MdControlCamera } from 'react-icons/md'
 import { IoMdLocate } from 'react-icons/io'
 import { GrServices, } from 'react-icons/gr'
 
@@ -24,16 +24,15 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "Main",
-                            pathname: "/dashboard",
+                            path: "/dashboard",
+                            subMenuItems: [],
                         },
                         {
                             label: "Analytics",
-                            pathname: "/dashboard/analytics",
+                            path: "/dashboard/analytics",
+                            subMenuItems: [],
                         },
-                        // {
-                        //     label: "Fintech",
-                        //     pathname: "/dashboard/fintech",
-                        // },
+
                     ]
                 },
                 {
@@ -47,11 +46,13 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "All Departments",
-                            pathname: "/department",
+                            path: "/department",
+                            subMenuItems: [],
                         },
                         {
                             label: "Create Department",
-                            pathname: "/department/create-department",
+                            path: "/department/create-department",
+                            subMenuItems: [],
                         },
                         // {
                         //     label: "Fintech",
@@ -69,15 +70,17 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "All Designations",
-                            pathname: "/designation",
+                            path: "/designation",
+                            subMenuItems: [],
                         },
                         {
                             label: "Create Designation",
-                            pathname: "/designation/create-designation",
+                            path: "/designation/create-designation",
+                            subMenuItems: [],
                         },
                         // {
                         //     label: "Fintech",
-                        //     pathname: "/dashboard/fintech",
+                        //     path: "/dashboard/fintech",
                         // },
                     ]
                 },
@@ -95,15 +98,18 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "All Jobs",
-                            pathname: "/jobs",
+                            path: "/jobs",
+                            subMenuItems: [],
                         },
                         {
                             label: "Create job",
-                            pathname: "/jobs/create-job",
+                            path: "/jobs/create-job",
+                            subMenuItems: [],
                         },
                         {
                             label: "Applied Jobs",
-                            pathname: "/applied-jobs",
+                            path: "/applied-jobs",
+                            subMenuItems: [],
                         },
                     ]
                 },
@@ -122,11 +128,13 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "All Candidates",
-                            pathname: "/candidates",
+                            path: "/candidates",
+                            subMenuItems: [],
                         },
                         {
                             label: "Create candidate",
-                            pathname: "/candidates/create-candidate",
+                            path: "/candidates/create-candidate",
+                            subMenuItems: [],
                         },
                         // {
                         //     label: "Fintech",
@@ -145,11 +153,13 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "All Employeee",
-                            pathname: "/employers",
+                            path: "/employers",
+                            subMenuItems: [],
                         },
                         {
                             label: "Create employee",
-                            pathname: "/employers/create-employeee",
+                            path: "/employers/create-employeee",
+                            subMenuItems: [],
                         },
                         // {
                         //     label: "Fintech",
@@ -168,11 +178,13 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "All Inspire",
-                            pathname: "/inspire",
+                            path: "/inspire",
+                            subMenuItems: [],
                         },
                         {
                             label: "Create Inspire",
-                            pathname: "/inspire/create-inspire",
+                            path: "/inspire/create-inspire",
+                            subMenuItems: [],
                         },
 
                     ]
@@ -188,11 +200,13 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "All Ticker",
-                            pathname: "/ticker",
+                            path: "/ticker",
+                            subMenuItems: [],
                         },
                         {
                             label: "Create Ticker",
-                            pathname: "/ticker/create-ticker",
+                            path: "/ticker/create-ticker",
+                            subMenuItems: [],
                         },
 
                     ]
@@ -207,11 +221,13 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "All Feedback",
-                            pathname: "/feedback",
+                            path: "/feedback",
+                            subMenuItems: [],
                         },
                         {
                             label: "Create Feedback",
-                            pathname: "/feedback/create-feedback",
+                            path: "/feedback/create-feedback",
+                            subMenuItems: [],
                         },
 
                     ]
@@ -227,11 +243,13 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "All FAQ",
-                            pathname: "/faq",
+                            path: "/faq",
+                            subMenuItems: [],
                         },
                         {
                             label: "Create FAQ",
-                            pathname: "/faq/create-faq",
+                            path: "/faq/create-faq",
+                            subMenuItems: [],
                         },
 
                     ]
@@ -246,11 +264,13 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "All Policy",
-                            pathname: "/policy",
+                            path: "/policy",
+                            subMenuItems: [],
                         },
                         {
                             label: "Create Policy",
-                            pathname: "/policy/create-policy",
+                            path: "/policy/create-policy",
+                            subMenuItems: [],
                         },
 
                     ]
@@ -279,14 +299,16 @@ const SidebarObj = () => {
                             rightIcon: "sadf",
                             path: "/doctor",
                             pathname: "doctor",
-                            subMenusItems: [
+                            subMenuItems: [
                                 {
                                     label: "Doctors",
-                                    pathname: "/locate/doctor",
+                                    path: "/locate/doctor",
+                                    subMenuItems: []
                                 },
                                 {
                                     label: "Create Doctor",
-                                    pathname: "/locate/doctor/create-doctor",
+                                    path: "/locate/doctor/create-doctor",
+                                    subMenuItems: []
                                 },
                             ]
                         },
@@ -297,14 +319,16 @@ const SidebarObj = () => {
                             rightIcon: "sadf",
                             path: "/lawyer",
                             pathname: "lawyer",
-                            subMenusItems: [
+                            subMenuItems: [
                                 {
                                     label: "Lawyers",
-                                    pathname: "/locate/lawyer",
+                                    path: "/locate/lawyer",
+                                    subMenuItems: []
                                 },
                                 {
                                     label: "Create Lawyer",
-                                    pathname: "/locate/lawyer/create-lawyer",
+                                    path: "/locate/lawyer/create-lawyer",
+                                    subMenuItems: []
                                 },
                             ]
                         },
@@ -315,14 +339,16 @@ const SidebarObj = () => {
                             rightIcon: "sadf",
                             path: "/services",
                             pathname: "services",
-                            subMenusItems: [
+                            subMenuItems: [
                                 {
                                     label: "Services",
-                                    pathname: "/locate/services",
+                                    path: "/locate/services",
+                                    subMenuItems: []
                                 },
                                 {
                                     label: "Create services",
-                                    pathname: "/locate/services/create-service",
+                                    path: "/locate/services/create-service",
+                                    subMenuItems: []
                                 },
                             ]
                         },
@@ -340,13 +366,14 @@ const SidebarObj = () => {
                     subMenuItems: [
                         {
                             label: "All Permissions",
-                            pathname: "/permission",
+                            path: "/permission",
+                            subMenuItems: []
                         },
                         {
                             label: "Create Permission",
-                            pathname: "/permission/create-permission",
+                            path: "/permission/create-permission",
+                            subMenuItems: []
                         },
-
                     ]
                 },
                 {
@@ -364,14 +391,16 @@ const SidebarObj = () => {
                             rightIcon: "sadf",
                             path: "/roles",
                             pathname: "roles",
-                            subMenusItems: [
+                            subMenuItems: [
                                 {
                                     label: "All Roles",
-                                    pathname: "/roles"
+                                    path: "/roles",
+                                    subMenuItems: []
                                 },
                                 {
                                     label: "Create Roles",
-                                    pathname: "/roles/create-roles",
+                                    path: "/roles/create-roles",
+                                    subMenuItems: []
                                 },
                             ]
                         },
@@ -383,14 +412,16 @@ const SidebarObj = () => {
                             rightIcon: "sadf",
                             path: "/singlePermission",
                             pathname: "singlePermission",
-                            subMenusItems: [
+                            subMenuItems: [
                                 {
                                     label: "Single Permissions",
-                                    pathname: "/singlePermission"
+                                    path: "/singlePermission",
+                                    subMenuItems: []
                                 },
                                 {
                                     label: "Create Single Permission",
-                                    pathname: "/singlePermission/create-permission"
+                                    path: "/singlePermission/create-permission",
+                                    subMenuItems: []
                                 },
                             ]
                         },
@@ -401,23 +432,22 @@ const SidebarObj = () => {
                             rightIcon: "sadf",
                             path: "/multiplePermission",
                             pathname: "multiplePermission",
-                            subMenusItems: [
+                            subMenuItems: [
                                 {
                                     label: "Multiple Permissions",
-                                    pathname: "/multiplePermission"
+                                    path: "/multiplePermission",
+                                    subMenuItems: []
                                 },
                                 {
                                     label: "Create Multiple Permission",
-                                    pathname: "/multiplePermission/create-permission"
+                                    path: "/multiplePermission/create-permission",
+                                    subMenuItems: []
                                 },
                             ]
                         },
 
                     ],
-                    // {
-                    //     label: "Create Roles",
-                    //     pathname: "/role/create-role",
-                    // },
+
                 },
                 // {
                 //     label: "Candidate Manage",
