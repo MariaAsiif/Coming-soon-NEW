@@ -50,10 +50,9 @@ const ViewEditTicker = (props) => {
     }, [props.data, reset]);
     return (
         <Modal open={props.open} onClose={props.onClose} center  >
-            <div className='bscontainer'>
+            <div className=''>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='row p-5'>
-
                         <div className='col-lg-4 mb-5'>
                             <label className="block text-lg font-medium mb-1" htmlFor="description">LOGO IMAGE</label>
                             {props.mode === "view" ?
@@ -76,7 +75,7 @@ const ViewEditTicker = (props) => {
                                 )}
                             {errors.logoFile && <span className='text-red-500'>This field is required</span>}
                         </div>
-                        <div className='col-lg-6 mb-5'>
+                        <div className='col-lg-8 mb-5'>
                             <label className="block text-lg font-medium mb-1" htmlFor="description">TICKER TEXT</label>
                             {props.mode === "view" ?
                                 (

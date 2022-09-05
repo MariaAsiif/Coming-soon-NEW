@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { callApi } from '../../utils/CallApi';
+import { callApi, HOSTNAME } from '../../utils/CallApi';
 import { IoEyeOutline } from 'react-icons/io5';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -61,7 +61,6 @@ const Ticker = () => {
     }
 
     useEffect(() => {
-        console.log("call")
         if (!tickerPopup) {
             (async () => {
                 try {
@@ -177,7 +176,7 @@ const Ticker = () => {
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         {/* <div className="text-left">{tiker?.}</div> */}
-                                                        <img onClick={() => openImagePopup(tiker.logoFile)} src={`https://hporxadminbackend.herokuapp.com${tiker?.logoFile}`} className="w-[80px] h-[50px] cursor-pointer" alt="image_logo" />
+                                                        <img onClick={() => openImagePopup(tiker.logoFile)} src={`${HOSTNAME}${tiker?.logoFile}`} className="w-[80px] h-[50px] cursor-pointer" alt="image_logo" />
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{tiker?.tickerText}</div>
