@@ -7,7 +7,7 @@ import ViewEditDoctorPopup from '../../../components/Popups/ViewEditDoctorPopup'
 
 
 const Doctors = () => {
-    const [alldoctors, setalldoctors] = useState([])
+    const [alldoctors, setallDoctors] = useState([])
     const [allservices, setallservices] = useState([])
     const [viewEditPopup, setviewEditPopup] = useState(false)
     const [mode, setmode] = useState("view")
@@ -51,24 +51,18 @@ const Doctors = () => {
             (async () => {
                 try {
                     const payload = {
-    
                         "sortproperty": "serviceName",
                         "sortorder": -1,
                         "offset": 0,
                         "limit": 1970,
-                        "category" :"doctor",
-                        // "businessName": "laher",
                         "query": {
-                            "critarion": {},
+                            "critarion": {"category": "Doctors"},
                             "individualServiceProvider": "_id email title content",
-                            // "businessServiceProvider": "_id email businessName content"
+                            "businessServiceProvider": "_id email businessName content"
                         }
-                    
-                    
                     }
-                    const response = await callApi("/locateservices/createService", "post", payload)
-                    console.log("res", response)
-                    // setallFeed(response.data.feedbacks)
+                    const response = await callApi("/locateservices/getServicesWithFullDetails", "post", payload)
+                    setallDoctors(response.data.services)
                 } catch (error) {
                     console.log(error);
                 }
@@ -94,7 +88,7 @@ const Doctors = () => {
                             </li>
                         </ul>
                     </div>
-                    <Link to="create-job" className="btn bg-red-500 hover:bg-green-600 text-white" >
+                    <Link to="create-doctor" className="btn bg-red-500 hover:bg-green-600 text-white" >
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                         </svg>
@@ -123,28 +117,16 @@ const Doctors = () => {
                                                 <div className="font-semibold text-left">JOB ID</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">JOB TITLE</div>
+                                                <div className="font-semibold text-left">SERVICE NAME</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">SALARY</div>
+                                                <div className="font-semibold text-left">SERVICE COUNTRY</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">DESCRIPTION</div>
+                                                <div className="font-semibold text-left">SERVICE CITY</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">JobType</div>
-                                            </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Job Status</div>
-                                            </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Job Class</div>
-                                            </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Expiry Date</div>
-                                            </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Employeer</div>
+                                                <div className="font-semibold text-left">STATUS</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Actions</div>
@@ -167,30 +149,17 @@ const Doctors = () => {
                                                         <div className="text-left">{doctor._id}</div>
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{doctor.job_title}</div>
+                                                        <div className="text-left">{doctor.serviceName}</div>
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{doctor.salary}</div>
+                                                        <div className="text-left">{doctor.serviceCountry}</div>
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{doctor.description}</div>
+                                                        <div className="text-left">{doctor.serviceCity}</div>
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{doctor.jobtype}</div>
+                                                       <button>{doctor.isApproved === true ? "Approved" : "Pendding"}</button>
                                                     </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{doctor.jobstatus}</div>
-                                                    </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{doctor.jobclass}</div>
-                                                    </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">sdfsdf</div>
-                                                    </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{doctor.employer}</div>
-                                                    </td>
-
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                         <div className="space-x-1">
                                                             <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openDoctorPopup(e, "edit", doctor)}>

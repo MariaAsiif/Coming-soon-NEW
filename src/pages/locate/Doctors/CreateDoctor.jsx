@@ -155,7 +155,7 @@ const CreateDoctor = () => {
                 draggable
                 pauseOnHover
             />
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='row p-11'>
 
                     <div className='col-12  mb-5'>
@@ -174,7 +174,7 @@ const CreateDoctor = () => {
                                     </svg>
                                 </li>
                                 <li className="flex items-center">
-                                    <div className="text-slate-500 hover:text-indigo-500" >Doctors</div>
+                                    <div className="text-slate-500 hover:text-indigo-500" >Add New Doctor</div>
                                 </li>
                             </ul>
                         </div>
@@ -530,7 +530,7 @@ const CreateDoctor = () => {
 
 
                     <div className='col-lg-12'>
-                        <button onClick={(e) => onSubmit(e)} className="btn bg-red-500 hover:bg-green-600 text-white" type="submit" >Submit</button>
+                        <button className="btn bg-red-500 hover:bg-green-600 text-white" type="submit" >Submit</button>
                     </div>
                 </div>
             </form>
