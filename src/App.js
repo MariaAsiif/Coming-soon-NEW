@@ -99,6 +99,8 @@ import CreateMultiplePermission from './pages/role/MultiplePermission/CreatePerm
 import Doctors from './pages/locate/Doctors/Doctors';
 import Lawyers from './pages/locate/Lawyers/Lawyers';
 import Services from './pages/locate/Services/Services';
+import CreatePhoneBook from './pages/phoneBook/CreatePhoneBook';
+import PhoneBooks from './pages/phoneBook/phoneBooks';
 
 
 const RequireAuth = ({ children }) => {
@@ -163,6 +165,12 @@ function App() {
         <Route path="/ticker" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Ticker />} />
           <Route path="create-ticker" element={<CreateTicker />} />
+        </Route>
+
+
+        <Route path="/phonebook" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<PhoneBooks />} />
+          <Route path="create-phonebook" element={<CreatePhoneBook />} />
         </Route>
 
         <Route path="/feedback" element={<RequireAuth><MainWrapper /></RequireAuth>} >

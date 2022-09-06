@@ -203,11 +203,26 @@ const SidebarObj = () => {
                             path: "/ticker",
                             subMenuItems: [],
                         },
+
                         {
                             label: "Create Ticker",
                             path: "/ticker/create-ticker",
                             subMenuItems: [],
                         },
+                        {
+                            label: "All PhoneBooks",
+                            path: "/phonebook",
+                            subMenuItems: [],
+
+                        },
+
+                        {
+                            label: "Create PhoneBook",
+                            path: "/phonebook/create-phonebook",
+                            subMenuItems: [],
+
+                        },
+
 
                     ]
                 },
