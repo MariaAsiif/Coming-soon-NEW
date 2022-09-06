@@ -133,13 +133,13 @@ const PhoneBooks = () => {
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                         </svg>
-                        <span className="ml-2">Create Ticker</span>
+                        <span className="ml-2">Create Phone Book</span>
                     </Link>
                 </div>
                 <div className='col-12 border'>
                     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                         <header className="px-5 py-4">
-                            <h2 className="font-semibold text-slate-800">All Ticker <span className="text-slate-400 font-medium">{allTicker.length}</span></h2>
+                            <h2 className="font-semibold text-slate-800">All PhoneBook <span className="text-slate-400 font-medium">{allTicker.length}</span></h2>
                         </header>
                         <div>
                             <div className="overflow-x-auto">
@@ -154,13 +154,9 @@ const PhoneBooks = () => {
                                                 <div className="font-semibold text-left">IMAGE</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">DESCRIPTION</div>
+                                                <div className="font-semibold text-left">BUSINESS NAME</div>
                                             </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">STATUS</div>
-                                            </th>
-
-
+                                           
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Actions</div>
                                             </th>

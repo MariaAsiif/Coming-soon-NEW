@@ -89,6 +89,25 @@ const CreateTicker = () => {
                         </header>
                     </div>
 
+
+                    <div className='col-lg-4 mb-4 relative'>
+                        <label className="block text-sm font-medium mb-1" htmlFor="businessName">Business Name </label>
+                        <div className='absolute right-5 top-10'>
+                            {!errors.businessName && watch('businessName') ? <FcCheckmark className='mr-5' /> : errors.businessName ? <div className=' text-red-500'><MdClose className='mr-5' /></div> : null}
+                        </div>
+                        <select  {...register('businessName')} className={`w-full  ${errors.businessName ? "border-red-400" : "border-gray-400"}`}>
+                            <option value="">Select Business Name</option>
+                            <option >Laher asif</option>
+                            <option>Laher asif</option>
+                            <option>Laher asif</option>
+                        </select>
+
+                        {errors.businessName && (
+                            <p className="text-red-500 text-sm">{errors.businessName.message}</p>
+                        )}
+                    </div>
+
+
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="name">Text</label>
                         <div className='absolute right-5 top-10'>
@@ -114,23 +133,7 @@ const CreateTicker = () => {
 
 
 
-                    <div className='col-lg-4 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="businessName">Business Name </label>
-                        <div className='absolute right-5 top-10'>
-                            {!errors.businessName && watch('businessName') ? <FcCheckmark className='mr-5' /> : errors.businessName ? <div className=' text-red-500'><MdClose className='mr-5' /></div> : null}
-                        </div>
-                        <select  {...register('businessName')} className={`w-full  ${errors.businessName ? "border-red-400" : "border-gray-400"}`}>
-                            <option value="">Select Business Name</option>
-                            <option >Laher asif</option>
-                            <option>Laher asif</option>
-                            <option>Laher asif</option>
-                        </select>
-
-                        {errors.businessName && (
-                            <p className="text-red-500 text-sm">{errors.businessName.message}</p>
-                        )}
-                    </div>
-
+                   
                     <div className='col-lg-4 mb-4 relative'>
                         <div>
                             <div className="text-sm text-slate-800 font-semibold mb-3">Active/Deactivate</div>
