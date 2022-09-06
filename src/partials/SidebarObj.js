@@ -5,7 +5,7 @@ import { BiSticker } from 'react-icons/bi'
 import { RiLuggageDepositLine } from 'react-icons/ri'
 import { SiSlideshare } from 'react-icons/si'
 import { GiInspiration, GiInjustice, GiScrollUnfurled, GiScrollQuill, } from 'react-icons/gi'
-import { MdOutlinePolicy, MdMedicalServices, MdCameraRoll, MdControlCamera , MdOutlineContactPhone} from 'react-icons/md'
+import { MdOutlinePolicy, MdMedicalServices, MdCameraRoll, MdControlCamera, MdOutlineContactPhone } from 'react-icons/md'
 import { IoMdLocate } from 'react-icons/io'
 import { IoConstructSharp } from 'react-icons/io5'
 import { GrServices, } from 'react-icons/gr'
@@ -257,6 +257,27 @@ const SidebarObj = () => {
                         {
                             label: "Create Feedback",
                             path: "/feedback/create-feedback",
+                            subMenuItems: [],
+                        },
+
+                    ]
+                },
+                {
+                    label: "About us Manage",
+                    leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<VscFeedback size={22} className=" text-green-500" />),
+                    rightIcon: "sadf",
+                    path: "/aboutus",
+                    pathname: "aboutus",
+                    subMenuItems: [
+                        {
+                            label: "All About Us",
+                            path: "/aboutus",
+                            subMenuItems: [],
+                        },
+                        {
+                            label: "Create About Us",
+                            path: "/aboutus/create-aboutus",
                             subMenuItems: [],
                         },
 
