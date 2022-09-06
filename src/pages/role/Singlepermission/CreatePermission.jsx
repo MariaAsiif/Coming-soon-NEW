@@ -12,27 +12,23 @@ const CreateSinglePermission = () => {
     const userId = useSelector((state) => state.userAuth.userInfo.userid);
 
 
+    const addPermission = async () => {
 
+    }
     useEffect(() => {
         (async () => {
             try {
-
                 let payload = {
-
                     "sortproperty": "created_at",
                     "sortorder": -1,
                     "offset": 0,
                     "limit": 50,
                     "query": {
                         "critarion": { "active": true },
-
                         "addedby": "_id email first_name",
-
                         "lastModifiedBy": "_id email first_name"
                     }
-
                 }
-
                 let response = await callApi("/permissions/getPermissionsWithFullDetails", "post", payload);
                 setallpermission(response.data.permissions)
             } catch (error) {
@@ -111,7 +107,7 @@ const CreateSinglePermission = () => {
                     </header>
                 </div>
 
-                <div className='col-lg-6 mb-4 relative w-full'>
+                <div className='col-lg-12 mb-4 relative  '>
                     <div className="bg-white shadow-lg w-full rounded-sm border border-slate-200 relative">
                         <header className="px-5 py-4">
                             {/* <h2 className="font-semibold text-slate-800">All Users <span className="text-slate-400 font-medium">{list.length}</span></h2> */}
@@ -157,7 +153,7 @@ const CreateSinglePermission = () => {
                                                         <div className="flex items-center">
                                                             <label className="inline-flex">
                                                                 <span className="sr-only">Select</span>
-                                                                <input className="form-checkbox" type="checkbox"  />
+                                                                <input className="form-checkbox" type="checkbox" />
                                                             </label>
                                                         </div>
                                                     </td>
@@ -185,6 +181,12 @@ const CreateSinglePermission = () => {
 
                         </div>
                     </div>
+                </div>
+                <div className='col-md-12'>
+                    <button onClick={addPermission} className="btn bg-red-500 hover:bg-green-600 text-white" >
+
+                        <span className="ml-2">Add Permission</span>
+                    </button>
                 </div>
             </div>
         </div>

@@ -10,7 +10,8 @@ import { callApi } from '../../utils/CallApi';
 import { Link } from "react-router-dom"
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
+import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
+import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 const schema = yup.object({
     name: yup.string().required("Author Name is Required"),
 
@@ -18,26 +19,34 @@ const schema = yup.object({
 });
 
 const CreateTermsCondition = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
 
-    const [companySetting, setCompanySetting] = useState(true)
-    const [file, setFile] = useState('')
-
-    const { register, watch, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+    const [expiryDate, setexpiryDate] = useState({ day: dd, month: mm, year: yyyy })
+    const [description, setdescription] = useState("")
 
 
 
-    const onSubmit = async (data) => {
+    const handleDiscription = (event, editor) => {
+        const data = editor.getData();
+
+        setdescription(data)
+
+    }
+    const onSubmit = async () => {
+        const payload = {
+            termsDate: `${expiryDate.year}-${expiryDate.month}-${expiryDate.day}`,
+            description: description
+        }
+        console.log(expiryDate);
         try {
-            let formdata = new FormData()
-            formdata.append('logoimg', file);
-            formdata.append('request', JSON.stringify({
-                tickerText: data.name,
-                "active": true
-            }));
-            const res = await callApi("/tickers/createTicker", "post", formdata)
+
+            const res = await callApi("/terms/createTerms", "post", payload)
             if (res.status === "Success") {
                 toast.success(res.message);
-                reset()
+
             }
             else {
                 toast.error(res.message);
@@ -48,6 +57,18 @@ const CreateTermsCondition = () => {
             console.log(error);
         }
     }
+
+    // ****************** DatePicker Content ***********
+    const renderCustomInput = ({ ref }) => (
+        < div className='relative cursor-pointer'>
+            <input readOnly ref={ref} // necessary  placeholder="yyy-mm-dd"
+                value={expiryDate ? `${expiryDate.year}/${expiryDate.month}/${expiryDate.day}` : ''}
+                className={`date_picker w-full outline-blue-400 cursor-pointer z-30  border-2 px-2 py-2  border-gray-400`}
+            />
+            <div className={`visible absolute top-3 cursor-pointer right-5`}>   <FcCheckmark />   </div>
+
+        </div >
+    )
     return (
         <div className='bscontainer-fluid'>
             <ToastContainer
@@ -61,86 +82,71 @@ const CreateTermsCondition = () => {
                 draggable
                 pauseOnHover
             />
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='row p-11'>
 
-                    <div className='col-12 mb-6'>
-                        <div className='mb-3'>
-                            <ul className="inline-flex flex-wrap text-sm font-medium">
-                                <li className="flex items-center">
-                                    <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
-                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
-                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
-                                    </svg>
-                                </li>
-                                <li className="flex items-center">
-                                    <Link to="/phonebook" className="text-slate-500 hover:text-indigo-500" >Terms Condition</Link>
-                                    <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
-                                        <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
-                                    </svg>
-                                </li>
-                                <li className="flex items-center">
-                                    <Link to="/ticker/create-phonebook" className="text-slate-500 hover:text-indigo-500" href="#0">Create Terms Condition</Link>
-                                </li>
-                            </ul>
-                        </div>
-                        <header className="py-4">
-                            <h2 className="font-semibold text-slate-800">Add New Terms Condition</h2>
-                        </header>
+            <div className='row p-11'>
+
+                <div className='col-12 mb-6'>
+                    <div className='mb-3'>
+                        <ul className="inline-flex flex-wrap text-sm font-medium">
+                            <li className="flex items-center">
+                                <Link to="/dashboard" className="text-slate-500 hover:text-indigo-500" >Dashboard </Link>
+                                <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                    <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                </svg>
+                            </li>
+                            <li className="flex items-center">
+                                <Link to="/phonebook" className="text-slate-500 hover:text-indigo-500" >Terms Condition</Link>
+                                <svg className="h-4 w-4 fill-current text-slate-400 mx-3" viewBox="0 0 16 16">
+                                    <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
+                                </svg>
+                            </li>
+                            <li className="flex items-center">
+                                <Link to="/ticker/create-phonebook" className="text-slate-500 hover:text-indigo-500" href="#0">Create Terms Condition</Link>
+                            </li>
+                        </ul>
                     </div>
-
-                    <div className='col-lg-12 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="name">Added By</label>
-                        <div className='absolute right-5 top-10'>
-                            {!errors.name && watch("name") ? <FcCheckmark /> : errors.name ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
-
-                        <select {...register('name')} className="w-full">
-                            <option value="">Select Added By</option>
-                            <option value="Super Admin">Super Admin</option>
-                            <option value="Admin">Admin</option>
-                            <option value="User">User</option>
-                        </select>
-
-                        {errors.name && (
-                            <p className="text-red-500 text-sm">{errors.name.message}</p>
-                        )}
-                    </div>
-
-                    <div className='col-lg-12 mb-4 relative'>
-                        <label className="block text-sm font-medium mb-1" htmlFor="name">Description</label>
-                        <div className='absolute right-5 top-10'>
-                            {!errors.name && watch("name") ? <FcCheckmark /> : errors.name ? <div className=' text-red-500'><MdClose /></div> : null}
-                        </div>
-                        <CKEditor
-                            editor={ClassicEditor}
-                            data="<p>Hello from CKEditor 5!</p>"
-                            config={ {
-                                toolbar: [ 'bold', 'italic', 'link', 'undo', 'redo', 'numberedList', 'bulletedList' ]
-                            } }
-                            onChange={(event, editor) => {
-                                const data = editor.getData();
-                                
-                            }}
-                          
-                        />
-
-                        {/* {errors.name && (
-                            <p className="text-red-500 text-sm">{errors.name.message}</p>
-                        )} */}
-                    </div>
-
-
-
-
-
-
-
-                    <div className='col-lg-12'>
-                        <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
-                    </div>
+                    <header className="py-4">
+                        <h2 className="font-semibold text-slate-800">Add New Terms Condition</h2>
+                    </header>
                 </div>
-            </form >
+
+                <div className='col-lg-4'>
+                    <label className="block text-sm font-medium mb-1"  >Terms Date</label>
+                    <DatePicker
+                        value={expiryDate}
+                        onChange={setexpiryDate}
+                        renderInput={renderCustomInput} // render a custom input
+                        shouldHighlightWeekends
+                    />
+                </div>
+
+                <div className='col-lg-12 mb-4 relative'>
+                    <label className="block text-sm font-medium mb-1" htmlFor="name">Description</label>
+
+                    <CKEditor
+                        editor={ClassicEditor}
+                        data={description}
+                        config={{
+                            toolbar: ['bold', 'italic', 'link', 'undo', 'redo', 'numberedList', 'bulletedList']
+                        }}
+                        onChange={handleDiscription}
+
+                    />
+
+
+                </div>
+
+
+
+
+
+
+
+                <div className='col-lg-12'>
+                    <button onClick={onSubmit} className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
+                </div>
+            </div>
+
         </div >
     )
 }

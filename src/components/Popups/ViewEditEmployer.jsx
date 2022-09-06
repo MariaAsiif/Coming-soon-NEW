@@ -47,7 +47,7 @@ const schema = yup.object({
 
 
 const ViewEditEmployer = ({ id, modalOpen, onClose, mode, data }) => {
-    debugger
+
     const modalContent = useRef(null);
 
     var today = new Date();
@@ -223,8 +223,8 @@ const ViewEditEmployer = ({ id, modalOpen, onClose, mode, data }) => {
                         pauseOnHover
                     />
 
-                      {/* Modal header */}
-                      <div className="px-5 py-3 border-b border-slate-200">
+                    {/* Modal header */}
+                    <div className="px-5 py-3 border-b border-slate-200">
                         <div className="flex justify-between items-center">
                             <div className="font-semibold text-slate-800">View Candidate</div>
                             <button className="text-slate-400 hover:text-slate-500" onClick={onClose}>
@@ -239,7 +239,7 @@ const ViewEditEmployer = ({ id, modalOpen, onClose, mode, data }) => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className='row p-11'>
 
-                          
+
 
                             <div className='col-lg-4 mb-4 relative'>
                                 <label className="block text-sm font-medium mb-1" htmlFor="fullname">Full Name </label>
