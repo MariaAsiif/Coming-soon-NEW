@@ -118,13 +118,8 @@ function Sidebar({
                       )
                     }
                     return (
-<<<<<<< Updated upstream
-                      <SidebarLinkGroup key={index} activecondition={pathname.includes(item.pathname)} level={1}>
-                        {(handleClick, open, handleSubClick, subopen) => {
-=======
                       <SidebarLinkGroup key={index} activecondition={pathname.includes(item.pathname)}>
                         {(handleClick, open, handleSubClick, subopen,) => {
->>>>>>> Stashed changes
                           return (
                             <React.Fragment>
                               <a onClick={(e) => { e.preventDefault(); sidebarExpanded ? handleClick() : setSidebarExpanded(true); }} className={`block text-slate-800 hover:text-red-500 truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-red-500' : ""}`} href="#0" >
@@ -173,7 +168,7 @@ function Sidebar({
                                           <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
 
                                             <ul className={`pl-9 mt-1 ${!subopen && 'hidden'}`}>
-                                              {subitem.subMenusItems.map((subitem, s_index) => {
+                                              {subitem.subMenusItems?.map((subitem, s_index) => {
                                                 if (!subitem?.subMenusItems) {
                                                   // if (pathname.includes(subitem.pathname) )
                                                     return (
