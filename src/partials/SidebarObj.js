@@ -5,7 +5,7 @@ import { BiSticker } from 'react-icons/bi'
 import { RiLuggageDepositLine } from 'react-icons/ri'
 import { SiSlideshare } from 'react-icons/si'
 import { GiInspiration, GiInjustice, GiScrollUnfurled, GiScrollQuill, } from 'react-icons/gi'
-import { MdOutlinePolicy, MdMedicalServices, MdCameraRoll, MdControlCamera } from 'react-icons/md'
+import { MdOutlinePolicy, MdMedicalServices, MdCameraRoll, MdControlCamera , MdOutlineContactPhone} from 'react-icons/md'
 import { IoMdLocate } from 'react-icons/io'
 import { GrServices, } from 'react-icons/gr'
 
@@ -195,34 +195,48 @@ const SidebarObj = () => {
                     leftIcon: (<BiSticker size={22} className="hover:text-red-500" />),
                     activeLeftIcon: (<BiSticker size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
-                    path: "/ticker",
-                    pathname: "ticker",
                     subMenuItems: [
                         {
-                            label: "All Ticker",
-                            path: "/ticker",
-                            subMenuItems: [],
-                        },
-
-                        {
-                            label: "Create Ticker",
-                            path: "/ticker/create-ticker",
-                            subMenuItems: [],
-                        },
-                        {
-                            label: "All PhoneBooks",
+                            label: "PhoneBook ",
+                            leftIcon: (<MdOutlineContactPhone size={22} className="hover:text-red-500" />),
+                            activeLeftIcon: (<MdOutlineContactPhone size={22} className=" text-green-500" />),
+                            rightIcon: "sadf",
                             path: "/phonebook",
-                            subMenuItems: [],
-
+                            pathname: "phonebook",
+                            subMenuItems: [
+                                {
+                                    label: "All PhoneBook",
+                                    path: "/phonebook",
+                                    subMenuItems: [],
+                                },
+                                {
+                                    label: "Create Business PhoneBook ",
+                                    path: "/phonebook/create-phonebook",
+                                    subMenuItems: [],
+                                }
+                            ]
                         },
 
                         {
-                            label: "Create PhoneBook",
-                            path: "/phonebook/create-phonebook",
-                            subMenuItems: [],
-
+                            label: "Ticker ",
+                            leftIcon: (<BiSticker size={22} className="hover:text-red-500" />),
+                            activeLeftIcon: (<BiSticker size={22} className=" text-green-500" />),
+                            rightIcon: "sadf",
+                            path: "/ticker",
+                            pathname: "ticker",
+                            subMenuItems: [
+                                {
+                                    label: "All Ticker",
+                                    path: "/ticker",
+                                    subMenuItems: [],
+                                },
+                                {
+                                    label: "Create Ticker",
+                                    path: "/ticker/create-ticker",
+                                    subMenuItems: [],
+                                }
+                            ],
                         },
-
 
                     ]
                 },
