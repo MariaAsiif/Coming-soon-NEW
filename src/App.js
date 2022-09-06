@@ -101,6 +101,8 @@ import Lawyers from './pages/locate/Lawyers/Lawyers';
 import Services from './pages/locate/Services/Services';
 import CreatePhoneBook from './pages/phoneBook/CreatePhoneBook';
 import PhoneBooks from './pages/phoneBook/phoneBooks';
+import TermsConditions from './pages/termsCondition/termsCondition';
+import CreateTermsCondition from './pages/termsCondition/CreateTerms';
 
 
 const RequireAuth = ({ children }) => {
@@ -216,6 +218,12 @@ function App() {
           <Route index element={<MutiplePermission />} />
           <Route path="create-permission" element={<CreateMultiplePermission />} />
         </Route>
+
+        <Route path="/terms" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<TermsConditions />} />
+          <Route path="create-terms" element={<CreateTermsCondition />} />
+        </Route>
+
 
 
         {/* <Route path="/ecommerce" element={<RequireAuth> <MainWrapper /></RequireAuth>} >

@@ -124,7 +124,7 @@ const PhoneBooks = () => {
                                 </svg>
                             </li>
                             <li className="flex items-center">
-                                <Link to="/phonebook" className="text-slate-500 hover:text-indigo-500" href="#0">Ticker</Link>
+                                <Link to="/phonebook" className="text-slate-500 hover:text-indigo-500" href="#0">PhoneBooks</Link>
                             </li>
                         </ul>
                     </div>
@@ -177,9 +177,7 @@ const PhoneBooks = () => {
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{tiker?.tickerText}</div>
                                                     </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{tiker?.active ? "Active" : "Deactive"}</div>
-                                                    </td>
+                                                   
 
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                         <div className="space-x-1">
