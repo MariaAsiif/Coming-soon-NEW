@@ -469,11 +469,11 @@ const SidebarObj = () => {
                                     path: "/singlePermission",
                                     subMenuItems: []
                                 },
-                                {
-                                    label: "Create Single Permission",
-                                    path: "/singlePermission/create-permission",
-                                    subMenuItems: []
-                                },
+                                // {
+                                //     label: "Create Single Permission",
+                                //     path: "/singlePermission/create-permission",
+                                //     subMenuItems: []
+                                // },
                             ]
                         },
                         {
@@ -489,11 +489,11 @@ const SidebarObj = () => {
                                     path: "/multiplePermission",
                                     subMenuItems: []
                                 },
-                                {
-                                    label: "Create Multiple Permission",
-                                    path: "/multiplePermission/create-permission",
-                                    subMenuItems: []
-                                },
+                                // {
+                                //     label: "Create Multiple Permission",
+                                //     path: "/multiplePermission/create-permission",
+                                //     subMenuItems: []
+                                // },
                             ]
                         },
 

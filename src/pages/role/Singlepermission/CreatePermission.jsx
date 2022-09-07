@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import * as yup from "yup";
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useSelector } from 'react-redux'
 import { callApi } from '../../../utils/CallApi';
 import { useEffect } from 'react';
@@ -9,12 +9,15 @@ import { useEffect } from 'react';
 
 const CreateSinglePermission = () => {
     const [allpermission, setallpermission] = useState([])
-    const userId = useSelector((state) => state.userAuth.userInfo.userid);
+    const [checkedId, setChecked] = useState('')
+    const [error, setError] = useState('')
+    // const userId = useSelector((state) => state.userAuth.userInfo.userid);
 
 
-    const addPermission = async () => {
+    const RoleId = useParams().id
 
-    }
+
+
     useEffect(() => {
         (async () => {
             try {
@@ -39,26 +42,44 @@ const CreateSinglePermission = () => {
 
 
 
+    const handleCheckbox = (id) => {
+        if (checkedId === id) {
+            setChecked('')
+        }
+        else {
+            setChecked(id)
+            setError('')
+        }
 
-    const onSubmit = async (data) => {
-        try {
-            let payload = {
-                roleName: data.name,
-                addedby: userId
+    }
 
+
+
+
+    const onSubmit = async () => {
+        if (checkedId === "") {
+            setError('One Permission is required')
+        }
+       
+        else {
+            try {
+                let payload = {
+                    roleid: RoleId,
+                    newpermission: [checkedId]
+                }
+                const res = await callApi("/roles/addSinglePermissionToRole", "post", payload)
+                if (res.status === "Success") {
+                    toast.success(res.message);
+                    // reset()
+                }
+                else {
+                    toast.error(res.message);
+
+                }
+
+            } catch (error) {
+                console.log(error);
             }
-            const res = await callApi("/roles/createRole", "post", payload)
-            if (res.status === "Success") {
-                toast.success(res.message);
-                // reset()
-            }
-            else {
-                toast.error(res.message);
-
-            }
-
-        } catch (error) {
-            console.log(error);
         }
     }
 
@@ -120,19 +141,22 @@ const CreateSinglePermission = () => {
                                     {/* Table header */}
                                     <thead className="text-xs font-semibold uppercase text-slate-500 bg-slate-50 border-t border-b border-slate-200">
                                         <tr>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+                                            {/* <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                 <div className="flex items-center">
                                                     <label className="inline-flex">
                                                         <span className="sr-only">Select all</span>
                                                         <input className="form-checkbox" type="checkbox" />
                                                     </label>
                                                 </div>
-                                            </th>
+                                            </th> */}
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Name</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">CREATE</div>
+                                            </th>
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">VIEW</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">EDIT</div>
@@ -146,36 +170,36 @@ const CreateSinglePermission = () => {
                                     </thead>
                                     {/* Table body */}
                                     <tbody className="text-sm divide-y divide-slate-200">
-                                        {allpermission.map((permission, i) => {
-                                            return (
-                                                <tr key={permission._id}>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-                                                        <div className="flex items-center">
-                                                            <label className="inline-flex">
-                                                                <span className="sr-only">Select</span>
-                                                                <input className="form-checkbox" type="checkbox" />
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        {permission?.permissionName}
-                                                    </td>
-                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <input type="checkbox" />
-                                                    </td>
-                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <input type="checkbox" />
-                                                    </td>
-                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <input type="checkbox" />
-                                                    </td>
 
-                                                </tr>
-                                            )
-                                        })}
+                                        <tr >
+                                            {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+                                                <div className="flex items-center">
+                                                    <label className="inline-flex">
+                                                        <span className="sr-only">Select</span>
+                                                        <input className="form-checkbox" type="checkbox" />
+                                                    </label>
+                                                </div>
+                                            </td> */}
+                                            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                {allpermission[0]?.moduleName}
+                                            </td>
+                                            {allpermission.map((permission, i) => {
+                                                console.log("permission", permission)
+                                                return (
+                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap" key={i}>
+                                                        <input type="checkbox" onClick={() => handleCheckbox(permission._id)} checked={permission._id === checkedId} />
+                                                    </td>
+                                                )
+                                            })
+                                            }
+                                        </tr>
 
                                     </tbody>
                                 </table>
+                                {
+                                    error &&
+                                    <div className='text-red-400 text-sm'>{error}</div>
+                                }
                             </div>
 
 
@@ -183,7 +207,7 @@ const CreateSinglePermission = () => {
                     </div>
                 </div>
                 <div className='col-md-12'>
-                    <button onClick={addPermission} className="btn bg-red-500 hover:bg-green-600 text-white" >
+                    <button onClick={() => onSubmit()} className="btn bg-red-500 hover:bg-green-600 text-white" >
 
                         <span className="ml-2">Add Permission</span>
                     </button>

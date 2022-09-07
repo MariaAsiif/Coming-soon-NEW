@@ -129,15 +129,10 @@ const Roles = () => {
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">ROLE NAME</div>
                                             </th>
-                                            {/* <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">HEAD OF DEPARTMENT</div>
-                                            </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">ADDED BY</div>
+                                                <div className="font-semibold text-left">PERMISSIONS</div>
                                             </th>
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">DESCRIPTION </div>
-                                            </th> */}
+                                           
 
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Actions</div>
@@ -148,23 +143,17 @@ const Roles = () => {
                                         {allrols?.map((job, i) => {
                                             return (
                                                 <tr key={job._id}>
-                                                    {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-                                                        <div className="flex items-center">
-                                                            <label className="inline-flex">
-                                                                <span className="sr-only">Select</span>
-                                                                <input id={job._id} onChange={handleChange} name={job._id} checked={job?.isChecked || false} className="form-checkbox" type="checkbox" />
-                                                            </label>
-                                                        </div>
-                                                    </td> */}
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{job._id}</div>
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">{job.roleName}</div>
                                                     </td>
-                                                   
-
-
+                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                       
+                                                       <Link to={`/singlePermission/create-permission/${job._id}`}   className="btn bg-red-500 hover:bg-green-600 text-white ">Single</Link>
+                                                       <Link to={`/multiplePermission/create-permission/${job._id}`}  className="btn bg-red-500 hover:bg-green-600 text-white ml-2" >Multiple</Link>
+                                                    </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                         <div className="space-x-1">
                                                             <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openJobPopup(e, "edit", job)}>

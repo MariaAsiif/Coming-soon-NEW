@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import * as yup from "yup";
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useSelector } from 'react-redux'
 import { callApi } from '../../../utils/CallApi';
 import { useEffect } from 'react';
@@ -10,7 +10,9 @@ import { useEffect } from 'react';
 const CreateMultiplePermission = () => {
     const [allpermission, setallpermission] = useState([])
     const userId = useSelector((state) => state.userAuth.userInfo.userid);
+    const [checkedId, setChecked] = useState([])
 
+    const RoleId = useParams().id
 
 
     useEffect(() => {
@@ -44,14 +46,17 @@ const CreateMultiplePermission = () => {
 
 
 
+
+
+
+
     const onSubmit = async (data) => {
         try {
             let payload = {
-                roleName: data.name,
-                addedby: userId
-
+                roleid: RoleId,
+                newpermissions: checkedId
             }
-            const res = await callApi("/roles/createRole", "post", payload)
+            const res = await callApi("/roles/addPermissionsToRole", "post", payload)
             if (res.status === "Success") {
                 toast.success(res.message);
                 // reset()
@@ -68,8 +73,23 @@ const CreateMultiplePermission = () => {
 
 
 
+    
+    const handleCheckbox = (id) => {
+        if (checkedId === id) {
+            setChecked('')
+        }
+        else {
+            setChecked({
+                ...checkedId,
+                id 
+            })
+            // setError('')
+        }
+
+    }
 
 
+console.log("check" , checkedId)
 
     return (
         <div className='bscontainer-fluid'>
@@ -150,33 +170,31 @@ const CreateMultiplePermission = () => {
                                     </thead>
                                     {/* Table body */}
                                     <tbody className="text-sm divide-y divide-slate-200">
-                                        {allpermission.map((permission, i) => {
-                                            return (
-                                                <tr key={permission._id}>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-                                                        <div className="flex items-center">
-                                                            <label className="inline-flex">
-                                                                <span className="sr-only">Select</span>
-                                                                <input className="form-checkbox" type="checkbox"  />
-                                                            </label>
-                                                        </div>
+                                        {/* {allpermission.map((permission, i) => {
+                                            return ( */}
+                                        <tr >
+                                            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+                                                <div className="flex items-center">
+                                                    <label className="inline-flex">
+                                                        <span className="sr-only">Select</span>
+                                                        <input className="form-checkbox" type="checkbox" />
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                {allpermission[0]?.moduleName}
+                                            </td>
+                                            {allpermission.map((permission, i) => {
+                                                console.log("permission", permission)
+                                                return (
+                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap" key={i}>
+                                                        <input type="checkbox" onClick={() => handleCheckbox(permission._id)} checked={checkedId[permission._id]} />
                                                     </td>
-                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        {permission?.permissionName}
-                                                    </td>
-                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <input type="checkbox" />
-                                                    </td>
-                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <input type="checkbox" />
-                                                    </td>
-                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <input type="checkbox" />
-                                                    </td>
+                                                )
+                                            })
+                                            }
 
-                                                </tr>
-                                            )
-                                        })}
+                                        </tr>
 
                                     </tbody>
                                 </table>

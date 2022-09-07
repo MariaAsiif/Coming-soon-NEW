@@ -213,7 +213,7 @@ function App() {
 
         <Route path="/singlePermission" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<SinglePermission />} />
-          <Route path="create-permission" element={<CreateSinglePermission />} />
+          <Route path="create-permission/:id" element={<CreateSinglePermission />} />
         </Route>
 
         <Route path="/multiplePermission" element={<RequireAuth><MainWrapper /></RequireAuth>} >
