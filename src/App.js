@@ -103,6 +103,8 @@ import CreatePhoneBook from './pages/phoneBook/CreatePhoneBook';
 import PhoneBooks from './pages/phoneBook/phoneBooks';
 import TermsConditions from './pages/termsCondition/termsCondition';
 import CreateTermsCondition from './pages/termsCondition/CreateTerms';
+import AboutUs from './pages/AboutUs/AboutUs';
+import CreateAboutUs from './pages/AboutUs/CreateAboutUs';
 
 
 const RequireAuth = ({ children }) => {
@@ -222,6 +224,11 @@ function App() {
         <Route path="/terms" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<TermsConditions />} />
           <Route path="create-terms" element={<CreateTermsCondition />} />
+        </Route>
+
+        <Route path="/aboutus" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+          <Route index element={<AboutUs />} />
+          <Route path="create-aboutus" element={<CreateAboutUs />} />
         </Route>
 
 
