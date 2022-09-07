@@ -28,10 +28,10 @@ const CreatePhoneBook = () => {
             let formdata = new FormData()
             formdata.append('logoimg', file);
             formdata.append('request', JSON.stringify({
-                tickerText: data.name,
+                businessPhoneBookText: data.name,
                 "active": true
             }));
-            const res = await callApi("/tickers/createTicker", "post", formdata)
+            const res = await callApi("/phonebooks/createPhoneBook", "post", formdata)
             if (res.status === "Success") {
                 toast.success(res.message);
                 reset()

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { Country, State, City } from 'country-state-city';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
@@ -15,15 +15,12 @@ const schema = yup.object({
     title: yup.string().required(),
     content: yup.string().required(),
     gender: yup.string().required(),
-    longitude: yup.string().required(),
     email: yup.string().email('Invalid email format').required(),
-    latitude: yup.string().required(),
     zipcode: yup.string().required(),
     website: yup.string().required(),
     mobile: yup.string().required(),
     address: yup.string().required(),
 });
-
 const CreateDoctor = () => {
 
     const [all_Countries, setall_Countries] = useState([])
@@ -38,60 +35,70 @@ const CreateDoctor = () => {
     const [file, setFile] = useState('')
 
 
+    const handleChangeCountry = (e) => {
+        let { value } = e.target
+        const updatedStates = State.getStatesOfCountry(value)
+        setall_States(updatedStates)
+        setrecruitModel((prevmodel) => ({
+            ...prevmodel,
+            country: value,
 
-    const { register, watch, handleSubmit, control, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+        }))
+
+
+
+    }
+
+
+    const handleState = (e) => {
+        let { value } = e.target
+        const updatedCities = City.getCitiesOfState(recruitModel.country, value)
+        setrecruitModel((prevmodel) => ({
+            ...prevmodel,
+            state: value,
+
+        }))
+        setall_Cities(updatedCities)
+
+    }
 
 
     const handleChange = (e) => {
         let { name, value } = e.target
-        if (name === "country") {
-            const updatedStates = State.getStatesOfCountry(value)
-            const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
-            const updatedCities = City.getCitiesOfState(value, stateCode)
-            setall_States(updatedStates)
-            setall_Cities(updatedCities)
-
-        }
-        else if (name === "state") {
-            const updatedStates = State.getStatesOfCountry(value)
-            const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
-            const updatedCities = City.getCitiesOfState(value, stateCode)
-            setall_Cities(updatedCities)
-
-        }
-        else {
-            setrecruitModel((prevmodel) => ({
-                ...prevmodel,
-                [name]: value
-            }))
-        }
+        setrecruitModel((prevmodel) => ({
+            ...prevmodel,
+            [name]: value
+        }))
     }
 
 
-    const onSubmit = async (e) => {
-        e.preventDefault()
+
+
+    const { register, watch, control, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+
+
+
+    const onSubmit = async (data) => {
         try {
-
             let payload = {
-                title: "data.title",
-                content: "data.content",
-                gender: "data.gender",
-                category: "doctor",
-                contactNo: "data.mobile",
-                address: "data.address",
-                state: "abc",
-                zip: "123",
-                email: "a@a.com",
-                website: "www.a.com",
-                facebook: "www.facebook.com",
-                twitter: "www.twitter.com",
-                instagram: "www.instagram.com",
-                linkedin: "www.linkedin.com",
-
-                "isIndividual": true,
-                "serviceCountry": "Spain",
-                "serviceCity": "Alava",
-                "serviceLocation": {
+              title: data.title,
+              content: data.content,
+              gender: data.gender,
+              category: "Doctors",
+              contactNo: data.mobile,
+              address: data.address,
+              state: recruitModel.state,
+              zip: data.zipcode,
+              email: data.email,
+              website: data.website,
+              facebook:data.facebook,
+              twitter: data.twitter,
+              instagram: data.instagram,
+              linkedin: data.linkedIn,
+              isIndividual: true,
+              serviceCountry: recruitModel.country,
+              serviceCity: recruitModel.city,
+              serviceLocation: {
                     "type": "Point",
                     "coordinates": [
                         -2.681792,
@@ -101,13 +108,13 @@ const CreateDoctor = () => {
             }
 
             const res = await callApi("/locateservices/createService", "post", payload)
+            console.log("Res" , res )
+            reset()
 
+        } catch (error) {
+            console.log(error);
         }
-        catch (err) { }
-
     }
-
-
 
 
 
@@ -120,17 +127,15 @@ const CreateDoctor = () => {
                 let removeDot = id.replace('.', "")
                 setCountryCode(removeDot)
                 const get_countris = Country.getAllCountries()
-                const CurrentStates = State.getStatesOfCountry(currentCountryCode)
-                const CurrentCities = City.getCitiesOfState(currentCountryCode, CurrentStates[0].isoCode)
+                const updatedStates = State.getStatesOfCountry(currentCountryCode)
+                setall_States(updatedStates)
                 setrecruitModel((prevmodel) => ({
                     ...prevmodel,
                     country: currentCountryCode,
-                    state: CurrentStates.length > 0 ? CurrentStates[0].isoCode : "",
-                    city: CurrentCities.length > 0 ? CurrentCities[0].name : ""
+
                 }))
                 setall_Countries(get_countris)
-                setall_States(CurrentStates)
-                setall_Cities(CurrentCities)
+
 
             })();
         } catch (error) {
@@ -138,7 +143,6 @@ const CreateDoctor = () => {
         }
 
     }, [])
-
 
 
 
@@ -204,8 +208,8 @@ const CreateDoctor = () => {
                             )}
                             <span hidden={watch('title')} className='absolute  text-red-400 font-medium text-lg top-[36px] left-[60px]'>*</span>
                             {/* <span className={watch('title') ? `visible absolute top-1/4 right-3` : `invisible`}>
-                                <FcCheckmark />
-                            </span> */}
+            <FcCheckmark />
+        </span> */}
 
                         </div>
                     </div>
@@ -235,19 +239,18 @@ const CreateDoctor = () => {
 
                         <label className="block text-sm font-medium mb-1" htmlFor="gender">Gender </label>
                         <div className='absolute right-5 top-10'>
-                            {!errors.gender && watch("gender") ? <FcCheckmark className='mr-5' /> : errors.gender ? <div className=' text-red-500'><MdClose /></div> : null}
+                            {!errors.gender && watch("gender") ? <FcCheckmark className='mr-5' /> : errors.gender ? <div className=' text-red-500'><MdClose className='mr-5' /></div> : null}
                         </div>
                         <select
-                            // value={recruitModel.gender}
-                            // onChange={handleChange}
+                         
                             {...register('gender')}
                             name="gender"
                             id="gender"
                             className={`form-input w-full   ${errors.gender && 'border-red-500'}`}
                         >
-                            <option disabled>Select Gender </option>
-                            <option>Male</option>
-                            <option>FeMale</option>
+                            <option value="">Select Gender </option>
+                            <option value="Male">Male</option>
+                            <option value="FeMale">FeMale</option>
 
 
                         </select>
@@ -284,12 +287,12 @@ const CreateDoctor = () => {
 
                         <select
                             value={recruitModel.country}
-                            onChange={handleChange}
+                            onChange={handleChangeCountry}
                             name="country"
                             id="country"
                             className={`form-input w-full   ${errors.country && 'border-red-500'}`}
                         >
-                            <option defaultChecked disabled>Select Country </option>
+                            <option value="">Select Country </option>
                             {all_Countries.map((contry) => {
                                 return (
                                     <option value={contry.isoCode}>{contry.name}</option>
@@ -310,12 +313,12 @@ const CreateDoctor = () => {
                         <select
                             // {...register('state')}
                             value={recruitModel.state}
-                            onChange={handleChange}
+                            onChange={handleState}
                             name="state"
                             id="state"
                             className={`form-input w-full   ${errors.state && 'border-red-500'}`}
                         >
-                            <option defaultChecked disabled>Select State </option>
+                            <option value="">Select State </option>
                             {all_States.map((contry) => {
                                 return (
                                     <option value={contry.isoCode}>{contry.name}</option>
@@ -326,8 +329,8 @@ const CreateDoctor = () => {
 
                         </select>
                         {/* {errors.state && (
-                            <p className="text-red-500 text-sm">{errors.state.message}</p>
-                        )} */}
+        <p className="text-red-500 text-sm">{errors.state.message}</p>
+    )} */}
                     </div>
                     <div className='col-lg-4 mb-4 relative'>
                         <label className="block text-sm font-medium mb-1" htmlFor="city">City</label>
@@ -342,7 +345,7 @@ const CreateDoctor = () => {
                             id="city"
                             className={`form-input w-full   ${errors.city && 'border-red-500'}`}
                         >
-                            <option defaultChecked disabled>Select city </option>
+                            <option value="">Select city </option>
                             {all_Cities.map((contry) => {
                                 return (
                                     <option >{contry.name}</option>
@@ -353,8 +356,8 @@ const CreateDoctor = () => {
 
                         </select>
                         {/* {errors.city && (
-                            <p className="text-red-500 text-sm">{errors.city.message}</p>
-                        )} */}
+        <p className="text-red-500 text-sm">{errors.city.message}</p>
+    )} */}
                     </div>
                     <div className='col-lg-4 mb-4 relative '>
                         <label className="block text-sm font-medium mb-1" htmlFor="phone">Phone</label>
@@ -382,14 +385,14 @@ const CreateDoctor = () => {
                                 )}
                             />
                             {/* <PhoneInput
-                                country={countryCode}
-                                dropdownClass={"custom-dropdown"}
-                                enableSearch
-                                disableSearchIcon
-                                placeholder="000 000 000"
-                                countryCodeEditable={false}
-                                value={mobile}
-                                onChange={handleMobileChange} /> */}
+            country={countryCode}
+            dropdownClass={"custom-dropdown"}
+            enableSearch
+            disableSearchIcon
+            placeholder="000 000 000"
+            countryCodeEditable={false}
+            value={mobile}
+            onChange={handleMobileChange} /> */}
                         </div>
                         {errors.mobile && (
                             <p className="text-red-500 text-sm">{errors.mobile.message}</p>
@@ -533,8 +536,8 @@ const CreateDoctor = () => {
                         <button className="btn bg-red-500 hover:bg-green-600 text-white" type="submit" >Submit</button>
                     </div>
                 </div>
-            </form>
-        </div>
+            </form >
+        </div >
     )
 }
 

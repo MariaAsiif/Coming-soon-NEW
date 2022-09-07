@@ -1,7 +1,7 @@
 import { FaUserGraduate, FaBriefcase, FaDna } from "react-icons/fa";
 import { AiFillDashboard } from "react-icons/ai";
 import { VscFeedback } from 'react-icons/vsc'
-import { BiSticker } from 'react-icons/bi'
+import { BiSticker , BiMessageAltDetail } from 'react-icons/bi'
 import { RiLuggageDepositLine } from 'react-icons/ri'
 import { SiSlideshare } from 'react-icons/si'
 import { GiInspiration, GiInjustice, GiScrollUnfurled, GiScrollQuill, } from 'react-icons/gi'
@@ -264,8 +264,8 @@ const SidebarObj = () => {
                 },
                 {
                     label: "About us Manage",
-                    leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<VscFeedback size={22} className=" text-green-500" />),
+                    leftIcon: (<BiMessageAltDetail  size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<BiMessageAltDetail  size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
                     path: "/aboutus",
                     pathname: "aboutus",
