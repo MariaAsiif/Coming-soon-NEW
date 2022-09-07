@@ -124,22 +124,22 @@ const TermsConditions = () => {
                                 </svg>
                             </li>
                             <li className="flex items-center">
-                                <Link to="/phonebook" className="text-slate-500 hover:text-indigo-500" href="#0">TermsConditions</Link>
+                                <Link to="/terms" className="text-slate-500 hover:text-indigo-500" href="#0">TermsConditions</Link>
                             </li>
                         </ul>
                     </div>
 
-                    <Link to="create-phonebook" className="btn bg-red-500 hover:bg-green-600 text-white" >
+                    <Link to="create-terms" className="btn bg-red-500 hover:bg-green-600 text-white" >
                         <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                         </svg>
-                        <span className="ml-2">Create Phone Book</span>
+                        <span className="ml-2">Create Terms Condition</span>
                     </Link>
                 </div>
                 <div className='col-12 border'>
                     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                         <header className="px-5 py-4">
-                            <h2 className="font-semibold text-slate-800">All PhoneBook <span className="text-slate-400 font-medium">{allTicker.length}</span></h2>
+                            <h2 className="font-semibold text-slate-800">All Terms and Conditions <span className="text-slate-400 font-medium">{allTicker.length}</span></h2>
                         </header>
                         <div>
                             <div className="overflow-x-auto">
@@ -151,10 +151,10 @@ const TermsConditions = () => {
                                                 <div className="font-semibold text-left">ID</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">IMAGE</div>
+                                                <div className="font-semibold text-left">ADDED BY</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">BUSINESS NAME</div>
+                                                <div className="font-semibold text-left">DESCRIPTION</div>
                                             </th>
                                            
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
