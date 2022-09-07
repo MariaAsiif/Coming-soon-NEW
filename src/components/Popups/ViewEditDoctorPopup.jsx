@@ -2,8 +2,91 @@ import React, { useRef, useEffect, useState } from 'react'
 import Transition from '../../utils/Transition';
 import { callApi } from '../../utils/CallApi';
 import { toast, ToastContainer } from 'react-toastify';
+import { useForm } from "react-hook-form";
+import { Country, State, City } from 'country-state-city';
+import axios from 'axios';
+
+
 const ViewEditDoctorPopup = ({ id, modalOpen, onClose, mode, data }) => {
+    const { register, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange ', });
     const modalContent = useRef(null);
+
+    const [all_Countries, setall_Countries] = useState([])
+    const [all_States, setall_States] = useState([])
+    const [all_Cities, setall_Cities] = useState([])
+    const [recruitModel, setrecruitModel] = useState({
+        city: "",
+        state: "",
+        country: "",
+    })
+    const [countryCode, setCountryCode] = useState("")
+
+
+    const handleChange = (e) => {
+        let { name, value } = e.target
+        if (name === "country") {
+            const updatedStates = State.getStatesOfCountry(value)
+            const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
+            const updatedCities = City.getCitiesOfState(value, stateCode)
+            setall_States(updatedStates)
+            setall_Cities(updatedCities)
+
+        }
+        else if (name === "state") {
+            const updatedStates = State.getStatesOfCountry(value)
+            const stateCode = updatedStates.length > 0 ? updatedStates[0].isoCode : ""
+            const updatedCities = City.getCitiesOfState(value, stateCode)
+            setall_Cities(updatedCities)
+
+        }
+        else {
+
+        }
+        setrecruitModel((prevmodel) => ({
+            ...prevmodel,
+            [name]: value
+        }))
+    }
+
+    const onSubmit = async (formdata) => {
+        console.log('====================================');
+        console.log(formdata);
+        console.log('====================================');
+
+    }
+
+    useEffect(() => {
+        try {
+            (async () => {
+                const response = await axios('https://api.ipregistry.co/?key=m7irmmf8ey12rx7o')
+                const currentCountryCode = response.data.location.country.code
+                let id = response.data.location.country.tld
+                let removeDot = id.replace('.', "")
+                setCountryCode(removeDot)
+                const get_countris = Country.getAllCountries()
+                const CurrentStates = State.getStatesOfCountry(currentCountryCode)
+                const CurrentCities = City.getCitiesOfState(currentCountryCode, CurrentStates[0].isoCode)
+                setrecruitModel((prevmodel) => ({
+                    ...prevmodel,
+                    country: currentCountryCode,
+                    state: CurrentStates.length > 0 ? CurrentStates[0].isoCode : "",
+                    city: CurrentCities.length > 0 ? CurrentCities[0].name : ""
+                }))
+                setall_Countries(get_countris)
+                setall_States(CurrentStates)
+                setall_Cities(CurrentCities)
+
+            })();
+        } catch (error) {
+            console.log(error);
+        }
+
+    }, [])
+    useEffect(() => {
+        reset(data);
+
+    }, [data, reset]);
+
     return (
         <>
             {/* Modal backdrop */}
@@ -37,114 +120,102 @@ const ViewEditDoctorPopup = ({ id, modalOpen, onClose, mode, data }) => {
                     </div>
 
                     <div className='bscontainer'>
-                        <form>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             <div className='row p-5'>
 
                                 <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">TITLE</label>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Service Name</label>
                                     {mode === "view" ?
                                         (
-                                            <p>{data.job_title}</p>
+                                            <p>{data.serviceName}</p>
                                         ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
+                                            <input    {...register("serviceName", { required: true })} className={`form-input w-full ${errors.serviceName ? "border-red-500" : "border-green-500"}`} />
                                         )}
+                                    {errors.serviceName && (<p className="text-red-500 text-sm">This field is required</p>)}
                                 </div>
 
                                 <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Content</label>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Country</label>
                                     {mode === "view" ?
                                         (
-                                            <p>{data.job_title}</p>
+                                            <p>{data.serviceCountry}</p>
                                         ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
+                                            <>
+                                                <select value={recruitModel.country} onChange={handleChange} name="country" id="country" className={`form-input w-full`}   >
+                                                    <option defaultChecked disabled>Select Country </option>
+                                                    {all_Countries.map((contry) => <option value={contry.isoCode}>{contry.name}</option>)}
+                                                </select>
+                                            </>
                                         )}
                                 </div>
                                 <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Content</label>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Category</label>
                                     {mode === "view" ?
                                         (
-                                            <p>{data.job_title}</p>
+                                            <p>{data.category}</p>
                                         ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
+                                            <input    {...register("category", { required: true })} className={`form-input w-full ${errors.category ? "border-red-500" : "border-green-500"}`} />
                                         )}
-                                </div> <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Content</label>
+                                    {errors.serviceName && (<p className="text-red-500 text-sm">This field is required</p>)}
+                                </div>
+                                <div className='col-lg-4 mb-5'>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">City</label>
                                     {mode === "view" ?
                                         (
-                                            <p>{data.job_title}</p>
+                                            <p>{data.serviceCity}</p>
                                         ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
-                                        )}
-                                </div> <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Content</label>
-                                    {mode === "view" ?
-                                        (
-                                            <p>{data.job_title}</p>
-                                        ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
-                                        )}
-                                </div> <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Content</label>
-                                    {mode === "view" ?
-                                        (
-                                            <p>{data.job_title}</p>
-                                        ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
-                                        )}
-                                </div> <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Content</label>
-                                    {mode === "view" ?
-                                        (
-                                            <p>{data.job_title}</p>
-                                        ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
-                                        )}
-                                </div> <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Content</label>
-                                    {mode === "view" ?
-                                        (
-                                            <p>{data.job_title}</p>
-                                        ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
-                                        )}
-                                </div> <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Content</label>
-                                    {mode === "view" ?
-                                        (
-                                            <p>{data.job_title}</p>
-                                        ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
-                                        )}
-                                </div> <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Content</label>
-                                    {mode === "view" ?
-                                        (
-                                            <p>{data.job_title}</p>
-                                        ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
-                                        )}
-                                </div> <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Content</label>
-                                    {mode === "view" ?
-                                        (
-                                            <p>{data.job_title}</p>
-                                        ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
-                                        )}
-                                </div> <div className='col-lg-4 mb-5'>
-                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Content</label>
-                                    {mode === "view" ?
-                                        (
-                                            <p>{data.job_title}</p>
-                                        ) : (
-                                            <input name='job_title' type="text" className={`form-input w-full`} />
+                                            <>
+                                                <select value={recruitModel.city} onChange={handleChange} name="country" id="country" className={`form-input w-full`}   >
+                                                    <option defaultChecked disabled>Select Country </option>
+                                                    {all_Cities.map((city) => <option >{city.name}</option>)}
+                                                </select>
+                                            </>
                                         )}
                                 </div>
-
+                                <div className='col-lg-4 mb-5'>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Website</label>
+                                    {mode === "view" ?
+                                        (
+                                            <p>{data.website}</p>
+                                        ) : (
+                                            <input    {...register("website", { required: true })} className={`form-input w-full ${errors.website ? "border-red-500" : "border-green-500"}`} />
+                                        )}
+                                    {errors.website && (<p className="text-red-500 text-sm">This field is required</p>)}
+                                </div>
+                                <div className='col-lg-4 mb-5'>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Facebook</label>
+                                    {mode === "view" ?
+                                        (
+                                            <p>{data.facebook}</p>
+                                        ) : (
+                                            <input    {...register("website", { required: true })} className={`form-input w-full ${errors.facebook ? "border-red-500" : "border-green-500"}`} />
+                                        )}
+                                    {errors.facebook && (<p className="text-red-500 text-sm">This field is required</p>)}
+                                </div>
+                                <div className='col-lg-4 mb-5'>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Twitter</label>
+                                    {mode === "view" ?
+                                        (
+                                            <p>{data.twitter}</p>
+                                        ) : (
+                                            <input    {...register("website", { required: true })} className={`form-input w-full ${errors.twitter ? "border-red-500" : "border-green-500"}`} />
+                                        )}
+                                    {errors.twitter && (<p className="text-red-500 text-sm">This field is required</p>)}
+                                </div>
+                                <div className='col-lg-4 mb-5'>
+                                    <label className="block text-lg font-medium mb-1" htmlFor="description">Instagram</label>
+                                    {mode === "view" ?
+                                        (
+                                            <p>{data.instagram}</p>
+                                        ) : (
+                                            <input    {...register("instagram", { required: true })} className={`form-input w-full ${errors.instagram ? "border-red-500" : "border-green-500"}`} />
+                                        )}
+                                    {errors.instagram && (<p className="text-red-500 text-sm">This field is required</p>)}
+                                </div>
                                 {
                                     mode !== "view" ? (
                                         <div className='col-lg-12'>
-                                            <button className="btn bg-red-500 hover:bg-green-600 text-white" >Update Job</button>
+                                            <button type="submit" className="btn bg-red-500 hover:bg-green-600 text-white" >Update Doctor</button>
                                         </div>
                                     ) : null
                                 }
