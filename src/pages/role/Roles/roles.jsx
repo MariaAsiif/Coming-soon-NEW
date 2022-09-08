@@ -63,7 +63,7 @@ const Roles = () => {
                 "offset": 0,
                 "limit": 50,
                 "query": {
-                    "critarion": {"active" : true},
+                    "critarion": {"active" : false},
                     "permissions" : "_id permissionName moduleName ",
                     "addedby": "_id email first_name",
                     "lastModifiedBy": "_id email first_name"

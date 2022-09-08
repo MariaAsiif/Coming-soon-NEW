@@ -218,7 +218,7 @@ function App() {
 
         <Route path="/multiplePermission" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<MutiplePermission />} />
-          <Route path="create-permission" element={<CreateMultiplePermission />} />
+          <Route path="create-permission/:id" element={<CreateMultiplePermission />} />
         </Route>
 
         <Route path="/terms" element={<RequireAuth><MainWrapper /></RequireAuth>} >

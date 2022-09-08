@@ -43,6 +43,7 @@ const CreateSinglePermission = () => {
 
 
     const handleCheckbox = (id) => {
+        debugger
         if (checkedId === id) {
             setChecked('')
         }
@@ -60,7 +61,7 @@ const CreateSinglePermission = () => {
         if (checkedId === "") {
             setError('One Permission is required')
         }
-       
+
         else {
             try {
                 let payload = {
@@ -84,6 +85,27 @@ const CreateSinglePermission = () => {
     }
 
 
+
+    let modules = []
+    allpermission.map(permission => {
+        if (!modules.includes(permission.moduleName))
+            modules.push(permission.moduleName)
+    })
+
+    // modify single permission 
+    let singlePermission = []
+    for (let module of modules) {
+        let moduleBased = {
+            moduleName: module,
+            permissions: []
+        }
+        allpermission.map(permission => {
+            if (permission.moduleName == module) {
+                moduleBased.permissions.push(permission._id )
+            }
+        })
+        singlePermission.push(moduleBased)
+    }
 
 
 
@@ -141,14 +163,14 @@ const CreateSinglePermission = () => {
                                     {/* Table header */}
                                     <thead className="text-xs font-semibold uppercase text-slate-500 bg-slate-50 border-t border-b border-slate-200">
                                         <tr>
-                                            {/* <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                 <div className="flex items-center">
                                                     <label className="inline-flex">
                                                         <span className="sr-only">Select all</span>
                                                         <input className="form-checkbox" type="checkbox" />
                                                     </label>
                                                 </div>
-                                            </th> */}
+                                            </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Name</div>
                                             </th>
@@ -170,29 +192,30 @@ const CreateSinglePermission = () => {
                                     </thead>
                                     {/* Table body */}
                                     <tbody className="text-sm divide-y divide-slate-200">
-
-                                        <tr >
-                                            {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-                                                <div className="flex items-center">
-                                                    <label className="inline-flex">
-                                                        <span className="sr-only">Select</span>
-                                                        <input className="form-checkbox" type="checkbox" />
-                                                    </label>
-                                                </div>
-                                            </td> */}
-                                            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                {allpermission[0]?.moduleName}
-                                            </td>
-                                            {allpermission.map((permission, i) => {
-                                                console.log("permission", permission)
-                                                return (
-                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap" key={i}>
-                                                        <input type="checkbox" onClick={() => handleCheckbox(permission._id)} checked={permission._id === checkedId} />
+                                        {singlePermission.map((permission, index) => {
+                                            return (
+                                                <tr >
+                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+                                                        <div className="flex items-center">
+                                                            <label className="inline-flex">
+                                                                <span className="sr-only">Select</span>
+                                                                <input className="form-checkbox" type="checkbox" />
+                                                            </label>
+                                                        </div>
                                                     </td>
-                                                )
-                                            })
-                                            }
-                                        </tr>
+                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap" key={index}>
+                                                         {permission?.moduleName}
+                                                    </td>
+                                                    {permission.permissions.map((per, i) => (
+                                                        <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap" key={i}>
+                                                            <input type="checkbox" onClick={() => handleCheckbox(per)} checked={per === checkedId} />
+                                                        </td>
+
+                                                    ))}
+                                                </tr>
+                                            )
+                                        })
+                                        }
 
                                     </tbody>
                                 </table>

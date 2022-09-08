@@ -11,6 +11,7 @@ const CreateMultiplePermission = () => {
     const [allpermission, setallpermission] = useState([])
     const userId = useSelector((state) => state.userAuth.userInfo.userid);
     const [checkedId, setChecked] = useState([])
+    const [error, setError] = useState('')
 
     const RoleId = useParams().id
 
@@ -51,45 +52,75 @@ const CreateMultiplePermission = () => {
 
 
     const onSubmit = async (data) => {
-        try {
-            let payload = {
-                roleid: RoleId,
-                newpermissions: checkedId
-            }
-            const res = await callApi("/roles/addPermissionsToRole", "post", payload)
-            if (res.status === "Success") {
-                toast.success(res.message);
-                // reset()
-            }
-            else {
-                toast.error(res.message);
 
-            }
+        if (checkedId?.length === 0) {
+            setError("Required Role")
+        }
+        else {
+            try {
+                let payload = {
+                    roleid: RoleId,
+                    newpermissions: checkedId
+                }
+                const res = await callApi("/roles/addPermissionsToRole", "post", payload)
+                if (res.status === "Success") {
+                    toast.success(res.message);
+                    // reset()
+                    setError('')
+                }
+                else {
+                    toast.error(res.message);
 
-        } catch (error) {
-            console.log(error);
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
 
 
-    
+
     const handleCheckbox = (id) => {
-        if (checkedId === id) {
-            setChecked('')
+
+        let find = checkedId.find((i) => i === id)
+        if (find) {
+            setChecked(checkedId.filter((f) => f !== id))
         }
         else {
-            setChecked({
-                ...checkedId,
-                id 
-            })
+            setChecked([...checkedId, id])
             // setError('')
         }
 
     }
 
 
-console.log("check" , checkedId)
+    let modules = []
+    allpermission.map(permission => {
+        if (!modules.includes(permission.moduleName))
+            modules.push(permission.moduleName)
+    })
+
+    // modify single permission 
+    let singlePermission = []
+    for (let module of modules) {
+        let moduleBased = {
+            moduleName: module,
+            permissions: []
+        }
+        allpermission.map(permission => {
+            if (permission.moduleName == module) {
+                moduleBased.permissions.push(permission._id)
+            }
+        })
+        singlePermission.push(moduleBased)
+    }
+
+
+
+
+
 
     return (
         <div className='bscontainer-fluid'>
@@ -159,6 +190,9 @@ console.log("check" , checkedId)
                                                 <div className="font-semibold text-left">CREATE</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">VIEW</div>
+                                            </th>
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">EDIT</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -172,36 +206,48 @@ console.log("check" , checkedId)
                                     <tbody className="text-sm divide-y divide-slate-200">
                                         {/* {allpermission.map((permission, i) => {
                                             return ( */}
-                                        <tr >
-                                            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-                                                <div className="flex items-center">
-                                                    <label className="inline-flex">
-                                                        <span className="sr-only">Select</span>
-                                                        <input className="form-checkbox" type="checkbox" />
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                {allpermission[0]?.moduleName}
-                                            </td>
-                                            {allpermission.map((permission, i) => {
-                                                console.log("permission", permission)
-                                                return (
-                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap" key={i}>
-                                                        <input type="checkbox" onClick={() => handleCheckbox(permission._id)} checked={checkedId[permission._id]} />
+                                        {singlePermission.map((permission, index) => {
+                                            return (
+                                                <tr >
+                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+                                                        <div className="flex items-center">
+                                                            <label className="inline-flex">
+                                                                <span className="sr-only">Select</span>
+                                                                <input className="form-checkbox" type="checkbox" />
+                                                            </label>
+                                                        </div>
                                                     </td>
-                                                )
-                                            })
-                                            }
+                                                    <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap" key={index}>
+                                                        {permission?.moduleName}
+                                                    </td>
+                                                    {permission.permissions.map((per, i) => (
+                                                        <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap" key={i}>
+                                                            <input type="checkbox" onClick={() => handleCheckbox(per)} checked={checkedId[per]} />
+                                                        </td>
 
-                                        </tr>
+                                                    ))}
+                                                </tr>
+                                            )
+                                        })
+                                        }
+
 
                                     </tbody>
                                 </table>
+                                {
+                                    error &&
+                                    <div className='text-red-400 text-sm'>{error}</div>
+                                }
                             </div>
 
-
                         </div>
+
+                    </div>
+                    <div className='col-md-12 mt-5'>
+                        <button onClick={() => onSubmit()} className="btn bg-red-500 hover:bg-green-600 text-white" >
+
+                            <span className="ml-2">Add Permission</span>
+                        </button>
                     </div>
                 </div>
             </div>
