@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import * as yup from "yup";
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { useSelector } from 'react-redux'
 import { callApi } from '../../../utils/CallApi';
 import { useEffect } from 'react';
@@ -14,6 +14,8 @@ const CreateMultiplePermission = () => {
     const [error, setError] = useState('')
 
     const RoleId = useParams().id
+
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -67,6 +69,8 @@ const CreateMultiplePermission = () => {
                     toast.success(res.message);
                     // reset()
                     setError('')
+                    navigate('/roles')
+                    
                 }
                 else {
                     toast.error(res.message);
