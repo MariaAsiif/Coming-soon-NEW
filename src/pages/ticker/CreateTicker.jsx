@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
@@ -19,6 +19,7 @@ const CreateTicker = () => {
 
     const [companySetting, setCompanySetting] = useState(true)
     const [file, setFile] = useState('')
+    const [allbusinesses, setallbusinesses] = useState([])
 
     const { register, watch, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
@@ -48,6 +49,27 @@ const CreateTicker = () => {
     }
 
     console.log("error", errors)
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const payload = {
+                    sortproperty: "created_at",
+                    sortorder: -1,
+                    offset: 0,
+                    limit: 50,
+                    query: {
+                        critarion: { active: true },
+                        fields: "_id businessPhoneBookText logoFile"
+                    }
+                }
+                const res = await callApi("/phonebooks/getPhoneBooksList", "post", payload)
+                setallbusinesses(res.data.phonebooks)
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, [])
     return (
         <div className='bscontainer-fluid'>
             <ToastContainer
@@ -96,10 +118,7 @@ const CreateTicker = () => {
                             {!errors.businessName && watch('businessName') ? <FcCheckmark className='mr-5' /> : errors.businessName ? <div className=' text-red-500'><MdClose className='mr-5' /></div> : null}
                         </div>
                         <select  {...register('businessName')} className={`w-full  ${errors.businessName ? "border-red-400" : "border-gray-400"}`}>
-                            <option value="">Select Business Name</option>
-                            <option >Laher asif</option>
-                            <option>Laher asif</option>
-                            <option>Laher asif</option>
+                            {allbusinesses.map((business) => <option key={business._id}>{business.businessPhoneBookText}</option>)}
                         </select>
 
                         {errors.businessName && (
@@ -133,7 +152,7 @@ const CreateTicker = () => {
 
 
 
-                   
+
                     <div className='col-lg-4 mb-4 relative'>
                         <div>
                             <div className="text-sm text-slate-800 font-semibold mb-3">Active/Deactivate</div>
