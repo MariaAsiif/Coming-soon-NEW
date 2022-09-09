@@ -536,28 +536,28 @@ const SidebarObj = () => {
 
                     ]
                 },
-                {
+                // {
 
-                    label: "Manage I User ",
-                    leftIcon: (<FaUserCog size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<FaUserCog size={22} className=" text-green-500" />),
-                    rightIcon: "sadf",
-                    path: "/term",
-                    pathname: "term",
-                    subMenuItems: [
-                        {
-                            label: "All Terms Condition",
-                            path: "/terms",
-                            subMenuItems: [],
-                        },
-                        {
-                            label: "Create Terms Condition",
-                            path: "/terms/create-terms",
-                            subMenuItems: [],
-                        },
+                //     label: "Manage I User ",
+                //     leftIcon: (<FaUserCog size={22} className="hover:text-red-500" />),
+                //     activeLeftIcon: (<FaUserCog size={22} className=" text-green-500" />),
+                //     rightIcon: "sadf",
+                //     path: "/term",
+                //     pathname: "term",
+                //     subMenuItems: [
+                //         {
+                //             label: "All Terms Condition",
+                //             path: "/terms",
+                //             subMenuItems: [],
+                //         },
+                //         {
+                //             label: "Create Terms Condition",
+                //             path: "/terms/create-terms",
+                //             subMenuItems: [],
+                //         },
 
-                    ]
-                },
+                //     ]
+                // },
 
                 // {
                 //     label: "Candidate ",
