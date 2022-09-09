@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import AuthImage from '../images/auth-image.jpg';
+
+import AuthImage from '../images/signin.jpg';
 import AuthDecoration from '../images/auth-decoration.png';
 import axios from "axios"
 import { callPublicApi } from "../utils/CallApi"
-
+import { useForm } from "react-hook-form";
 function Signup() {
   let navigate = useNavigate();
   const [formdata, setformdata] = useState({
