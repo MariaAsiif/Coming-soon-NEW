@@ -9,14 +9,38 @@ import { MdOutlinePolicy, MdMedicalServices, MdCameraRoll, MdControlCamera, MdOu
 import { IoMdLocate } from 'react-icons/io'
 import { IoConstructSharp } from 'react-icons/io5'
 import { GrServices, } from 'react-icons/gr'
+import { FaUserCog } from 'react-icons/fa'
 
 const SidebarObj = () => {
     return [
         {
             groupname: "DASHBOARD | ADMINISTRATOR",
             menuitems: [
+
                 {
-                    label: "Coming soon",
+                    label: "Manage I About us ",
+                    leftIcon: (<BiMessageAltDetail  size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<BiMessageAltDetail  size={22} className=" text-green-500" />),
+                    rightIcon: "sadf",
+                    path: "/aboutus",
+                    pathname: "aboutus",
+                    subMenuItems: [
+                        {
+                            label: "All About Us",
+                            path: "/aboutus",
+                            subMenuItems: [],
+                        },
+                        {
+                            label: "Create About Us",
+                            path: "/aboutus/create-aboutus",
+                            subMenuItems: [],
+                        },
+
+                    ]
+                },
+
+                {
+                    label: "Manage I ComingSoon",
                     leftIcon: (<AiFillDashboard size={22} className=" hover:text-red-500" />),
                     activeLeftIcon: (<AiFillDashboard size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -36,9 +60,40 @@ const SidebarObj = () => {
 
                     ]
                 },
+
                 {
                     // <<<<<<< HEAD
-                    label: "Department Manage",
+                    //                     label: "Candidate ",
+                    //                     leftIcon: (<FcBusinessman/>),
+                    //                     activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current !text-indigo-500`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-indigo-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-indigo-200`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
+                    // =======
+                    label: "Manage I Candidate ",
+                    leftIcon: (<FaUserGraduate size={22} className=" hover:text-red-500" />),
+                    activeLeftIcon: (<FaUserGraduate size={22} className="text-green-500" />),
+                    rightIcon: "sadf",
+                    path: "/candidates",
+                    pathname: "candidates",
+                    subMenuItems: [
+                        {
+                            label: "All Candidates",
+                            path: "/candidates",
+                            subMenuItems: [],
+                        },
+                        {
+                            label: "Create candidate",
+                            path: "/candidates/create-candidate",
+                            subMenuItems: [],
+                        },
+                        // {
+                        //     label: "Fintech",
+                        //     pathname: "/dashboard/fintech",
+                        // },
+                    ]
+                },
+
+                {
+                    // <<<<<<< HEAD
+                    label: "Manage I Department ",
                     leftIcon: (<RiLuggageDepositLine size={22} className=" hover:text-red-500" />),
                     activeLeftIcon: (<RiLuggageDepositLine size={22} className="text-green-500" />),
                     rightIcon: "sadf",
@@ -62,7 +117,7 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-                    label: "Designation Manage",
+                    label: "Manage I Designation ",
                     leftIcon: (<SiSlideshare size={22} className=" hover:text-red-500" />),
                     activeLeftIcon: (<SiSlideshare size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -85,67 +140,10 @@ const SidebarObj = () => {
                         // },
                     ]
                 },
-                {
-                    //                     label: "Jobs Manage",
-                    //                     leftIcon: (<FcBriefcase/>),
-                    //                     activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current !text-indigo-500`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-indigo-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-indigo-200`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
-                    // =======
-                    label: "Jobs Manage",
-                    leftIcon: (<FaBriefcase size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<FaBriefcase size={22} className="text-green-500" />),
-                    rightIcon: "sadf",
-                    path: "/jobs",
-                    pathname: "jobs",
-                    subMenuItems: [
-                        {
-                            label: "All Jobs",
-                            path: "/jobs",
-                            subMenuItems: [],
-                        },
-                        {
-                            label: "Create job",
-                            path: "/jobs/create-job",
-                            subMenuItems: [],
-                        },
-                        {
-                            label: "Applied Jobs",
-                            path: "/applied-jobs",
-                            subMenuItems: [],
-                        },
-                    ]
-                },
-                {
-                    // <<<<<<< HEAD
-                    //                     label: "Candidate Manage",
-                    //                     leftIcon: (<FcBusinessman/>),
-                    //                     activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current !text-indigo-500`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-indigo-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-indigo-200`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
-                    // =======
-                    label: "Candidate Manage",
-                    leftIcon: (<FaUserGraduate size={22} className=" hover:text-red-500" />),
-                    activeLeftIcon: (<FaUserGraduate size={22} className="text-green-500" />),
-                    rightIcon: "sadf",
-                    path: "/candidates",
-                    pathname: "candidates",
-                    subMenuItems: [
-                        {
-                            label: "All Candidates",
-                            path: "/candidates",
-                            subMenuItems: [],
-                        },
-                        {
-                            label: "Create candidate",
-                            path: "/candidates/create-candidate",
-                            subMenuItems: [],
-                        },
-                        // {
-                        //     label: "Fintech",
-                        //     pathname: "/dashboard/fintech",
-                        // },
-                    ]
-                },
+                
                 {
 
-                    label: "Employeee Manage",
+                    label: "Manage I Employeee ",
                     leftIcon: (<svg className="shrink-0 h-6 w-6 hover:text-red-500" viewBox="0 0 24 24"> <path className={`fill-current text-slate-600 hover:text-red-500`} d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" /> <path className={`fill-current text-slate-400 hover:text-red-500`} d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" /> </svg>),
                     activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current text-red-500`} d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" /> <path className={`fill-current text-red-300`} d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" /> </svg>),
                     rightIcon: "sadf",
@@ -169,80 +167,7 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-
-                    label: "Inpire Manage",
-                    leftIcon: (<GiInspiration size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<GiInspiration size={22} className=" text-green-500" />),
-                    rightIcon: "sadf",
-                    path: "/inspire",
-                    pathname: "inspire",
-                    subMenuItems: [
-                        {
-                            label: "All Inspire",
-                            path: "/inspire",
-                            subMenuItems: [],
-                        },
-                        {
-                            label: "Create Inspire",
-                            path: "/inspire/create-inspire",
-                            subMenuItems: [],
-                        },
-
-                    ]
-                },
-                {
-
-                    label: "Ticker Manage",
-                    leftIcon: (<BiSticker size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<BiSticker size={22} className=" text-green-500" />),
-                    rightIcon: "sadf",
-                    subMenuItems: [
-                        {
-                            label: "PhoneBook ",
-                            leftIcon: (<MdOutlineContactPhone size={22} className="hover:text-red-500" />),
-                            activeLeftIcon: (<MdOutlineContactPhone size={22} className=" text-green-500" />),
-                            rightIcon: "sadf",
-                            path: "/phonebook",
-                            pathname: "phonebook",
-                            subMenuItems: [
-                                {
-                                    label: "All PhoneBook",
-                                    path: "/phonebook",
-                                    subMenuItems: [],
-                                },
-                                {
-                                    label: "Create Business PhoneBook ",
-                                    path: "/phonebook/create-phonebook",
-                                    subMenuItems: [],
-                                }
-                            ]
-                        },
-
-                        {
-                            label: "Ticker ",
-                            leftIcon: (<BiSticker size={22} className="hover:text-red-500" />),
-                            activeLeftIcon: (<BiSticker size={22} className=" text-green-500" />),
-                            rightIcon: "sadf",
-                            path: "/ticker",
-                            pathname: "ticker",
-                            subMenuItems: [
-                                {
-                                    label: "All Ticker",
-                                    path: "/ticker",
-                                    subMenuItems: [],
-                                },
-                                {
-                                    label: "Create Ticker",
-                                    path: "/ticker/create-ticker",
-                                    subMenuItems: [],
-                                }
-                            ],
-                        },
-
-                    ]
-                },
-                {
-                    label: "Feedback Manage",
+                    label: "Manage I Feedback ",
                     leftIcon: (<VscFeedback size={22} className="hover:text-red-500" />),
                     activeLeftIcon: (<VscFeedback size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -263,29 +188,8 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-                    label: "About us Manage",
-                    leftIcon: (<BiMessageAltDetail  size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<BiMessageAltDetail  size={22} className=" text-green-500" />),
-                    rightIcon: "sadf",
-                    path: "/aboutus",
-                    pathname: "aboutus",
-                    subMenuItems: [
-                        {
-                            label: "All About Us",
-                            path: "/aboutus",
-                            subMenuItems: [],
-                        },
-                        {
-                            label: "Create About Us",
-                            path: "/aboutus/create-aboutus",
-                            subMenuItems: [],
-                        },
 
-                    ]
-                },
-                {
-
-                    label: "FAQ Manage",
+                    label: "Manage I FAQ ",
                     leftIcon: (<FaDna size={22} className="hover:text-red-500" />),
                     activeLeftIcon: (<FaDna size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -306,36 +210,59 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-                    label: "Policy Manage",
-                    leftIcon: (<MdOutlinePolicy size={22} className="hover:text-red-500" />),
-                    activeLeftIcon: (<MdOutlinePolicy size={22} className=" text-green-500" />),
+
+                    label: "Manage I Inpire ",
+                    leftIcon: (<GiInspiration size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<GiInspiration size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
-                    path: "/policy",
-                    pathname: "policy",
+                    path: "/inspire",
+                    pathname: "inspire",
                     subMenuItems: [
                         {
-                            label: "All Policy",
-                            path: "/policy",
+                            label: "All Inspire",
+                            path: "/inspire",
                             subMenuItems: [],
                         },
                         {
-                            label: "Create Policy",
-                            path: "/policy/create-policy",
+                            label: "Create Inspire",
+                            path: "/inspire/create-inspire",
                             subMenuItems: [],
                         },
 
                     ]
                 },
-                // {
-                //     label: "Candidate Manage",
-                //     leftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current text-slate-400`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-slate-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-slate-400`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
-                //     activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current !text-indigo-500`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-indigo-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-indigo-200`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
-                //     rightIcon: "sadf",
-                //     path: "/candidates",
-                //     pathname: "candidates",
-                //     subMenuItems: [
                 {
-                    label: "Locate Manage",
+                    //                     label: "Jobs ",
+                    //                     leftIcon: (<FcBriefcase/>),
+                    //                     activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current !text-indigo-500`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-indigo-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-indigo-200`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
+                    // =======
+                    label: "Manage I Jobs ",
+                    leftIcon: (<FaBriefcase size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<FaBriefcase size={22} className="text-green-500" />),
+                    rightIcon: "sadf",
+                    path: "/jobs",
+                    pathname: "jobs",
+                    subMenuItems: [
+                        {
+                            label: "All Jobs",
+                            path: "/jobs",
+                            subMenuItems: [],
+                        },
+                        {
+                            label: "Create job",
+                            path: "/jobs/create-job",
+                            subMenuItems: [],
+                        },
+                        {
+                            label: "Applied Jobs",
+                            path: "/applied-jobs",
+                            subMenuItems: [],
+                        },
+                    ]
+                },
+
+                {
+                    label: "Manage I Locate ",
                     leftIcon: (<IoMdLocate size={22} className="hover:text-red-500" />),
                     activeLeftIcon: (<IoMdLocate size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -408,7 +335,28 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-                    label: "Permission Manage",
+                    label: "Manage I Policy ",
+                    leftIcon: (<MdOutlinePolicy size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<MdOutlinePolicy size={22} className=" text-green-500" />),
+                    rightIcon: "sadf",
+                    path: "/policy",
+                    pathname: "policy",
+                    subMenuItems: [
+                        {
+                            label: "All Policy",
+                            path: "/policy",
+                            subMenuItems: [],
+                        },
+                        {
+                            label: "Create Policy",
+                            path: "/policy/create-policy",
+                            subMenuItems: [],
+                        },
+
+                    ]
+                },
+                {
+                    label: "Manage I Permission ",
                     leftIcon: (<MdOutlinePolicy size={22} className="hover:text-red-500" />),
                     activeLeftIcon: (<MdOutlinePolicy size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -428,7 +376,7 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-                    label: "Role Manage",
+                    label: "Manage I Role ",
                     leftIcon: (<GiScrollQuill size={22} className="hover:text-red-500" />),
                     activeLeftIcon: (<GiScrollQuill size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -500,9 +448,75 @@ const SidebarObj = () => {
                     ],
 
                 },
+                
                 {
 
-                    label: "Terms & Condition",
+                    label: "Manage I Ticker ",
+                    leftIcon: (<BiSticker size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<BiSticker size={22} className=" text-green-500" />),
+                    rightIcon: "sadf",
+                    subMenuItems: [
+                        {
+                            label: "PhoneBook ",
+                            leftIcon: (<MdOutlineContactPhone size={22} className="hover:text-red-500" />),
+                            activeLeftIcon: (<MdOutlineContactPhone size={22} className=" text-green-500" />),
+                            rightIcon: "sadf",
+                            path: "/phonebook",
+                            pathname: "phonebook",
+                            subMenuItems: [
+                                {
+                                    label: "All PhoneBook",
+                                    path: "/phonebook",
+                                    subMenuItems: [],
+                                },
+                                {
+                                    label: "Create Business PhoneBook ",
+                                    path: "/phonebook/create-phonebook",
+                                    subMenuItems: [],
+                                }
+                            ]
+                        },
+
+                        {
+                            label: "Ticker ",
+                            leftIcon: (<BiSticker size={22} className="hover:text-red-500" />),
+                            activeLeftIcon: (<BiSticker size={22} className=" text-green-500" />),
+                            rightIcon: "sadf",
+                            path: "/ticker",
+                            pathname: "ticker",
+                            subMenuItems: [
+                                {
+                                    label: "All Ticker",
+                                    path: "/ticker",
+                                    subMenuItems: [],
+                                },
+                                {
+                                    label: "Create Ticker",
+                                    path: "/ticker/create-ticker",
+                                    subMenuItems: [],
+                                }
+                            ],
+                        },
+
+                    ]
+                },
+                
+                
+                
+                
+                // {
+                //     label: "Candidate ",
+                //     leftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current text-slate-400`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-slate-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-slate-400`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
+                //     activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current !text-indigo-500`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-indigo-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-indigo-200`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
+                //     rightIcon: "sadf",
+                //     path: "/candidates",
+                //     pathname: "candidates",
+                //     subMenuItems: [
+              
+                
+                {
+
+                    label: "Manage I Term & Con",
                     leftIcon: (<IoConstructSharp size={22} className="hover:text-red-500" />),
                     activeLeftIcon: (<IoConstructSharp size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -522,9 +536,31 @@ const SidebarObj = () => {
 
                     ]
                 },
+                {
+
+                    label: "Manage I User ",
+                    leftIcon: (<FaUserCog size={22} className="hover:text-red-500" />),
+                    activeLeftIcon: (<FaUserCog size={22} className=" text-green-500" />),
+                    rightIcon: "sadf",
+                    path: "/term",
+                    pathname: "term",
+                    subMenuItems: [
+                        {
+                            label: "All Terms Condition",
+                            path: "/terms",
+                            subMenuItems: [],
+                        },
+                        {
+                            label: "Create Terms Condition",
+                            path: "/terms/create-terms",
+                            subMenuItems: [],
+                        },
+
+                    ]
+                },
 
                 // {
-                //     label: "Candidate Manage",
+                //     label: "Candidate ",
                 //     leftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current text-slate-400`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-slate-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-slate-400`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
                 //     activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current !text-indigo-500`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-indigo-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-indigo-200`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
                 //     rightIcon: "sadf",
