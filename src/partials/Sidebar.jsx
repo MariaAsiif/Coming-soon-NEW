@@ -76,7 +76,7 @@ function Sidebar({
             </svg>
           </button>
           {/* Logo */}
-          <NavLink end to="/" className="block">
+          <NavLink end to="/dashboard" className="block">
             {sidebarExpanded ?
               // <<<<<<< HEAD
               //               <img src={hproxlogo} alt="hprox_lgo" className="lg:sidebar-expanded:block  lg:sidebar-expanded:w-[300px] h-[50px] " style={{objectFit:'contain'}}/>
@@ -101,7 +101,7 @@ function Sidebar({
                     if (item.subMenuItems.length === 0) {
                       return (
                         <li key={index} className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes(item.pathname) && 'bg-gray-500'}`}>
-                          <NavLink end to={item.path} className={`block text-slate-800 hover:text-red-500 truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-red-500' : ""}`} >
+                          <NavLink end to={item.path} className={`block text-slate-800 hover:text-black truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-black' : ""}`} >
                             <div className="flex items-center justify-between">
                               <div className="grow flex items-center">
                                 {pathname.includes(item.pathname) ? item.activeLeftIcon : item.leftIcon}
@@ -122,7 +122,7 @@ function Sidebar({
                         {(handleClick, open, handleSubClick, subopen) => {
                           return (
                             <React.Fragment>
-                              <a onClick={(e) => { e.preventDefault(); sidebarExpanded ? handleClick() : setSidebarExpanded(true); }} className={`block text-slate-800 hover:text-red-500 truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-red-500' : ""}`} href="#0" >
+                              <a onClick={(e) => { e.preventDefault(); sidebarExpanded ? handleClick() : setSidebarExpanded(true); }} className={`block text-slate-800 hover:text-black truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-black' : ""}`} href="#0" >
                                 <div className="flex items-center justify-between">
                                   <div className="flex items-center">
                                     {pathname.includes(item.pathname) ? item.activeLeftIcon : item.leftIcon}
@@ -141,7 +141,7 @@ function Sidebar({
                                     if (subitem.subMenuItems.length === 0) {
                                       return (
                                         <li key={s_index} className="mb-1 last:mb-0">
-                                          <NavLink end to={subitem.path} className={({ isActive }) => 'block text-gray-400 hover:text-red-500 sdfdsf transition duration-150 truncate ' + (isActive ? '!text-black font-bold' : '')}>
+                                          <NavLink end to={subitem.path} className={({ isActive }) => 'block text-gray-400 hover:text-black sdfdsf transition duration-150 truncate ' + (isActive ? '!text-black font-bold' : '')}>
                                             <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                               {subitem.label}
                                             </span>
@@ -155,7 +155,7 @@ function Sidebar({
                                           {(handleClick, open) => {
                                             return (
                                               <React.Fragment>
-                                                <a onClick={(e) => { e.preventDefault(); sidebarExpanded ? handleClick() : setSidebarExpanded(true); }} className={`block text-slate-800 hover:text-red-500 truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-red-500' : ""}`} href="#0" >
+                                                <a onClick={(e) => { e.preventDefault(); sidebarExpanded ? handleClick() : setSidebarExpanded(true); }} className={`block text-slate-800 hover:text-black truncate transition duration-150 ${pathname.includes(item.pathname) ? 'hover:text-black' : ""}`} href="#0" >
                                                   <div className="flex items-center justify-between">
                                                     <div className="flex items-center">
                                                       {pathname.includes(subitem.pathname) ? subitem.activeLeftIcon : subitem.leftIcon}
@@ -174,7 +174,7 @@ function Sidebar({
 
                                                       return (
                                                         <li key={s_index} className="mb-1 last:mb-0">
-                                                          <NavLink end to={subitem.path} className={({ isActive }) => 'block text-gray-400 hover:text-red-500 sdfdsf transition duration-150 truncate ' + (isActive ? '!text-black font-bold' : '')}>
+                                                          <NavLink end to={subitem.path} className={({ isActive }) => 'block text-gray-400 hover:text-black sdfdsf transition duration-150 truncate ' + (isActive ? '!text-black font-bold' : '')}>
                                                             <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                                               {subitem.label}
                                                             </span>
