@@ -19,6 +19,8 @@ const ViewEditInspire = ({ id, modalOpen, onClose, mode, data }) => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange ', });
     const [quoteDate, setquoteDate] = useState({ day: 10, month: 8, year: 2022 })
 
+    console.log(`hello i am in pop up`)
+
 
     console.log("quts", quoteDate)
 

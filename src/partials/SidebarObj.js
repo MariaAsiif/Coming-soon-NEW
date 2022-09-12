@@ -546,6 +546,11 @@ const SidebarObj = () => {
                     pathname: "user",
                     subMenuItems: [
                         {
+                            label: "User List",
+                            path: "/user/list",
+                            subMenuItems: [],
+                        },
+                        {
                             label: "All Assign Roles ",
                             path: "/user",
                             subMenuItems: [],
@@ -555,7 +560,6 @@ const SidebarObj = () => {
                             path: "/user/assign-role",
                             subMenuItems: [],
                         },
-
                     ]
                 },
 

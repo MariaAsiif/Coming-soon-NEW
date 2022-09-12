@@ -1,17 +1,25 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState,useRef} from 'react'
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import { useForm } from "react-hook-form";
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import Transition from '../../utils/Transition';
 import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
 import { Country, State, City } from 'country-state-city';
+import { Alert } from 'react-bootstrap';
+import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
+import moment from 'moment'
+import { callApi } from '../../utils/CallApi';
 
 const ViewEditUser = (props) => {
     const [all_Countries, setall_Countries] = useState([])
+    const { register, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange ', });
     const [all_States, setall_States] = useState([])
     const [all_Cities, setall_Cities] = useState([])
     const [countryCode, setCountryCode] = useState("")
+    const modalContent = useRef(null);
+
     const [recruitModel, setrecruitModel] = useState({
         surname: "Mr",
         fullname: "",
@@ -29,6 +37,8 @@ const ViewEditUser = (props) => {
         mobile: "",
         age: "",
     })
+
+    console.log(`hello i am pop`)
 
     const handleChange = (e) => {
         let { name, value } = e.target
@@ -54,271 +64,171 @@ const ViewEditUser = (props) => {
             }))
         }
     }
-
-    const { register, reset, watch ,  handleSubmit, formState: { errors } } = useForm({ mode: 'onChange ', });
+    const onSubmit = async (values) => {
+        const { created_at } = values;
+        const formattedDate =  moment(created_at).format('YYYY-MM-DD');
+        const payload = {...values, created_at: formattedDate}
+        let response = await callApi("/users/updateuser", "post", payload);
+        response.status === 'Success' && props.onClose()
+    }
 
     useEffect(() => {
         reset(props.data);
-
+        console.log(`props =============`, props)
     }, [props.data, reset]);
 
     return (
-        <Modal open={props.show} onClose={props.onClose} center classNames={{ modal: "w-11/12 p-0" }}>
-            <div className='bscontainer'>
-                <div className='row text-left'>
-                    <div className='col-lg-3 mb-4'>
-                        {/* <label className="block text-lg font-medium mb-1 uppercase" htmlFor="description">NAME</label> */}
-                        {props.mode === "view" ? (
-                            <p>{props.data.first_name}</p>
-                        ) :
-                            <div className='relative inline-block w-4/5 '>
-                                <input name='fullname'
-                                    type="text"
-                                    {...register('fullname')}
-                                    placeholder='Name'
-                                    className={`form-input w-full h-full  ${errors.fullname ? "border-red-400" : "border-gray-400"} `}
-                                />
-                                {errors.fullname && (
-                                    <p className="text-red-500 text-sm">{errors.fullname.message}</p>
-                                )}
-                                <span hidden={watch('fullname')} className='absolute  text-red-400 font-medium text-lg top-1/4 left-[70px]'>*</span>
-                                <span className={watch('fullname') ? `visible absolute top-1/4 right-3` : `invisible`}>
-                                    <FcCheckmark />
-                                </span>
-
-                            </div>
-                        }
-                    </div>
-                    <div className='col-lg-3 mb-4'>
-                        <label className="block text-lg font-medium mb-1 uppercase" htmlFor="description">First family name</label>
-                        {props.mode === "view" ? (
-                            <p>{props.data.first_family_name}</p>
-                        ) :
-                            <div className='col-lg-4 mb-4 relative'>
-                                {/* <label className="block text-sm font-medium mb-1" htmlFor="salary">First Family Name </label> */}
-                                <div className='absolute right-5 top-10'>
-                                    {!errors.firstFname && watch("firstFname") ? <FcCheckmark /> : errors.firstFname ? <div className=' text-red-500'><MdClose /></div> : null}
-                                </div>
-                                <input
-                                    {...register('firstFname')}
-                                    autoComplete="off"
-                                    className={`w-full  ${errors.firstFname ? "border-red-400" : "border-gray-400"}`}
-                                    name='firstFname' id="firstFname"
-                                    type="text"
-                                    placeholder="FIRST FAMILY NAME "
-
-                                />
-                                <span hidden={watch("firstFname")} className='absolute text-red-400 text-lg font-medium  top-9 left-[175px]'>*</span>
-
-                                {errors.firstFname && (
-                                    <p className="text-red-500 text-sm">{errors.firstFname.message}</p>
-                                )}
-                            </div>
-                        }
-                    </div>
-                    <div className='col-lg-3 mb-4'>
-                        <label className="block text-lg font-medium mb-1 uppercase" htmlFor="description">Second Family name</label>
-                        {props.mode === "view" ? (
-                            <p>{props.data.second_family_name}</p>
-                        ) :
-                            <div className='col-lg-4 mb-4 relative'>
-                                {/* <label className="block text-sm font-medium mb-1" htmlFor="secondFname">Second Family Name </label> */}
-                                <div className='absolute right-5 top-10'>
-                                    {!errors.secondFname && watch('secondFname') ? <FcCheckmark /> : errors.secondFname ? <div className=' text-red-500'><MdClose /></div> : null}
-                                </div>
-                                <input
-                                    {...register('secondFname')}
-                                    autoComplete="off"
-                                    className={`form-input w-full  ${errors.secondFname && 'border-red-500'}`}
-                                    name='secondFname' id="secondFname"
-                                    placeholder="2nd Family Name"
-
-                                    type="text" />
-                                <span hidden={watch('secondFname')} className='absolute text-red-400 text-sm font-medium  top-9 left-[170px]'>(optional)</span>
-
-
-                                {errors.secondFname && (
-                                    <p className="text-red-500 text-sm">{errors.secondFname.message}</p>
-                                )}
-                            </div>
-
-                        }
-                    </div>
-                    <div className='col-lg-3 mb-4'>
-                        <label className="block text-lg font-medium mb-1 uppercase" htmlFor="description">Third Family name</label>
-                        {props.mode === "view" ? (
-                            <p>{props.data.third_family_name}</p>
-                        ) :
-                            <div className='col-lg-4 mb-4 relative'>
-                                {/* <label className="block text-sm font-medium mb-1" htmlFor="thirdFname">Third Family Name </label> */}
-                                <div className='absolute right-5 top-10'>
-                                    {!errors.thirdFname && watch('thirdFname') ? <FcCheckmark /> : errors.thirdFname ? <div className=' text-red-500'><MdClose /></div> : null}
-                                </div>
-                                <input
-                                    {...register('thirdFname')}
-                                    autoComplete="off"
-                                    className={`form-input w-full  ${errors.thirdFname && 'border-red-500'}`}
-                                    name='thirdFname' id="thirdFname"
-                                    placeholder="3rd Family Name"
-                                    type="text"
-                                />
-                                <span hidden={watch('thirdFname')} className='absolute text-red-400 text-sm font-medium  top-9 left-[170px]'>(optional)</span>
-
-                                {errors.thirdFname && (
-                                    <p className="text-red-500 text-sm">{errors.thirdFname.message}</p>
-                                )}
-                            </div>
-                        }
-                    </div>
-                    <div className='col-lg-3 mb-4'>
-                        <label className="block text-lg font-medium mb-1 uppercase" htmlFor="description">email</label>
-                        {props.mode === "view" ? (
-                            <p>{props.data.email}</p>
-                        ) :
-
-                            <div className='col-lg-4 mb-4 relative'>
-                                {/* <label className="block text-sm font-medium mb-1" htmlFor="email">Email</label> */}
-                                <div className='absolute right-10 top-10'>
-                                    {!errors.email && watch('email') ? <FcCheckmark /> : errors.email ? <div className=' text-red-500'><MdClose /></div> : null}
-                                </div>
-                                <input
-                                    {...register('email')}
-                                    autoComplete="off"
-                                    className={`form-input w-full  ${errors.email && 'border-red-500'}`}
-                                    name='email' id="email"
-                                    placeholder="Email Address"
-                                    type="text" />
-                                <span hidden={watch('email')} className='absolute text-red-400 text-lg font-medium  top-9 left-[150px]'>*</span>
-
-                                {errors.email && (
-                                    <p className="text-red-500 text-sm">{errors.email.message}</p>
-                                )}
-                            </div>
-                        }
-                    </div>
-                    <div className='col-lg-3 mb-4'>
-                        <label className="block text-lg font-medium mb-1 uppercase" htmlFor="description">phone number</label>
-                        {props.mode === "view" ? (
-                            <p>{props.data.phoneNumber}</p>
-                        ) : null}
-                    </div>
-                    <div className='col-lg-3 mb-4'>
-                        {/* <label className="block text-lg font-medium mb-1" htmlFor="description">role</label> */}
-                        {props.mode === "view" ? (
-                            <p>{props.data.role}</p>
-                        ) : null}
-                    </div>
-                    <div className='col-lg-3 mb-4'>
-                        <label className="block text-lg font-medium mb-1" htmlFor="description">Country</label>
-                        {props.mode === "view" ? (
-                            <p>{props.data.country}</p>
-                        ) :
-                            <div className='col-lg-4 mb-4 relative'>
-                                {/* <label className="block text-sm font-medium mb-1" htmlFor="country">Country</label> */}
-                                <div className='absolute right-10 top-10'>
-                                    {!errors.country ? <FcCheckmark /> : errors.country ? <div className=' text-red-500'><MdClose /></div> : null}
-                                </div>
-
-
-                                <select
-                                    value={recruitModel.country}
-                                    onChange={handleChange}
-                                    name="country"
-                                    id="country"
-                                    className={`form-input w-full   ${errors.country && 'border-red-500'}`}
-                                >
-                                    <option defaultChecked disabled>Select Country </option>
-                                    {all_Countries.map((contry) => {
-                                        return (
-                                            <option value={contry.isoCode}>{contry.name}</option>
-
-                                        )
-                                    })
-                                    }
-
-                                </select>
-
-                            </div>
-                        }
-                    </div>
-                    <div className='col-lg-3 mb-4'>
-                        <label className="block text-lg font-medium mb-1" htmlFor="description">State</label>
-                        {props.mode === "view" ? (
-                            <p>{props.data.state}</p>
-                        ) :
-
-                            <div className='col-lg-4 mb-4 relative'>
-                                {/* <label className="block text-sm font-medium mb-1" htmlFor="state">State</label> */}
-                                <div className='absolute right-10 top-10'>
-                                    {!errors.state ? <FcCheckmark /> : errors.state ? <div className=' text-red-500'><MdClose /></div> : null}
-                                </div>
-                                <select
-                                    // {...register('state')}
-                                    value={recruitModel.state}
-                                    onChange={handleChange}
-                                    name="state"
-                                    id="state"
-                                    className={`form-input w-full   ${errors.state && 'border-red-500'}`}
-                                >
-                                    <option defaultChecked disabled>Select State </option>
-                                    {all_States.map((contry) => {
-                                        return (
-                                            <option value={contry.isoCode}>{contry.name}</option>
-
-                                        )
-                                    })
-                                    }
-
-                                </select>
-                                {/* {errors.state && (
-                                    <p className="text-red-500 text-sm">{errors.state.message}</p>
-                                )} */}
-                            </div>
-                        }
-                    </div>
-                    <div className='col-lg-3 mb-4'>
-                        <label className="block text-lg font-medium mb-1" htmlFor="description">City</label>
-                        {props.mode === "view" ? (
-                            <p>{props.data.city}</p>
-                        ) :
-                            <div className='col-lg-4 mb-4 relative'>
-                                {/* <label className="block text-sm font-medium mb-1" htmlFor="city">City</label> */}
-                                <div className='absolute right-10 top-10'>
-                                    {!errors.city ? <FcCheckmark /> : errors.city ? <div className=' text-red-500'><MdClose /></div> : null}
-                                </div>
-                                <select
-                                    // {...register('city')}
-                                    value={recruitModel.city}
-                                    onChange={handleChange}
-                                    name="city"
-                                    id="city"
-                                    className={`form-input w-full   ${errors.city && 'border-red-500'}`}
-                                >
-                                    <option defaultChecked disabled>Select city </option>
-                                    {all_Cities.map((contry) => {
-                                        return (
-                                            <option >{contry.name}</option>
-
-                                        )
-                                    })
-                                    }
-
-                                </select>
-                                {/* {errors.city && (
-                            <p className="text-red-500 text-sm">{errors.city.message}</p>
-                        )} */}
-                            </div>
-                        }
-                    </div>
-                    <div className='col-lg-3 mb-4'>
-                        <label className="block text-lg font-medium mb-1" htmlFor="description">Interest</label>
-                        {props.mode === "view" ? (
-                            <p>{props.data.interest.map((i) => <span key={i}>{i}</span>)}</p>
-                        ) : null}
+        <>
+        <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+        />
+        {/* Modal backdrop */}
+        <Transition
+            className="fixed inset-0 bg-slate-900 bg-opacity-30 z-50 transition-opacity"
+            show={props.show}
+            enter="transition ease-out duration-200"
+            enterStart="opacity-0"
+            enterEnd="opacity-100"
+            leave="transition ease-out duration-100"
+            leaveStart="opacity-100"
+            leaveEnd="opacity-0"
+            aria-hidden="true"
+        />
+        {/* Modal dialog */}
+        <Transition
+            id={props.id}
+            className="fixed inset-0 z-50 overflow-hidden flex items-center my-4 justify-center px-4 sm:px-6"
+            role="dialog"
+            aria-modal="true"
+            show={props.show}
+            enter="transition ease-in-out duration-200"
+            enterStart="opacity-0 translate-y-4"
+            enterEnd="opacity-100 translate-y-0"
+            leave="transition ease-in-out duration-200"
+            leaveStart="opacity-100 translate-y-0"
+            leaveEnd="opacity-0 translate-y-4"
+        >
+            <div ref={modalContent} className="bg-white rounded shadow-lg overflow-auto w-3/4 h-2/3">
+                {/* Modal header */}
+                <div className="px-5 py-3 border-b border-slate-200">
+                    <div className="flex justify-between items-center">
+                        <div className="font-semibold text-slate-800">View User</div>
+                        <button className="text-slate-400 hover:text-slate-500" onClick={props.onClose}>
+                            <div className="sr-only">Close</div>
+                            <svg className="w-4 h-4 fill-current">
+                                <path d="M7.95 6.536l4.242-4.243a1 1 0 111.415 1.414L9.364 7.95l4.243 4.242a1 1 0 11-1.415 1.415L7.95 9.364l-4.243 4.243a1 1 0 01-1.414-1.415L6.536 7.95 2.293 3.707a1 1 0 011.414-1.414L7.95 6.536z" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
+                <div className='bscontainer'>
+                    
+
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className='row p-5'>
+                        <div className='col-lg-4 mb-5'>
+                                <label className="block text-lg font-medium mb-1" htmlFor="description">First Family Name</label>
+                                {props.mode === "view" ?
+                                    (
+                                        <p>{props.data.first_family_name}</p>
+                                    ) : (
+
+                                        <input  {...register("first_family_name", { required: true })} className={`form-input w-full ${errors.authorName ? "border-red-500" : "border-green-500"}`} />
+                                    )}
+                                {errors.authorName && <span className='text-red-500'>This field is required</span>}
+                            </div>
+                            <div className='col-lg-4 mb-5'>
+                                <label className="block text-lg font-medium mb-1" htmlFor="description">Name</label>
+                                {props.mode === "view" ?
+                                    (
+                                        <p>{props.data.first_name}</p>
+                                    ) : (
+
+                                        <input  {...register("first_name", { required: true })} className={`form-input w-full ${errors.authorName ? "border-red-500" : "border-green-500"}`} />
+                                    )}
+                                {errors.authorName && <span className='text-red-500'>This field is required</span>}
+                            </div>
+                            <div className='col-lg-4 mb-5'>
+                                <label className="block text-lg font-medium mb-1" htmlFor="description">Email</label>
+                                {props.mode === "view" ?
+                                    (
+                                        <p>{props.data.email}</p>
+                                    ) : (
+
+                                        <input  {...register("email", { required: true })} className={`form-input w-full ${errors.authorName ? "border-red-500" : "border-green-500"}`} />
+                                    )}
+                                {errors.authorName && <span className='text-red-500'>This field is required</span>}
+                            </div>
+                            <div className='col-lg-4 mb-5'>
+                                <label className="block text-lg font-medium mb-1" htmlFor="description">Phone Number</label>
+                                {props.mode === "view" ?
+                                    (
+                                        <p>{props.data.phoneNumber}</p>
+                                    ) : (
+
+                                        <input  {...register("phoneNumber", { required: true })} className={`form-input w-full ${errors.authorName ? "border-red-500" : "border-green-500"}`} />
+                                    )}
+                                {errors.authorName && <span className='text-red-500'>This field is required</span>}
+                            </div>
+                            <div className='col-lg-4 mb-5'>
+                                <label className="block text-lg font-medium mb-1" htmlFor="description">Role</label>
+                                {props.mode === "view" ?
+                                    (
+                                        <p>{props.data.role}</p>
+                                    ) : (
+
+                                        <input  {...register("role", { required: true })} className={`form-input w-full ${errors.authorName ? "border-red-500" : "border-green-500"}`} />
+                                    )}
+                                {errors.authorName && <span className='text-red-500'>This field is required</span>}
+                            </div>
+                            <div className='col-lg-4 mb-5'>
+                                <label className="block text-lg font-medium mb-1" htmlFor="description">Registered Date</label>
+                                {props.mode === "view" ?
+                                    (
+                                        <p>{props.data.created_at}</p>
+                                    ) : (
+
+                                        <input  {...register("created_at", { required: true })} className={`form-input w-full ${errors.authorName ? "border-red-500" : "border-green-500"}`} />
+                                    )}
+                                {errors.authorName && <span className='text-red-500'>This field is required</span>}
+                            </div>
+                            {/* <div className='col-lg-4 mb-5'>
+                                <label className="block text-lg font-medium mb-1" htmlFor="description">QUOTE DATE</label>
+                                {mode === "view" ?
+                                    (
+                                        <p>{moment(data.quoteDate).format('MM/DD/YYYY')}</p>
+                                    ) : (
+                                        <DatePicker
+                                            value={quoteDate}
+                                            onChange={(date) => setquoteDate(date)}
+                                            renderInput={renderCustomInput} // render a custom input
+                                            shouldHighlightWeekends
+                                        // calendarPopperPosition="bottom"
+                                        />
+                                    )}
+                            </div> */}
+                            {
+                                props.mode !== "view" ? (
+                                    <div className='col-lg-12'>
+                                        <button type='submit' className="btn bg-red-500 hover:bg-green-600 text-white" >Update Inspire</button>
+                                    </div>
+                                ) : null
+                            }
+                        </div>
+                    </form>
+
+                </div>
             </div>
-        </Modal>
+        </Transition>
+    </>
     )
 }
 

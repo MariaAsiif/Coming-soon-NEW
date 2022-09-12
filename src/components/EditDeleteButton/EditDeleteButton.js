@@ -3,13 +3,13 @@ import { IoEyeOutline } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
 const EditDeleteButton = ({ moduleName, data, showPopup, deleteToggle , delePopup }) => {
 
-    const { permission, role } = useSelector((state) => state.userAuth.userInfo)
+    // const { permission, role } = useSelector((state) => state.userAuth.userInfo)
     
-    console.log("module", permission.permissions)
+    // console.log("module", permission.permissions)
 
     return (
         <div>
-            {role === "superadmin" ?
+            {/* {role === "superadmin" ? */}
                 <div className="space-x-1">
                     <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => showPopup(e, "edit", data)}>
                         <span className="sr-only">Edit</span>
@@ -28,7 +28,7 @@ const EditDeleteButton = ({ moduleName, data, showPopup, deleteToggle , delePopu
                         </svg>
                     </button>
                 </div>
-                :
+                {/* :
                 permission.permissions.filter((f) => f.moduleName === moduleName) ?
                     <div className="space-x-1" >
                         <button disabled={permission.permissions.some((f) => f.moduleName === "Create Inspire") ? false : true} className="disabled:cursor-not-allowed text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => showPopup(e, "edit", data)}>
@@ -49,10 +49,10 @@ const EditDeleteButton = ({ moduleName, data, showPopup, deleteToggle , delePopu
                         </button>
                     </div>
                     :
-                    null
+                    null */}
 
 
-            }
+            {/* } */}
 
         </div>
     )

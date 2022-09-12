@@ -106,6 +106,7 @@ import CreateTermsCondition from './pages/termsCondition/CreateTerms';
 import AboutUs from './pages/AboutUs/AboutUs';
 import CreateAboutUs from './pages/AboutUs/CreateAboutUs';
 import AssignRole from './pages/user/AssignRole';
+import Users from './pages/user/users';
 
 
 const RequireAuth = ({ children }) => {
@@ -236,6 +237,7 @@ function App() {
         <Route path="/user" element={<RequireAuth><MainWrapper /></RequireAuth>} >
           <Route index element={<Roles />} />
           <Route path="assign-role" element={<AssignRole />} />
+          <Route path="list" element={<Users />} />
         </Route>
 
 
