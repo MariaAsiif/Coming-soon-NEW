@@ -18,7 +18,7 @@ const SidebarObj = () => {
             menuitems: [
 
                 {
-                    label: "Manage I About us ",
+                    label: "Manage I About us",
                     leftIcon: (<BiMessageAltDetail  size={22}  />),
                     activeLeftIcon: (<BiMessageAltDetail  size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -67,7 +67,7 @@ const SidebarObj = () => {
                     //                     leftIcon: (<FcBusinessman/>),
                     //                     activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current !text-indigo-500`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" /> <path className={`fill-current text-indigo-600`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" /> <path className={`fill-current text-indigo-200`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" /> </svg>),
                     // =======
-                    label: "Manage I Candidate ",
+                    label: "Manage I Candidate",
                     leftIcon: (<FaUserGraduate size={22} className=" hover:text-black" />),
                     activeLeftIcon: (<FaUserGraduate size={22} className="text-green-500" />),
                     rightIcon: "sadf",
@@ -93,7 +93,7 @@ const SidebarObj = () => {
 
                 {
                     // <<<<<<< HEAD
-                    label: "Manage I Department ",
+                    label: "Manage I Department",
                     leftIcon: (<RiLuggageDepositLine size={22} className=" hover:text-black" />),
                     activeLeftIcon: (<RiLuggageDepositLine size={22} className="text-green-500" />),
                     rightIcon: "sadf",
@@ -117,7 +117,7 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-                    label: "Manage I Designation ",
+                    label: "Manage I Designation",
                     leftIcon: (<SiSlideshare size={22} className=" hover:text-black" />),
                     activeLeftIcon: (<SiSlideshare size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -143,7 +143,7 @@ const SidebarObj = () => {
                 
                 {
 
-                    label: "Manage I Employeee ",
+                    label: "Manage I Employeee",
                     leftIcon: (<svg className="shrink-0 h-6 w-6 hover:text-black" viewBox="0 0 24 24"> <path className={`fill-current text-slate-600 hover:text-black`} d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" /> <path className={`fill-current text-slate-400 hover:text-black`} d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" /> </svg>),
                     activeLeftIcon: (<svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24"> <path className={`fill-current text-black`} d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" /> <path className={`fill-current text-red-300`} d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" /> </svg>),
                     rightIcon: "sadf",
@@ -167,7 +167,7 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-                    label: "Manage I Feedback ",
+                    label: "Manage I Feedback",
                     leftIcon: (<VscFeedback size={22}  />),
                     activeLeftIcon: (<VscFeedback size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -189,7 +189,7 @@ const SidebarObj = () => {
                 },
                 {
 
-                    label: "Manage I FAQ ",
+                    label: "Manage I FAQ",
                     leftIcon: (<FaDna size={22}  />),
                     activeLeftIcon: (<FaDna size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -211,7 +211,7 @@ const SidebarObj = () => {
                 },
                 {
 
-                    label: "Manage I Inpire ",
+                    label: "Manage I Inspire",
                     leftIcon: (<GiInspiration size={22}  />),
                     activeLeftIcon: (<GiInspiration size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -262,7 +262,7 @@ const SidebarObj = () => {
                 },
 
                 {
-                    label: "Manage I Locate ",
+                    label: "Manage I Locate",
                     leftIcon: (<IoMdLocate size={22}  />),
                     activeLeftIcon: (<IoMdLocate size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -335,7 +335,7 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-                    label: "Manage I Policy ",
+                    label: "Manage I Policy",
                     leftIcon: (<MdOutlinePolicy size={22}  />),
                     activeLeftIcon: (<MdOutlinePolicy size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -356,7 +356,7 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-                    label: "Manage I Permission ",
+                    label: "Manage I Permission",
                     leftIcon: (<MdOutlinePolicy size={22}  />),
                     activeLeftIcon: (<MdOutlinePolicy size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -376,7 +376,7 @@ const SidebarObj = () => {
                     ]
                 },
                 {
-                    label: "Manage I Role ",
+                    label: "Manage I Role",
                     leftIcon: (<GiScrollQuill size={22}  />),
                     activeLeftIcon: (<GiScrollQuill size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -451,7 +451,7 @@ const SidebarObj = () => {
                 
                 {
 
-                    label: "Manage I Ticker ",
+                    label: "Manage I Ticker",
                     leftIcon: (<BiSticker size={22}  />),
                     activeLeftIcon: (<BiSticker size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
@@ -478,7 +478,7 @@ const SidebarObj = () => {
                         },
 
                         {
-                            label: "Ticker ",
+                            label: "Ticker",
                             leftIcon: (<BiSticker size={22}  />),
                             activeLeftIcon: (<BiSticker size={22} className=" text-green-500" />),
                             rightIcon: "sadf",
@@ -538,21 +538,21 @@ const SidebarObj = () => {
                 },
                 {
 
-                    label: "Manage I User ",
+                    label: "Manage I User",
                     leftIcon: (<FaUserCog size={22}  />),
                     activeLeftIcon: (<FaUserCog size={22} className=" text-green-500" />),
                     rightIcon: "sadf",
-                    path: "/term",
-                    pathname: "term",
+                    path: "/user",
+                    pathname: "user",
                     subMenuItems: [
                         {
-                            label: "All Terms Condition",
-                            path: "/terms",
+                            label: "All Assign Roles ",
+                            path: "/user",
                             subMenuItems: [],
                         },
                         {
-                            label: "Create Terms Condition",
-                            path: "/terms/create-terms",
+                            label: "Assign Role",
+                            path: "/user/assign-role",
                             subMenuItems: [],
                         },
 

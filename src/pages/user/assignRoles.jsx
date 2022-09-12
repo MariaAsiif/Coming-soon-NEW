@@ -7,7 +7,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import ViewEditTicker from '../../components/Popups/ViewEditTicker';
 import DeletePopup from '../../components/deletePopups/DeletePopups';
 import ImageViewerPopup from '../../components/Popups/ImageViewerPopup';
-const Ticker = () => {
+const Roles = () => {
     const [allTicker, setallTicker] = useState([])
     const [tickerPopup, settickerPopup] = useState(false)
     const [delPopup, setDelPopup] = useState(false)
@@ -229,4 +229,4 @@ const Ticker = () => {
     )
 }
 
-export default Ticker
+export default Roles
