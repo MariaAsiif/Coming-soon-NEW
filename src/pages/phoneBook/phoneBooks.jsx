@@ -79,8 +79,8 @@ const PhoneBooks = () => {
                         }
 
                     }
-                    const response = await callApi("/tickers/getTickersWithFullDetails", "post", payload)
-                    setallTicker(response.data.tickers)
+                    const response = await callApi("/phonebooks/getPhoneBooksWithFullDetailsPublic", "post", payload)
+                    setallTicker(response.data.phonebooks)
                 } catch (error) {
                     console.log(error);
                 }

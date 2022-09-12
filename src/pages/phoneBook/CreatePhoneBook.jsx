@@ -17,13 +17,14 @@ const CreatePhoneBook = () => {
 
     const { register, watch, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', });
 
-
+console.log("file" , file )
 
     const onSubmit = async (data) => {
-        console.log(data);
-        let formData = new FormData();    //formdata object
+      
 
-        formData.append('logoimg', data.logoimg);   //append the values with key, value pair
+        let formData = new FormData();    
+
+        formData.append('logoimg', file);   //append the values with key, value pair
 
         formData.append('request', JSON.stringify({
             businessPhoneBookText: data.businessPhoneBookText,
@@ -103,7 +104,7 @@ const CreatePhoneBook = () => {
                         <div className='absolute right-5 top-10'>
                             {!errors.logoimg && watch('logoimg') ? <FcCheckmark /> : errors.logo ? <div className=' text-red-500'><MdClose /></div> : null}
                         </div>
-                        <input {...register('logoimg')} type="file" className={`form-input w-full h-[42px]  ${errors.logoimg && 'border-red-500'}`} />
+                        <input  type="file" className={`form-input w-full h-[42px`} onChange={(e) => setFile(e.target.files[0])} />
                         <small className='text-red-500'>only png, svg images can be added</small>
                     </div>
                     <div className='col-lg-12'>

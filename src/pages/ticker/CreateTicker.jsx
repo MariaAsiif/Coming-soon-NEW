@@ -3,37 +3,58 @@ import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { callApi } from '../../utils/CallApi';
 import { Link } from "react-router-dom"
+import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
+import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 const schema = yup.object({
     name: yup.string().required("Ticker Name is Required"),
-    businessName: yup.string().required()
+    // businessName: yup.string().required()
 
 
 });
 
 const CreateTicker = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
 
+    const [expiryDate, setexpiryDate] = useState({ day: dd, month: mm, year: yyyy })
+    const [startDate, setStartDate] = useState({ day: dd, month: mm, year: yyyy })
     const [companySetting, setCompanySetting] = useState(true)
-    const [file, setFile] = useState('')
+    const [name, setNames] = useState({})
     const [allbusinesses, setallbusinesses] = useState([])
 
-    const { register, watch, reset, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+    const { register, watch, reset, control, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
+
+
+    const handleChange = (e) => {
+        let find = allbusinesses.find((f) => f._id === e.target.value)
+        setNames(find)
+    }
 
 
 
     const onSubmit = async (data) => {
         try {
-            let formdata = new FormData()
-            formdata.append('logoimg', file);
-            formdata.append('request', JSON.stringify({
+
+            let startedDate = `${startDate.year}-${startDate.month}-${startDate.day}`;
+            let endDate = `${expiryDate.year}-${expiryDate.month}-${expiryDate.day}`;
+
+            let payload = {
+                phonebookid: name?._id,
+                logoFile: name?.logoFile,
                 tickerText: data.name,
+                startDate: startedDate,
+                expiryDate: endDate,
                 "active": true
-            }));
-            const res = await callApi("/tickers/createTicker", "post", formdata)
+            }
+          
+            const res = await callApi("/tickers/createTicker", "post", payload)
             if (res.status === "Success") {
                 toast.success(res.message);
                 reset()
@@ -49,6 +70,7 @@ const CreateTicker = () => {
     }
 
     console.log("error", errors)
+    console.log("name", name)
 
     useEffect(() => {
         (async () => {
@@ -70,6 +92,34 @@ const CreateTicker = () => {
             }
         })();
     }, [])
+
+
+    // ****************** Datepicker Content ***********
+    const renderStartDate = ({ ref }) => (
+        < div className='relative cursor-pointe w-full'>
+            <input readOnly ref={ref} // necessary  placeholder="yyy-mm-dd"
+                value={startDate ? `${startDate.year}/${startDate.month}/${startDate.day}` : ''}
+                className={` form-input w-full outline-blue-400 cursor-pointer z-30  px-2 py-2  border-gray-400`}
+            />
+            <div className={`visible absolute top-3 cursor-pointer right-5`}>   <FcCheckmark />   </div>
+
+        </div >
+    )
+
+
+    // ****************** Datepicker Content ***********
+    const renderEndDate = ({ ref }) => (
+        < div className='relative cursor-pointe w-full'>
+            <input readOnly ref={ref} // necessary  placeholder="yyy-mm-dd"
+                value={expiryDate ? `${expiryDate.year}/${expiryDate.month}/${expiryDate.day}` : ''}
+                className={` form-input w-full outline-blue-400 cursor-pointer z-30  px-2 py-2  border-gray-400`}
+            />
+            <div className={`visible absolute top-3 cursor-pointer right-5`}>   <FcCheckmark />   </div>
+
+        </div >
+    )
+
+
     return (
         <div className='bscontainer-fluid'>
             <ToastContainer
@@ -117,8 +167,10 @@ const CreateTicker = () => {
                         <div className='absolute right-5 top-10'>
                             {!errors.businessName && watch('businessName') ? <FcCheckmark className='mr-5' /> : errors.businessName ? <div className=' text-red-500'><MdClose className='mr-5' /></div> : null}
                         </div>
-                        <select  {...register('businessName')} className={`w-full  ${errors.businessName ? "border-red-400" : "border-gray-400"}`}>
-                            {allbusinesses.map((business) => <option key={business._id}>{business.businessPhoneBookText}</option>)}
+                        <select onChange={handleChange}  className={`w-full  ${errors.businessName ? "border-red-400" : "border-gray-400"}`}>
+                            {allbusinesses.map((business) => <option key={business._id} value={business._id}  >
+                                <span >{business.businessPhoneBookText}</span>
+                            </option>)}
                         </select>
 
                         {errors.businessName && (
@@ -173,6 +225,45 @@ const CreateTicker = () => {
                                 <div className="text-sm text-slate-400 italic ml-2">{companySetting ? 'Active' : 'Deactivate'}</div>
                             </div>
                         </div>
+                    </div>
+
+                    <div className='col-lg-4 mb-4 '>
+                        <label className="block text-sm font-medium mb-1 "  >Start Date</label>
+                        <div className="relative">
+                            <Controller
+                                control={control}
+                                name="expiryDate"
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <DatePicker
+                                        value={value}
+                                        onChange={setStartDate}
+                                        renderInput={renderStartDate} // render a custom input
+                                        shouldHighlightWeekends
+                                    />
+                                )}
+                            />
+                        </div>
+
+
+                    </div>
+                    <div className='col-lg-4 mb-4 '>
+                        <label className="block text-sm font-medium mb-1 "  >End Date</label>
+                        <div className="relative">
+                            <Controller
+                                control={control}
+                                name="expiryDate"
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <DatePicker
+                                        value={value}
+                                        onChange={setexpiryDate}
+                                        renderInput={renderEndDate} // render a custom input
+                                        shouldHighlightWeekends
+                                    />
+                                )}
+                            />
+                        </div>
+
+
                     </div>
 
                     <div className='col-lg-12'>
