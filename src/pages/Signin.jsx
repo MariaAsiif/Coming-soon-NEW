@@ -73,7 +73,7 @@ function Signin() {
 
         } else {
           dispatch(signin({ token: response.token, userdata: response.data }))
-          navigate("/dashboard");
+          navigate(from, { replace: true });
         }
       }
       catch (err) {

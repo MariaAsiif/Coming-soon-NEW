@@ -60,7 +60,7 @@ function Sidebar({
     }
   }, [sidebarExpanded]);
 
-  console.log("storedSidebarExpanded",)
+  console.log("storedSidebarExpanded", permission)
 
   return (
     <div>
