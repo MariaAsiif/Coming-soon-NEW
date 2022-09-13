@@ -1,10 +1,8 @@
 // import React from 'react'
-import CommingSoon from './components/CommingSoon/CommingSoon'
-
+import CommingSoon from './components/CommingSoon/CommingSoon';
 
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-
 
 import './charts/ChartjsConfig';
 
@@ -58,7 +56,7 @@ import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 
 import MainWrapper from './pages/MainWrapper';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 import Jobs from './pages/Jobs/Jobs';
 import CreateJob from './pages/Jobs/CreateJob';
@@ -93,7 +91,7 @@ import CreateRole from './pages/role/Roles/CreateRole';
 import Roles from './pages/role/Roles/roles';
 import SinglePermission from './pages/role/Singlepermission/singlePermission';
 import CreateSinglePermission from './pages/role/Singlepermission/CreatePermission';
-import MutiplePermission from './pages/role/MultiplePermission/multiplepermission'
+import MutiplePermission from './pages/role/MultiplePermission/multiplepermission';
 import CreateMultiplePermission from './pages/role/MultiplePermission/CreatePermission';
 
 import Doctors from './pages/locate/Doctors/Doctors';
@@ -107,139 +105,281 @@ import AboutUs from './pages/AboutUs/AboutUs';
 import CreateAboutUs from './pages/AboutUs/CreateAboutUs';
 import AssignRole from './pages/user/AssignRole';
 import Users from './pages/user/users';
-
+import CreateUsers from './pages/user/CreateUser';
 
 const RequireAuth = ({ children }) => {
   const token = useSelector((state) => state.userAuth.loginInfo.token);
   let location = useLocation();
   if (!token) {
-    return <Navigate to="/signin" state={{ from: location }} replace />;
+    return <Navigate to='/signin' state={{ from: location }} replace />;
   }
   return children;
-}
-
+};
 
 function App() {
-
   const location = useLocation();
 
   useEffect(() => {
-    document.querySelector('html').style.scrollBehavior = 'auto'
-    window.scroll({ top: 0 })
-    document.querySelector('html').style.scrollBehavior = ''
+    document.querySelector('html').style.scrollBehavior = 'auto';
+    window.scroll({ top: 0 });
+    document.querySelector('html').style.scrollBehavior = '';
   }, [location.pathname]); // triggered on route change
 
   return (
     <>
-
       <Routes>
-        <Route exact path="/" element={<CommingSoon />} />
-        <Route exact path="/user-feedback" element={<UserFeedback />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route exact path='/' element={<CommingSoon />} />
+        <Route exact path='/user-feedback' element={<UserFeedback />} />
+        <Route path='/signin' element={<Signin />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route
+          path='/dashboard'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Dashboard />} />
-          <Route path="analytics" element={<Analytics />} />
-          <Route path="fintech" element={<Fintech />} />
+          <Route path='analytics' element={<Analytics />} />
+          <Route path='fintech' element={<Fintech />} />
         </Route>
-        <Route path="/department" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/department'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Department />} />
-          <Route path="create-department" element={<CreateDepartment />} />
+          <Route path='create-department' element={<CreateDepartment />} />
         </Route>
-        <Route path="/designation" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/designation'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Designation />} />
-          <Route path="create-designation" element={<CreateDesignation />} />
+          <Route path='create-designation' element={<CreateDesignation />} />
         </Route>
 
-        <Route path="/jobs" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/jobs'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Jobs />} />
-          <Route path="create-job" element={<CreateJob />} />
+          <Route path='create-job' element={<CreateJob />} />
         </Route>
 
-        <Route path="/candidates" element={<RequireAuth><MainWrapper /> </RequireAuth>} >
+        <Route
+          path='/candidates'
+          element={
+            <RequireAuth>
+              <MainWrapper />{' '}
+            </RequireAuth>
+          }
+        >
           <Route index element={<Candidate />} />
-          <Route path="create-candidate" element={<CreateCandidate />} />
+          <Route path='create-candidate' element={<CreateCandidate />} />
         </Route>
-        <Route path="/employers" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/employers'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Employers />} />
-          <Route path="create-employers" element={<CreateEmployer />} />
+          <Route path='create-employers' element={<CreateEmployer />} />
         </Route>
-        <Route path="/inspire" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/inspire'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Inspire />} />
-          <Route path="create-inspire" element={<CreateInspire />} />
+          <Route path='create-inspire' element={<CreateInspire />} />
         </Route>
 
-        <Route path="/ticker" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/ticker'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Ticker />} />
-          <Route path="create-ticker" element={<CreateTicker />} />
+          <Route path='create-ticker' element={<CreateTicker />} />
         </Route>
 
-
-        <Route path="/phonebook" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/phonebook'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<PhoneBooks />} />
-          <Route path="create-phonebook" element={<CreatePhoneBook />} />
+          <Route path='create-phonebook' element={<CreatePhoneBook />} />
         </Route>
 
-        <Route path="/feedback" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/feedback'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<FeedBack />} />
-          <Route path="create-feedback" element={<CreateFeedback />} />
+          <Route path='create-feedback' element={<CreateFeedback />} />
         </Route>
 
-        <Route path="/locate/" element={<RequireAuth><MainWrapper /></RequireAuth>} >
-          <Route path="doctor" element={<Doctors />} />
-          <Route path="lawyer" element={<Lawyers />} />
-          <Route path="services" element={<Services />} />
-          <Route path="doctor/create-doctor" element={<CreateDoctor />} />
-          <Route path="lawyer/create-lawyer" element={<CreateLawyer />} />
-          <Route path="services/create-service" element={<CreateServices />} />
+        <Route
+          path='/locate/'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
+          <Route path='doctor' element={<Doctors />} />
+          <Route path='lawyer' element={<Lawyers />} />
+          <Route path='services' element={<Services />} />
+          <Route path='doctor/create-doctor' element={<CreateDoctor />} />
+          <Route path='lawyer/create-lawyer' element={<CreateLawyer />} />
+          <Route path='services/create-service' element={<CreateServices />} />
         </Route>
 
-        <Route path="/faq" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/faq'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Faqs />} />
-          <Route path="create-faq" element={<CreateFaq />} />
+          <Route path='create-faq' element={<CreateFaq />} />
         </Route>
 
-        <Route path="/policy" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/policy'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Policy />} />
-          <Route path="create-policy" element={<CreatePolicy />} />
+          <Route path='create-policy' element={<CreatePolicy />} />
         </Route>
 
-        <Route path="/permission" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/permission'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Permission />} />
-          <Route path="create-permission" element={<CreatePermission />} />
+          <Route path='create-permission' element={<CreatePermission />} />
         </Route>
 
-        <Route path="/roles" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/roles'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Roles />} />
-          <Route path="create-roles" element={<CreateRole />} />
+          <Route path='create-roles' element={<CreateRole />} />
         </Route>
 
-        <Route path="/singlePermission" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/singlePermission'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<SinglePermission />} />
-          <Route path="create-permission/:id" element={<CreateSinglePermission />} />
+          <Route
+            path='create-permission/:id'
+            element={<CreateSinglePermission />}
+          />
         </Route>
 
-        <Route path="/multiplePermission" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/multiplePermission'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<MutiplePermission />} />
-          <Route path="create-permission/:id" element={<CreateMultiplePermission />} />
+          <Route
+            path='create-permission/:id'
+            element={<CreateMultiplePermission />}
+          />
         </Route>
 
-        <Route path="/terms" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/terms'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<TermsConditions />} />
-          <Route path="create-terms" element={<CreateTermsCondition />} />
+          <Route path='create-terms' element={<CreateTermsCondition />} />
         </Route>
 
-        <Route path="/aboutus" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/aboutus'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<AboutUs />} />
-          <Route path="create-aboutus" element={<CreateAboutUs />} />
+          <Route path='create-aboutus' element={<CreateAboutUs />} />
         </Route>
 
-        <Route path="/user" element={<RequireAuth><MainWrapper /></RequireAuth>} >
+        <Route
+          path='/user'
+          element={
+            <RequireAuth>
+              <MainWrapper />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Roles />} />
-          <Route path="assign-role" element={<AssignRole />} />
-          <Route path="list" element={<Users />} />
+          <Route path='assign-role' element={<AssignRole />} />
+          <Route path='list' element={<Users />} />
+          <Route path='list/create-user' element={<CreateUsers />} />
         </Route>
-
 
         {/* <Route path="/ecommerce" element={ <MainWrapper />} >
           <Route index path="customers" element={<Customers />} />
@@ -354,8 +494,7 @@ function App() {
           <Route path="accordion" element={<AccordionPage />} />
           <Route path="icons" element={<IconsPage />} />
         </Route> */}
-        <Route path="*" element={<PageNotFound />} />
-
+        <Route path='*' element={<PageNotFound />} />
       </Routes>
     </>
   );
