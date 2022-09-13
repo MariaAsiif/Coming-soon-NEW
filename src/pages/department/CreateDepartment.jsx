@@ -24,26 +24,13 @@ const CreateDepartment = () => {
 
     const onSubmit = async (data) => {
         console.log("Data", data)
-        // try {
-        //     const config = {
-        //         headers: {
-        //             'Authorization': 'Bearer ' + token
-        //         }
-        //     };
-        //     let response = await axios.post('http://localhost:5873/jobs/createjob', config);
-        //     console.log(response);
-        //     if (response.data.status === "Success") {
-        //         navigate("/jobs", { replace: true });
-        //         toast.success(response.data.message);
+        try {
+          
+            
 
-        //     }
-        //     else {
-        //         toast.error(response.data.message);
-        //     }
-
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
         <div className='bscontainer-fluid'>

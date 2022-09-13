@@ -111,7 +111,7 @@ console.log("label",LabelName)
         {/* Links */}
         <div className="space-y-8">
           {sidebaritems.map((group, i) => {
-            console.log("item", group)
+     
 
             return (
               <div key={i}>
@@ -240,7 +240,7 @@ console.log("label",LabelName)
                   :
 
                   <ul className="mt-3 max-h-[400px] overflow-auto">
-                    {group.menuitems?.filter((f) => permission?.permissions?.some((s) => s?.moduleName === f?.label)).map((item, index) => {
+                    {group.menuitems?.map((item, index) => {
                       if (item.subMenuItems.length === 0) {
                         return (
                           <li key={index} className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes(item.pathname) && 'bg-gray-500'}`}>
@@ -284,7 +284,7 @@ console.log("label",LabelName)
                                   </a>
                                   <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                                     <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
-                                      {item.subMenuItems.filter((f) => LabelName.includes(f.label)).map((subitem, s_index) => {
+                                      {item.subMenuItems.map((subitem, s_index) => {
                                         if (subitem.subMenuItems.length === 0) {
                                           return (
                                             <li key={s_index} className="mb-1 last:mb-0">
