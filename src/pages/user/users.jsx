@@ -31,7 +31,7 @@ const Users = () => {
   const deleteUser = async (delId) => {
     let value = {
       userid: delId,
-      active: true
+      active: false
     };
     setDelPopup(false)
     try {
