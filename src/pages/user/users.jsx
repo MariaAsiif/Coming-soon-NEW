@@ -22,32 +22,56 @@ const Users = () => {
     setUserRow(data);
   };
 
-  const deletePopToggle = (id) => {
+  const deletePopToggle = async (id) => {
     setDelId(id);
     setDelPopup(true);
+    console.log(`id ===========`, id)
   };
 
-  const deleteInspire = async () => {
+  const deleteUser = async (delId) => {
     let value = {
-      id: delId,
+      userid: delId,
+      active: true
     };
+    setDelPopup(false)
     try {
-      // const res = await callApi("/roles/removeRole", "post", value)
-      // if (res.status === "Success") {
-      //     toast.success(res.message);
-      //     setDelPopup(false)
-      //     let oldinspires = allrols
-      //     const updatedInspires = oldinspires.filter((inspire) => inspire._id !== res.data._id)
-      //     setallrols(updatedInspires)
-      // }
-      // else {
-      //     toast.error(res.message);
-      // }
+      const res = await callApi("/users/activeUser", "post", value)
+      if (res.status === "Success") {
+          toast.success(res.message);
+          
+          let oldUsers = users
+          const updateUsers = oldUsers.filter((user) => user._id !== res.data._id)
+          setUsers(updateUsers)
+      }
+      else {
+          toast.error(res.message);
+      }
     } catch (error) {}
   };
 
-  const handleApproved = () => {
+  const handleApproved = async (id, status) => {
     console.log('This is approved function');
+    let value = {
+      userid: id,
+      approved: status
+    };
+    try {
+      const res = await callApi("/users/approveDisapproveUser", "post", value)
+      if (res.status === "Success") {
+          toast.success(res.message);
+          let oldUsers = users
+          const updateUsers = oldUsers.map((user) => {
+            if(user._id === res.data._id){
+              user.approved = status
+            }
+            return user;
+          })
+          setUsers(updateUsers)
+      }
+      else {
+          toast.error(res.message);
+      }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -60,8 +84,7 @@ const Users = () => {
             offset: 0,
             limit: 50,
             query: {
-              criterion: { active: true },
-              permissions: '_id permissionName moduleName ',
+              critarion: { active: true },
               addedBy: '_id email first_name',
               lastModifiedBy: '_id email first_name',
             },
@@ -86,7 +109,7 @@ const Users = () => {
       {delPopup && (
         <DeletePopup
           permition={delPopup}
-          callback={deleteInspire}
+          callback={()=>{deleteUser(delId)}}
           Toggle={() => setDelPopup(false)}
         />
       )}
@@ -201,16 +224,30 @@ const Users = () => {
                           <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
                             <div className='text-left'>{user.created_at}</div>
                           </td>
-                          <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
-                            <div className='text-left'>
-                              <button
-                                className='btn bg-red-500 hover:bg-green-600 text-white'
-                                onClick={handleApproved}
-                              >
-                                <span className='ml-2'>Approved</span>
-                              </button>
-                            </div>
-                          </td>
+                         {user.approved && (
+                           <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
+                           <div className='text-left'>
+                             <button
+                               className='btn bg-green-600 text-white'
+                               onClick={()=> {handleApproved(user._id, false)}}
+                             >
+                               <span className='ml-2'>Approved</span>
+                             </button>
+                           </div>
+                         </td>
+                         )}
+                          {!user.approved && (
+                           <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
+                           <div className='text-left'>
+                             <button
+                               className='btn bg-red-500 text-white'
+                               onClick={()=> {handleApproved(user._id, true)}}
+                             >
+                               <span className='ml-2'>DisApproved</span>
+                             </button>
+                           </div>
+                         </td>
+                         )}
 
                           <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px'>
                             <div className='space-x-1'>
@@ -225,15 +262,6 @@ const Users = () => {
                                 >
                                   <path d='M19.7 8.3c-.4-.4-1-.4-1.4 0l-10 10c-.2.2-.3.4-.3.7v4c0 .6.4 1 1 1h4c.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4l-4-4zM12.6 22H10v-2.6l6-6 2.6 2.6-6 6zm7.4-7.4L17.4 12l1.6-1.6 2.6 2.6-1.6 1.6z' />
                                 </svg>
-                              </button>
-                              <button
-                                className='text-slate-400 hover:text-slate-500 rounded-full'
-                                onClick={(e) => openUserPopup(e, 'view', user)}
-                              >
-                                <IoEyeOutline
-                                  className='text-red-500 hover:text-green-600'
-                                  size={23}
-                                />
                               </button>
                               <button
                                 className='text-rose-500 hover:text-rose-600 rounded-full'
