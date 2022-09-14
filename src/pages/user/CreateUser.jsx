@@ -1,86 +1,204 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
+import { surnames } from '../../utils/enum';
 import { FcCheckmark } from 'react-icons/fc';
 import { MdClose } from 'react-icons/md';
-import { toast, ToastContainer } from 'react-toastify';
-import { useForm } from 'react-hook-form';
+import { Country, State, City } from 'country-state-city';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { callApi } from '../../utils/CallApi';
-
-import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
-import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
-
+import { callApi } from '../../utils/CallApi';
 const schema = yup.object({
-  name: yup.string().required('Author Name is Required'),
-  quote: yup.string().required('Quotation is Required'),
+  first_name: yup.string().required(),
+  first_family_name: yup.string().required(),
+  second_family_name: yup.string().optional(),
+  third_family_name: yup.string().optional(),
+  email: yup.string().email('Invalid email format').required(),
+  password: yup.string().required(),
+  phoneNumber: yup.string().required(),
 });
 
-const CreateUsers = () => {
-  console.log('Create User page');
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-  const [quoteDate, setquoteDate] = useState({
-    day: dd,
-    month: mm,
-    year: yyyy,
+const CreateUser = () => {
+  let navigate = useNavigate();
+
+  const [roles, setallroles] = useState([]);
+  const [roleId, setRoleId] = useState('');
+  const [roleName, setRoleName] = useState('');
+  const [error, setError] = useState({
+    userError: '',
+    roleError: '',
   });
-  const [companySetting, setCompanySetting] = useState(true);
+
+  const [isActive, setIsActive] = useState(true);
+  const [approved, setApproved] = useState(true);
+  const [verified, setVerified] = useState(true);
+  const [all_Countries, setall_Countries] = useState([]);
+  const [all_States, setall_States] = useState([]);
+  const [all_Cities, setall_Cities] = useState([]);
+  const [countryCode, setCountryCode] = useState('');
+  const [recruitModel, setrecruitModel] = useState({
+    city: '',
+    state: '',
+    country: '',
+  });
+  const [location, setLocation] = useState({
+    type: 'Point',
+    coordinates: [0, 0],
+  });
 
   const {
     register,
     watch,
-    reset,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
-  // ****************** Datepicker Content ***********
-  const renderCustomInput = ({ ref }) => (
-    <div className='relative cursor-pointe w-full'>
-      <input
-        readOnly
-        ref={ref} // necessary  placeholder="yyy-mm-dd"
-        value={
-          quoteDate
-            ? `${quoteDate.year}/${quoteDate.month}/${quoteDate.day}`
-            : ''
-        }
-        className={` form-input w-full outline-blue-400 cursor-pointer z-30  px-2 py-2  border-gray-400`}
-      />
-      <div className={`visible absolute top-3 cursor-pointer right-5`}>
-        {' '}
-        <FcCheckmark />{' '}
-      </div>
-    </div>
-  );
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    if (name === 'country') {
+      const updatedStates = State.getStatesOfCountry(value);
+      const stateCode =
+        updatedStates.length > 0 ? updatedStates[0].isoCode : '';
+      const updatedCities = City.getCitiesOfState(value, stateCode);
+      setall_States(updatedStates);
+      setall_Cities(updatedCities);
+    } else if (name === 'state') {
+      const updatedStates = State.getStatesOfCountry(value);
+      const stateCode =
+        updatedStates.length > 0 ? updatedStates[0].isoCode : '';
+      const updatedCities = City.getCitiesOfState(value, stateCode);
+      setall_Cities(updatedCities);
+    }
+    setrecruitModel((prevmodel) => ({
+      ...prevmodel,
+      [name]: value,
+    }));
+  };
+  const handleIsActiveToggle = () => setIsActive(!isActive);
+  const handleApprovedToggle = () => setApproved(!approved);
+  const handleVerifiedToggle = () => setVerified(!verified);
 
-  const handleChangeDate = (data) => {
-    const date = moment(data).format('yyyy-M-D').split('-');
-    setquoteDate({ day: +date[2], month: +date[1], year: +date[0] });
+  // ROll Set
+
+  const handleChangeRole = (e) => {
+    let findRole = roles.find((f) => f._id === e.target.value);
+    setRoleId(findRole._id);
+    setRoleName(findRole.roleName);
+  };
+
+  const handleChangeCountry = (e) => {
+    let { value } = e.target;
+    let countryCode = all_Countries.find(
+      (country) => country.name === value
+    ).isoCode;
+    const updatedStates = State.getStatesOfCountry(countryCode);
+    setCountryCode(countryCode);
+    setall_States(updatedStates);
+    setrecruitModel((prevmodel) => ({
+      ...prevmodel,
+      country: value,
+    }));
+  };
+
+  const handleChangeState = (e) => {
+    let { value } = e.target;
+    let stateCode = all_States.find((state) => state.name === value).isoCode;
+    const updatedCities = City.getCitiesOfState(
+      countryCode.toUpperCase(),
+      stateCode
+    );
+    setrecruitModel((prevmodel) => ({
+      ...prevmodel,
+      state: value,
+    }));
+    setall_Cities(updatedCities);
+  };
+
+  const handleChangeCity = (e) => {
+    let { value } = e.target;
+    setrecruitModel((prevmodel) => ({
+      ...prevmodel,
+      city: value,
+    }));
   };
 
   const onSubmit = async (data) => {
-    let updated = `${quoteDate.year}-${quoteDate.month}-${quoteDate.day}`;
-
-    let value = {
-      quoteText: data.quote,
-      authorName: data.name,
-      quoteColor: 'Red',
-      quoteDate: updated,
-      addedby: '6305dac13c594d3538c790b8',
+    const newData = {
+      ...data,
+      isActive,
+      approved,
+      verified,
+      country: recruitModel.country,
+      state: recruitModel.state,
+      city: recruitModel.city,
+      role: roleName,
+      location,
     };
-    const res = await callApi('/quotes/createQuote', 'post', value);
-    if (res.status === 'Success') {
-      toast.success(res.message);
-      reset();
-    } else {
-      toast.error(res.message);
-    }
+    try {
+      let response = await callApi('/users/signup', 'post', newData);
+      if (response.status === 'Success') {
+        navigate('/user/list');
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {}
   };
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await axios(
+          'https://api.ipregistry.co/?key=m7irmmf8ey12rx7o'
+        );
+        const currentCountryCode = response.data.location.country.code;
+        let id = response.data.location.country.tld;
+        let removeDot = id.replace('.', '');
+        setCountryCode(removeDot);
+        const get_countris = Country.getAllCountries();
+        const CurrentStates = State.getStatesOfCountry(currentCountryCode);
+        const CurrentCities = City.getCitiesOfState(
+          currentCountryCode,
+          CurrentStates[0].isoCode
+        );
+        setall_Countries(get_countris);
+        setall_States(CurrentStates);
+        setall_Cities(CurrentCities);
+      };
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const roles = {
+          sortproperty: 'createdAt',
+          sortorder: -1,
+          offset: 0,
+          limit: 50,
+          query: {
+            critarion: { active: true },
+            fields: '_id roleName',
+          },
+        };
+        const resRole = await callApi('/roles/getRolesList', 'post', roles);
+        setallroles(resRole.data.roles);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   return (
     <div className='bscontainer-fluid'>
@@ -143,270 +261,166 @@ const CreateUsers = () => {
               <h2 className='font-semibold text-slate-800'>Add New User</h2>
             </header>
           </div>
-
           <div className='col-lg-4 mb-4 relative'>
-            <label className='block text-sm font-medium mb-1' htmlFor='name'>
-              First Name{' '}
+            <label
+              className='block text-sm font-medium mb-1'
+              htmlFor='first_name'
+            >
+              Full Name
             </label>
             <div className='absolute right-5 top-10'>
-              {!errors.name && watch('name') ? (
+              {!errors.first_name ? (
                 <FcCheckmark />
-              ) : errors.name ? (
+              ) : errors.first_name ? (
+                <div className=' text-red-500'>
+                  <MdClose />
+                </div>
+              ) : null}
+            </div>
+            <div className='text-gray-500 text-base bg-light-gray flex h-11'>
+              <div className='dropdown relative w-1/5'>
+                <select
+                  className=' w-full h-full'
+                  {...register('surname')}
+                  id='dropdown'
+                >
+                  {surnames.map((sur, i) => {
+                    return <option>{sur}</option>;
+                  })}
+                </select>
+              </div>
+              <div className='relative inline-block w-4/5 '>
+                <input
+                  name='first_name'
+                  type='text'
+                  {...register('first_name')}
+                  placeholder='Name'
+                  className={`form-input w-full h-full  ${
+                    errors.first_name ? 'border-red-400' : 'border-gray-400'
+                  } `}
+                />
+                {errors.first_name && (
+                  <p className='text-red-500 text-sm'>
+                    {errors.first_name.message}
+                  </p>
+                )}
+                <span
+                  hidden={watch('first_name')}
+                  className='absolute  text-red-400 font-medium text-lg top-1/4 left-[70px]'
+                >
+                  *
+                </span>
+                <span
+                  className={
+                    watch('first_name')
+                      ? `visible absolute top-1/4 right-3`
+                      : `invisible`
+                  }
+                >
+                  <FcCheckmark />
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className='col-lg-4 mb-4 relative'>
+            <label
+              className='block text-sm font-medium mb-1'
+              htmlFor='first_family_name'
+            >
+              First Family Name
+            </label>
+            <div className='absolute right-5 top-10'>
+              {!errors.first_family_name && watch('first_family_name') ? (
+                <FcCheckmark />
+              ) : errors.first_family_name ? (
                 <div className=' text-red-500'>
                   <MdClose />
                 </div>
               ) : null}
             </div>
             <input
-              {...register('name')}
+              {...register('first_family_name')}
               autoComplete='off'
               className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
+                errors.first_family_name ? 'border-red-400' : 'border-gray-400'
               }`}
-              name='name'
-              id='name'
+              name='first_family_name'
+              id='first_family_name'
               type='text'
-              placeholder='Name'
+              placeholder='FIRST FAMILY NAME '
             />
             <span
-              hidden={watch('name')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
+              hidden={watch('first_family_name')}
+              className='absolute text-red-400 text-lg font-medium  top-9 left-[175px]'
             >
               *
             </span>
 
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
+            {errors.first_family_name && (
+              <p className='text-red-500 text-sm'>
+                {errors.first_family_name.message}
+              </p>
             )}
           </div>
           <div className='col-lg-4 mb-4 relative'>
             <label
               className='block text-sm font-medium mb-1'
-              htmlFor='firstFamilyName'
-            >
-              First Family Name{' '}
-            </label>
-            <div className='absolute right-5 top-10'>
-              {!errors.name && watch('firstFamilyName') ? (
-                <FcCheckmark />
-              ) : errors.name ? (
-                <div className=' text-red-500'>
-                  <MdClose />
-                </div>
-              ) : null}
-            </div>
-            <input
-              {...register('firstFamilyName')}
-              autoComplete='off'
-              className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
-              }`}
-              name='firstFamilyName'
-              id='firstFamilyName'
-              type='text'
-              placeholder='First Family Name'
-            />
-            <span
-              hidden={watch('firstFamilyName')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
-            >
-              *
-            </span>
-
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
-            )}
-          </div>
-          <div className='col-lg-4 mb-4 relative'>
-            <label
-              className='block text-sm font-medium mb-1'
-              htmlFor='secondFamilyName'
+              htmlFor='second_family_name'
             >
               Second Family Name{' '}
             </label>
-            <div className='absolute right-5 top-10'>
-              {!errors.name && watch('secondFamilyName') ? (
-                <FcCheckmark />
-              ) : errors.name ? (
-                <div className=' text-red-500'>
-                  <MdClose />
-                </div>
-              ) : null}
-            </div>
             <input
-              {...register('secondFamilyName')}
+              {...register('second_family_name')}
               autoComplete='off'
-              className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
+              className={`form-input w-full  ${
+                errors.second_family_name && 'border-red-500'
               }`}
-              name='secondFamilyName'
-              id='secondFamilyName'
+              name='second_family_name'
+              id='second_family_name'
+              placeholder='2nd Family Name'
               type='text'
-              placeholder='Second Family Name'
             />
             <span
-              hidden={watch('secondFamilyName')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
+              hidden={watch('second_family_name')}
+              className='absolute text-red-400 text-sm font-medium  top-9 left-[170px]'
             >
-              *
+              (optional)
             </span>
-
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
-            )}
           </div>
           <div className='col-lg-4 mb-4 relative'>
             <label
               className='block text-sm font-medium mb-1'
-              htmlFor='thirdFamilyName'
+              htmlFor='third_family_name'
             >
               Third Family Name{' '}
             </label>
-            <div className='absolute right-5 top-10'>
-              {!errors.name && watch('thirdFamilyName') ? (
-                <FcCheckmark />
-              ) : errors.name ? (
-                <div className=' text-red-500'>
-                  <MdClose />
-                </div>
-              ) : null}
-            </div>
             <input
-              {...register('thirdFamilyName')}
+              {...register('third_family_name')}
               autoComplete='off'
-              className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
+              className={`form-input w-full  ${
+                errors.third_family_name && 'border-red-500'
               }`}
-              name='thirdFamilyName'
-              id='thirdFamilyName'
+              name='third_family_name'
+              id='third_family_name'
+              placeholder='3rd Family Name'
               type='text'
-              placeholder='Third Family Name'
             />
             <span
-              hidden={watch('thirdFamilyName')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
+              hidden={watch('third_family_name')}
+              className='absolute text-red-400 text-sm font-medium  top-9 left-[170px]'
             >
-              *
+              (optional)
             </span>
-
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
-            )}
-          </div>
-
-          <div className='col-lg-4 mb-4 relative'>
-            <label className='block text-sm font-medium mb-1' htmlFor='city'>
-              City{' '}
-            </label>
-            <div className='absolute right-5 top-10'>
-              {!errors.name && watch('city') ? (
-                <FcCheckmark />
-              ) : errors.name ? (
-                <div className=' text-red-500'>
-                  <MdClose />
-                </div>
-              ) : null}
-            </div>
-            <input
-              {...register('city')}
-              autoComplete='off'
-              className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
-              }`}
-              name='city'
-              id='city'
-              type='text'
-              placeholder='City'
-            />
-            <span
-              hidden={watch('City')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
-            >
-              *
-            </span>
-
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
-            )}
           </div>
           <div className='col-lg-4 mb-4 relative'>
-            <label className='block text-sm font-medium mb-1' htmlFor='country'>
-              Country{' '}
+            <label className='block text-sm font-medium mb-1' htmlFor='email'>
+              Email
             </label>
-            <div className='absolute right-5 top-10'>
-              {!errors.name && watch('city') ? (
+            <div className='absolute right-10 top-10'>
+              {!errors.email && watch('email') ? (
                 <FcCheckmark />
-              ) : errors.name ? (
-                <div className=' text-red-500'>
-                  <MdClose />
-                </div>
-              ) : null}
-            </div>
-            <input
-              {...register('country')}
-              autoComplete='off'
-              className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
-              }`}
-              name='country'
-              id='country'
-              type='text'
-              placeholder='Country'
-            />
-            <span
-              hidden={watch('Country')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
-            >
-              *
-            </span>
-
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
-            )}
-          </div>
-          <div className='col-lg-4 mb-4 relative'>
-            <label className='block text-sm font-medium mb-1' htmlFor='state'>
-              State{' '}
-            </label>
-            <div className='absolute right-5 top-10'>
-              {!errors.name && watch('state') ? (
-                <FcCheckmark />
-              ) : errors.name ? (
-                <div className=' text-red-500'>
-                  <MdClose />
-                </div>
-              ) : null}
-            </div>
-            <input
-              {...register('state')}
-              autoComplete='off'
-              className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
-              }`}
-              name='state'
-              id='state'
-              type='text'
-              placeholder='State'
-            />
-            <span
-              hidden={watch('state')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
-            >
-              *
-            </span>
-
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
-            )}
-          </div>
-          <div className='col-lg-4 mb-4 relative'>
-            <label className='block text-sm font-medium mb-1' htmlFor='name'>
-              Email{' '}
-            </label>
-            <div className='absolute right-5 top-10'>
-              {!errors.name && watch('email') ? (
-                <FcCheckmark />
-              ) : errors.name ? (
+              ) : errors.email ? (
                 <div className=' text-red-500'>
                   <MdClose />
                 </div>
@@ -415,134 +429,23 @@ const CreateUsers = () => {
             <input
               {...register('email')}
               autoComplete='off'
-              className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
+              className={`form-input w-full  ${
+                errors.email && 'border-red-500'
               }`}
-              name='Email'
-              id='name'
+              name='email'
+              id='email'
+              placeholder='Email Address'
               type='text'
-              placeholder='Email'
             />
             <span
               hidden={watch('email')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
+              className='absolute text-red-400 text-lg font-medium  top-9 left-[150px]'
             >
               *
             </span>
 
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
-            )}
-          </div>
-          <div className='col-lg-4 mb-4 relative'>
-            <label
-              className='block text-sm font-medium mb-1'
-              htmlFor='phonenumber'
-            >
-              Phone Number{' '}
-            </label>
-            <div className='absolute right-5 top-10'>
-              {!errors.name && watch('phoneNumber') ? (
-                <FcCheckmark />
-              ) : errors.name ? (
-                <div className=' text-red-500'>
-                  <MdClose />
-                </div>
-              ) : null}
-            </div>
-            <input
-              {...register('phoneNumber')}
-              autoComplete='off'
-              className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
-              }`}
-              name='Phone Number'
-              id='phoneNumber'
-              type='number'
-              placeholder='Phone Number'
-            />
-            <span
-              hidden={watch('phoneNumber')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
-            >
-              *
-            </span>
-
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
-            )}
-          </div>
-          <div className='col-lg-4 mb-4 relative'>
-            <label className='block text-sm font-medium mb-1' htmlFor='role'>
-              Role{' '}
-            </label>
-            <div className='absolute right-5 top-10'>
-              {!errors.name && watch('password') ? (
-                <FcCheckmark />
-              ) : errors.name ? (
-                <div className=' text-red-500'>
-                  <MdClose />
-                </div>
-              ) : null}
-            </div>
-            <input
-              {...register('role')}
-              autoComplete='off'
-              className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
-              }`}
-              name='Role'
-              id='role'
-              type='text'
-              placeholder='Role'
-            />
-            <span
-              hidden={watch('role')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
-            >
-              *
-            </span>
-
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
-            )}
-          </div>
-          <div className='col-lg-4 mb-4 relative'>
-            <label
-              className='block text-sm font-medium mb-1'
-              htmlFor='confirmPassword'
-            >
-              Confirm Password{' '}
-            </label>
-            <div className='absolute right-5 top-10'>
-              {!errors.name && watch('confirmPassword') ? (
-                <FcCheckmark />
-              ) : errors.name ? (
-                <div className=' text-red-500'>
-                  <MdClose />
-                </div>
-              ) : null}
-            </div>
-            <input
-              {...register('confirmPassword')}
-              autoComplete='off'
-              className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
-              }`}
-              name='confirmPassword'
-              id='confirmPassword'
-              type='text'
-              placeholder='Confirm Password'
-            />
-            <span
-              hidden={watch('confirmPassword')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
-            >
-              *
-            </span>
-
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
+            {errors.email && (
+              <p className='text-red-500 text-sm'>{errors.email.message}</p>
             )}
           </div>
           <div className='col-lg-4 mb-4 relative'>
@@ -550,12 +453,12 @@ const CreateUsers = () => {
               className='block text-sm font-medium mb-1'
               htmlFor='password'
             >
-              Password{' '}
+              Password
             </label>
-            <div className='absolute right-5 top-10'>
-              {!errors.name && watch('role') ? (
+            <div className='absolute right-10 top-10'>
+              {!errors.password && watch('password') ? (
                 <FcCheckmark />
-              ) : errors.name ? (
+              ) : errors.password ? (
                 <div className=' text-red-500'>
                   <MdClose />
                 </div>
@@ -564,26 +467,279 @@ const CreateUsers = () => {
             <input
               {...register('password')}
               autoComplete='off'
-              className={`w-full  ${
-                errors.name ? 'border-red-400' : 'border-gray-400'
+              className={`form-input w-full  ${
+                errors.password && 'border-red-500'
               }`}
               name='password'
               id='password'
-              type='text'
               placeholder='Password'
+              type='password'
             />
             <span
               hidden={watch('password')}
-              className='absolute text-red-400 text-lg font-medium  top-9 left-[345px]'
+              className='absolute text-red-400 text-lg font-medium  top-9 left-[150px]'
             >
               *
             </span>
 
-            {errors.name && (
-              <p className='text-red-500 text-sm'>{errors.name.message}</p>
+            {errors.password && (
+              <p className='text-red-500 text-sm'>{errors.password.message}</p>
+            )}
+          </div>
+          <div className='col-lg-4 mb-4 relative'>
+            <label className='block text-sm font-medium mb-1' htmlFor='country'>
+              Country
+            </label>
+            <div className='absolute right-10 top-10'>
+              {!errors.country ? (
+                <FcCheckmark />
+              ) : errors.country ? (
+                <div className=' text-red-500'>
+                  <MdClose />
+                </div>
+              ) : null}
+            </div>
+            <select
+              value={recruitModel.country}
+              onChange={handleChangeCountry}
+              name='country'
+              id='country'
+              className={`form-input w-full   ${
+                errors.country && 'border-red-500'
+              }`}
+            >
+              <option value=''>Select Country </option>
+              {all_Countries.map((country) => (
+                <option>{country.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className='col-lg-4 mb-4 relative'>
+            <label className='block text-sm font-medium mb-1' htmlFor='state'>
+              State
+            </label>
+            <div className='absolute right-10 top-10'>
+              {!errors.state ? (
+                <FcCheckmark />
+              ) : errors.state ? (
+                <div className=' text-red-500'>
+                  <MdClose />
+                </div>
+              ) : null}
+            </div>
+
+            <select
+              value={recruitModel.state}
+              onChange={handleChangeState}
+              name='state'
+              id='state'
+              className={`form-input w-full   ${
+                errors.state && 'border-red-500'
+              }`}
+            >
+              <option value=''>Select State </option>
+              {all_States.map((state) => (
+                <option>{state.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className='col-lg-4 mb-4 relative'>
+            <label className='block text-sm font-medium mb-1' htmlFor='city'>
+              City
+            </label>
+            <div className='absolute right-10 top-10'>
+              {!errors.city ? (
+                <FcCheckmark />
+              ) : errors.city ? (
+                <div className=' text-red-500'>
+                  <MdClose />
+                </div>
+              ) : null}
+            </div>
+            <select
+              // {...register('city')}
+              value={recruitModel.city}
+              onChange={handleChangeCity}
+              name='city'
+              id='city'
+              className={`form-input w-full   ${
+                errors.city && 'border-red-500'
+              }`}
+            >
+              <option>Select city </option>
+              {all_Cities.map((city) => {
+                return <option>{city.name}</option>;
+              })}
+            </select>
+            {/* {errors.city && (
+                            <p className="text-red-500 text-sm">{errors.city.message}</p>
+                        )} */}
+          </div>
+          <div className='col-lg-4 mb-4 relative '>
+            <label
+              className='block text-sm font-medium mb-1'
+              htmlFor='phoneNumber'
+            >
+              Phone
+            </label>
+            <div className='absolute right-10 top-10'>
+              {!errors.phoneNumber && watch('phoneNumber') ? (
+                <FcCheckmark />
+              ) : errors.phoneNumber ? (
+                <div className=' text-red-500'>
+                  <MdClose />
+                </div>
+              ) : null}
+            </div>
+
+            <div className='w-full '>
+              <Controller
+                name='phoneNumber'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { onChange, value } }) => (
+                  <PhoneInput
+                    value={value}
+                    enableSearch
+                    disableSearchIcon
+                    country={countryCode}
+                    onChange={onChange}
+                    placeholder='000 000 000'
+                    // countryCodeEditable={false}
+                    className={` w-full  ${errors.phoneNumber && 'error_form'}`}
+                    dropdownClass={'custom-dropdown'}
+                  />
+                )}
+              />
+            </div>
+            {errors.phoneNumber && (
+              <p className='text-red-500 text-sm'>
+                {errors.phoneNumber.message}
+              </p>
             )}
           </div>
 
+          <div className='col-lg-4 mb-4 relative'>
+            <label
+              className='block text-sm font-medium mb-1'
+              htmlFor='businessName'
+            >
+              Roles
+            </label>
+            <div className='absolute right-5 top-10'>
+              {!error.roleError ? (
+                <FcCheckmark className='mr-5' />
+              ) : error.roleError ? (
+                <div className=' text-red-500'>
+                  <MdClose className='mr-5' />
+                </div>
+              ) : null}
+            </div>
+            <select
+              onChange={handleChangeRole}
+              className={`w-full  ${
+                error.roleError ? 'border-red-400' : 'border-gray-400'
+              }`}
+            >
+              <option>Select Role</option>
+
+              {roles.map((business) => (
+                <option key={business._id} value={business._id}>
+                  <span>{business.roleName}</span>
+                </option>
+              ))}
+            </select>
+
+            {error.roleError && (
+              <p className='text-red-500 text-sm'>{error.roleError}</p>
+            )}
+          </div>
+          <div className='row'>
+            <div className='col-lg-4 mb-4 relative'>
+              <div>
+                <div className='text-sm text-slate-800 font-semibold mb-3'>
+                  Active/In Active
+                </div>
+                <div className='flex items-center'>
+                  <div className='form-switch'>
+                    <input
+                      type='checkbox'
+                      id='active-toggle'
+                      className='sr-only'
+                      checked={isActive}
+                      onChange={handleIsActiveToggle}
+                    />
+                    <label className='bg-slate-400' htmlFor='active-toggle'>
+                      <span
+                        className='bg-white shadow-sm'
+                        aria-hidden='true'
+                      ></span>
+                      <span className='sr-only'>Active Culture</span>
+                    </label>
+                  </div>
+                  <div className='text-sm text-slate-400 italic ml-2'>
+                    {isActive ? 'Active' : 'InActive'}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='col-lg-4 mb-4 relative'>
+              <div>
+                <div className='text-sm text-slate-800 font-semibold mb-3'>
+                  Approved/DisApproved
+                </div>
+                <div className='flex items-center'>
+                  <div className='form-switch'>
+                    <input
+                      type='checkbox'
+                      id='approved-toggle'
+                      className='sr-only'
+                      checked={approved}
+                      onChange={handleApprovedToggle}
+                    />
+                    <label className='bg-slate-400' htmlFor='approved-toggle'>
+                      <span
+                        className='bg-white shadow-sm'
+                        aria-hidden='true'
+                      ></span>
+                      <span className='sr-only'>Approved Culture</span>
+                    </label>
+                  </div>
+                  <div className='text-sm text-slate-400 italic ml-2'>
+                    {approved ? 'Approved' : 'DisApproved'}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='col-lg-4 mb-4 relative'>
+              <div>
+                <div className='text-sm text-slate-800 font-semibold mb-3'>
+                  Verified/Non Verified
+                </div>
+                <div className='flex items-center'>
+                  <div className='form-switch'>
+                    <input
+                      type='checkbox'
+                      id='verified-toggle'
+                      className='sr-only'
+                      checked={verified}
+                      onChange={handleVerifiedToggle}
+                    />
+                    <label className='bg-slate-400' htmlFor='verified-toggle'>
+                      <span
+                        className='bg-white shadow-sm'
+                        aria-hidden='true'
+                      ></span>
+                      <span className='sr-only'>Verified Culture</span>
+                    </label>
+                  </div>
+                  <div className='text-sm text-slate-400 italic ml-2'>
+                    {verified ? 'Verified' : 'Non Verified'}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className='col-lg-12'>
             <button className='btn bg-red-500 hover:bg-green-600 text-white'>
               Submit
@@ -595,4 +751,4 @@ const CreateUsers = () => {
   );
 };
 
-export default CreateUsers;
+export default CreateUser;

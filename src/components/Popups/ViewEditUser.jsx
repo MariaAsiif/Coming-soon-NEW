@@ -1,25 +1,35 @@
 import React, { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
 import 'react-responsive-modal/styles.css';
-import { Modal } from 'react-responsive-modal';
-import { useForm } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
+import { Controller, useForm } from 'react-hook-form';
+import { ToastContainer } from 'react-toastify';
 import Transition from '../../utils/Transition';
-import { FcCheckmark } from 'react-icons/fc';
-import { MdClose } from 'react-icons/md';
 import { Country, State, City } from 'country-state-city';
-import { Alert } from 'react-bootstrap';
-import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
 import moment from 'moment';
 import { callApi } from '../../utils/CallApi';
+import PhoneInput from 'react-phone-input-2';
 
 const ViewEditUser = (props) => {
-  const [all_Countries, setall_Countries] = useState([]);
   const {
     register,
     reset,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({ mode: 'onChange ' });
+
+  const [isActive, setIsActive] = useState(true);
+  const [approved, setApproved] = useState(true);
+  const [verified, setVerified] = useState(true);
+  const [roles, setallroles] = useState([]);
+  const [role, setRole] = useState('');
+  const [error, setError] = useState({
+    userError: '',
+    roleError: '',
+  });
+
+  // ROle Handler
+  const [all_Countries, setall_Countries] = useState([]);
   const [all_States, setall_States] = useState([]);
   const [all_Cities, setall_Cities] = useState([]);
   const [countryCode, setCountryCode] = useState('');
@@ -28,57 +38,134 @@ const ViewEditUser = (props) => {
   const [recruitModel, setrecruitModel] = useState({
     surname: 'Mr',
     fullname: '',
-    firstFname: '',
-    secondFname: '',
-    thirdFname: '',
+    first_family_name: '',
+    second_family_name: '',
+    third_family_name: '',
     email: '',
     reEmail: '',
     city: '',
     state: '',
     industry: '',
     country: '',
-    // postcode:"",
     position: '',
     mobile: '',
     age: '',
   });
 
-  console.log(`hello i am pop`);
+  const handleIsActive = () => setIsActive(!isActive);
+  const handleApproved = () => setApproved(!approved);
+  const handleVerified = () => setVerified(!verified);
 
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-    if (name === 'country') {
-      const updatedStates = State.getStatesOfCountry(value);
-      const stateCode =
-        updatedStates.length > 0 ? updatedStates[0].isoCode : '';
-      const updatedCities = City.getCitiesOfState(value, stateCode);
-      setall_States(updatedStates);
-      setall_Cities(updatedCities);
-    } else if (name === 'state') {
-      const updatedStates = State.getStatesOfCountry(value);
-      const stateCode =
-        updatedStates.length > 0 ? updatedStates[0].isoCode : '';
-      const updatedCities = City.getCitiesOfState(value, stateCode);
-      setall_Cities(updatedCities);
-    } else {
-      setrecruitModel((prevModel) => ({
-        ...prevModel,
-        [name]: value,
-      }));
-    }
+  // ROle Set
+  const handleChangeRole = (e) => {
+    let findRole = roles.find((f) => f._id === e.target.value);
+    setRole(findRole._id);
   };
+
+  const handleChangeCountry = (e) => {
+    let { value } = e.target;
+    let countryCode = all_Countries.find(
+      (country) => country.name === value
+    ).isoCode;
+    const updatedStates = State.getStatesOfCountry(countryCode);
+    setCountryCode(countryCode);
+    setall_States(updatedStates);
+    setrecruitModel((prevmodel) => ({
+      ...prevmodel,
+      country: value,
+    }));
+  };
+
+  const handleChangeState = (e) => {
+    let { value } = e.target;
+    let stateCode = all_States.find((state) => state.name === value).isoCode;
+    const updatedCities = City.getCitiesOfState(
+      countryCode.toUpperCase(),
+      stateCode
+    );
+    setrecruitModel((prevmodel) => ({
+      ...prevmodel,
+      state: value,
+    }));
+    setall_Cities(updatedCities);
+  };
+
+  const handleChangeCity = (e) => {
+    let { value } = e.target;
+    setrecruitModel((prevmodel) => ({
+      ...prevmodel,
+      city: value,
+    }));
+  };
+
   const onSubmit = async (values) => {
     const { created_at } = values;
     const formattedDate = moment(created_at).format('YYYY-MM-DD');
-    const payload = { ...values, created_at: formattedDate };
+    const payload = {
+      ...values,
+      country: recruitModel.country,
+      state: recruitModel.state,
+      city: recruitModel.city,
+      created_at: formattedDate,
+    };
     let response = await callApi('/users/updateuser', 'post', payload);
     response.status === 'Success' && props.onClose();
   };
 
   useEffect(() => {
     reset(props.data);
-    console.log(`props =============`, props);
   }, [props.data, reset]);
+
+  // Geo
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await axios(
+          'https://api.ipregistry.co/?key=m7irmmf8ey12rx7o'
+        );
+        const currentCountryCode = response.data.location.country.code;
+        let id = response.data.location.country.tld;
+        let removeDot = id.replace('.', '');
+        setCountryCode(removeDot);
+        const get_countris = Country.getAllCountries();
+        const CurrentStates = State.getStatesOfCountry(currentCountryCode);
+        const CurrentCities = City.getCitiesOfState(
+          currentCountryCode,
+          CurrentStates[0].isoCode
+        );
+        setall_Countries(get_countris);
+        setall_States(CurrentStates);
+        setall_Cities(CurrentCities);
+      };
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  // ROle Set
+  useEffect(() => {
+    (async () => {
+      try {
+        const roles = {
+          sortproperty: 'createdAt',
+          sortorder: -1,
+          offset: 0,
+          limit: 50,
+          query: {
+            critarion: { active: true },
+            fields: '_id roleName',
+          },
+        };
+
+        const resRole = await callApi('/roles/getRolesList', 'post', roles);
+        setallroles(resRole.data.roles);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   return (
     <>
@@ -146,29 +233,6 @@ const ViewEditUser = (props) => {
                     className='block text-lg font-medium mb-1'
                     htmlFor='description'
                   >
-                    First Family Name
-                  </label>
-                  {props.mode === 'view' ? (
-                    <p>{props.data.first_family_name}</p>
-                  ) : (
-                    <input
-                      {...register('first_family_name', { required: true })}
-                      className={`form-input w-full ${
-                        errors.authorName
-                          ? 'border-red-500'
-                          : 'border-green-500'
-                      }`}
-                    />
-                  )}
-                  {errors.authorName && (
-                    <span className='text-red-500'>This field is required</span>
-                  )}
-                </div>
-                <div className='col-lg-4 mb-5'>
-                  <label
-                    className='block text-lg font-medium mb-1'
-                    htmlFor='description'
-                  >
                     First Name
                   </label>
                   {props.mode === 'view' ? (
@@ -192,13 +256,59 @@ const ViewEditUser = (props) => {
                     className='block text-lg font-medium mb-1'
                     htmlFor='description'
                   >
-                    Second Name
+                    First Family Name
                   </label>
                   {props.mode === 'view' ? (
-                    <p>{props.data.secondFname}</p>
+                    <p>{props.data.first_family_name}</p>
                   ) : (
                     <input
-                      {...register('secondFname', { required: true })}
+                      {...register('first_family_name', { required: true })}
+                      className={`form-input w-full ${
+                        errors.authorName
+                          ? 'border-red-500'
+                          : 'border-green-500'
+                      }`}
+                    />
+                  )}
+                  {errors.authorName && (
+                    <span className='text-red-500'>This field is required</span>
+                  )}
+                </div>
+                <div className='col-lg-4 mb-5'>
+                  <label
+                    className='block text-lg font-medium mb-1'
+                    htmlFor='description'
+                  >
+                    Second Family Name
+                  </label>
+                  {props.mode === 'view' ? (
+                    <p>{props.data.second_family_name}</p>
+                  ) : (
+                    <input
+                      {...register('second_family_name', { required: true })}
+                      className={`form-input w-full ${
+                        errors.authorName
+                          ? 'border-red-500'
+                          : 'border-green-500'
+                      }`}
+                    />
+                  )}
+                  {errors.authorName && (
+                    <span className='text-red-500'>This field is required</span>
+                  )}
+                </div>
+                <div className='col-lg-4 mb-5'>
+                  <label
+                    className='block text-lg font-medium mb-1'
+                    htmlFor='description'
+                  >
+                    Third Family Name
+                  </label>
+                  {props.mode === 'view' ? (
+                    <p>{props.data.third_family_name}</p>
+                  ) : (
+                    <input
+                      {...register('third_family_name', { required: true })}
                       className={`form-input w-full ${
                         errors.authorName
                           ? 'border-red-500'
@@ -233,29 +343,7 @@ const ViewEditUser = (props) => {
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
-                <div className='col-lg-4 mb-5'>
-                  <label
-                    className='block text-lg font-medium mb-1'
-                    htmlFor='description'
-                  >
-                    City
-                  </label>
-                  {props.mode === 'view' ? (
-                    <p>{props.data.city}</p>
-                  ) : (
-                    <input
-                      {...register('city', { required: true })}
-                      className={`form-input w-full ${
-                        errors.authorName
-                          ? 'border-red-500'
-                          : 'border-green-500'
-                      }`}
-                    />
-                  )}
-                  {errors.authorName && (
-                    <span className='text-red-500'>This field is required</span>
-                  )}
-                </div>
+
                 <div className='col-lg-4 mb-5'>
                   <label
                     className='block text-lg font-medium mb-1'
@@ -266,14 +354,24 @@ const ViewEditUser = (props) => {
                   {props.mode === 'view' ? (
                     <p>{props.data.country}</p>
                   ) : (
-                    <input
-                      {...register('country', { required: true })}
-                      className={`form-input w-full ${
-                        errors.authorName
-                          ? 'border-red-500'
-                          : 'border-green-500'
+                    <select
+                      value={
+                        recruitModel.country
+                          ? recruitModel.country
+                          : props.data.country
+                      }
+                      onChange={handleChangeCountry}
+                      name='country'
+                      id='country'
+                      className={`form-control  form-control-lg ${
+                        errors.country && 'border-red-500'
                       }`}
-                    />
+                    >
+                      <option value=''>Select Country </option>
+                      {all_Countries.map((country) => (
+                        <option>{country.name}</option>
+                      ))}
+                    </select>
                   )}
                   {errors.authorName && (
                     <span className='text-red-500'>This field is required</span>
@@ -289,19 +387,62 @@ const ViewEditUser = (props) => {
                   {props.mode === 'view' ? (
                     <p>{props.data.state}</p>
                   ) : (
-                    <input
-                      {...register('state', { required: true })}
-                      className={`form-input w-full ${
-                        errors.authorName
-                          ? 'border-red-500'
-                          : 'border-green-500'
+                    <select
+                      value={
+                        recruitModel.state
+                          ? recruitModel.state
+                          : props.data.state
+                      }
+                      onChange={handleChangeState}
+                      name='state'
+                      id='state'
+                      className={`w-full form-control  form-control-lg ${
+                        errors.state && 'border-red-500'
                       }`}
-                    />
+                    >
+                      <option value=''>Select State </option>
+                      {all_States.map((state) => (
+                        <option>{state.name}</option>
+                      ))}
+                    </select>
                   )}
                   {errors.authorName && (
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
+                <div className='col-lg-4 mb-5'>
+                  <label
+                    className='block text-lg font-medium mb-1'
+                    htmlFor='city'
+                  >
+                    City
+                  </label>
+                  {props.mode === 'view' ? (
+                    <p>{props.data.city}</p>
+                  ) : (
+                    <select
+                      // {...register('city')}
+                      value={
+                        recruitModel.city ? recruitModel.city : props.data.city
+                      }
+                      onChange={handleChangeCity}
+                      name='city'
+                      id='city'
+                      className={`form-input w-full   ${
+                        errors.city && 'border-red-500'
+                      }`}
+                    >
+                      <option>Select city </option>
+                      {all_Cities.map((city) => {
+                        return <option>{city.name}</option>;
+                      })}
+                    </select>
+                  )}
+                  {errors.authorName && (
+                    <span className='text-red-500'>This field is required</span>
+                  )}
+                </div>
+
                 <div className='col-lg-4 mb-5'>
                   <label
                     className='block text-lg font-medium mb-1'
@@ -312,13 +453,24 @@ const ViewEditUser = (props) => {
                   {props.mode === 'view' ? (
                     <p>{props.data.phoneNumber}</p>
                   ) : (
-                    <input
-                      {...register('phoneNumber', { required: true })}
-                      className={`form-input w-full ${
-                        errors.authorName
-                          ? 'border-red-500'
-                          : 'border-green-500'
-                      }`}
+                    <Controller
+                      name='phoneNumber'
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { onChange, value } }) => (
+                        <PhoneInput
+                          value={value}
+                          enableSearch
+                          disableSearchIcon
+                          country={countryCode}
+                          onChange={onChange}
+                          placeholder='000 000 000'
+                          className={` w-full  ${
+                            errors.phoneNumber && 'error_form'
+                          }`}
+                          dropdownClass={'custom-dropdown'}
+                        />
+                      )}
                     />
                   )}
                   {errors.authorName && (
@@ -335,14 +487,20 @@ const ViewEditUser = (props) => {
                   {props.mode === 'view' ? (
                     <p>{props.data.role}</p>
                   ) : (
-                    <input
-                      {...register('role', { required: true })}
-                      className={`form-input w-full ${
-                        errors.authorName
-                          ? 'border-red-500'
-                          : 'border-green-500'
+                    <select
+                      onChange={handleChangeRole}
+                      className={`w-full  ${
+                        error.roleError ? 'border-red-400' : 'border-gray-400'
                       }`}
-                    />
+                    >
+                      <option>Select Role</option>
+
+                      {roles.map((business) => (
+                        <option key={business._id} value={business.value}>
+                          <span>{business.roleName}</span>
+                        </option>
+                      ))}
+                    </select>
                   )}
                   {errors.authorName && (
                     <span className='text-red-500'>This field is required</span>
@@ -351,7 +509,7 @@ const ViewEditUser = (props) => {
                 <div className='col-lg-4 mb-5'>
                   <label
                     className='block text-lg font-medium mb-1'
-                    htmlFor='description'
+                    htmlFor='created_at'
                   >
                     Registered Date
                   </label>
@@ -371,21 +529,131 @@ const ViewEditUser = (props) => {
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
-                {/* <div className='col-lg-4 mb-5'>
-                                <label className="block text-lg font-medium mb-1" htmlFor="description">QUOTE DATE</label>
-                                {mode === "view" ?
-                                    (
-                                        <p>{moment(data.quoteDate).format('MM/DD/YYYY')}</p>
-                                    ) : (
-                                        <DatePicker
-                                            value={quoteDate}
-                                            onChange={(date) => setquoteDate(date)}
-                                            renderInput={renderCustomInput} // render a custom input
-                                            shouldHighlightWeekends
-                                        // calendarPopperPosition="bottom"
-                                        />
-                                    )}
-                            </div> */}
+                <div className='row'>
+                  <div className='col-lg-4 mb-5'>
+                    <label
+                      className='block text-lg font-medium mb-1'
+                      htmlFor='created_at'
+                    >
+                      Active/InActive
+                    </label>
+                    {props.mode === 'view' ? (
+                      <p> {isActive ? 'Active' : 'InActive'}</p>
+                    ) : (
+                      <div className='flex items-center'>
+                        <div className='form-switch'>
+                          <input
+                            type='checkbox'
+                            id='active-toggle'
+                            className='sr-only'
+                            checked={isActive}
+                            onChange={handleIsActive}
+                          />
+                          <label
+                            className='bg-slate-400'
+                            htmlFor='active-toggle'
+                          >
+                            <span
+                              className='bg-white shadow-sm'
+                              aria-hidden='true'
+                            ></span>
+                            <span className='sr-only'>Active Culture</span>
+                          </label>
+                        </div>
+                        <div className='text-sm text-slate-400 italic ml-2'>
+                          {isActive ? 'Active' : 'InActive'}
+                        </div>
+                      </div>
+                    )}
+                    {errors.authorName && (
+                      <span className='text-red-500'>
+                        This field is required
+                      </span>
+                    )}
+                  </div>
+                  <div className='col-lg-4 mb-5'>
+                    <label
+                      className='block text-lg font-medium mb-1'
+                      htmlFor='created_at'
+                    >
+                      Approved/DisApproved
+                    </label>
+                    {props.mode === 'view' ? (
+                      <p> {approved ? 'Approved' : 'DisApproved'}</p>
+                    ) : (
+                      <div className='flex items-center'>
+                        <div className='form-switch'>
+                          <input
+                            type='checkbox'
+                            id='approved-toggle'
+                            className='sr-only'
+                            checked={approved}
+                            onChange={handleApproved}
+                          />
+                          <label
+                            className='bg-slate-400'
+                            htmlFor='approved-toggle'
+                          >
+                            <span
+                              className='bg-white shadow-sm'
+                              aria-hidden='true'
+                            ></span>
+                            <span className='sr-only'>Approved Culture</span>
+                          </label>
+                        </div>
+                        <div className='text-sm text-slate-400 italic ml-2'>
+                          {approved ? 'Approved' : 'DisApproved'}
+                        </div>
+                      </div>
+                    )}
+                    {errors.authorName && (
+                      <span className='text-red-500'>
+                        This field is required
+                      </span>
+                    )}
+                  </div>
+                  <div className='col-lg-4 mb-5'>
+                    <label
+                      className='block text-lg font-medium mb-1'
+                      htmlFor='verified'
+                    >
+                      Verified/Non Verified
+                    </label>
+                    {props.mode === 'view' ? (
+                      <p> {verified ? 'Verified' : 'DisVerified'}</p>
+                    ) : (
+                      <div className='flex items-center'>
+                        <div className='form-switch'>
+                          <input
+                            type='checkbox'
+                            id='verified-toggle'
+                            className='sr-only'
+                            checked={verified}
+                            onChange={handleVerified}
+                          />
+                          <label
+                            className='bg-slate-400'
+                            htmlFor='verified-toggle'
+                          >
+                            <span
+                              className='bg-white shadow-sm'
+                              aria-hidden='true'
+                            ></span>
+                            <span className='sr-only'>verified Culture</span>
+                          </label>
+                        </div>
+                        <div className='text-sm text-slate-400 italic ml-2'>
+                          {verified ? 'Verified' : 'DisVerified'}
+                        </div>
+                      </div>
+                    )}
+                    {errors.authorName && (
+                      <span className='text-red-500'>
+                        This field is required
+                      </span>
+                    )}
+                  </div>
+                </div>
                 {props.mode !== 'view' ? (
                   <div className='col-lg-12'>
                     <button

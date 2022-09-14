@@ -16,7 +16,7 @@
     "bootstrap": "^5.2.0",
     "chart.js": "^3.8.0",
     "chartjs-adapter-moment": "^1.0.0",
-    "country-state-city": "^3.0.1",
+    "country-state-city": "^3.1.2",
     "formik": "^2.2.9",
     "moment": "^2.29.4",
     "npm": "^8.15.0",
