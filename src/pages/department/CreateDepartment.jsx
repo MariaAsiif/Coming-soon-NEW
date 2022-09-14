@@ -24,26 +24,13 @@ const CreateDepartment = () => {
 
     const onSubmit = async (data) => {
         console.log("Data", data)
-        // try {
-        //     const config = {
-        //         headers: {
-        //             'Authorization': 'Bearer ' + token
-        //         }
-        //     };
-        //     let response = await axios.post('http://localhost:5873/jobs/createjob', config);
-        //     console.log(response);
-        //     if (response.data.status === "Success") {
-        //         navigate("/jobs", { replace: true });
-        //         toast.success(response.data.message);
+        try {
+          
+            
 
-        //     }
-        //     else {
-        //         toast.error(response.data.message);
-        //     }
-
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
         <div className='bscontainer-fluid'>
@@ -133,11 +120,12 @@ const CreateDepartment = () => {
                         <div className='absolute right-5 top-10'>
                             {!errors.added && watch('added') ? <FcCheckmark /> : errors.added ? <div className=' text-red-500 mr-5'><MdClose /></div> : null}
                         </div>
-                        <select value="added_by "
+                        <select 
                             name="added"
+                            {...register('added')}
                             className={`form-input w-full  ${errors.added && 'border-red-500'}`}
                         >
-                            <option>Select Added By</option>
+                            <option value=""> Select Added By</option>
                             <option>Super Admin</option>
                             <option>Admin</option>
                         </select>

@@ -32,7 +32,9 @@ const CreateSinglePermission = () => {
                         "lastModifiedBy": "_id email first_name"
                     }
                 }
+                
                 let response = await callApi("/permissions/getPermissionsWithFullDetails", "post", payload);
+
                 setallpermission(response.data.permissions)
             } catch (error) {
                 console.log(error);
@@ -101,13 +103,14 @@ const CreateSinglePermission = () => {
         }
         allpermission.map(permission => {
             if (permission.moduleName == module) {
-                moduleBased.permissions.push(permission._id )
+                moduleBased.permissions.push(permission._id)
             }
         })
         singlePermission.push(moduleBased)
     }
 
 
+    // console.log("All" , allpermission.filter((f) => f.permissionName === "Doctors/"))
 
 
     return (
@@ -199,8 +202,9 @@ const CreateSinglePermission = () => {
                                     {/* Table body */}
                                     <tbody className="text-sm divide-y divide-slate-200">
                                         {singlePermission.map((permission, index) => {
+                                            console.log("per", permission)
                                             return (
-                                                <tr >
+                                                <tr key={index}>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                                         <div className="flex items-center">
                                                             <label className="inline-flex">
@@ -210,14 +214,17 @@ const CreateSinglePermission = () => {
                                                         </div>
                                                     </td>
                                                     <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap" key={index}>
-                                                         {permission?.moduleName}
+                                                        {permission?.moduleName === "Manage I Locate" ? "Manage I Locate/Doctor" : permission?.moduleName}
                                                     </td>
-                                                    {permission.permissions.map((per, i) => (
-                                                        <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap" key={i}>
-                                                            <input type="checkbox" onClick={() => handleCheckbox(per)} checked={per === checkedId} />
-                                                        </td>
+                                                    {permission.permissions.map((per, i) => {
+                                                        if(per )
+                                                        return (
+                                                            <td className="px-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap" key={i}>
+                                                                <input type="checkbox" onClick={() => handleCheckbox(per)} checked={per === checkedId} />
+                                                            </td>
 
-                                                    ))}
+                                                        )
+                                                    })}
                                                 </tr>
                                             )
                                         })

@@ -7,13 +7,16 @@ import logo from '../images/hporx_logo.png';
 import { useDispatch } from 'react-redux'
 import { signin } from "../Redux/UserAuthSlice/UserAuthSlice"
 import { callPublicApi } from "../utils/CallApi"
+import Loader from '../components/Loader/loader';
 
 function Signin() {
+
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "../dashboard"
   const dispatch = useDispatch()
 
+  const [loading , setLoading ] = useState(false)
   const [authValue, setAuthValue] = useState({
     email: "superadmin@getnada.com",
     password: '12345678',
@@ -67,13 +70,15 @@ function Signin() {
     }
     else {
       try {
-
+        setLoading(true)
         const response = await callPublicApi("/users/signin", "post", authValue)
         if (response.data.status === "Fail") {
 
         } else {
+          setLoading(false)
+
           dispatch(signin({ token: response.token, userdata: response.data }))
-          navigate("/dashboard");
+          navigate(from, { replace: true });
         }
       }
       catch (err) {
@@ -88,6 +93,8 @@ function Signin() {
   let { email, password } = authValue;
   return (
     <main className="bg-white">
+
+      {loading && <Loader/> }
 
       <div className="relative md:flex">
 

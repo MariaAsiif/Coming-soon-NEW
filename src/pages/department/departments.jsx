@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import axios from 'axios'
+// import axios from 'axios'
 import { Link } from 'react-router-dom';
-import { IoEyeOutline } from 'react-icons/io5';
+// import { IoEyeOutline } from 'react-icons/io5';
 import ViewEditEmployer from '../../components/Popups/ViewEditEmployer';
+import EditDeleteButton from '../../components/EditDeleteButton/EditDeleteButton';
+import { callApi } from '../../utils/CallApi';
+import DeletePopup from '../../components/deletePopups/DeletePopups';
+import { toast } from 'react-toastify';
 const Department = () => {
     const token = useSelector((state) => state.userAuth.loginInfo.token);
     const [alljobs, setalljobs] = useState([])
     const [jobPopup, setjobPopup] = useState(false)
     const [jobMode, setjobMode] = useState("view")
     const [jobRow, setjobRow] = useState({})
+    const [delPopup, setDelPopup] = useState(false)
+    const [delId, setDelId] = useState('')
 
     const openJobPopup = (e, mode, data) => {
         e.stopPropagation()
@@ -19,62 +25,54 @@ const Department = () => {
     }
 
 
-    // const [selectedjobs, setselectedjobs] = useState([])
+    const deletePopToggle = (id) => {
+        setDelId(id)
+        setDelPopup(true)
+    }
 
-    // const handleChange = (e) => {
-    //     const { name, checked } = e.target;
-    //     if (name === 'allSelect') {
-    //         let tempUser = alljobs.map((job) => {
-    //             return { ...job, isChecked: checked };
-    //         });
-    //         setalljobs(tempUser);
-    //         if (e.target.checked) {
-    //             setselectedjobs(tempUser)
-    //         }
-    //         else {
-    //             setselectedjobs([])
-    //         }
+    const deleteInspire = async () => {
+        let value = {
+            id: delId
+        }
+        try {
+            const res = await callApi("/quotes/removeQuote", "post", value)
+            if (res.status === "Success") {
+                toast.success(res.message);
+                setDelPopup(false)
+                let oldinspires = alljobs
+                const updatedInspires = oldinspires.filter((inspire) => inspire._id !== res.data._id)
+                setalljobs(updatedInspires)
+            }
+            else {
+                toast.error(res.message);
 
-    //     } else {
-    //         let tempUser = alljobs.map((job) =>
-    //             job._id === name ? { ...job, isChecked: checked } : job
-    //         );
-    //         setalljobs(tempUser);
-    //         if (e.target.checked) {
+            }
+        } catch (error) {
 
-    //             console.log("checked");
-    //             let oldselectedjobssss = alljobs.find((sjob) => sjob._id === name)
-    //             setselectedjobs((prevjob) => ([
-    //                 ...prevjob,
-    //                 oldselectedjobssss
-    //             ]))
-    //         }
-    //         else {
-    //             console.log("unchecked");
-    //             let oldselectedjobs = selectedjobs.filter((sjob) => sjob._id !== name)
-    //             setselectedjobs(oldselectedjobs)
-    //         }
-    //     }
-    // };
+        }
+    }
+
     useEffect(() => {
         (async () => {
             try {
-                const config = {
-                    headers: {
-                        'Authorization': 'Bearer ' + token
+                const payload = {
+
+                    "sortproperty": "created_at",
+                    "sortorder": -1,
+                    "offset": 0,
+                    "limit": 50,
+                    "query": {
+                        "critarion": { "active": true },
+                        "employeeFields": "_id email first_name",
+                        "addedby": "_id email first_name",
+                        "departmentHead": "_id email first_name",
+                        "lastModifiedBy": "_id email first_name"
                     }
-                };
-                let response = await axios.post('http://localhost:5873/employees/getEmployees', {
-                    sortproperty: "created_at",
-                    sortorder: -1,
-                    offset: 0,
-                    limit: 50
-                }, config);
 
-                console.log("rs", response)
+                }
+                let response = await callApi('/departmens/getDepartmentsWithFullDetails', 'post', payload)
 
-                const updatedjobs = response.data.data.jobs.map((job) => ({ ...job, isChecked: false }))
-                setalljobs(updatedjobs)
+                setalljobs(response.data.departments)
             } catch (error) {
                 console.log(error);
             }
@@ -83,6 +81,7 @@ const Department = () => {
     return (
         <div className='bscontainer-fluid'>
             <ViewEditEmployer id="job-modal" data={jobRow} mode={jobMode} modalOpen={jobPopup} onClose={() => setjobPopup(false)} />
+            {delPopup && <DeletePopup permition={delPopup} callback={deleteInspire} Toggle={() => setDelPopup(false)} />}
             <div className='row py-5'>
                 <div className='col-12  mb-5'>
                     <div className='mb-3'>
@@ -145,7 +144,7 @@ const Department = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="text-sm divide-y divide-slate-200">
-                                        {alljobs.map((job, i) => {
+                                        {alljobs?.map((job, i) => {
                                             return (
                                                 <tr key={job._id}>
                                                     {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
@@ -171,30 +170,12 @@ const Department = () => {
 
 
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-                                                        <div className="space-x-1">
-                                                            <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openJobPopup(e, "edit", job)}>
-                                                                <span className="sr-only">Edit</span>
-                                                                <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
-                                                                    <path d="M19.7 8.3c-.4-.4-1-.4-1.4 0l-10 10c-.2.2-.3.4-.3.7v4c0 .6.4 1 1 1h4c.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4l-4-4zM12.6 22H10v-2.6l6-6 2.6 2.6-6 6zm7.4-7.4L17.4 12l1.6-1.6 2.6 2.6-1.6 1.6z" />
-                                                                </svg>
-                                                            </button>
-                                                            <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openJobPopup(e, "view", job)}>
-                                                                <IoEyeOutline className='text-red-500 hover:text-green-600' size={23} />
-
-                                                                {/* <img src={viewSvg} className="w-6 h-7" alt='delete' /> */}
-                                                                {/* <span className="sr-only">Show</span>
-                                                                <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
-                                                                    <path d="M16 20c.3 0 .5-.1.7-.3l5.7-5.7-1.4-1.4-4 4V8h-2v8.6l-4-4L9.6 14l5.7 5.7c.2.2.4.3.7.3zM9 22h14v2H9z" />
-                                                                </svg> */}
-                                                            </button>
-                                                            <button className="text-rose-500 hover:text-rose-600 rounded-full">
-                                                                <span className="sr-only">Delete</span>
-                                                                <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
-                                                                    <path d="M13 15h2v6h-2zM17 15h2v6h-2z" />
-                                                                    <path d="M20 9c0-.6-.4-1-1-1h-6c-.6 0-1 .4-1 1v2H8v2h1v10c0 .6.4 1 1 1h12c.6 0 1-.4 1-1V13h1v-2h-4V9zm-6 1h4v1h-4v-1zm7 3v9H11v-9h10z" />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
+                                                        <EditDeleteButton
+                                                            moduleName="Manage I Inspire"
+                                                            data={job}
+                                                            showPopup={openJobPopup}
+                                                            deleteToggle={deletePopToggle}
+                                                            delePopup={deleteInspire} />
                                                     </td>
 
                                                 </tr>
