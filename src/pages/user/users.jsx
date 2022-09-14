@@ -264,7 +264,7 @@ const Users = () => {
                                 </svg>
                               </button>
                               <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openUserPopup(e, "view", user)}>
-                                   <IoEyeOutline className='text-red-500 hover:text-green-600' size={23} />
+                                <IoEyeOutline className='text-red-500 hover:text-green-600' size={23} />
                               </button>
                               <button
                                 className='text-rose-500 hover:text-rose-600 rounded-full'
