@@ -76,7 +76,7 @@ function Signup() {
             {/* Header */}
             <div className='flex-1'>
               <div className='flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8'>
-                {/* Logo */}
+                {/* logo */}
                 <Link className='block' to='/'>
                   <img src={logo} alt='Logo' className=' w-36' />
                 </Link>
@@ -111,12 +111,6 @@ function Signup() {
                           {errors.first_name.message}
                         </p>
                       )}
-                      <span
-                        hidden={watch('first_name')}
-                        className='absolute  text-red-400 font-medium text-lg top-1/4 left-[70px]'
-                      >
-                        *
-                      </span>
                       <span
                         className={
                           watch('first_name')
@@ -213,12 +207,6 @@ function Signup() {
                         className='form-input w-full'
                         type='text'
                       />
-                      <span
-                        hidden={watch('password')}
-                        className='absolute text-red-400 text-lg font-medium  top-9 left-[150px]'
-                      >
-                        *
-                      </span>
 
                       {errors.password && (
                         <p className='text-red-500 text-sm'>
@@ -303,7 +291,7 @@ function Signup() {
                   <button
                     onClick={handleSignup}
                     type='button'
-                    className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap'
+                    className='btn bg-red-500 hover:bg-green-600 text-white'
                   >
                     Sign Up
                   </button>
