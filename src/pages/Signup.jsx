@@ -76,20 +76,20 @@ function Signup() {
             {/* Header */}
             <div className='flex-1'>
               <div className='flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8'>
-                {/* logo */}
+                {/* Logo */}
                 <Link className='block' to='/'>
                   <img src={logo} alt='Logo' className=' w-36' />
                 </Link>
               </div>
             </div>
 
-            <div className='max-w-lg mx-auto px-4 py-8'>
+            <div className='max-w-lg mx-auto px-4 py-4'>
               <h1 className='text-3xl text-slate-800 font-bold mb-6'>
                 Create your Account
               </h1>
               {/* Form */}
               <form>
-                <div className='space-y-6'>
+                <div>
                   <div className='row'>
                     <div className='col-lg-6 mb-4 '>
                       <label
