@@ -91,7 +91,7 @@ function Signup() {
               <form>
                 <div>
                   <div className='row'>
-                    <div className='col-lg-6 mb-4 '>
+                    <div className='col-lg-6 mb-1 '>
                       <label
                         className='block text-sm font-medium mb-1'
                         htmlFor='name'
