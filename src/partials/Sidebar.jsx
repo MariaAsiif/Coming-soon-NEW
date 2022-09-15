@@ -120,7 +120,7 @@ console.log("label",permission)
                 </h3>
                 {role === 'superadmin' ?
                   <ul className="mt-3 max-h-[400px] overflow-auto">
-                    {group.menuitems?.filter((f) => permission?.permissions?.some((s) => s?.moduleName === f?.label)).map((item, index) => {
+                    {group.menuitems?.map((item, index) => {
                       if (item.subMenuItems.length === 0) {
                         return (
                           <li key={index} className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes(item.pathname) && 'bg-gray-500'}`}>

@@ -16,7 +16,7 @@ function Signin() {
   const from = location.state?.from?.pathname || "../dashboard"
   const dispatch = useDispatch()
 
-  const [loading , setLoading ] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [authValue, setAuthValue] = useState({
     email: "superadmin@getnada.com",
     password: '12345678',
@@ -73,16 +73,18 @@ function Signin() {
         setLoading(true)
         const response = await callPublicApi("/users/signin", "post", authValue)
         if (response.data.status === "Fail") {
+          setLoading(false)
 
         } else {
           setLoading(false)
-
           dispatch(signin({ token: response.token, userdata: response.data }))
           navigate(from, { replace: true });
         }
       }
       catch (err) {
-        console.log("err", err )
+        console.log("err", err)
+        setLoading(false)
+
         // dispatch(signin({ token: response.token} ))
         // navigate("../dashboard");
       }
@@ -94,7 +96,7 @@ function Signin() {
   return (
     <main className="bg-white">
 
-      {loading && <Loader/> }
+      {loading && <Loader />}
 
       <div className="relative md:flex">
 
