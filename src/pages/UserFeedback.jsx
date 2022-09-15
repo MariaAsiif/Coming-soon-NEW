@@ -60,7 +60,7 @@ const UserFeedback = () => {
                                                 Feedback
                                                 <br />
                                                 <span className='text-red-500 text-[16px] uppercase flex justify-center cursor-pointer'>
-                                                    Instructions {feedback ? <IoMdArrowDropdown className='text-red-500' /> : <IoMdArrowDropup className='text-red-500' />} </span>
+                                                    Instructions {feedback ? <IoMdArrowDropup className='text-red-500' /> : <IoMdArrowDropdown className='text-red-500' />} </span>
                                             </h1>
 
                                             {feedback ?
