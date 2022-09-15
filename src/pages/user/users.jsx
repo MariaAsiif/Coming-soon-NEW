@@ -1,129 +1,119 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { callApi, HOSTNAME } from '../../utils/CallApi';
 import { IoEyeOutline } from 'react-icons/io5';
-import { toast, ToastContainer } from 'react-toastify';
 
-import ViewEditTicker from '../../components/Popups/ViewEditTicker';
+import { callApi } from '../../utils/CallApi';
+
+import { toast } from 'react-toastify';
+import ViewEditUser from '../../components/Popups/ViewEditUser';
 import DeletePopup from '../../components/deletePopups/DeletePopups';
-import ImageViewerPopup from '../../components/Popups/ImageViewerPopup';
-const Roles = () => {
-  const [allTicker, setallTicker] = useState([]);
-  const [tickerPopup, settickerPopup] = useState(false);
-  const [delPopup, setDelPopup] = useState(false);
+const Users = () => {
+  const [users, setUsers] = useState([]);
+  const [userPopup, setUserPopup] = useState(false);
+  const [userMode, setUserMode] = useState('view');
   const [delId, setDelId] = useState('');
-  const [jobMode, setjobMode] = useState('view');
-  const [jobRow, setjobRow] = useState({});
-  const [imagePopup, setimagePopup] = useState(false);
-  const [imagePopupUrl, setimagePopupUrl] = useState('');
+  const [userRow, setUserRow] = useState({});
+  const [delPopup, setDelPopup] = useState(false);
 
-  const openJobPopup = (e, mode, data) => {
+  const openUserPopup = (e, mode, data) => {
     e.stopPropagation();
-    settickerPopup(true);
-    setjobMode(mode);
-    setjobRow(data);
+    setUserPopup(true);
+    setUserMode(mode);
+    setUserRow(data);
   };
 
-  const deletePopToggle = (id) => {
+  const deletePopToggle = async (id) => {
     setDelId(id);
     setDelPopup(true);
+    console.log(`id ===========`, id)
   };
 
-  const deleteTicker = async () => {
+  const deleteUser = async (delId) => {
     let value = {
-      id: delId,
+      userid: delId,
+      active: false
     };
-
+    setDelPopup(false)
     try {
-      const res = await callApi('/tickers/removeTicker', 'post', value);
-      if (res.status === 'Success') {
-        toast.success(res.message);
-        setDelPopup(false);
-        let oldtickers = allTicker;
-        const updatedTickers = oldtickers.filter(
-          (ticker) => ticker._id !== res.data._id
-        );
-        setallTicker(updatedTickers);
-      } else {
-        toast.error(res.message);
-        setDelPopup(false);
+      const res = await callApi("/users/activeUser", "post", value)
+      if (res.status === "Success") {
+          toast.success(res.message);
+          
+          let oldUsers = users
+          const updateUsers = oldUsers.filter((user) => user._id !== res.data._id)
+          setUsers(updateUsers)
       }
-    } catch (error) {
-      setDelPopup(false);
-    }
+      else {
+          toast.error(res.message);
+      }
+    } catch (error) {}
   };
 
-  const openImagePopup = (url) => {
-    setimagePopup(true);
-    setimagePopupUrl(`${HOSTNAME}${url}`);
+  const handleApproved = async (id, status) => {
+    console.log('This is approved function');
+    let value = {
+      userid: id,
+      approved: status
+    };
+    try {
+      const res = await callApi("/users/approveDisapproveUser", "post", value)
+      if (res.status === "Success") {
+          toast.success(res.message);
+          let oldUsers = users
+          const updateUsers = oldUsers.map((user) => {
+            if(user._id === res.data._id){
+              user.approved = status
+            }
+            return user;
+          })
+          setUsers(updateUsers)
+      }
+      else {
+          toast.error(res.message);
+      }
+    } catch (error) {}
   };
 
   useEffect(() => {
-    if (!tickerPopup) {
+    if (!userPopup)
       (async () => {
         try {
-          const payload = {
-            sortproperty: 'created_at',
-            sortorder: -1,
+          let payload = {
+            sortProperty: 'createdAt',
+            sortOrder: -1,
             offset: 0,
             limit: 50,
             query: {
               critarion: { active: true },
-
-              addedby: '_id email first_name',
-
+              addedBy: '_id email first_name',
               lastModifiedBy: '_id email first_name',
             },
           };
-          const response = await callApi(
-            '/tickers/getTickersWithFullDetails',
-            'post',
-            payload
-          );
-          setallTicker(response.data.tickers);
+
+          let response = await callApi('/users/listAllUsers', 'post', payload);
+          setUsers(response?.data?.users);
         } catch (error) {
           console.log(error);
         }
       })();
-    }
-  }, [tickerPopup]);
+  }, [userPopup]);
   return (
     <div className='bscontainer-fluid'>
-      <ToastContainer
-        position='top-right'
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
+      <ViewEditUser
+        id='user-modal'
+        data={userRow}
+        mode={userMode}
+        show={userPopup}
+        onClose={() => setUserPopup(false)}
       />
-      {imagePopup ? (
-        <ImageViewerPopup
-          imageUrl={imagePopupUrl}
-          open={imagePopup}
-          onClose={() => setimagePopup(false)}
-        />
-      ) : null}
-      {tickerPopup ? (
-        <ViewEditTicker
-          id='job-modal'
-          data={jobRow}
-          mode={jobMode}
-          open={tickerPopup}
-          onClose={() => settickerPopup(false)}
-        />
-      ) : null}
-
       {delPopup && (
         <DeletePopup
           permition={delPopup}
+          callback={()=>{deleteUser(delId)}}
           Toggle={() => setDelPopup(false)}
-          callback={deleteTicker}
         />
       )}
+
       <div className='row py-5'>
         <div className='col-12  mb-5'>
           <div className='mb-3'>
@@ -144,18 +134,17 @@ const Roles = () => {
               </li>
               <li className='flex items-center'>
                 <Link
-                  to='/ticker'
+                  to='/user/list'
                   className='text-slate-500 hover:text-indigo-500'
                   href='#0'
                 >
-                  Ticker
+                  User
                 </Link>
               </li>
             </ul>
           </div>
-
           <Link
-            to='create-ticker'
+            to='create-user'
             className='btn bg-red-500 hover:bg-green-600 text-white'
           >
             <svg
@@ -164,16 +153,16 @@ const Roles = () => {
             >
               <path d='M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z' />
             </svg>
-            <span className='ml-2'>Create Ticker</span>
+            <span className='ml-2'>Create User</span>
           </Link>
         </div>
         <div className='col-12 border'>
           <div className='bg-white shadow-lg rounded-sm border border-slate-200 relative'>
             <header className='px-5 py-4'>
               <h2 className='font-semibold text-slate-800'>
-                All Ticker{' '}
+                All Users{' '}
                 <span className='text-slate-400 font-medium'>
-                  {allTicker.length}
+                  {users?.length}
                 </span>
               </h2>
             </header>
@@ -186,16 +175,27 @@ const Roles = () => {
                         <div className='font-semibold text-left'>ID</div>
                       </th>
                       <th className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
-                        <div className='font-semibold text-left'>IMAGE</div>
+                        <div className='font-semibold text-left'>Name</div>
+                      </th>
+                      <th className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
+                        <div className='font-semibold text-left'>Email</div>
                       </th>
                       <th className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
                         <div className='font-semibold text-left'>
-                          DESCRIPTION
+                          Phone Number
                         </div>
                       </th>
-                      {/* <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">STATUS</div>
-                                            </th> */}
+                      <th className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
+                        <div className='font-semibold text-left'>Role</div>
+                      </th>
+                      <th className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
+                        <div className='font-semibold text-left'>
+                          Registered Date
+                        </div>
+                      </th>
+                      <th className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
+                        <div className='font-semibold text-left'>Status</div>
+                      </th>
 
                       <th className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
                         <div className='font-semibold text-left'>Actions</div>
@@ -203,35 +203,57 @@ const Roles = () => {
                     </tr>
                   </thead>
                   <tbody className='text-sm divide-y divide-slate-200'>
-                    {allTicker.map((tiker) => {
+                    {users?.map((user, i) => {
                       return (
-                        <tr key={tiker?._id}>
+                        <tr key={user._id}>
                           <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
-                            <div className='text-left'>{tiker?._id}</div>
+                            <div className='text-left'>{user._id}</div>
                           </td>
                           <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
-                            {/* <div className="text-left">{tiker?.}</div> */}
-                            <img
-                              onClick={() => openImagePopup(tiker.logoFile)}
-                              src={`${HOSTNAME}/public${tiker?.logoFile}`}
-                              className='w-[80px] h-[50px] cursor-pointer'
-                              alt='image_logo'
-                            />
+                            <div className='text-left'>{user.first_name}</div>
                           </td>
                           <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
-                            <div className='text-left'>{tiker?.tickerText}</div>
+                            <div className='text-left'>{user.email}</div>
                           </td>
                           <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
-                            <div className='text-left'>
-                              {tiker?.active ? 'Active' : 'Deactive'}
-                            </div>
+                            <div className='text-left'>{user.phoneNumber}</div>
                           </td>
+                          <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
+                            <div className='text-left'>{user.role}</div>
+                          </td>
+                          <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
+                            <div className='text-left'>{user.created_at}</div>
+                          </td>
+                         {user.approved && (
+                           <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
+                           <div className='text-left'>
+                             <button
+                               className='btn bg-green-600 text-white'
+                               onClick={()=> {handleApproved(user._id, false)}}
+                             >
+                               <span className='ml-2'>Approved</span>
+                             </button>
+                           </div>
+                         </td>
+                         )}
+                          {!user.approved && (
+                           <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap'>
+                           <div className='text-left'>
+                             <button
+                               className='btn bg-red-500 text-white'
+                               onClick={()=> {handleApproved(user._id, true)}}
+                             >
+                               <span className='ml-2'>DisApproved</span>
+                             </button>
+                           </div>
+                         </td>
+                         )}
 
                           <td className='px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px'>
                             <div className='space-x-1'>
                               <button
                                 className='text-slate-400 hover:text-slate-500 rounded-full'
-                                onClick={(e) => openJobPopup(e, 'edit', tiker)}
+                                onClick={(e) => openUserPopup(e, 'edit', user)}
                               >
                                 <span className='sr-only'>Edit</span>
                                 <svg
@@ -241,24 +263,12 @@ const Roles = () => {
                                   <path d='M19.7 8.3c-.4-.4-1-.4-1.4 0l-10 10c-.2.2-.3.4-.3.7v4c0 .6.4 1 1 1h4c.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4l-4-4zM12.6 22H10v-2.6l6-6 2.6 2.6-6 6zm7.4-7.4L17.4 12l1.6-1.6 2.6 2.6-1.6 1.6z' />
                                 </svg>
                               </button>
-                              <button
-                                className='text-slate-400 hover:text-slate-500 rounded-full'
-                                onClick={(e) => openJobPopup(e, 'view', tiker)}
-                              >
-                                <IoEyeOutline
-                                  className='text-red-500 hover:text-green-600'
-                                  size={23}
-                                />
-
-                                {/* <img src={viewSvg} className="w-6 h-7" alt='delete' /> */}
-                                {/* <span className="sr-only">Show</span>
-                                                                <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
-                                                                    <path d="M16 20c.3 0 .5-.1.7-.3l5.7-5.7-1.4-1.4-4 4V8h-2v8.6l-4-4L9.6 14l5.7 5.7c.2.2.4.3.7.3zM9 22h14v2H9z" />
-                                                                </svg> */}
+                              <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openUserPopup(e, "view", user)}>
+                                <IoEyeOutline className='text-red-500 hover:text-green-600' size={23} />
                               </button>
                               <button
                                 className='text-rose-500 hover:text-rose-600 rounded-full'
-                                onClick={() => deletePopToggle(tiker?._id)}
+                                onClick={() => deletePopToggle(user._id)}
                               >
                                 <span className='sr-only'>Delete</span>
                                 <svg
@@ -285,4 +295,4 @@ const Roles = () => {
   );
 };
 
-export default Roles;
+export default Users;
