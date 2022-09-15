@@ -63,8 +63,9 @@ const UserFeedback = () => {
                                                     Instructions {feedback ? <IoMdArrowDropdown className='text-red-500' /> : <IoMdArrowDropup className='text-red-500' />} </span>
                                             </h1>
 
-                                            {feedback &&
-                                                <div className='border p-2 mb-3  text-[14px] overflow-auto max-h-[150px]'>
+                                            {feedback ?
+
+                                                <div className='border p-2 mb-3  text-[14px] '>
                                                     Thank ypu for your participation and sharing with us for improvement of the time.
                                                     <br />
                                                     <br />
@@ -92,33 +93,34 @@ const UserFeedback = () => {
                                                     Thank you for participating.
 
                                                 </div>
-                                            }
-                                            <div className=''>
-                                                <div className='mb-3'>
-                                                    <label className='block font-semibold text-lg mb-2'>User name</label>
-                                                    <input  {...register('username', { required: true })} className='border-gray-300 w-full rounded' type="text" placeholder='john doe' />
-                                                    {errors.username && (<p className="text-red-500 text-sm">User name is required</p>)}
-                                                </div>
-                                                <div className='mb-3'>
-                                                    <label className='block font-semibold text-lg mb-2'>Email address</label>
-                                                    <input  {...register('email', { required: true })} className='border-gray-300 w-full rounded' type="email" placeholder='john@gmail.com' />
-                                                    {errors.email && (<p className="text-red-500 text-sm">Email is required</p>)}
-                                                </div>
+                                                :
+                                                <div className=''>
+                                                    <div className='mb-3'>
+                                                        <label className='block font-semibold text-lg mb-2'>User name</label>
+                                                        <input  {...register('username', { required: true })} className='border-gray-300 w-full rounded' type="text" placeholder='john doe' />
+                                                        {errors.username && (<p className="text-red-500 text-sm">User name is required</p>)}
+                                                    </div>
+                                                    <div className='mb-3'>
+                                                        <label className='block font-semibold text-lg mb-2'>Email address</label>
+                                                        <input  {...register('email', { required: true })} className='border-gray-300 w-full rounded' type="email" placeholder='john@gmail.com' />
+                                                        {errors.email && (<p className="text-red-500 text-sm">Email is required</p>)}
+                                                    </div>
 
-                                                <div className='mb-3'>
-                                                    <label className='block font-semibold text-lg mb-2'>Your feedback</label>
-                                                    <textarea rows={4} placeholder="feedback" className='border-gray-300 w-full rounded' {...register('feedback', { required: true })} />
-                                                    {errors.feedback && (<p className="text-red-500 text-sm">Feedback is required</p>)}
+                                                    <div className='mb-3'>
+                                                        <label className='block font-semibold text-lg mb-2'>Your feedback</label>
+                                                        <textarea rows={4} placeholder="feedback" className='border-gray-300 w-full rounded' {...register('feedback', { required: true })} />
+                                                        {errors.feedback && (<p className="text-red-500 text-sm">Feedback is required</p>)}
+                                                    </div>
+                                                    <div className='mb-3'>
+                                                        <label className='font-semibold text-lg mb-2'>Image</label>
+                                                        <input className='border border-gray-300 focus:outline-blue-700 w-full rounded p-2'{...register('feedbackimg')} type="file" />
+                                                        <p className='text-gray-400 text-center text-xs'>png, jpeg, jpg, svg images are allowed </p>
+                                                    </div>
+                                                    <div >
+                                                        <button type='submit' className='bg-red-500 hover:bg-green-600 w-full rounded p-3 text-white font-semibold'>SUBMIT</button>
+                                                    </div>
                                                 </div>
-                                                <div className='mb-3'>
-                                                    <label className='font-semibold text-lg mb-2'>Image</label>
-                                                    <input className='border border-gray-300 focus:outline-blue-700 w-full rounded p-2'{...register('feedbackimg')} type="file" />
-                                                    <p className='text-gray-400 text-center text-xs'>png, jpeg, jpg, svg images are allowed </p>
-                                                </div>
-                                                <div >
-                                                    <button type='submit' className='bg-red-500 hover:bg-green-600 w-full rounded p-3 text-white font-semibold'>SUBMIT</button>
-                                                </div>
-                                            </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>
