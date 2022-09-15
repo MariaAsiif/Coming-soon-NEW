@@ -30,7 +30,7 @@ const CreateUser = () => {
 
   const [roles, setallroles] = useState([]);
   const [roleId, setRoleId] = useState('');
-  const [roleName, setRoleName] = useState('');
+  const [roleName, setRoleName] = useState();
   const [error, setError] = useState({
     userError: '',
     roleError: '',
@@ -131,26 +131,40 @@ const CreateUser = () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(`roleName ===========`, roleName);
     const newData = {
       ...data,
-      isActive,
+      active: isActive,
       approved,
-      verified,
+      is_verified: verified,
       country: recruitModel.country,
       state: recruitModel.state,
       city: recruitModel.city,
       role: roleName,
       location,
     };
+    console.log(`newData ========`, newData);
     try {
-      let response = await callApi('/users/signup', 'post', newData);
-      if (response.status === 'Success') {
-        navigate('/user/list');
-        toast.success(response.data.message);
-      } else {
-        toast.error(response.data.message);
+      if (!newData.role) {
+        toast.warning(`Please Select One Role`);
+        return;
       }
-    } catch (error) {}
+      let response = await callApi('/users/signup', 'post', newData);
+      console.log(`response==============`, response);
+      if (response.status === 'Success') {
+        console.log(`response message ========`, response.message);
+        toast.success(`User successfully created`);
+        setTimeout(() => {
+          navigate('/user/list');
+        }, 5000);
+      } else {
+        console.log(`Error reponse message ========`, response.message);
+
+        toast.error(response.message);
+      }
+    } catch (error) {
+      console.log(`error ============`, error);
+    }
   };
 
   useEffect(() => {
@@ -658,7 +672,7 @@ const CreateUser = () => {
             <div className='col-lg-4 mb-4 relative'>
               <div>
                 <div className='text-sm text-slate-800 font-semibold mb-3'>
-                  Active/In Active
+                  Active
                 </div>
                 <div className='flex items-center'>
                   <div className='form-switch'>
@@ -686,7 +700,7 @@ const CreateUser = () => {
             <div className='col-lg-4 mb-4 relative'>
               <div>
                 <div className='text-sm text-slate-800 font-semibold mb-3'>
-                  Approved/DisApproved
+                  Approved
                 </div>
                 <div className='flex items-center'>
                   <div className='form-switch'>
@@ -714,7 +728,7 @@ const CreateUser = () => {
             <div className='col-lg-4 mb-4 relative'>
               <div>
                 <div className='text-sm text-slate-800 font-semibold mb-3'>
-                  Verified/Non Verified
+                  Verified
                 </div>
                 <div className='flex items-center'>
                   <div className='form-switch'>

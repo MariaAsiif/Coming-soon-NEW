@@ -1,147 +1,351 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
-
+import { FcCheckmark } from 'react-icons/fc';
 import AuthImage from '../images/signin.jpg';
 import AuthDecoration from '../images/auth-decoration.png';
-import axios from "axios"
-import { callPublicApi } from "../utils/CallApi"
-import { useForm } from "react-hook-form";
+import axios from 'axios';
+import { callPublicApi } from '../utils/CallApi';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import logo from '../images/hporx_logo.png';
+const schema = yup.object({
+  first_name: yup.string().required(),
+  first_family_name: yup.string().required(),
+  second_family_name: yup.string().optional(),
+  third_family_name: yup.string().optional(),
+  email: yup.string().email('Invalid email format').required(),
+  password: yup.string().required(),
+  phoneNumber: yup.string().required(),
+});
+
 function Signup() {
   let navigate = useNavigate();
   const [formdata, setformdata] = useState({
-    first_name: "",
-    first_family_name: "jamshaid",
-    second_family_name: "jamshaid",
-    third_family_name: "jamshaid",
-    email: "",
-    password: "",
-    phoneNumber: "+923074901291",
-    channel: "sms",
-    role: "superadmin",
+    first_name: '',
+    first_family_name: 'jamshaid',
+    second_family_name: 'jamshaid',
+    third_family_name: 'jamshaid',
+    email: '',
+    password: '',
+    phoneNumber: '+923074901291',
+    channel: 'sms',
+    role: 'superadmin',
     approved: false,
     location: {
-      type: "Point",
-      coordinates: [
-        74.28911285869138,
-        31.624888273644956
-      ]
-    }
-  })
+      type: 'Point',
+      coordinates: [74.28911285869138, 31.624888273644956],
+    },
+  });
+
+  const {
+    register,
+    watch,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({ mode: 'onChange', resolver: yupResolver(schema) });
 
   const handleChange = (e) => {
-    let { name, value } = e.target
+    let { name, value } = e.target;
     setformdata((prevdata) => ({
       ...prevdata,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
   const handleSignup = async () => {
+    console.log('handle sign up clicked');
     try {
-      const response = await callPublicApi("/users/signup", "post", formdata)
-      console.log("response", response);
-      if (response.status === "Success") {
-        console.log("Successs");
-        navigate("/ecommerce/orders", { replace: true });
-
+      const response = await callPublicApi('/users/signup', 'post', formdata);
+      console.log('response', response);
+      if (response.status === 'Success') {
+        console.log('Successs');
+        navigate('/ecommerce/orders', { replace: true });
       }
-
-
     } catch (error) {
-      console.log("ERROR of Signup", error);
+      console.log('ERROR of Signup', error);
     }
-
-  }
+  };
 
   return (
-    <main className="bg-white">
-
-      <div className="relative md:flex">
-
+    <main className='bg-white'>
+      <div className='relative md:flex'>
         {/* Content */}
-        <div className="md:w-1/2">
-          <div className="min-h-screen h-full flex flex-col after:flex-1">
-
+        <div className='md:w-1/2'>
+          <div className='min-h-screen h-full flex flex-col after:flex-1'>
             {/* Header */}
-            <div className="flex-1">
-              <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+            <div className='flex-1'>
+              <div className='flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8'>
                 {/* Logo */}
-                <Link className="block" to="/">
-                  <svg width="32" height="32" viewBox="0 0 32 32">
-                    <defs>
-                      <linearGradient x1="28.538%" y1="20.229%" x2="100%" y2="108.156%" id="logo-a">
-                        <stop stopColor="#A5B4FC" stopOpacity="0" offset="0%" />
-                        <stop stopColor="#A5B4FC" offset="100%" />
-                      </linearGradient>
-                      <linearGradient x1="88.638%" y1="29.267%" x2="22.42%" y2="100%" id="logo-b">
-                        <stop stopColor="#38BDF8" stopOpacity="0" offset="0%" />
-                        <stop stopColor="#38BDF8" offset="100%" />
-                      </linearGradient>
-                    </defs>
-                    <rect fill="#6366F1" width="32" height="32" rx="16" />
-                    <path d="M18.277.16C26.035 1.267 32 7.938 32 16c0 8.837-7.163 16-16 16a15.937 15.937 0 01-10.426-3.863L18.277.161z" fill="#4F46E5" />
-                    <path d="M7.404 2.503l18.339 26.19A15.93 15.93 0 0116 32C7.163 32 0 24.837 0 16 0 10.327 2.952 5.344 7.404 2.503z" fill="url(#logo-a)" />
-                    <path d="M2.223 24.14L29.777 7.86A15.926 15.926 0 0132 16c0 8.837-7.163 16-16 16-5.864 0-10.991-3.154-13.777-7.86z" fill="url(#logo-b)" />
-                  </svg>
+                <Link className='block' to='/'>
+                  <img src={logo} alt='Logo' className=' w-36' />
                 </Link>
               </div>
             </div>
 
-            <div className="max-w-sm mx-auto px-4 py-8">
-              <h1 className="text-3xl text-slate-800 font-bold mb-6">Create your Account ✨</h1>
+            <div className='max-w-lg mx-auto px-4 py-8'>
+              <h1 className='text-3xl text-slate-800 font-bold mb-6'>
+                Create your Account
+              </h1>
               {/* Form */}
               <form>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-1" htmlFor="email">Email Address <span className="text-rose-500">*</span></label>
-                    <input name='email' value={formdata.email} onChange={handleChange} id="email" className="form-input w-full" type="email" />
+                <div className='space-y-6'>
+                  <div className='row'>
+                    <div className='col-lg-6 mb-4 '>
+                      <label
+                        className='block text-sm font-medium mb-1'
+                        htmlFor='name'
+                      >
+                        Full Name <span className='text-rose-500'>*</span>
+                      </label>
+                      <input
+                        name='first_name'
+                        value={formdata.first_name}
+                        onChange={handleChange}
+                        id='name'
+                        className='form-input w-full'
+                        type='text'
+                      />
+                      {errors.first_name && (
+                        <p className='text-red-500 text-sm'>
+                          {errors.first_name.message}
+                        </p>
+                      )}
+                      <span
+                        hidden={watch('first_name')}
+                        className='absolute  text-red-400 font-medium text-lg top-1/4 left-[70px]'
+                      >
+                        *
+                      </span>
+                      <span
+                        className={
+                          watch('first_name')
+                            ? `visible absolute top-1/4 right-3`
+                            : `invisible`
+                        }
+                      >
+                        <FcCheckmark />
+                      </span>
+                    </div>
+                    <div className='col-lg-6 mb-4 '>
+                      <label
+                        className='block text-sm font-medium mb-1'
+                        htmlFor='First Family Name'
+                      >
+                        First Family Name
+                        <span className='text-rose-500'>*</span>
+                      </label>
+                      <input
+                        name='First Family Name'
+                        value={formdata.first_family_name}
+                        onChange={handleChange}
+                        id='first_family_name'
+                        className='form-input w-full'
+                        type='text'
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1" htmlFor="name">Full Name <span className="text-rose-500">*</span></label>
-                    <input name="first_name" value={formdata.first_name} onChange={handleChange} id="name" className="form-input w-full" type="text" />
+                  <div className='row'>
+                    <div className='col-lg-6 mb-4 '>
+                      <label
+                        className='block text-sm font-medium mb-1'
+                        htmlFor='name'
+                      >
+                        Second Family Name
+                        <span className='text-rose-500'>*</span>
+                      </label>
+                      <input
+                        name='Second Family Name'
+                        value={formdata.second_family_name}
+                        onChange={handleChange}
+                        id='second_family_name'
+                        className='form-input w-full'
+                        type='text'
+                      />
+                    </div>
+                    <div className='col-lg-6 mb-4 '>
+                      <label
+                        className='block text-sm font-medium mb-1'
+                        htmlFor='Third Family Name'
+                      >
+                        Third Family Name
+                        <span className='text-rose-500'>*</span>
+                      </label>
+                      <input
+                        name='third_family_name'
+                        value={formdata.third_family_name}
+                        onChange={handleChange}
+                        id='third_family_name'
+                        className='form-input w-full'
+                        type='text'
+                      />
+                    </div>
                   </div>
-                  {/* <div>
-                    <label className="block text-sm font-medium mb-1" htmlFor="role">Your Role <span className="text-rose-500">*</span></label>
-                    <select id="role" className="form-select w-full">
-                      <option>Designer</option>
-                      <option>Developer</option>
-                      <option>Accountant</option>
-                    </select>
-                  </div> */}
-                  <div>
-                    <label className="block text-sm font-medium mb-1" htmlFor="password">Password</label>
-                    <input name='password' value={formdata.password} onChange={handleChange} id="password" className="form-input w-full" type="password" autoComplete="on" />
+                  <div className='row'>
+                    <div className='col-lg-6 mb-4 '>
+                      <label
+                        className='block text-sm font-medium mb-1'
+                        htmlFor='Email'
+                      >
+                        Email <span className='text-rose-500'>*</span>
+                      </label>
+                      <input
+                        name='email'
+                        value={formdata.Email}
+                        onChange={handleChange}
+                        id='Email'
+                        className='form-input w-full'
+                        type='text'
+                      />
+                    </div>
+                    <div className='col-lg-6 mb-4 '>
+                      <label
+                        className='block text-sm font-medium mb-1'
+                        htmlFor='Password'
+                      >
+                        Password <span className='text-rose-500'>*</span>
+                      </label>
+                      <input
+                        name='password'
+                        value={formdata.Password}
+                        onChange={handleChange}
+                        id='Password'
+                        className='form-input w-full'
+                        type='text'
+                      />
+                      <span
+                        hidden={watch('password')}
+                        className='absolute text-red-400 text-lg font-medium  top-9 left-[150px]'
+                      >
+                        *
+                      </span>
+
+                      {errors.password && (
+                        <p className='text-red-500 text-sm'>
+                          {errors.password.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className='row'>
+                    <div className='col-lg-6 mb-4 '>
+                      <label
+                        className='block text-sm font-medium mb-1'
+                        htmlFor='country'
+                      >
+                        Country <span className='text-rose-500'>*</span>
+                      </label>
+                      <select
+                        value=''
+                        // onChange={handleChangeCountry}
+                        name='country'
+                        id='country'
+                        className={`form-input w-full`}
+                      >
+                        <option value=''>Select Country </option>
+                      </select>
+                    </div>
+                    <div className='col-lg-6 mb-4 '>
+                      <label
+                        className='block text-sm font-medium mb-1'
+                        htmlFor='state'
+                      >
+                        State <span className='text-rose-500'>*</span>
+                      </label>
+                      <select
+                        value=''
+                        // onChange={handleChangeCountry}
+                        name='state'
+                        id='state'
+                        className={`form-input w-full`}
+                      >
+                        <option value=''>Select State </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className='row'>
+                    <div className='col-lg-6 mb-4 '>
+                      <label
+                        className='block text-sm font-medium mb-1'
+                        htmlFor='city'
+                      >
+                        City <span className='text-rose-500'>*</span>
+                      </label>
+                      <select
+                        value=''
+                        // onChange={handleChangeCountry}
+                        name='city'
+                        id='city'
+                        className={`form-input w-full`}
+                      >
+                        <option value=''>Select City </option>
+                      </select>
+                    </div>
+                    <div className='col-lg-6 mb-4 '>
+                      <label
+                        className='block text-sm font-medium mb-1'
+                        htmlFor='phonenumber'
+                      >
+                        Phone Number <span className='text-rose-500'>*</span>
+                      </label>
+                      <input
+                        name='phoneNumber'
+                        value={formdata.phoneNumber}
+                        onChange={handleChange}
+                        id='phoneNumber'
+                        className='form-input w-full'
+                        type='number'
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-between mt-6">
-                  {/* <div className="mr-1">
-                    <label className="flex items-center">
-                      <input type="checkbox" className="form-checkbox" />
-                      <span className="text-sm ml-2">Email me about product news.</span>
-                    </label>
-                  </div> */}
-                  <button onClick={handleSignup} type='button' className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap"  >Sign Up</button>
+                <div className='flex items-center justify-between mt-6'>
+                  <button
+                    onClick={handleSignup}
+                    type='button'
+                    className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap'
+                  >
+                    Sign Up
+                  </button>
                 </div>
               </form>
               {/* Footer */}
-              <div className="pt-5 mt-6 border-t border-slate-200">
-                <div className="text-sm">
-                  Have an account? <Link className="font-medium text-indigo-500 hover:text-indigo-600" to="/signin">Sign In</Link>
+              <div className='pt-5 mt-6 border-t border-slate-200'>
+                <div className='text-sm'>
+                  Have an account?{' '}
+                  <Link
+                    className='font-medium text-indigo-500 hover:text-indigo-600'
+                    to='/signin'
+                  >
+                    Sign In
+                  </Link>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
         {/* Image */}
-        <div className="hidden md:block absolute top-0 bottom-0 right-0 md:w-1/2" aria-hidden="true">
-          <img className="object-cover object-center w-full h-full" src={AuthImage} width="760" height="1024" alt="Authentication" />
-          <img className="absolute top-1/4 left-0 -translate-x-1/2 ml-8 hidden lg:block" src={AuthDecoration} width="218" height="224" alt="Authentication decoration" />
+        <div
+          className='hidden md:block absolute top-0 bottom-0 right-0 md:w-1/2'
+          aria-hidden='true'
+        >
+          <img
+            className='object-cover object-center w-full h-full'
+            src={AuthImage}
+            width='760'
+            height='1024'
+            alt='Authentication'
+          />
+          <img
+            className='absolute top-1/4 left-0 -translate-x-1/2 ml-8 hidden lg:block'
+            src={AuthDecoration}
+            width='218'
+            height='224'
+            alt='Authentication decoration'
+          />
         </div>
-
       </div>
-
     </main>
   );
 }

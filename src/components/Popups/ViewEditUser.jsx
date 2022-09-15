@@ -2,12 +2,24 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import 'react-responsive-modal/styles.css';
 import { Controller, useForm } from 'react-hook-form';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import Transition from '../../utils/Transition';
 import { Country, State, City } from 'country-state-city';
 import moment from 'moment';
 import { callApi } from '../../utils/CallApi';
 import PhoneInput from 'react-phone-input-2';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object({
+  first_name: yup.string().required(),
+  first_family_name: yup.string().required(),
+  second_family_name: yup.string().optional(),
+  third_family_name: yup.string().optional(),
+  email: yup.string().email('Invalid email format').required(),
+  password: yup.string().required(),
+  phoneNumber: yup.string().required(),
+});
 
 const ViewEditUser = (props) => {
   const {
@@ -16,7 +28,7 @@ const ViewEditUser = (props) => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({ mode: 'onChange ' });
+  } = useForm({ mode: 'onChange ', resolver: yupResolver(schema) });
 
   const [isActive, setIsActive] = useState(true);
   const [approved, setApproved] = useState(true);
@@ -43,10 +55,10 @@ const ViewEditUser = (props) => {
     third_family_name: '',
     email: '',
     reEmail: '',
-    city: '',
-    state: '',
+    country: props.data.Country,
+    state: props.data.state,
+    city: props.data.city,
     industry: '',
-    country: '',
     position: '',
     mobile: '',
     age: '',
@@ -108,8 +120,19 @@ const ViewEditUser = (props) => {
       city: recruitModel.city,
       created_at: formattedDate,
     };
-    let response = await callApi('/users/updateuser', 'post', payload);
-    response.status === 'Success' && props.onClose();
+    try {
+      let response = await callApi('/users/updateuser', 'post', payload);
+      if (response.status === 'Success') {
+        console.log(`response message ========`, response.message);
+        toast.success(`User updated successfully`);
+        props.onClose();
+      } else {
+        console.log(`Error reponse message ========`, response.message);
+        toast.error(response.message);
+      }
+    } catch (error) {
+      console.log(`error ============`, error);
+    }
   };
 
   useEffect(() => {
@@ -241,13 +264,13 @@ const ViewEditUser = (props) => {
                     <input
                       {...register('first_name', { required: true })}
                       className={`form-input w-full ${
-                        errors.authorName
+                        errors.first_name
                           ? 'border-red-500'
                           : 'border-green-500'
                       }`}
                     />
                   )}
-                  {errors.authorName && (
+                  {errors.first_name && (
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
@@ -264,13 +287,13 @@ const ViewEditUser = (props) => {
                     <input
                       {...register('first_family_name', { required: true })}
                       className={`form-input w-full ${
-                        errors.authorName
+                        errors.first_family_name
                           ? 'border-red-500'
                           : 'border-green-500'
                       }`}
                     />
                   )}
-                  {errors.authorName && (
+                  {errors.first_family_name && (
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
@@ -287,13 +310,13 @@ const ViewEditUser = (props) => {
                     <input
                       {...register('second_family_name', { required: true })}
                       className={`form-input w-full ${
-                        errors.authorName
+                        errors.second_family_name
                           ? 'border-red-500'
                           : 'border-green-500'
                       }`}
                     />
                   )}
-                  {errors.authorName && (
+                  {errors.second_family_name && (
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
@@ -310,13 +333,13 @@ const ViewEditUser = (props) => {
                     <input
                       {...register('third_family_name', { required: true })}
                       className={`form-input w-full ${
-                        errors.authorName
+                        errors.third_family_name
                           ? 'border-red-500'
                           : 'border-green-500'
                       }`}
                     />
                   )}
-                  {errors.authorName && (
+                  {errors.third_family_name && (
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
@@ -333,13 +356,11 @@ const ViewEditUser = (props) => {
                     <input
                       {...register('email', { required: true })}
                       className={`form-input w-full ${
-                        errors.authorName
-                          ? 'border-red-500'
-                          : 'border-green-500'
+                        errors.email ? 'border-red-500' : 'border-green-500'
                       }`}
                     />
                   )}
-                  {errors.authorName && (
+                  {errors.email && (
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
@@ -367,13 +388,13 @@ const ViewEditUser = (props) => {
                         errors.country && 'border-red-500'
                       }`}
                     >
-                      <option value=''>Select Country </option>
+                      <option value=''>{props.data.country} </option>
                       {all_Countries.map((country) => (
                         <option>{country.name}</option>
                       ))}
                     </select>
                   )}
-                  {errors.authorName && (
+                  {errors.country && (
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
@@ -400,13 +421,13 @@ const ViewEditUser = (props) => {
                         errors.state && 'border-red-500'
                       }`}
                     >
-                      <option value=''>Select State </option>
+                      <option value=''>{props.data.state}</option>
                       {all_States.map((state) => (
                         <option>{state.name}</option>
                       ))}
                     </select>
                   )}
-                  {errors.authorName && (
+                  {errors.state && (
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
@@ -432,13 +453,13 @@ const ViewEditUser = (props) => {
                         errors.city && 'border-red-500'
                       }`}
                     >
-                      <option>Select city </option>
+                      <option>{props.data.city}</option>
                       {all_Cities.map((city) => {
                         return <option>{city.name}</option>;
                       })}
                     </select>
                   )}
-                  {errors.authorName && (
+                  {errors.city && (
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
@@ -473,7 +494,7 @@ const ViewEditUser = (props) => {
                       )}
                     />
                   )}
-                  {errors.authorName && (
+                  {errors.phoneNumber && (
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
@@ -493,7 +514,7 @@ const ViewEditUser = (props) => {
                         error.roleError ? 'border-red-400' : 'border-gray-400'
                       }`}
                     >
-                      <option>Select Role</option>
+                      <option>{props.data.role}</option>
 
                       {roles.map((business) => (
                         <option key={business._id} value={business.value}>
@@ -502,40 +523,18 @@ const ViewEditUser = (props) => {
                       ))}
                     </select>
                   )}
-                  {errors.authorName && (
+                  {errors.role && (
                     <span className='text-red-500'>This field is required</span>
                   )}
                 </div>
-                <div className='col-lg-4 mb-5'>
-                  <label
-                    className='block text-lg font-medium mb-1'
-                    htmlFor='created_at'
-                  >
-                    Registered Date
-                  </label>
-                  {props.mode === 'view' ? (
-                    <p>{props.data.created_at}</p>
-                  ) : (
-                    <input
-                      {...register('created_at', { required: true })}
-                      className={`form-input w-full ${
-                        errors.authorName
-                          ? 'border-red-500'
-                          : 'border-green-500'
-                      }`}
-                    />
-                  )}
-                  {errors.authorName && (
-                    <span className='text-red-500'>This field is required</span>
-                  )}
-                </div>
+
                 <div className='row'>
                   <div className='col-lg-4 mb-5'>
                     <label
                       className='block text-lg font-medium mb-1'
                       htmlFor='created_at'
                     >
-                      Active/InActive
+                      Active
                     </label>
                     {props.mode === 'view' ? (
                       <p> {isActive ? 'Active' : 'InActive'}</p>
@@ -565,7 +564,7 @@ const ViewEditUser = (props) => {
                         </div>
                       </div>
                     )}
-                    {errors.authorName && (
+                    {errors.isActive && (
                       <span className='text-red-500'>
                         This field is required
                       </span>
@@ -576,7 +575,7 @@ const ViewEditUser = (props) => {
                       className='block text-lg font-medium mb-1'
                       htmlFor='created_at'
                     >
-                      Approved/DisApproved
+                      Approved
                     </label>
                     {props.mode === 'view' ? (
                       <p> {approved ? 'Approved' : 'DisApproved'}</p>
@@ -606,7 +605,7 @@ const ViewEditUser = (props) => {
                         </div>
                       </div>
                     )}
-                    {errors.authorName && (
+                    {errors.approved && (
                       <span className='text-red-500'>
                         This field is required
                       </span>
@@ -617,7 +616,7 @@ const ViewEditUser = (props) => {
                       className='block text-lg font-medium mb-1'
                       htmlFor='verified'
                     >
-                      Verified/Non Verified
+                      Verified
                     </label>
                     {props.mode === 'view' ? (
                       <p> {verified ? 'Verified' : 'DisVerified'}</p>
@@ -647,7 +646,7 @@ const ViewEditUser = (props) => {
                         </div>
                       </div>
                     )}
-                    {errors.authorName && (
+                    {errors.verified && (
                       <span className='text-red-500'>
                         This field is required
                       </span>
