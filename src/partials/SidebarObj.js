@@ -614,7 +614,7 @@ const SidebarObj = () => {
             },
             {
               label: 'Create Users',
-              path: 'list/create-user',
+              path: '/user/list/create-user',
               subMenuItems: [],
             },
           ],

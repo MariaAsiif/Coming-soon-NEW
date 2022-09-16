@@ -315,7 +315,7 @@ const CreateUser = () => {
                 />
                 {errors.first_name && (
                   <p className='text-red-500 text-sm'>
-                    {errors.first_name.message}
+                    {`first name is a required`}
                   </p>
                 )}
                 <span
@@ -373,7 +373,7 @@ const CreateUser = () => {
 
             {errors.first_family_name && (
               <p className='text-red-500 text-sm'>
-                {errors.first_family_name.message}
+                {`first family name is a required`}
               </p>
             )}
           </div>
@@ -628,7 +628,7 @@ const CreateUser = () => {
             </div>
             {errors.phoneNumber && (
               <p className='text-red-500 text-sm'>
-                {errors.phoneNumber.message}
+                {`phone number is a required`}
               </p>
             )}
           </div>

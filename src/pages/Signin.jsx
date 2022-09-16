@@ -158,14 +158,14 @@ function Signin() {
                   <div className='mr-1'>
                     <Link
                       to='/signup'
-                      className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap'
+                      className='btn bg-red-500 hover:bg-green-600 text-white m1-3 whitespace-nowrap'
                     >
                       Sign Up
                     </Link>
 
                     <button
                       type='submit'
-                      className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap'
+                      className='btn bg-red-500 hover:bg-green-600 text-white ml-3 whitespace-nowrap'
                     >
                       Sign In
                     </button>
