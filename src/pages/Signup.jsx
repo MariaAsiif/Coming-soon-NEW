@@ -97,10 +97,20 @@ function Signup() {
 
   const handleChange = (e) => {
     let { name, value } = e.target;
+  
+    if (name === "first_family_name" || name === "second_family_name" || name === "third_family_name") {
+      value = e.target.value.toUpperCase().replace(/[^a-z]/gi, '');
+      setformdata((prevdata) => ({
+        ...prevdata,
+        [name]: value,
+      }));
+    }
+    else{
     setformdata((prevdata) => ({
       ...prevdata,
       [name]: value,
     }));
+  }
   };
 
   const onSubmit = async (data) => {
@@ -195,25 +205,27 @@ function Signup() {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='space-y-0'>
                   <div className='row'>
-                    <div className='col-lg-6 mb-1 '>
+                    <div className='col-lg-6 mb-1 relative'>
                       <label
                         className='block text-sm font-medium mb-1'
                         htmlFor='name'
                       >
-                        Full Name <span className='text-rose-500'>*</span>
+                        Full Name
+                        <span className='text-rose-500 absolute left-[95px] top-[3px] '>*</span>
                       </label>
                       <input
                         {...register('first_name')}
                         name='first_name'
                         value={formdata.first_name}
                         onChange={handleChange}
+                        placeholder="First Name"
                         id='first_name'
-                        className='form-input w-full'
+                        className={`form-input w-full  ${errors.first_name && 'border-red-500'}`}
                         type='text'
                       />
 
                       {errors.first_name && (
-                        <p className='text-red-500 text-sm'>
+                        <p className='text-red-500 text-sm '>
                           {`first name is a required`}
                         </p>
                       )}
@@ -227,21 +239,23 @@ function Signup() {
                         ) : null}
                       </div>
                     </div>
-                    <div className='col-lg-6 mb-4 '>
+                    <div className='col-lg-6 mb-4 relative '>
                       <label
-                        className='block text-sm font-medium mb-1'
+                        className='flex items-center text-sm font-medium mb-1'
                         htmlFor='first_family_name'
                       >
                         First Family Name
-                        <span className='text-rose-500'>*</span>
+                        <span className='text-rose-500 absolute right-[95px] top-[3px] '>*</span>
                       </label>
                       <input
                         {...register('first_family_name')}
                         name='first_family_name'
                         value={formdata.first_family_name}
                         onChange={handleChange}
+                        placeholder="Family Name"
                         id='first_family_name'
-                        className='form-input w-full'
+                        className={`form-input w-full  ${errors.first_family_name && 'border-red-500'}`}
+
                         type='text'
                       />
                       {errors.first_family_name && (
@@ -252,7 +266,7 @@ function Signup() {
                     </div>
                   </div>
                   <div className='row'>
-                    <div className='col-lg-6 mb-4 '>
+                    <div className='col-lg-6 mb-4 relative'>
                       <label
                         className='block text-sm font-medium mb-1'
                         htmlFor='second_family_name'
@@ -265,6 +279,7 @@ function Signup() {
                         value={formdata.second_family_name}
                         onChange={handleChange}
                         id='second_family_name'
+                        placeholder="Second Family Name"
                         className='form-input w-full'
                         type='text'
                       />
@@ -274,7 +289,7 @@ function Signup() {
                         </p>
                       )}
                     </div>
-                    <div className='col-lg-6 mb-4 '>
+                    <div className='col-lg-6 mb-4 relative'>
                       <label
                         className='block text-sm font-medium mb-1'
                         htmlFor='third_family_name'
@@ -287,6 +302,7 @@ function Signup() {
                         value={formdata.third_family_name}
                         onChange={handleChange}
                         id='third_family_name'
+                      placeholder='Third Family Name'
                         className='form-input w-full'
                         type='text'
                       />
@@ -298,12 +314,13 @@ function Signup() {
                     </div>
                   </div>
                   <div className='row'>
-                    <div className='col-lg-6 mb-4 '>
+                    <div className='col-lg-6 mb-4 relative'>
                       <label
                         className='block text-sm font-medium mb-1'
                         htmlFor='email'
                       >
-                        Email <span className='text-rose-500'>*</span>
+                        Email
+                        <span className='text-rose-500 absolute left-[60px] top-[3px] '>*</span>
                       </label>
                       <input
                         {...register('email')}
@@ -311,7 +328,9 @@ function Signup() {
                         value={formdata.email}
                         onChange={handleChange}
                         id='email'
-                        className='form-input w-full'
+                        className={`form-input w-full  ${errors.email && 'border-red-500'}`}
+                        placeholder='Email '
+
                         type='text'
                       />
                       {errors.email && (
@@ -320,20 +339,23 @@ function Signup() {
                         </p>
                       )}
                     </div>
-                    <div className='col-lg-6 mb-4 '>
+                    <div className='col-lg-6 mb-4 relative'>
                       <label
                         className='block text-sm font-medium mb-1'
                         htmlFor='Password'
                       >
-                        Password <span className='text-rose-500'>*</span>
+                        Password
+                        <span className='text-rose-500 absolute left-[85px] top-[3px] '>*</span>
                       </label>
                       <input
                         {...register('password')}
                         name='password'
-                        value={formdata.Password}
+                        value={formdata.password}
                         onChange={handleChange}
+                        placeholder='Password '
                         id='password'
-                        className='form-input w-full'
+                        className={`form-input w-full  ${errors.password && 'border-red-500'}`}
+
                         type='password'
                       />
                       {errors.password && (
@@ -344,21 +366,21 @@ function Signup() {
                     </div>
                   </div>
                   <div className='row'>
-                    <div className='col-lg-6 mb-4 '>
+                    <div className='col-lg-6 mb-4 relative'>
                       <label
                         className='block text-sm font-medium mb-1'
                         htmlFor='country'
                       >
-                        Country <span className='text-rose-500'>*</span>
+                        Country
+                        <span className='text-rose-500 absolute left-[75px] top-[3px] '>*</span>
                       </label>
                       <select
                         value={formdata.country}
                         onChange={handleChangeCountry}
                         name='country'
                         id='country'
-                        className={`form-input w-full   ${
-                          errors.country && 'border-red-500'
-                        }`}
+                        className={`form-input w-full   ${errors.country && 'border-red-500'
+                          }`}
                       >
                         <option value=''>Select Country </option>
                         {all_Countries.map((country) => (
@@ -366,21 +388,21 @@ function Signup() {
                         ))}
                       </select>
                     </div>
-                    <div className='col-lg-6 mb-4 '>
+                    <div className='col-lg-6 mb-4 relative'>
                       <label
                         className='block text-sm font-medium mb-1'
                         htmlFor='state'
                       >
-                        State <span className='text-rose-500'>*</span>
+                        State
+                        <span className='text-rose-500 absolute left-[60px] top-[3px] '>*</span>
                       </label>
                       <select
                         value={formdata.state}
                         onChange={handleChangeState}
                         name='state'
                         id='state'
-                        className={`form-input w-full   ${
-                          errors.state && 'border-red-500'
-                        }`}
+                        className={`form-input w-full   ${errors.state && 'border-red-500'
+                          }`}
                       >
                         <option value=''>Select State </option>
                         {all_States.map((state) => (
@@ -390,12 +412,13 @@ function Signup() {
                     </div>
                   </div>
                   <div className='row'>
-                    <div className='col-lg-6 mb-4 '>
+                    <div className='col-lg-6 mb-4 relative'>
                       <label
                         className='block text-sm font-medium mb-1'
                         htmlFor='city'
                       >
-                        City <span className='text-rose-500'>*</span>
+                        City
+                        <span className='text-rose-500 absolute left-[50px] top-[3px] '>*</span>
                       </label>
                       <select
                         // {...register('city')}
@@ -403,9 +426,8 @@ function Signup() {
                         onChange={handleChangeCity}
                         name='city'
                         id='city'
-                        className={`form-input w-full   ${
-                          errors.city && 'border-red-500'
-                        }`}
+                        className={`form-input w-full   ${errors.city && 'border-red-500'
+                          }`}
                       >
                         <option>Select city </option>
                         {all_Cities.map((city) => {
@@ -413,7 +435,7 @@ function Signup() {
                         })}
                       </select>
                     </div>
-                    <div className='col-lg-6 mb-4 '>
+                    <div className='col-lg-6 mb-4 relative'>
                       <label
                         className='block text-sm font-medium mb-1'
                         htmlFor='phoneNumber'
@@ -434,9 +456,8 @@ function Signup() {
                               onChange={onChange}
                               placeholder='000 000 000'
                               // countryCodeEditable={false}
-                              className={` w-full  ${
-                                errors.phoneNumber && 'error_form'
-                              }`}
+                              className={` w-full  ${errors.phoneNumber && 'error_form'
+                                }`}
                               dropdownClass={'custom-dropdown'}
                             />
                           )}

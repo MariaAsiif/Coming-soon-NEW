@@ -7,6 +7,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import ViewEditTicker from '../../components/Popups/ViewEditTicker';
 import DeletePopup from '../../components/deletePopups/DeletePopups';
 import ImageViewerPopup from '../../components/Popups/ImageViewerPopup';
+import ViewEditTerms from '../../components/Popups/ViewEditTerms';
 const TermsConditions = () => {
     const [allterms, setallTerms] = useState([])
     const [tickerPopup, settickerPopup] = useState(false)
@@ -36,7 +37,7 @@ const TermsConditions = () => {
 
 
         try {
-            const res = await callApi("/tickers/removeTicker", "post", value)
+            const res = await callApi("/terms/removeTerms", "post", value)
             if (res.status === "Success") {
 
                 toast.success(res.message);
@@ -102,14 +103,10 @@ const TermsConditions = () => {
                 draggable
                 pauseOnHover
             />
-            {
-                imagePopup ? (
-                    <ImageViewerPopup imageUrl={imagePopupUrl} open={imagePopup} onClose={() => setimagePopup(false)} />
-                ) : null
-            }
+           
             {
                 tickerPopup ? (
-                    <ViewEditTicker id="job-modal" data={jobRow} mode={jobMode} open={tickerPopup} onClose={() => settickerPopup(false)} />
+                    <ViewEditTerms id="job-modal" data={jobRow} mode={jobMode} open={tickerPopup} onClose={() => settickerPopup(false)} />
                 ) : null
             }
 
@@ -156,6 +153,9 @@ const TermsConditions = () => {
                                                 <div className="font-semibold text-left">Added By</div>
                                             </th>
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">Date</div>
+                                            </th>
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Description</div>
                                             </th>
 
@@ -174,6 +174,9 @@ const TermsConditions = () => {
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         superadmin
+                                                    </td>
+                                                    <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                        {tiker?.termsDate}
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                         <div className="text-left">

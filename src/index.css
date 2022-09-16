@@ -233,7 +233,7 @@ video {
   letter-spacing: .01rem;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
-  padding-left: 70px !important;
+  padding-left: 50px !important;
   margin-left: 0;
   background: #FFFFFF;
   border: none !important;
@@ -251,6 +251,7 @@ video {
 
 .error_form {
   border-color: red !important;
+  
 }
 
 .react-tel-input:focus {
@@ -302,7 +303,7 @@ select {
   top: 0;
   bottom: 0;
   padding: 0;
-  width: 15% !important;
+  /* width: 20% !important; */
   background-color: white !important;
   border-right: 1px solid #cacaca !important;
   border-left: 0px !important;
@@ -317,7 +318,7 @@ select {
   position: relative;
   width: 41px;
   height: 100%;
-  padding: 0 0 0px 20px !important;
+  /* padding: 0 0 0px 20px !important; */
   border: none !important;
   border-radius: 3px 0 0 3px;
 
