@@ -10,14 +10,14 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import moment from 'moment';
-const ViewEditTerms = (props) => {
+const ViewEditTerms = ({ id, modalOpen, onClose, mode, data }) => {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
     const [expiryDate, setexpiryDate] = useState({ day: dd, month: mm, year: yyyy })
-    const [description, setdescription] = useState(props.data.description)
+    const [description, setdescription] = useState(data.description)
     const [error, setError] = useState("")
     const handleDiscription = (event, editor) => {
 
@@ -47,7 +47,7 @@ const ViewEditTerms = (props) => {
                 const res = await callApi("/terms/updateTerms", "post", payload)
                 if (res.status === "Success") {
                     toast.success(res.message);
-
+                    onClose()
                 }
                 else {
                     toast.error(res.message);
@@ -74,22 +74,31 @@ const ViewEditTerms = (props) => {
 
 
     useEffect(() => {
+        const keyHandler = ({ keyCode }) => {
+            if (!modalOpen || keyCode !== 27) return;
+            onClose();
+        };
+        document.addEventListener('keydown', keyHandler);
+        return () => document.removeEventListener('keydown', keyHandler);
+    });
+
+    useEffect(() => {
       
-        const date = moment(props.data?.termsDate).format('yyyy-M-D').split('-')
+        const date = moment(data?.termsDate).format('yyyy-M-D').split('-')
     setexpiryDate({ day: +date[2], month: +date[1], year: +date[0] })
-    }, [props.data]);
+    }, [data]);
 
 
     return (
-        <Modal open={props.open} onClose={props.onClose} center  >
+        <Modal open={data} onClose={onClose} center  >
             <div className=''>
                 <form >
                     <div className='row p-5'>
                         <div className='col-lg-6 mb-5'>
                             <label className="block text-lg text-left font-medium mb-1" htmlFor="description">DATE</label>
-                            {props.mode === "view" ?
+                            {mode === "view" ?
                                 (
-                                    <p>{props.data.termsDate}</p>
+                                    <p>{data.termsDate}</p>
 
 
                                 ) : (
@@ -108,9 +117,11 @@ const ViewEditTerms = (props) => {
                         </div>
                         <div className='col-lg-12 mb-5'>
                             <label className="block text-lg text-left font-medium mb-1" htmlFor="description">DESCRIPTION</label>
-                            {props.mode === "view" ?
+                            {mode === "view" ?
                                 (
-                                    <div dangerouslySetInnerHTML={{_html:props.data.description }}/>
+                                    // <div dangerouslySetInnerHTML={{_html:data.description }}/>
+                                    <p>{data.description}</p>
+
                                 ) : (
 
                                     <CKEditor
@@ -127,7 +138,7 @@ const ViewEditTerms = (props) => {
                             {error && <span className='text-red-500'>This field is required</span>}
                         </div>
                         <div className='col-lg-12 mt-10'>
-                            {props.mode === "edit" &&
+                            {mode === "edit" &&
                                 <button onClick={(e) => onSubmit(e)} className="btn bg-red-500 hover:bg-green-600 text-white" type='submit' >Update</button>
                             }
                         </div>

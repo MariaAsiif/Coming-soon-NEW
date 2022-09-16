@@ -56,10 +56,7 @@ const TermsConditions = () => {
         }
     }
 
-    const openImagePopup = (url) => {
-        setimagePopup(true)
-        setimagePopupUrl(`https://hporxadminbackend.herokuapp.com${url}`)
-    }
+   
 
     useEffect(() => {
         if (!tickerPopup) {
@@ -198,11 +195,7 @@ const TermsConditions = () => {
                                                             <button className="text-slate-400 hover:text-slate-500 rounded-full" onClick={(e) => openJobPopup(e, "view", tiker)}>
                                                                 <IoEyeOutline className='text-red-500 hover:text-green-600' size={23} />
 
-                                                                {/* <img src={viewSvg} className="w-6 h-7" alt='delete' /> */}
-                                                                {/* <span className="sr-only">Show</span>
-                                                                <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
-                                                                    <path d="M16 20c.3 0 .5-.1.7-.3l5.7-5.7-1.4-1.4-4 4V8h-2v8.6l-4-4L9.6 14l5.7 5.7c.2.2.4.3.7.3zM9 22h14v2H9z" />
-                                                                </svg> */}
+                                                              
                                                             </button>
                                                             <button className="text-rose-500 hover:text-rose-600 rounded-full" onClick={() => deletePopToggle(tiker?._id)}>
                                                                 <span className="sr-only">Delete</span>
