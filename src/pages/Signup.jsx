@@ -195,7 +195,7 @@ function Signup() {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='space-y-0'>
                   <div className='row'>
-                    <div className='col-lg-6 mb-4 '>
+                    <div className='col-lg-6 mb-1 '>
                       <label
                         className='block text-sm font-medium mb-1'
                         htmlFor='name'

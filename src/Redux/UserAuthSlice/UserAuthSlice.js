@@ -20,7 +20,7 @@ export const UserAuthSlice = createSlice({
             state.loginInfo.token = action.payload.token
             state.userInfo.name = action.payload.userdata.first_name
             state.userInfo.email = action.payload.userdata.email
-            state.userInfo.role = action.payload?.userdata?.rolePrivileges?.roleName 
+            state.userInfo.role = action.payload?.userdata?.rolePrivileges?.roleName || "superadmin"
             state.userInfo.userid = action.payload.userdata._id
             state.userInfo.permission = action.payload.userdata.rolePrivileges
         },
