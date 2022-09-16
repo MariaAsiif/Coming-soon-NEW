@@ -8,7 +8,7 @@ import ViewEditTicker from '../../components/Popups/ViewEditTicker';
 import DeletePopup from '../../components/deletePopups/DeletePopups';
 import ImageViewerPopup from '../../components/Popups/ImageViewerPopup';
 const TermsConditions = () => {
-    const [allTicker, setallTicker] = useState([])
+    const [allterms, setallTerms] = useState([])
     const [tickerPopup, settickerPopup] = useState(false)
     const [delPopup, setDelPopup] = useState(false)
     const [delId, setDelId] = useState('')
@@ -41,9 +41,9 @@ const TermsConditions = () => {
 
                 toast.success(res.message);
                 setDelPopup(false)
-                let oldtickers = allTicker
+                let oldtickers = allterms
                 const updatedTickers = oldtickers.filter((ticker) => ticker._id !== res.data._id)
-                setallTicker(updatedTickers)
+                setallTerms(updatedTickers)
             }
             else {
                 toast.error(res.message);
@@ -79,8 +79,9 @@ const TermsConditions = () => {
                         }
 
                     }
-                    const response = await callApi("/tickers/getTickersWithFullDetails", "post", payload)
-
+                    const response = await callApi("/terms/getTermsWithFullDetailsPublic", "post", payload)
+                    setallTerms(response.data.terms)
+                    console.log("terms", response)
                 } catch (error) {
                     console.log(error);
                 }
@@ -139,7 +140,7 @@ const TermsConditions = () => {
                 <div className='col-12 border'>
                     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                         <header className="px-5 py-4">
-                            <h2 className="font-semibold text-slate-800">All Terms and Conditions <span className="text-slate-400 font-medium">{allTicker.length}</span></h2>
+                            <h2 className="font-semibold text-slate-800">All Terms and Conditions <span className="text-slate-400 font-medium">{allterms.length}</span></h2>
                         </header>
                         <div>
                             <div className="overflow-x-auto">
@@ -164,7 +165,7 @@ const TermsConditions = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="text-sm divide-y divide-slate-200">
-                                        {allTicker.map((tiker) => {
+                                        {allterms.map((tiker) => {
                                             return (
                                                 <tr key={tiker?._id}>
 
@@ -172,11 +173,14 @@ const TermsConditions = () => {
                                                         <div className="text-left">{tiker?._id}</div>
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        {/* <div className="text-left">{tiker?.}</div> */}
-                                                        <img onClick={() => openImagePopup(tiker.logoFile)} src={`${HOSTNAME}${tiker?.logoFile}`} className="w-[80px] h-[50px] cursor-pointer" alt="image_logo" />
+                                                        superadmin
                                                     </td>
                                                     <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                        <div className="text-left">{tiker?.tickerText}</div>
+                                                        <div className="text-left">
+                                                            <div
+                                                                dangerouslySetInnerHTML={{ __html: tiker?.description }}
+                                                            />
+                                                        </div>
                                                     </td>
 
 

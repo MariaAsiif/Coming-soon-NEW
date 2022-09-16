@@ -3,20 +3,13 @@ import { FcCheckmark } from 'react-icons/fc'
 import { MdClose } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
 import { callApi } from '../../utils/CallApi';
 import { Link } from "react-router-dom"
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-const schema = yup.object({
-    name: yup.string().required("Author Name is Required"),
 
-
-});
 
 const CreateTermsCondition = () => {
     var today = new Date();
@@ -26,6 +19,7 @@ const CreateTermsCondition = () => {
 
     const [expiryDate, setexpiryDate] = useState({ day: dd, month: mm, year: yyyy })
     const [description, setdescription] = useState("")
+    const [error, setError] = useState("")
 
 
 
@@ -35,26 +29,31 @@ const CreateTermsCondition = () => {
         setdescription(data)
 
     }
-    const onSubmit = async () => {
-        const payload = {
-            termsDate: `${expiryDate.year}-${expiryDate.month}-${expiryDate.day}`,
-            description: description
+    const onSubmit = async (e) => {
+        e.preventDefault()
+        if (description === "") {
+            setError("Description is Required")
         }
-        console.log(expiryDate);
-        try {
-
-            const res = await callApi("/terms/createTerms", "post", payload)
-            if (res.status === "Success") {
-                toast.success(res.message);
-
+        else {
+            const payload = {
+                termsDate: `${expiryDate.year}-${expiryDate.month}-${expiryDate.day}`,
+                description: description
             }
-            else {
-                toast.error(res.message);
+            try {
 
+                const res = await callApi("/terms/createTerms", "post", payload)
+                if (res.status === "Success") {
+                    toast.success(res.message);
+
+                }
+                else {
+                    toast.error(res.message);
+
+                }
+
+            } catch (error) {
+                console.log(error);
             }
-
-        } catch (error) {
-            console.log(error);
         }
     }
 
@@ -111,7 +110,7 @@ const CreateTermsCondition = () => {
                         </header>
                     </div>
                     <div className='col-md-6'>
-                        <label>Title</label>
+                        <label>Date</label>
                         <DatePicker
                             value={expiryDate}
                             calendarPopperPosition="bottom"
@@ -120,7 +119,7 @@ const CreateTermsCondition = () => {
                             shouldHighlightWeekends
                         />
                     </div>
-                    <div className='col-md-6'>
+                    {/* <div className='col-md-6'>
                         <label>Added by</label>
                         <select className='w-full'>
                             <option value="">Select Added By</option>
@@ -128,7 +127,7 @@ const CreateTermsCondition = () => {
                             <option>Amin</option>
                             <option>User</option>
                         </select>
-                    </div>
+                    </div> */}
                     <div className='col-md-12 mt-3'>
                         <label>Desccription</label>
                         <CKEditor
@@ -140,10 +139,11 @@ const CreateTermsCondition = () => {
                             onChange={handleDiscription}
 
                         />
+                        {error && <div className='text-red-500'>{error}</div>}
 
                     </div>
                     <div className='col-md-12 mt-3'>
-                        <button className="btn bg-red-500 hover:bg-green-600 text-white" >Submit</button>
+                        <button className="btn bg-red-500 hover:bg-green-600 text-white" onClick={(e) => onSubmit(e)}>Submit</button>
                     </div>
 
 
