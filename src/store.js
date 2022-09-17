@@ -5,6 +5,7 @@ import counterReducer from './Redux/Counter/CounterSlice'
 import UserAuthReducer from './Redux/UserAuthSlice/UserAuthSlice';
 import { combineReducers } from "redux";
 
+
 const persistConfig = {
     key: 'root',
     storage,
@@ -17,8 +18,12 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
+
+
 export const store = configureStore({
-    reducer: persistedReducer
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}),
 })
+
 
 export const persistor = persistStore(store)

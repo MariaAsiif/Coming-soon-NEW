@@ -64,6 +64,10 @@ const ViewEditUser = (props) => {
     age: '',
   });
 
+
+  const [location, setlocation] = useState("")
+
+
   const handleIsActive = () => setIsActive(!isActive);
   const handleApproved = () => setApproved(!approved);
   const handleVerified = () => setVerified(!verified);
@@ -104,10 +108,21 @@ const ViewEditUser = (props) => {
 
   const handleChangeCity = (e) => {
     let { value } = e.target;
+    let latitudeCode = all_Cities.find((city) => city.name === value).latitude;
+    let longitudeCode = all_Cities.find((city) => city.name === value).longitude;
+    let locationCoordinates = {
+      type: "Point",
+      coordinates: [
+        latitudeCode,
+        longitudeCode
+      ]
+    }
     setrecruitModel((prevmodel) => ({
       ...prevmodel,
       city: value,
     }));
+    setlocation(locationCoordinates)
+
   };
 
   const onSubmit = async (values) => {
@@ -119,6 +134,7 @@ const ViewEditUser = (props) => {
       state: recruitModel.state,
       city: recruitModel.city,
       created_at: formattedDate,
+      location: location
     };
     try {
       let response = await callApi('/users/updateuser', 'post', payload);
@@ -263,11 +279,10 @@ const ViewEditUser = (props) => {
                   ) : (
                     <input
                       {...register('first_name', { required: true })}
-                      className={`form-input w-full ${
-                        errors.first_name
-                          ? 'border-red-500'
-                          : 'border-green-500'
-                      }`}
+                      className={`form-input w-full ${errors.first_name
+                        ? 'border-red-500'
+                        : 'border-green-500'
+                        }`}
                     />
                   )}
                   {errors.first_name && (
@@ -286,11 +301,10 @@ const ViewEditUser = (props) => {
                   ) : (
                     <input
                       {...register('first_family_name', { required: true })}
-                      className={`form-input w-full ${
-                        errors.first_family_name
-                          ? 'border-red-500'
-                          : 'border-green-500'
-                      }`}
+                      className={`form-input w-full ${errors.first_family_name
+                        ? 'border-red-500'
+                        : 'border-green-500'
+                        }`}
                     />
                   )}
                   {errors.first_family_name && (
@@ -309,11 +323,10 @@ const ViewEditUser = (props) => {
                   ) : (
                     <input
                       {...register('second_family_name', { required: true })}
-                      className={`form-input w-full ${
-                        errors.second_family_name
-                          ? 'border-red-500'
-                          : 'border-green-500'
-                      }`}
+                      className={`form-input w-full ${errors.second_family_name
+                        ? 'border-red-500'
+                        : 'border-green-500'
+                        }`}
                     />
                   )}
                   {errors.second_family_name && (
@@ -332,11 +345,10 @@ const ViewEditUser = (props) => {
                   ) : (
                     <input
                       {...register('third_family_name', { required: true })}
-                      className={`form-input w-full ${
-                        errors.third_family_name
-                          ? 'border-red-500'
-                          : 'border-green-500'
-                      }`}
+                      className={`form-input w-full ${errors.third_family_name
+                        ? 'border-red-500'
+                        : 'border-green-500'
+                        }`}
                     />
                   )}
                   {errors.third_family_name && (
@@ -355,9 +367,8 @@ const ViewEditUser = (props) => {
                   ) : (
                     <input
                       {...register('email', { required: true })}
-                      className={`form-input w-full ${
-                        errors.email ? 'border-red-500' : 'border-green-500'
-                      }`}
+                      className={`form-input w-full ${errors.email ? 'border-red-500' : 'border-green-500'
+                        }`}
                     />
                   )}
                   {errors.email && (
@@ -384,9 +395,8 @@ const ViewEditUser = (props) => {
                       onChange={handleChangeCountry}
                       name='country'
                       id='country'
-                      className={`form-control  form-control-lg ${
-                        errors.country && 'border-red-500'
-                      }`}
+                      className={`form-control  form-control-lg ${errors.country && 'border-red-500'
+                        }`}
                     >
                       <option value=''>{props.data.country} </option>
                       {all_Countries.map((country) => (
@@ -417,9 +427,8 @@ const ViewEditUser = (props) => {
                       onChange={handleChangeState}
                       name='state'
                       id='state'
-                      className={`w-full form-control  form-control-lg ${
-                        errors.state && 'border-red-500'
-                      }`}
+                      className={`w-full form-control  form-control-lg ${errors.state && 'border-red-500'
+                        }`}
                     >
                       <option value=''>{props.data.state}</option>
                       {all_States.map((state) => (
@@ -449,9 +458,8 @@ const ViewEditUser = (props) => {
                       onChange={handleChangeCity}
                       name='city'
                       id='city'
-                      className={`form-input w-full   ${
-                        errors.city && 'border-red-500'
-                      }`}
+                      className={`form-input w-full   ${errors.city && 'border-red-500'
+                        }`}
                     >
                       <option>{props.data.city}</option>
                       {all_Cities.map((city) => {
@@ -486,9 +494,8 @@ const ViewEditUser = (props) => {
                           country={countryCode}
                           onChange={onChange}
                           placeholder='000 000 000'
-                          className={` w-full  ${
-                            errors.phoneNumber && 'error_form'
-                          }`}
+                          className={` w-full  ${errors.phoneNumber && 'error_form'
+                            }`}
                           dropdownClass={'custom-dropdown'}
                         />
                       )}
@@ -510,9 +517,8 @@ const ViewEditUser = (props) => {
                   ) : (
                     <select
                       onChange={handleChangeRole}
-                      className={`w-full  ${
-                        error.roleError ? 'border-red-400' : 'border-gray-400'
-                      }`}
+                      className={`w-full  ${error.roleError ? 'border-red-400' : 'border-gray-400'
+                        }`}
                     >
                       <option>{props.data.role}</option>
 

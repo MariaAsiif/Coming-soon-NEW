@@ -48,10 +48,17 @@ const CreateUser = () => {
     state: '',
     country: '',
   });
-  const [location, setLocation] = useState({
-    type: 'Point',
-    coordinates: [0, 0],
-  });
+
+
+
+  // const [location, setLocation] = useState({
+  //   type: 'Point',
+  //   coordinates: [0, 0],
+  // });
+
+  const [location, setlocation] = useState("")
+
+
 
   const {
     register,
@@ -124,10 +131,21 @@ const CreateUser = () => {
 
   const handleChangeCity = (e) => {
     let { value } = e.target;
+    let latitudeCode = all_Cities.find((city) => city.name === value).latitude;
+    let longitudeCode = all_Cities.find((city) => city.name === value).longitude;
+    let locationCoordinates = {
+      type: "Point",
+      coordinates: [
+        latitudeCode,
+        longitudeCode
+      ]
+    }
     setrecruitModel((prevmodel) => ({
       ...prevmodel,
       city: value,
     }));
+    setlocation(locationCoordinates)
+
   };
 
   const onSubmit = async (data) => {
@@ -141,7 +159,7 @@ const CreateUser = () => {
       state: recruitModel.state,
       city: recruitModel.city,
       role: roleName,
-      location,
+      location: location,
     };
     console.log(`newData ========`, newData);
     try {
@@ -309,9 +327,8 @@ const CreateUser = () => {
                   type='text'
                   {...register('first_name')}
                   placeholder='Name'
-                  className={`form-input w-full h-full  ${
-                    errors.first_name ? 'border-red-400' : 'border-gray-400'
-                  } `}
+                  className={`form-input w-full h-full  ${errors.first_name ? 'border-red-400' : 'border-gray-400'
+                    } `}
                 />
                 {errors.first_name && (
                   <p className='text-red-500 text-sm'>
@@ -356,9 +373,8 @@ const CreateUser = () => {
             <input
               {...register('first_family_name')}
               autoComplete='off'
-              className={`w-full  ${
-                errors.first_family_name ? 'border-red-400' : 'border-gray-400'
-              }`}
+              className={`w-full  ${errors.first_family_name ? 'border-red-400' : 'border-gray-400'
+                }`}
               name='first_family_name'
               id='first_family_name'
               type='text'
@@ -387,9 +403,8 @@ const CreateUser = () => {
             <input
               {...register('second_family_name')}
               autoComplete='off'
-              className={`form-input w-full  ${
-                errors.second_family_name && 'border-red-500'
-              }`}
+              className={`form-input w-full  ${errors.second_family_name && 'border-red-500'
+                }`}
               name='second_family_name'
               id='second_family_name'
               placeholder='2nd Family Name'
@@ -412,9 +427,8 @@ const CreateUser = () => {
             <input
               {...register('third_family_name')}
               autoComplete='off'
-              className={`form-input w-full  ${
-                errors.third_family_name && 'border-red-500'
-              }`}
+              className={`form-input w-full  ${errors.third_family_name && 'border-red-500'
+                }`}
               name='third_family_name'
               id='third_family_name'
               placeholder='3rd Family Name'
@@ -443,9 +457,8 @@ const CreateUser = () => {
             <input
               {...register('email')}
               autoComplete='off'
-              className={`form-input w-full  ${
-                errors.email && 'border-red-500'
-              }`}
+              className={`form-input w-full  ${errors.email && 'border-red-500'
+                }`}
               name='email'
               id='email'
               placeholder='Email Address'
@@ -481,9 +494,8 @@ const CreateUser = () => {
             <input
               {...register('password')}
               autoComplete='off'
-              className={`form-input w-full  ${
-                errors.password && 'border-red-500'
-              }`}
+              className={`form-input w-full  ${errors.password && 'border-red-500'
+                }`}
               name='password'
               id='password'
               placeholder='Password'
@@ -518,9 +530,8 @@ const CreateUser = () => {
               onChange={handleChangeCountry}
               name='country'
               id='country'
-              className={`form-input w-full   ${
-                errors.country && 'border-red-500'
-              }`}
+              className={`form-input w-full   ${errors.country && 'border-red-500'
+                }`}
             >
               <option value=''>Select Country </option>
               {all_Countries.map((country) => (
@@ -547,9 +558,8 @@ const CreateUser = () => {
               onChange={handleChangeState}
               name='state'
               id='state'
-              className={`form-input w-full   ${
-                errors.state && 'border-red-500'
-              }`}
+              className={`form-input w-full   ${errors.state && 'border-red-500'
+                }`}
             >
               <option value=''>Select State </option>
               {all_States.map((state) => (
@@ -576,9 +586,8 @@ const CreateUser = () => {
               onChange={handleChangeCity}
               name='city'
               id='city'
-              className={`form-input w-full   ${
-                errors.city && 'border-red-500'
-              }`}
+              className={`form-input w-full   ${errors.city && 'border-red-500'
+                }`}
             >
               <option>Select city </option>
               {all_Cities.map((city) => {
@@ -651,9 +660,8 @@ const CreateUser = () => {
             </div>
             <select
               onChange={handleChangeRole}
-              className={`w-full  ${
-                error.roleError ? 'border-red-400' : 'border-gray-400'
-              }`}
+              className={`w-full  ${error.roleError ? 'border-red-400' : 'border-gray-400'
+                }`}
             >
               <option>Select Role</option>
 

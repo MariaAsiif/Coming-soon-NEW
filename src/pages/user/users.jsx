@@ -47,7 +47,7 @@ const Users = () => {
       } else {
         toast.error(res.message);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleApproved = async (id, status) => {
@@ -71,7 +71,7 @@ const Users = () => {
       } else {
         toast.error(res.message);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -91,6 +91,7 @@ const Users = () => {
           };
 
           let response = await callApi('/users/listAllUsers', 'post', payload);
+          console.warn("response============", response)
           setUsers(response?.data?.users);
         } catch (error) {
           console.log(error);
