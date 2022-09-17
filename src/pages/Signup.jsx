@@ -219,7 +219,7 @@ function Signup() {
       if (response.status === "Success") {
         toast.success(`User signup successfully`);
         setTimeout(() => {
-          // navigate("/signin");
+          navigate("/signin");
         }, 5000);
       } else {
         console.log(`Error reponse message ========`, response.message);
